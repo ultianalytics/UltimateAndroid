@@ -15,12 +15,17 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.summithillsoftware.ultimate.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.team.TeamsActivity"
+            android:label="@string/title_activity_teams" >
         </activity>
     </application>
 
