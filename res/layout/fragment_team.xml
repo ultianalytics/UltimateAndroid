@@ -43,14 +43,15 @@
                     android:id="@+id/radio_team_type_uni"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_team_type_uni" />
+                    android:text="@string/label_team_type_uni"
+                    android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/radio_team_type_mixed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/label_team_type_mixed" />
+                    android:text="@string/label_team_type_mixed"
+                    android:checked="false" />
                 
             </RadioGroup>
 
@@ -59,8 +60,7 @@
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin" >
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/label_team_playerdisplay"
@@ -73,12 +73,13 @@
             <RadioGroup
                 android:id="@+id/radiogroup_team_playerdisplay"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/radio_team_playerdisplay_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/radio_team_playerdisplay_name" />
 
                 <RadioButton

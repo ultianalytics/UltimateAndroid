@@ -1,10 +1,12 @@
-package com.summithillsoftware.ultimate;
+package com.summithillsoftware.ultimate.ui.team;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class TeamActivity extends Activity {
+import com.summithillsoftware.ultimate.R;
+
+public class TeamActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +20,6 @@ public class TeamActivity extends Activity {
 		getMenuInflater().inflate(R.menu.team, menu);
 		return true;
 	}
+
 
 }

@@ -28,7 +28,7 @@
             android:label="@string/title_activity_teams" >
         </activity>
         <activity
-            android:name="com.summithillsoftware.ultimate.TeamActivity"
+            android:name="com.summithillsoftware.ultimate.ui.team.TeamActivity"
             android:label="@string/title_activity_team" >
         </activity>
     </application>
