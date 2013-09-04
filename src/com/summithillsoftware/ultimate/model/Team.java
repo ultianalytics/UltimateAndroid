@@ -1,9 +1,23 @@
 package com.summithillsoftware.ultimate.model;
 
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
+import com.summithillsoftware.ultimate.UltimateApplication;
+
 public class Team {
+	private static final String FILE_NAME_PREFIX = "team-";
+	private static Team Current;
+	
 	private String teamId;	
 	private String name;
 	private List<Player>players;
@@ -16,6 +30,163 @@ public class Team {
 	public Team() {
 		super();
 		players = new ArrayList<Player>();
+		teamId = generateUniqueFileName();
+	}
+	
+	public static Team current() {
+		synchronized (FILE_NAME_PREFIX) {
+			if (Current == null) {
+				String currentTeamFileName = Preferences.current().getCurrentTeamFileName(); 
+				Current = read(currentTeamFileName);
+				if (Current == null) {
+					Team newTeam = new Team();
+					newTeam.save();
+					Preferences.current().setCurrentTeamFileName(Current.teamId);
+				}
+			}
+			return Current;
+		}
+	}
+	
+	public static void setCurrentTeamId(String newCurrentTeamId) {
+		if (Current != null && !Current.teamId.equals(newCurrentTeamId)) {
+			// TODO...reset the current game (to null)
+		}
+		if (Current == null || !Current.teamId.equals(newCurrentTeamId)) {
+			Current = read(newCurrentTeamId);
+			Preferences.current().setCurrentTeamFileName(newCurrentTeamId);
+			Preferences.current().save();
+		}
+	}
+	
+	public static boolean isCurrentTeam(String otherTeamId) {
+		return otherTeamId.equals(Preferences.current().getCurrentTeamFileName());
+	}
+
+	public static List<TeamDescription> retrieveTeamDescriptions() {
+		ArrayList<TeamDescription> descriptions = new ArrayList<TeamDescription>();
+		for (String teamFileName : getAllTeamFileNames()) {
+			Team team = read(teamFileName);
+			TeamDescription description = new TeamDescription(teamFileName, team.getName(), team.getCloudId());
+			descriptions.add(description);
+		}
+		return descriptions;
+	}
+	
+	public static boolean  isDuplicateTeamName(String newTeamName, Team teamToIgnore) {
+		for (TeamDescription existingTeam : retrieveTeamDescriptions()) {
+			if (teamToIgnore == null || !existingTeam.getTeamId().equals(teamToIgnore.getTeamId())) {
+				if (!existingTeam.getTeamId().equals(teamToIgnore.getTeamId()) && existingTeam.getName().equalsIgnoreCase(newTeamName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static String getTeamIdForCloudId(String cloudId) {
+		for (TeamDescription team : retrieveTeamDescriptions()) {
+			if (team.getCloudId().equals(cloudId)) {
+				return team.getTeamId();
+			}
+		}
+		return null;
+	}
+	
+	private static List<String> getAllTeamFileNames() {
+		ArrayList<String> fileNames = new ArrayList<String>();
+		File teamsDir = getTeamsDir();
+		for (File file : teamsDir.listFiles()) {
+			if (file.isFile() && file.getName().startsWith(FILE_NAME_PREFIX)) {
+				fileNames.add(file.getName());
+			}
+		}
+		return fileNames;
+	}
+	
+	private static Team read(String teamId) {
+		// will answer NULL if error or not found
+		Team team = null;
+		File existingFile = getFile(teamId);
+		if (existingFile != null && existingFile.exists()) {
+			FileInputStream fileInputStream = null;
+			ObjectInputStream objectInputStream = null;
+			try {
+				fileInputStream = new FileInputStream(existingFile);
+				objectInputStream = new ObjectInputStream(fileInputStream);
+				team = (Team) objectInputStream.readObject();
+			} catch (Exception e) {
+				Log.e(ULTIMATE, "Error restoring team from file", e);
+			} finally {
+				try {
+					objectInputStream.close();
+					fileInputStream.close();
+				} catch (Exception e2) {
+					Log.e(ULTIMATE, "Unable to close files when restoring team file", e2);
+				}
+			}
+		}
+		return team;
+	}
+	
+	private static String generateUniqueFileName() {
+		return FILE_NAME_PREFIX + java.util.UUID.randomUUID().toString();
+	}
+	
+	private static File getFile(String teamId) {
+		if (teamId == null) {
+			return null;
+		}
+		return new File(getTeamsDir(), teamId);
+	}
+	
+	private static File getTeamsDir() {
+		return UltimateApplication.current().getFilesDir();
+	}
+	
+	public void save() {
+		FileOutputStream fileOutputStream = null;
+		ObjectOutputStream objectOutputStream = null;
+		try {
+			fileOutputStream = new FileOutputStream(getFile(teamId));
+			objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(this);
+	   } catch (Exception e) {
+		   Log.e(ULTIMATE, "Error saving team file", e);
+	   } finally {
+			try {
+				objectOutputStream.close();
+				fileOutputStream.close();
+			} catch (Exception e2) {
+				Log.e(ULTIMATE, "Unable to close files when saving team file", e2);
+			}
+	   }
+	}
+	
+	public void delete() {
+		// move "current" to another team		
+		if (isCurrentTeam(this.getTeamId())) {
+			for (TeamDescription team : retrieveTeamDescriptions()) {
+				if (!team.getTeamId().equals(this.getTeamId())) {
+					setCurrentTeamId(team.getTeamId());
+					break;
+				}
+			}
+		}
+		
+		// delete the associated games
+		// TODO...delete the games
+		
+		// delete the team
+		File file = getFile(this.getTeamId());
+		boolean deleted = file.delete();
+		if (!deleted) {
+			Log.e(ULTIMATE, "failed to delete team");
+		}
+	}
+
+	public boolean hasBeenSaved() {
+		return getFile(this.getTeamId()).exists();
 	}
 	
 	public String getTeamId() {
