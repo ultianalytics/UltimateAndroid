@@ -2,16 +2,16 @@ package com.summithillsoftware.ultimate.ui.team;
 
 import java.util.List;
 
-import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.ObjectStore;
-import com.summithillsoftware.ultimate.model.TeamDescription;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.model.TeamDescription;
 
 public class TeamsListAdaptor extends BaseAdapter {
 	private Context context;
@@ -24,7 +24,7 @@ public class TeamsListAdaptor extends BaseAdapter {
 	}
 	
 	private void resetTeams() {
-		teams = ObjectStore.current().getTeamDescriptions();
+		teams = Team.retrieveTeamDescriptions();
 		notifyDataSetChanged();
 	}
 	
@@ -57,7 +57,7 @@ public class TeamsListAdaptor extends BaseAdapter {
 		TeamDescription team = teams.get(index);
 		teamNameTextView.setText(team.getName());
 		cloudIdTextView.setText(team.getCloudId());	
-		teamNameTextView.setTextColor(context.getResources().getColor(team.isCurrentTeam() ? R.color.list_name :R.color.list_name_current));
+		teamNameTextView.setTextColor(context.getResources().getColor(team.isCurrentTeam() ? R.color.list_name_current:R.color.list_name));
 		
 		return rowView;
 	}

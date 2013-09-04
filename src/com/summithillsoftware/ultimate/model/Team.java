@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,10 @@ import android.util.Log;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 
-public class Team {
+public class Team implements Serializable {
+	private static final long serialVersionUID = -6976411750470902715L;
+	
+	private static final String DEFAULT_TEAM_NAME = "My Team";
 	private static final String FILE_NAME_PREFIX = "team-";
 	private static Team Current;
 	
@@ -37,11 +41,15 @@ public class Team {
 		synchronized (FILE_NAME_PREFIX) {
 			if (Current == null) {
 				String currentTeamFileName = Preferences.current().getCurrentTeamFileName(); 
-				Current = read(currentTeamFileName);
+				if (currentTeamFileName != null) {
+					Current = read(currentTeamFileName);
+				}
 				if (Current == null) {
 					Team newTeam = new Team();
+					newTeam.name = DEFAULT_TEAM_NAME;
 					newTeam.save();
-					Preferences.current().setCurrentTeamFileName(Current.teamId);
+					Preferences.current().setCurrentTeamFileName(newTeam.teamId);
+					Preferences.current().save();
 				}
 			}
 			return Current;

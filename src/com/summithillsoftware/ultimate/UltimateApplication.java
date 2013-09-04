@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate;
 
+import com.summithillsoftware.ultimate.model.Team;
+
 import android.app.Application;
 
 public class UltimateApplication extends Application {
@@ -15,7 +17,11 @@ public class UltimateApplication extends Application {
     public final void onCreate() {
         super.onCreate(); 
         Current = this;
+        ensureOneTeam();
     }  
     
+    private void ensureOneTeam() {
+    	Team.current();
+    }
     
 }

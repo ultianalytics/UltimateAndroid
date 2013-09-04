@@ -22,7 +22,7 @@ public class TeamDescription {
 		return cloudId;
 	}
 	public boolean isCurrentTeam() {
-		return teamId.equals(ObjectStore.current().getCurrentTeamId());
+		return Team.isCurrentTeam(teamId);
 	}
 	
 }
