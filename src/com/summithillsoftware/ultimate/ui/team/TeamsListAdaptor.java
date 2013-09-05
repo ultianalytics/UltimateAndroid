@@ -23,7 +23,7 @@ public class TeamsListAdaptor extends BaseAdapter {
 		resetTeams();
 	}
 	
-	private void resetTeams() {
+	public void resetTeams() {
 		teams = Team.retrieveTeamDescriptions();
 		notifyDataSetChanged();
 	}

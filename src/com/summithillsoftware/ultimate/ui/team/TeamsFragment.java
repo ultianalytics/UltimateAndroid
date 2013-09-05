@@ -14,7 +14,7 @@ public class TeamsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_teams, container);
-		initializeListView((ListView)view.findViewById(R.id.teamsListView));
+		initializeListView((ListView)view.findViewById(R.id.listview_teams));
 		return view;
 	}
 	
