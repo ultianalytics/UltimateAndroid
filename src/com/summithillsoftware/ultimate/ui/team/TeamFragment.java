@@ -1,12 +1,12 @@
 package com.summithillsoftware.ultimate.ui.team;
 
-import com.summithillsoftware.ultimate.R;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.summithillsoftware.ultimate.R;
 
 public class TeamFragment extends Fragment {
 	
@@ -15,5 +15,6 @@ public class TeamFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_team, container);
 		return view;
 	}
+
 
 }

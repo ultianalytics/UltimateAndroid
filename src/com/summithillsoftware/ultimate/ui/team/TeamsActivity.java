@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.view.View;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.model.TeamDescription;
 
 public class TeamsActivity extends FragmentActivity {
 
@@ -15,6 +20,7 @@ public class TeamsActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams);
+		registerListTimeSelectedListener();
 		
 	}
 
@@ -47,5 +53,22 @@ public class TeamsActivity extends FragmentActivity {
 	
 	private TeamsListAdaptor getTeamsListViewAdapter() {
 		return (TeamsListAdaptor)getTeamsListView().getAdapter();
+	}
+	
+	private void registerListTimeSelectedListener() {
+		getTeamsListView().setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				TeamDescription selectedTeam = (TeamDescription)getTeamsListViewAdapter().getItem(position);
+				Team.setCurrentTeamId(selectedTeam.getTeamId());
+				goToTeamActivity();
+			}
+
+		});
+	}
+	
+	private void goToTeamActivity() {
+		startActivity(new Intent(this, TeamActivity.class));
 	}
 }

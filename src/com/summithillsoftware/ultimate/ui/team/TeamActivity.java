@@ -17,6 +17,13 @@ public class TeamActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		populateView();
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -29,18 +36,26 @@ public class TeamActivity extends FragmentActivity {
 		if (isTeamValid()) {
 			if (isNewTeam()) {
 				Team newTeam = new Team();
-				newTeam.setName(getNameTextView().getText().toString());
+				newTeam.setName(getNameTextView().getText().toString().trim());
 				newTeam.save();
 				Team.setCurrentTeamId(newTeam.getTeamId());
-				finish();
 			} else {
-				
+				Team.current().setName(getNameTextView().getText().toString().trim());
+				Team.current().save();
 			}
+			finish();
 		}
 	}
 
 	public void cancelClicked(View v) {
-		
+		finish();
+	}
+	
+	
+	private void populateView() {
+		if (!isNewTeam()) {
+			getNameTextView().setText(Team.current().getName());
+		}
 	}
 	
 	private TextView getNameTextView() {
@@ -54,5 +69,5 @@ public class TeamActivity extends FragmentActivity {
 	private boolean isTeamValid() {
 		return true;
 	}
-	
+
 }
