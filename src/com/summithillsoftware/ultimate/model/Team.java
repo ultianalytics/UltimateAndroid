@@ -201,6 +201,10 @@ public class Team implements Serializable {
 		return getFile(this.getTeamId()).exists();
 	}
 	
+	public boolean isDefaultTeamName() {
+		return getName() != null && getName().equalsIgnoreCase(DEFAULT_TEAM_NAME);
+	}
+	
 	public String getTeamId() {
 		return teamId;
 	}

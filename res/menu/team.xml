@@ -11,5 +11,11 @@
         android:orderInCategory="50"
         android:showAsAction="never"
         android:title="@string/action_delete"/>    
+        
+    <item
+        android:id="@+id/action_teams"
+        android:orderInCategory="75"
+        android:showAsAction="never"
+        android:title="@string/action_teams"/>        
 
 </menu>

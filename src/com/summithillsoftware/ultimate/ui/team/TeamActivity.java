@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.team;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ public class TeamActivity extends AbstractActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 	    super.onPrepareOptionsMenu(menu);
 	    menu.findItem(R.id.action_delete).setVisible(!isNewTeam());
+	    menu.findItem(R.id.action_teams).setVisible(!isNewTeam());
 	    return true;
 	}
 
@@ -50,6 +52,9 @@ public class TeamActivity extends AbstractActivity {
 			}
 
 			return true;
+		} else if (item.getItemId() == R.id.action_teams) {
+			goToTeamsActivity();
+			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
@@ -69,7 +74,9 @@ public class TeamActivity extends AbstractActivity {
 	
 	private void populateView() {
 		if (!isNewTeam()) {
-			getNameTextView().setText(Team.current().getName());
+			if (!Team.current().isDefaultTeamName()) {
+				getNameTextView().setText(Team.current().getName());
+			}
 			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
 		}
@@ -112,6 +119,10 @@ public class TeamActivity extends AbstractActivity {
 			return false;
 		}
 		return true;
+	}
+	
+	private void goToTeamsActivity() {
+		startActivity(new Intent(this, TeamsActivity.class));
 	}
 
 }
