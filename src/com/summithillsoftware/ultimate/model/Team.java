@@ -81,6 +81,10 @@ public class Team implements Serializable {
 		return descriptions;
 	}
 	
+	public static int numberOfTeams() {
+		return getAllTeamFileNames().size();
+	}
+	
 	public static boolean  isDuplicateTeamName(String newTeamName, Team teamToIgnore) {
 		for (TeamDescription existingTeam : retrieveTeamDescriptions()) {
 			if (teamToIgnore == null || !existingTeam.getTeamId().equals(teamToIgnore.getTeamId())) {

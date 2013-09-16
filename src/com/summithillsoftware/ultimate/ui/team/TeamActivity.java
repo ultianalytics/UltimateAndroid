@@ -1,7 +1,6 @@
 package com.summithillsoftware.ultimate.ui.team;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
 
-public class TeamActivity extends FragmentActivity {
+public class TeamActivity extends AbstractActivity {
 	public static final String NEW_TEAM = "NewTeam";
 	
 	@Override
@@ -24,8 +23,6 @@ public class TeamActivity extends FragmentActivity {
 	protected void onStart() {
 		super.onStart();
 		populateView();
-
-			
 	}
 	
 	@Override
@@ -45,8 +42,13 @@ public class TeamActivity extends FragmentActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		if (item.getItemId() == R.id.action_delete) {
-			Team.current().delete();
-			finish();
+			if (Team.numberOfTeams() > 1) {
+				Team.current().delete();
+				finish();
+			} else {
+				displayErrorMessage("Delete Not Allowed", "You cannot delete this team because it is the only team on this device.  Create another team and then retry.");
+			}
+
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
@@ -57,7 +59,7 @@ public class TeamActivity extends FragmentActivity {
 		if (isTeamValid()) {
 			populateModel();
 			finish();
-		}
+		} 
 	}
 
 	public void cancelClicked(View v) {
@@ -75,13 +77,16 @@ public class TeamActivity extends FragmentActivity {
 	
 	private void populateModel() {
 		Team team = isNewTeam() ? new Team() : Team.current();
-		team.setName(getNameTextView().getText().toString().trim());
+		team.setName(getTeamName());
 		team.setMixed(getTeamTypeRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_type_mixed);
 		team.setDisplayingPlayerNumber(getPlayerDisplayRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_playerdisplay_number);
 		team.save();
 		Team.setCurrentTeamId(team.getTeamId());
 	}
 	
+	private String getTeamName() {
+		return getNameTextView().getText().toString().trim();
+	}
 	private TextView getNameTextView() {
 		return (TextView)findViewById(R.id.teamFragment).findViewById(R.id.text_team_name);
 	}
@@ -99,6 +104,13 @@ public class TeamActivity extends FragmentActivity {
 	}
 	
 	private boolean isTeamValid() {
+		if (getTeamName().isEmpty()) {
+			displayErrorMessage("Team Name Required", "Please enter a name for this team.");
+			return false;
+		} else if (Team.isDuplicateTeamName(getTeamName(), isNewTeam() ? null : Team.current())) {
+			displayErrorMessage("Duplicate Name", "Each team must have a unique name.  Please enter a different name for this team.");
+			return false;
+		}
 		return true;
 	}
 
