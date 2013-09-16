@@ -244,7 +244,8 @@ public final class R {
         public static final int team=0x7f020002;
     }
     public static final class id {
-        public static final int action_add=0x7f090013;
+        public static final int action_add=0x7f090014;
+        public static final int action_delete=0x7f090013;
         public static final int action_settings=0x7f090012;
         public static final int button_cancel=0x7f09000e;
         public static final int button_save=0x7f09000d;
@@ -279,22 +280,23 @@ public final class R {
         public static final int teams=0x7f080002;
     }
     public static final class string {
+        public static final int action_delete=0x7f060003;
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
-        public static final int button_cancel=0x7f06000e;
-        public static final int button_save=0x7f06000f;
-        public static final int hello_world=0x7f060003;
+        public static final int button_cancel=0x7f06000f;
+        public static final int button_save=0x7f060010;
+        public static final int hello_world=0x7f060004;
         public static final int image_description=0x7f060001;
-        public static final int label_team_playerdisplay=0x7f06000a;
-        public static final int label_team_type=0x7f060007;
-        public static final int label_team_type_mixed=0x7f060009;
-        public static final int label_team_type_uni=0x7f060008;
-        public static final int menuitem_team_add=0x7f06000d;
-        public static final int placeholder_team_name=0x7f060006;
-        public static final int radio_team_playerdisplay_name=0x7f06000b;
-        public static final int radio_team_playerdisplay_number=0x7f06000c;
-        public static final int title_activity_team=0x7f060005;
-        public static final int title_activity_teams=0x7f060004;
+        public static final int label_team_playerdisplay=0x7f06000b;
+        public static final int label_team_type=0x7f060008;
+        public static final int label_team_type_mixed=0x7f06000a;
+        public static final int label_team_type_uni=0x7f060009;
+        public static final int menuitem_team_add=0x7f06000e;
+        public static final int placeholder_team_name=0x7f060007;
+        public static final int radio_team_playerdisplay_name=0x7f06000c;
+        public static final int radio_team_playerdisplay_number=0x7f06000d;
+        public static final int title_activity_team=0x7f060006;
+        public static final int title_activity_teams=0x7f060005;
     }
     public static final class style {
         /** 

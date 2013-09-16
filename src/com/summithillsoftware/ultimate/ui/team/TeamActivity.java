@@ -3,7 +3,9 @@ package com.summithillsoftware.ultimate.ui.team;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -22,8 +24,16 @@ public class TeamActivity extends FragmentActivity {
 	protected void onStart() {
 		super.onStart();
 		populateView();
+
+			
 	}
 	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    menu.findItem(R.id.action_delete).setVisible(!isNewTeam());
+	    return true;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,17 +42,20 @@ public class TeamActivity extends FragmentActivity {
 		return true;
 	}
 
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		if (item.getItemId() == R.id.action_delete) {
+			Team.current().delete();
+			finish();
+			return true;
+		} else {
+			return super.onMenuItemSelected(featureId, item);
+		}
+	}
+	
 	public void saveClicked(View v) {
 		if (isTeamValid()) {
-			if (isNewTeam()) {
-				Team newTeam = new Team();
-				newTeam.setName(getNameTextView().getText().toString().trim());
-				newTeam.save();
-				Team.setCurrentTeamId(newTeam.getTeamId());
-			} else {
-				Team.current().setName(getNameTextView().getText().toString().trim());
-				Team.current().save();
-			}
+			populateModel();
 			finish();
 		}
 	}
@@ -55,11 +68,30 @@ public class TeamActivity extends FragmentActivity {
 	private void populateView() {
 		if (!isNewTeam()) {
 			getNameTextView().setText(Team.current().getName());
+			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
+			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
 		}
+	}
+	
+	private void populateModel() {
+		Team team = isNewTeam() ? new Team() : Team.current();
+		team.setName(getNameTextView().getText().toString().trim());
+		team.setMixed(getTeamTypeRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_type_mixed);
+		team.setDisplayingPlayerNumber(getPlayerDisplayRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_playerdisplay_number);
+		team.save();
+		Team.setCurrentTeamId(team.getTeamId());
 	}
 	
 	private TextView getNameTextView() {
 		return (TextView)findViewById(R.id.teamFragment).findViewById(R.id.text_team_name);
+	}
+	
+	private RadioGroup getTeamTypeRadioGroup() {
+		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_type);
+	}
+	
+	private RadioGroup getPlayerDisplayRadioGroup() {
+		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_playerdisplay);
 	}
 	
 	private boolean isNewTeam() {
