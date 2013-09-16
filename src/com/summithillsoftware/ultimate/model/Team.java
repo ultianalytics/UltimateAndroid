@@ -87,7 +87,11 @@ public class Team implements Serializable {
 	
 	public static boolean  isDuplicateTeamName(String newTeamName, Team teamToIgnore) {
 		for (TeamDescription existingTeam : retrieveTeamDescriptions()) {
-			if (teamToIgnore == null || !existingTeam.getTeamId().equals(teamToIgnore.getTeamId())) {
+			if (teamToIgnore == null) {
+				if (existingTeam.getName().equalsIgnoreCase(newTeamName)) {
+					return true;
+				}
+			} else if (!existingTeam.getTeamId().equals(teamToIgnore.getTeamId())) {
 				if (!existingTeam.getTeamId().equals(teamToIgnore.getTeamId()) && existingTeam.getName().equalsIgnoreCase(newTeamName)) {
 					return true;
 				}
