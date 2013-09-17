@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.team;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,13 +45,7 @@ public class TeamActivity extends AbstractActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		if (item.getItemId() == R.id.action_delete) {
-			if (Team.numberOfTeams() > 1) {
-				Team.current().delete();
-				finish();
-			} else {
-				displayErrorMessage("Delete Not Allowed", "You cannot delete this team because it is the only team on this device.  Create another team and then retry.");
-			}
-
+			deleteClicked();
 			return true;
 		} else if (item.getItemId() == R.id.action_teams) {
 			goToTeamsActivity();
@@ -69,6 +64,24 @@ public class TeamActivity extends AbstractActivity {
 
 	public void cancelClicked(View v) {
 		finish();
+	}
+	
+	private void deleteClicked() {
+		if (Team.numberOfTeams() > 1) {
+			confirmDelete();
+		} else {
+			displayErrorMessage(getString(R.string.alert_team_delete_not_allowed_title), getString(R.string.alert_team_delete_not_allowed_message));
+		}
+	}
+	
+	private void confirmDelete() {
+		displayConfirmDialog(getString(R.string.alert_team_confirm_delete_title), getString(R.string.alert_team_confirm_delete_message), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+				Team.current().delete();
+				finish();
+			}
+ 		});
 	}
 	
 	
@@ -112,10 +125,10 @@ public class TeamActivity extends AbstractActivity {
 	
 	private boolean isTeamValid() {
 		if (getTeamName().isEmpty()) {
-			displayErrorMessage("Team Name Required", "Please enter a name for this team.");
+			displayErrorMessage(getString(R.string.alert_team_name_required_title), getString(R.string.alert_team_name_required_message));
 			return false;
 		} else if (Team.isDuplicateTeamName(getTeamName(), isNewTeam() ? null : Team.current())) {
-			displayErrorMessage("Duplicate Name", "Each team must have a unique name.  Please enter a different name for this team.");
+			displayErrorMessage(getString(R.string.alert_team_duplicate_name_title), getString(R.string.alert_team_duplicate_name_message));
 			return false;
 		}
 		return true;

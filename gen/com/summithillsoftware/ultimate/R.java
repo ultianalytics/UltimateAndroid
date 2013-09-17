@@ -240,8 +240,11 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int plus_white=0x7f020001;
-        public static final int team=0x7f020002;
+        public static final int plus_group_white=0x7f020001;
+        public static final int plus_person_white=0x7f020002;
+        public static final int plus_white=0x7f020003;
+        public static final int team=0x7f020004;
+        public static final int trash_white=0x7f020005;
     }
     public static final class id {
         public static final int action_add=0x7f090015;
@@ -284,6 +287,14 @@ public final class R {
         public static final int action_delete=0x7f060003;
         public static final int action_settings=0x7f060002;
         public static final int action_teams=0x7f060004;
+        public static final int alert_team_confirm_delete_message=0x7f060013;
+        public static final int alert_team_confirm_delete_title=0x7f060012;
+        public static final int alert_team_delete_not_allowed_message=0x7f060015;
+        public static final int alert_team_delete_not_allowed_title=0x7f060014;
+        public static final int alert_team_duplicate_name_message=0x7f060019;
+        public static final int alert_team_duplicate_name_title=0x7f060018;
+        public static final int alert_team_name_required_message=0x7f060017;
+        public static final int alert_team_name_required_title=0x7f060016;
         public static final int app_name=0x7f060000;
         public static final int button_cancel=0x7f060010;
         public static final int button_save=0x7f060011;

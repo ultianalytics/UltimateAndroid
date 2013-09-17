@@ -19,5 +19,12 @@
     <string name="menuitem_team_add">Add Team</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
-
+    <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
+    <string name="alert_team_confirm_delete_message">Do you really want to delete this team?</string>
+    <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
+    <string name="alert_team_delete_not_allowed_message">You cannot delete this team because it is the only team on this device.  Create another team and then retry.</string>  
+    <string name="alert_team_name_required_title">Team Name Required</string>
+    <string name="alert_team_name_required_message">Please enter a name for this team.</string>  
+    <string name="alert_team_duplicate_name_title">Duplicate Name</string>
+    <string name="alert_team_duplicate_name_message">Each team must have a unique name.  Please enter a different name for this team.</string>  
 </resources>
