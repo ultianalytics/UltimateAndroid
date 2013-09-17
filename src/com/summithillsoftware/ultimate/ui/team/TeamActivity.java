@@ -92,6 +92,8 @@ public class TeamActivity extends AbstractActivity {
 			}
 			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
+		} else {
+			getNameTextView().requestFocus();
 		}
 	}
 	
