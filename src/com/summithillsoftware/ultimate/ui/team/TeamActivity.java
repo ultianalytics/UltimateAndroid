@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class TeamActivity extends AbstractActivity {
 	public static final String NEW_TEAM = "NewTeam";

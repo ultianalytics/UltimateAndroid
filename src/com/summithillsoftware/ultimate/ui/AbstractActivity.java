@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.team;
+package com.summithillsoftware.ultimate.ui;
 
 import static android.content.DialogInterface.*;
 import android.app.AlertDialog;

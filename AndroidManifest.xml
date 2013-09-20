@@ -7,8 +7,9 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
-    
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
 
     <application
         android:name="com.summithillsoftware.ultimate.UltimateApplication"
@@ -33,6 +34,10 @@
         <activity
             android:name="com.summithillsoftware.ultimate.ui.team.TeamActivity"
             android:label="@string/title_activity_team" >
+        </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.team.PlayersActivity"
+            android:label="@string/title_activity_players" >
         </activity>
     </application>
 

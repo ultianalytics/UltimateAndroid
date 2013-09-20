@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
+import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class TeamsActivity extends AbstractActivity {
 
