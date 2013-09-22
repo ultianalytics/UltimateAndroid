@@ -23,8 +23,8 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	@Override
-	protected void onStart() {
-		super.onStart();
+	protected void onResume() {
+		super.onResume();
 		populateView();
 	}
 	
@@ -57,10 +57,11 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	public void saveClicked(View v) {
-		boolean isNew = isNewTeam();
 		if (isTeamValid()) {
-			populateModel();
-			if (isNew) {
+			boolean continueToPlayers = isNewTeam();
+			populateAndSaveTeam();
+			getIntent().removeExtra(NEW_TEAM);
+			if (continueToPlayers) {
 				goToPlayersActivity();
 			} else {
 				finish();
@@ -94,12 +95,10 @@ public class TeamActivity extends AbstractActivity {
  		});
 	}
 	
-	
 	private void populateView() {
 		if (isNewTeam()) {
 			getNameTextView().requestFocus();
-			getPlayersButton().setVisibility(View.GONE);
-//			getPlayersButtonSeparator().setVisibility(View.GONE);
+			getPlayersView().setVisibility(View.GONE);
 		} else {
 			getPlayersButton().requestFocus();
 			if (!Team.current().isDefaultTeamName()) {
@@ -107,10 +106,11 @@ public class TeamActivity extends AbstractActivity {
 			}
 			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
+			getPlayersView().setVisibility(View.VISIBLE);
 		}
 	}
 	
-	private void populateModel() {
+	private void populateAndSaveTeam() {
 		Team team = isNewTeam() ? new Team() : Team.current();
 		team.setName(getTeamName());
 		team.setMixed(getTeamTypeRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_type_mixed);
@@ -118,7 +118,7 @@ public class TeamActivity extends AbstractActivity {
 		team.save();
 		Team.setCurrentTeamId(team.getTeamId());
 	}
-	
+
 	private String getTeamName() {
 		return getNameTextView().getText().toString().trim();
 	}
@@ -138,8 +138,8 @@ public class TeamActivity extends AbstractActivity {
 		return (View)findViewById(R.id.teamFragment).findViewById(R.id.label_team_players);
 	}
 	
-	private View getPlayersButtonSeparator() {
-		return (View)findViewById(R.id.teamFragment).findViewById(R.id.separator_players);
+	private View getPlayersView() {
+		return (View)findViewById(R.id.teamFragment).findViewById(R.id.view_team_players_button);
 	}
 	
 	private boolean isNewTeam() {
@@ -164,5 +164,7 @@ public class TeamActivity extends AbstractActivity {
 	private void goToPlayersActivity() {
 		startActivity(new Intent(this, PlayersActivity.class));
 	}
+
+
 
 }
