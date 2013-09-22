@@ -19,6 +19,7 @@
     <string name="radio_team_playerdisplay_name">Name</string>
     <string name="radio_team_playerdisplay_number">Number</string>
     <string name="menuitem_team_add">Add Team</string>
+    <string name="menuitem_player_add">Add Player</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
@@ -29,5 +30,6 @@
     <string name="alert_team_name_required_message">Please enter a name for this team.</string>
     <string name="alert_team_duplicate_name_title">Duplicate Name</string>
     <string name="alert_team_duplicate_name_message">Each team must have a unique name.  Please enter a different name for this team.</string>
+    <string name="title_activity_player">PlayerActivity</string>
 
 </resources>

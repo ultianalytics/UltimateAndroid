@@ -20,7 +20,7 @@ public class TeamsActivity extends AbstractActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams);
-		registerListTimeSelectedListener();
+		registerTeamSelectedListener();
 		
 	}
 
@@ -55,7 +55,7 @@ public class TeamsActivity extends AbstractActivity {
 		return (TeamsListAdaptor)getTeamsListView().getAdapter();
 	}
 	
-	private void registerListTimeSelectedListener() {
+	private void registerTeamSelectedListener() {
 		getTeamsListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

@@ -39,6 +39,10 @@
             android:name="com.summithillsoftware.ultimate.ui.team.PlayersActivity"
             android:label="@string/title_activity_players" >
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.team.PlayerActivity"
+            android:label="@string/title_activity_player" >
+        </activity>
     </application>
 
 </manifest>

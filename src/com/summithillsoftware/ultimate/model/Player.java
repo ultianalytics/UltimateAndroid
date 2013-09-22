@@ -1,6 +1,9 @@
 package com.summithillsoftware.ultimate.model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+	private static final long serialVersionUID = 7079444636975701164L;
 	private static Player ANONYMOUS_PLAYER = null;
 	private static final String ANON_NAME = "Anonymous";
 	
