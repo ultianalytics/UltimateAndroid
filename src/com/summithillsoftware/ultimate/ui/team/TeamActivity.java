@@ -57,10 +57,19 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	public void saveClicked(View v) {
+		boolean isNew = isNewTeam();
 		if (isTeamValid()) {
 			populateModel();
-			finish();
+			if (isNew) {
+				goToPlayersActivity();
+			} else {
+				finish();
+			}
 		} 
+	}
+	
+	public void playersClicked(View v) {
+		goToPlayersActivity();
 	}
 
 	public void cancelClicked(View v) {
@@ -87,14 +96,17 @@ public class TeamActivity extends AbstractActivity {
 	
 	
 	private void populateView() {
-		if (!isNewTeam()) {
+		if (isNewTeam()) {
+			getNameTextView().requestFocus();
+			getPlayersButton().setVisibility(View.GONE);
+//			getPlayersButtonSeparator().setVisibility(View.GONE);
+		} else {
+			getPlayersButton().requestFocus();
 			if (!Team.current().isDefaultTeamName()) {
 				getNameTextView().setText(Team.current().getName());
 			}
 			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
-		} else {
-			getNameTextView().requestFocus();
 		}
 	}
 	
@@ -122,6 +134,14 @@ public class TeamActivity extends AbstractActivity {
 		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_playerdisplay);
 	}
 	
+	private View getPlayersButton() {
+		return (View)findViewById(R.id.teamFragment).findViewById(R.id.label_team_players);
+	}
+	
+	private View getPlayersButtonSeparator() {
+		return (View)findViewById(R.id.teamFragment).findViewById(R.id.separator_players);
+	}
+	
 	private boolean isNewTeam() {
 		return getIntent().getBooleanExtra(NEW_TEAM, false);
 	}
@@ -139,6 +159,10 @@ public class TeamActivity extends AbstractActivity {
 	
 	private void goToTeamsActivity() {
 		startActivity(new Intent(this, TeamsActivity.class));
+	}
+	
+	private void goToPlayersActivity() {
+		startActivity(new Intent(this, PlayersActivity.class));
 	}
 
 }

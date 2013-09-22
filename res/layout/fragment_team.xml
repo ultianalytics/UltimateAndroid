@@ -13,7 +13,6 @@
         android:hint="@string/placeholder_team_name"
         android:inputType="textCapWords|textNoSuggestions" >
 
-        <requestFocus />
     </EditText>
 
     <TableLayout
@@ -98,21 +97,19 @@
 
         <include layout="@layout/form_group_separator"/>
         
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+
 
             <TextView
                 android:id="@+id/label_team_players"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_team_players"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:onClick="playersClicked" />
             
-        </TableRow>
 
-		<include layout="@layout/form_group_separator"/>
+
+		<include layout="@layout/form_group_separator" android:id="@+id/separator_players"/>
 
     </TableLayout>
 
