@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -38,7 +39,6 @@ public class TeamActivity extends AbstractActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.team, menu);
 		return true;
 	}
@@ -58,10 +58,11 @@ public class TeamActivity extends AbstractActivity {
 	
 	public void saveClicked(View v) {
 		if (isTeamValid()) {
-			boolean continueToPlayers = isNewTeam();
+			boolean wasNewTeam = isNewTeam();
+			boolean wasDefaultTeamName = isNewTeam() ? false : Team.current().isDefaultTeamName();
 			populateAndSaveTeam();
 			getIntent().removeExtra(NEW_TEAM);
-			if (continueToPlayers) {
+			if (wasNewTeam || (wasDefaultTeamName && !Team.current().isDefaultTeamName())) {
 				goToPlayersActivity();
 			} else {
 				finish();
@@ -96,17 +97,20 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	private void populateView() {
-		if (isNewTeam()) {
-			getNameTextView().requestFocus();
-			getPlayersView().setVisibility(View.GONE);
-		} else {
-			getPlayersButton().requestFocus();
+		if (!isNewTeam()) {
 			if (!Team.current().isDefaultTeamName()) {
 				getNameTextView().setText(Team.current().getName());
 			}
 			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
+		}
+		
+		if (isNewTeam() || Team.current().isDefaultTeamName()) { 
+			getPlayersView().setVisibility(View.GONE);
+			getNameTextView().requestFocus();
+		} else {
 			getPlayersView().setVisibility(View.VISIBLE);
+			getCancelButton().requestFocus();
 		}
 	}
 	
@@ -134,8 +138,8 @@ public class TeamActivity extends AbstractActivity {
 		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_playerdisplay);
 	}
 	
-	private View getPlayersButton() {
-		return (View)findViewById(R.id.teamFragment).findViewById(R.id.label_team_players);
+	private Button getCancelButton() {
+		return (Button)findViewById(R.id.teamFragment).findViewById(R.id.button_cancel);
 	}
 	
 	private View getPlayersView() {

@@ -1,6 +1,8 @@
 package com.summithillsoftware.ultimate.model;
 
+import android.annotation.SuppressLint;
 import java.io.Serializable;
+import java.util.Locale;
 
 public class Player implements Serializable {
 	private static final long serialVersionUID = 7079444636975701164L;
@@ -23,6 +25,11 @@ public class Player implements Serializable {
 		name = "";
 		number = "";
 		position = PlayerPosition.Any;
+	}
+	
+	public Player(String name) {
+		this();
+		this.name = name;
 	}
 	
 	public static Player anonymous() {
@@ -65,6 +72,38 @@ public class Player implements Serializable {
 	public void setPosition(PlayerPosition position) {
 		this.position = position;
 	}
+	public boolean isDuplicateNewName(String newName, Team team) {
+		if (newName.equalsIgnoreCase(name)) {
+			return false;
+		} else {
+			return team.getPlayers().contains(new Player(newName));
+		}
+	}
 
+	@SuppressLint("DefaultLocale")
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.toLowerCase(Locale.ENGLISH).hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equalsIgnoreCase(other.name))
+			return false;
+		return true;
+	}
 
 }

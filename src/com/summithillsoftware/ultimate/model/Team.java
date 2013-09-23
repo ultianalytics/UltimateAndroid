@@ -10,8 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 
 import android.util.Log;
 
@@ -37,14 +37,6 @@ public class Team implements Serializable {
 		super();
 		players = new ArrayList<Player>();
 		teamId = generateUniqueFileName();
-		
-		// DELETE THIS CODE!!!
-		Player player = new Player();
-		player.setName("Bob");
-		players.add(player);
-		player = new Player();
-		player.setName("Tom");
-		players.add(player);
 	}
 	
 	public static Team current() {
@@ -276,5 +268,13 @@ public class Team implements Serializable {
 			}
 		});
 		return playersSorted;
+	}
+	public Player getPlayerNamed(String playerName) {
+		for (Player player : getPlayers()) {
+			if (playerName.equalsIgnoreCase(playerName)) {
+				return player;
+			}
+		}
+		return null;
 	}
 }

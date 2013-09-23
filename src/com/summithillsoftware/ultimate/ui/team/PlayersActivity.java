@@ -58,7 +58,9 @@ public class PlayersActivity extends AbstractActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Player player = (Player)getPlayersListViewAdapter().getItem(position);
-				// TODO...go to player view for this player
+				Intent intent = new Intent(PlayersActivity.this, PlayerActivity.class);
+				intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
+				startActivity(intent);
 			}
 
 		});

@@ -12,8 +12,8 @@
     <string name="title_activity_players">Players</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="label_team_type">Type:</string>
-    <string name="label_team_type_uni">Uni</string>
-    <string name="label_team_type_mixed">Mixed</string>
+    <string name="radio_team_type_uni">Uni</string>
+    <string name="radio_team_type_mixed">Mixed</string>
     <string name="label_team_playerdisplay">Player Display:</string>
     <string name="label_team_players">Players</string>
     <string name="radio_team_playerdisplay_name">Name</string>
@@ -30,6 +30,19 @@
     <string name="alert_team_name_required_message">Please enter a name for this team.</string>
     <string name="alert_team_duplicate_name_title">Duplicate Name</string>
     <string name="alert_team_duplicate_name_message">Each team must have a unique name.  Please enter a different name for this team.</string>
+    <string name="alert_player_name_required_title">Player Name Required</string>
+    <string name="alert_player_name_required_message">Please enter a name for this player.</string>
+    <string name="alert_player_duplicate_name_title">Duplicate Name</string>
+    <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>    
     <string name="title_activity_player">PlayerActivity</string>
-
+    <string name="placeholder_player_name">Player Name</string>
+    <string name="placeholder_player_number">Player Number</string>
+    <string name="label_player_position">Position</string>
+    <string name="radio_player_position_cutter">Cutter</string>
+    <string name="radio_player_position_handler">Handler</string>
+    <string name="radio_player_position_any">Any</string>
+    <string name="label_player_gender">Gender</string>
+    <string name="radio_player_gender_male">Male</string>
+    <string name="radio_player_gender_female">Female</string>
+    
 </resources>

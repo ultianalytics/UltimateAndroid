@@ -5,13 +5,24 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/text_team_name"
+        android:id="@+id/text_player_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:ems="10"
-        android:hint="@string/placeholder_team_name"
+        android:hint="@string/placeholder_player_name"
         android:inputType="textCapWords|textNoSuggestions" >
+
+    </EditText>
+    
+    <EditText
+        android:id="@+id/text_player_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:hint="@string/placeholder_player_number"
+        android:inputType="numberSigned" >
 
     </EditText>
 
@@ -26,32 +37,39 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/label_team_type"
+                android:id="@+id/label_player_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/label_team_type"
+                android:text="@string/label_player_position"
                 android:maxLength="50"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <RadioGroup
-                android:id="@+id/radiogroup_team_type"
+                android:id="@+id/radiogroup_player_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
                 <RadioButton
-                    android:id="@+id/radio_team_type_uni"
+                    android:id="@+id/radio_player_position_cutter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/radio_team_type_uni"
+                    android:text="@string/radio_player_position_cutter"
                     android:checked="true" />
 
                 <RadioButton
-                    android:id="@+id/radio_team_type_mixed"
+                    android:id="@+id/radio_player_position_handler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/radio_team_type_mixed"
-                    android:checked="false" />
+                    android:text="@string/radio_player_position_handler"
+                    android:checked="true" />
+                
+                <RadioButton
+                    android:id="@+id/radio_player_position_any"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radio_player_position_any"
+                    android:checked="true" />
                 
             </RadioGroup>
 
@@ -65,54 +83,36 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/label_team_playerdisplay"
+                android:id="@+id/label_player_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/label_team_playerdisplay"
+                android:text="@string/label_player_gender"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <RadioGroup
-                android:id="@+id/radiogroup_team_playerdisplay"
+                android:id="@+id/radiogroup_player_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/radio_team_playerdisplay_name"
+                    android:id="@+id/radio_player_gender_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="@string/radio_team_playerdisplay_name" />
+                    android:text="@string/radio_player_gender_male" />
 
                 <RadioButton
-                    android:id="@+id/radio_team_playerdisplay_number"
+                    android:id="@+id/radio_player_gender_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="@string/radio_team_playerdisplay_number" />
+                    android:text="@string/radio_player_gender_female" />
                 
             </RadioGroup>
             
         </TableRow>
 
-        <include layout="@layout/form_group_separator"/>
-
-        <LinearLayout android:id="@+id/view_team_players_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/label_team_players"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="playersClicked"
-                android:text="@string/label_team_players"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <include layout="@layout/form_group_separator" />
-        </LinearLayout>
 
     </TableLayout>
 
