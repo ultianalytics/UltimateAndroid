@@ -247,8 +247,8 @@ public final class R {
         public static final int trash_white=0x7f020005;
     }
     public static final class id {
-        public static final int action_add=0x7f090024;
-        public static final int action_delete=0x7f090025;
+        public static final int action_add=0x7f090025;
+        public static final int action_delete=0x7f090024;
         public static final int action_settings=0x7f090023;
         public static final int action_teams=0x7f090026;
         public static final int button_cancel=0x7f090012;
@@ -312,6 +312,8 @@ public final class R {
         public static final int action_delete=0x7f060003;
         public static final int action_settings=0x7f060002;
         public static final int action_teams=0x7f060004;
+        public static final int alert_player_confirm_delete_message=0x7f060022;
+        public static final int alert_player_confirm_delete_title=0x7f060021;
         public static final int alert_player_duplicate_name_message=0x7f060020;
         public static final int alert_player_duplicate_name_title=0x7f06001f;
         public static final int alert_player_name_required_message=0x7f06001e;
@@ -329,26 +331,26 @@ public final class R {
         public static final int button_save=0x7f060014;
         public static final int hello_world=0x7f060005;
         public static final int image_description=0x7f060001;
-        public static final int label_player_gender=0x7f060028;
-        public static final int label_player_position=0x7f060024;
+        public static final int label_player_gender=0x7f06002a;
+        public static final int label_player_position=0x7f060026;
         public static final int label_team_playerdisplay=0x7f06000d;
         public static final int label_team_players=0x7f06000e;
         public static final int label_team_type=0x7f06000a;
         public static final int menuitem_player_add=0x7f060012;
         public static final int menuitem_team_add=0x7f060011;
-        public static final int placeholder_player_name=0x7f060022;
-        public static final int placeholder_player_number=0x7f060023;
+        public static final int placeholder_player_name=0x7f060024;
+        public static final int placeholder_player_number=0x7f060025;
         public static final int placeholder_team_name=0x7f060009;
-        public static final int radio_player_gender_female=0x7f06002a;
-        public static final int radio_player_gender_male=0x7f060029;
-        public static final int radio_player_position_any=0x7f060027;
-        public static final int radio_player_position_cutter=0x7f060025;
-        public static final int radio_player_position_handler=0x7f060026;
+        public static final int radio_player_gender_female=0x7f06002c;
+        public static final int radio_player_gender_male=0x7f06002b;
+        public static final int radio_player_position_any=0x7f060029;
+        public static final int radio_player_position_cutter=0x7f060027;
+        public static final int radio_player_position_handler=0x7f060028;
         public static final int radio_team_playerdisplay_name=0x7f06000f;
         public static final int radio_team_playerdisplay_number=0x7f060010;
         public static final int radio_team_type_mixed=0x7f06000c;
         public static final int radio_team_type_uni=0x7f06000b;
-        public static final int title_activity_player=0x7f060021;
+        public static final int title_activity_player=0x7f060023;
         public static final int title_activity_players=0x7f060008;
         public static final int title_activity_team=0x7f060007;
         public static final int title_activity_teams=0x7f060006;

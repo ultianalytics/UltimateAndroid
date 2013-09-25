@@ -271,10 +271,32 @@ public class Team implements Serializable {
 	}
 	public Player getPlayerNamed(String playerName) {
 		for (Player player : getPlayers()) {
-			if (playerName.equalsIgnoreCase(playerName)) {
+			if (playerName.equalsIgnoreCase(player.getName())) {
 				return player;
 			}
 		}
 		return null;
+	}
+	
+	public boolean addPlayer(Player player) {
+		Boolean replaced = removePlayer(player);
+		getPlayers().add(player); 
+		return replaced;
+	}
+	
+	public boolean removePlayer(Player player) {
+		Boolean replaced = getPlayers().remove(player);
+		return replaced;
+	}
+	
+	public boolean isDuplicatePlayerName(String newPlayerName, Player playerToIgnore) {
+		for (Player player : getPlayers()) {
+			if (playerToIgnore == null || playerToIgnore != player) {
+				if (player.getName().equalsIgnoreCase(newPlayerName)) {
+					return true;
+				}
+			} 
+		}
+		return false;
 	}
 }

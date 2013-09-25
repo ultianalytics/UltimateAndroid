@@ -25,6 +25,7 @@ public class Player implements Serializable {
 		name = "";
 		number = "";
 		position = PlayerPosition.Any;
+		isMale = true;
 	}
 	
 	public Player(String name) {
@@ -104,6 +105,11 @@ public class Player implements Serializable {
 		} else if (!name.equalsIgnoreCase(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [name=" + name + "]";
 	}
 
 }

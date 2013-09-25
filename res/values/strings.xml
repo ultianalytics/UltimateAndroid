@@ -33,7 +33,9 @@
     <string name="alert_player_name_required_title">Player Name Required</string>
     <string name="alert_player_name_required_message">Please enter a name for this player.</string>
     <string name="alert_player_duplicate_name_title">Duplicate Name</string>
-    <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>    
+    <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>  
+    <string name="alert_player_confirm_delete_title">Confirm Player Delete</string>
+    <string name="alert_player_confirm_delete_message">Do you really want to delete this player?</string>
     <string name="title_activity_player">PlayerActivity</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
