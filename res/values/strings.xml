@@ -10,6 +10,7 @@
     <string name="title_activity_teams">Teams</string>
     <string name="title_activity_team">Team</string>
     <string name="title_activity_players">Players</string>
+    <string name="title_activity_player">Player</string>    
     <string name="placeholder_team_name">Team Name</string>
     <string name="label_team_type">Type:</string>
     <string name="radio_team_type_uni">Uni</string>
@@ -22,6 +23,7 @@
     <string name="menuitem_player_add">Add Player</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
+    <string name="button_save_and_add">Save, Add New</string>
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
     <string name="alert_team_confirm_delete_message">Do you really want to delete this team?</string>
     <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
@@ -36,7 +38,6 @@
     <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>  
     <string name="alert_player_confirm_delete_title">Confirm Player Delete</string>
     <string name="alert_player_confirm_delete_message">Do you really want to delete this player?</string>
-    <string name="title_activity_player">PlayerActivity</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
     <string name="label_player_position">Position</string>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -21,6 +23,9 @@ public class PlayerActivity extends AbstractActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (isNewPlayer()) {
+			this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
+		}
 		setContentView(R.layout.activity_player);
 		populateView();
 	}
@@ -40,11 +45,18 @@ public class PlayerActivity extends AbstractActivity {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
+	
 	public void saveClicked(View v) {
 		if (isPlayerValid()) {
 			populateAndSaveTeam();
-			getIntent().removeExtra(NEW_PLAYER);  // unnecessary
 			finish();
+		} 
+	}
+	
+	public void saveAndAddClicked(View v) {
+		if (isPlayerValid()) {
+			populateAndSaveTeam();
+			populateView();
 		} 
 	}
 
@@ -68,6 +80,7 @@ public class PlayerActivity extends AbstractActivity {
 	}
 	
 	private void populateView() {
+		getAddAnotherButton().setVisibility(isNewPlayer() ? View.VISIBLE : View.GONE);
 		Player player = getPlayer();
 		getNameTextView().setText(player.getName());
 		getNumberTextView().setText(player.getNumber());
@@ -129,6 +142,14 @@ public class PlayerActivity extends AbstractActivity {
 	
 	private RadioGroup getGenderRadioGroup() {
 		return (RadioGroup)findViewById(R.id.playerFragment).findViewById(R.id.radiogroup_player_gender);
+	}
+	
+	private Button getCancelButton() {
+		return (Button)findViewById(R.id.playerFragment).findViewById(R.id.button_cancel);
+	}
+	
+	private Button getAddAnotherButton() {
+		return (Button)findViewById(R.id.playerFragment).findViewById(R.id.button_save_and_add);
 	}
 	
 	private boolean isNewPlayer() {
