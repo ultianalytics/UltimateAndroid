@@ -17,6 +17,7 @@
     <string name="radio_team_type_mixed">Mixed</string>
     <string name="label_team_playerdisplay">Player Display:</string>
     <string name="label_team_players">Players</string>
+    <string name="label_team_player_number">Number</string>
     <string name="radio_team_playerdisplay_name">Name</string>
     <string name="radio_team_playerdisplay_number">Number</string>
     <string name="menuitem_team_add">Add Team</string>
