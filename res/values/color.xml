@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <color name="list_name">#111111</color>
+    <color name="list_name">#FFFFFF</color>
 	<color name="list_name_current">#FF0000</color>
+	<color name="form_separator">#303030</color>
 
 	
 	<!--  misc colors -->

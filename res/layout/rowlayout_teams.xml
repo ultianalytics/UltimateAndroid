@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/image_description"
-        android:src="@drawable/team" />
+        android:src="@drawable/social_group" />
 
     <TextView
         android:id="@+id/text_team_name"

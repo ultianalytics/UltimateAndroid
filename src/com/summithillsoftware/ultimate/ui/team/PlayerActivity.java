@@ -143,11 +143,7 @@ public class PlayerActivity extends AbstractActivity {
 	private RadioGroup getGenderRadioGroup() {
 		return (RadioGroup)findViewById(R.id.playerFragment).findViewById(R.id.radiogroup_player_gender);
 	}
-	
-	private Button getCancelButton() {
-		return (Button)findViewById(R.id.playerFragment).findViewById(R.id.button_cancel);
-	}
-	
+
 	private Button getAddAnotherButton() {
 		return (Button)findViewById(R.id.playerFragment).findViewById(R.id.button_save_and_add);
 	}
