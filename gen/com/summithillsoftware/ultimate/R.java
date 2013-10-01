@@ -250,10 +250,10 @@ public final class R {
         public static final int trash_white=0x7f020007;
     }
     public static final class id {
-        public static final int action_add=0x7f090028;
-        public static final int action_delete=0x7f090027;
-        public static final int action_settings=0x7f090026;
-        public static final int action_teams=0x7f090029;
+        public static final int action_add=0x7f090029;
+        public static final int action_delete=0x7f090028;
+        public static final int action_settings=0x7f090027;
+        public static final int action_teams=0x7f09002a;
         public static final int button_cancel=0x7f090015;
         public static final int button_save=0x7f090013;
         public static final int button_save_and_add=0x7f090014;
@@ -289,7 +289,8 @@ public final class R {
         public static final int text_player_name=0x7f090004;
         public static final int text_player_number=0x7f090007;
         public static final int text_players_description=0x7f090024;
-        public static final int text_team_cloud_id=0x7f090025;
+        public static final int text_players_number=0x7f090025;
+        public static final int text_team_cloud_id=0x7f090026;
         public static final int text_team_name=0x7f090017;
         public static final int view_team_players_button=0x7f090020;
     }

@@ -62,6 +62,10 @@ public class PlayersListAdapter extends BaseAdapter {
 		
 		Player player = getSortedPlayers().get(index);
 		playerNameTextView.setText(player.getName());
+		if (player.getNumber() != null && player.getNumber().trim().length() > 0) {
+			TextView playerNumberTextView = (TextView)rowView.findViewById(R.id.text_players_number);
+			playerNumberTextView.setText(" (" + player.getNumber() + ")");
+		}
 		
 		return rowView;
 	}
