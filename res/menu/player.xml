@@ -3,7 +3,7 @@
     <item
         android:id="@+id/action_delete"
         android:orderInCategory="50"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom|withText"
         android:icon="@drawable/trash_white"
         android:title="@string/action_delete"/>    
         
