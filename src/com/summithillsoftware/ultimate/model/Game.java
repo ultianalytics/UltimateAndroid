@@ -19,6 +19,7 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Game implements Serializable {
 	private static final long serialVersionUID = -5725999403548435161L;
+	private static final String GAMES_DIRECTORY_NAME_PREFIX = "games-";	
 	private static final String FILE_NAME_PREFIX = "game-";
 	private static Game Current;
 
@@ -190,7 +191,7 @@ public class Game implements Serializable {
 		if (teamId == null || gameId == null) {
 			return null;
 		}
-		return new File(getTeamDir(teamId), teamId);
+		return new File(getTeamDir(teamId), gameId);
 	}
 	
 	private static String generateUniqueFileName() {
@@ -198,11 +199,11 @@ public class Game implements Serializable {
 	}
 	
 	private static File getTeamDir(String teamId) {
-		return new File(getTeamsDir(), teamId);
-	}
-	
-	private static File getTeamsDir() {
-		return UltimateApplication.current().getFilesDir();
+		File teamDir = new File(UltimateApplication.current().getFilesDir(), GAMES_DIRECTORY_NAME_PREFIX + teamId);
+		if (!teamDir.exists()) {
+			teamDir.mkdir();
+		}
+		return teamDir;
 	}
 
 	public Date getStartDateTime() {
