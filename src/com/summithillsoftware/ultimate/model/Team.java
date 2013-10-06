@@ -60,7 +60,7 @@ public class Team implements Serializable {
 	
 	public static void setCurrentTeamId(String newCurrentTeamId) {
 		if (Current != null && !Current.teamId.equals(newCurrentTeamId)) {
-			// TODO...reset the current game (to null)
+			Game.setCurrentGame(null);
 		}
 		if (Current == null || !Current.teamId.equals(newCurrentTeamId)) {
 			Current = read(newCurrentTeamId);
@@ -193,7 +193,7 @@ public class Team implements Serializable {
 		}
 		
 		// delete the associated games
-		// TODO...delete the games
+		Game.deleteAllGamesForTeam(this.getTeamId());
 		
 		// delete the team
 		File file = getFile(this.getTeamId());
