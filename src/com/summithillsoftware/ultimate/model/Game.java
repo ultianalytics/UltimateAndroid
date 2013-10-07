@@ -70,7 +70,7 @@ public class Game implements Serializable {
 	}
 	
 	public static boolean isCurrentGame(String gameId) {
-		return gameId == null ? false : currentGameId().equals(gameId);
+		return gameId == null || currentGameId() == null ? false : currentGameId().equals(gameId);
 	}
 	
 	private static Game read(String gameId) {
