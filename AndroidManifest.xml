@@ -33,8 +33,8 @@
         </activity>
         <activity
             android:name="com.summithillsoftware.ultimate.ui.team.TeamActivity"
-            android:label="@string/title_activity_team" 
-            android:windowSoftInputMode="stateHidden">
+            android:label="@string/title_activity_team"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.summithillsoftware.ultimate.ui.team.PlayersActivity"
@@ -42,8 +42,12 @@
         </activity>
         <activity
             android:name="com.summithillsoftware.ultimate.ui.team.PlayerActivity"
-            android:label="@string/title_activity_player" 
-            android:windowSoftInputMode="stateHidden">
+            android:label="@string/title_activity_player"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.game.GamesActivity"
+            android:label="@string/title_activity_games" >
         </activity>
     </application>
 

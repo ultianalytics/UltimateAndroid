@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.game.GamesActivity;
 
 public class TeamActivity extends AbstractActivity {
 	public static final String NEW_TEAM = "NewTeam";
@@ -51,6 +52,9 @@ public class TeamActivity extends AbstractActivity {
 		} else if (item.getItemId() == R.id.action_teams) {
 			goToTeamsActivity();
 			return true;
+		} else if (item.getItemId() == R.id.action_games) {
+			goToGamesActivity();
+			return true;			
 		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
@@ -167,6 +171,10 @@ public class TeamActivity extends AbstractActivity {
 	
 	private void goToPlayersActivity() {
 		startActivity(new Intent(this, PlayersActivity.class));
+	}
+	
+	private void goToGamesActivity() {
+		startActivity(new Intent(this, GamesActivity.class));
 	}
 
 
