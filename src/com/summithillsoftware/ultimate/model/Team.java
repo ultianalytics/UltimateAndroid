@@ -59,18 +59,43 @@ public class Team implements Serializable {
 	}
 	
 	public static void setCurrentTeamId(String newCurrentTeamId) {
-		if (Current != null && !Current.teamId.equals(newCurrentTeamId)) {
-			Game.setCurrentGame(null);
+		synchronized (FILE_NAME_PREFIX) {		
+			if (Current != null && !Current.teamId.equals(newCurrentTeamId)) {
+				Game.setCurrentGame(null);  // clear current game if switching teams
+			}
+			if (Current == null || !Current.teamId.equals(newCurrentTeamId)) {
+				if (newCurrentTeamId != null) {
+					Current = read(newCurrentTeamId);
+					if (Current == null) {
+						throw new RuntimeException("Team has not been saved");
+					}
+				}
+				Preferences.current().setCurrentTeamFileName(newCurrentTeamId);
+				Preferences.current().save();
+			}
 		}
-		if (Current == null || !Current.teamId.equals(newCurrentTeamId)) {
-			Current = read(newCurrentTeamId);
-			Preferences.current().setCurrentTeamFileName(newCurrentTeamId);
-			Preferences.current().save();
+	}
+	
+	public static void setCurrentTeam(Team team) {
+		synchronized (FILE_NAME_PREFIX) {
+			if (team != null && !team.hasBeenSaved()) {
+				throw new RuntimeException("Team has not been saved");
+			}
+			if (team == null || (Current != null && !Current.teamId.equals(team.getTeamId()))) {
+				Game.setCurrentGame(null);  // clear current game if switching teams
+			}
+			if (Current == null || team == null || !Current.teamId.equals(team.getTeamId())) {
+				Current = team;
+				Preferences.current().setCurrentTeamFileName(team == null ? null : team.getTeamId());
+				Preferences.current().save();
+			}
 		}
 	}
 	
 	public static boolean isCurrentTeam(String otherTeamId) {
-		return otherTeamId.equals(Preferences.current().getCurrentTeamFileName());
+		synchronized (FILE_NAME_PREFIX) {
+			return otherTeamId.equals(Preferences.current().getCurrentTeamFileName());
+		}
 	}
 
 	public static List<TeamDescription> retrieveTeamDescriptions() {
@@ -299,4 +324,5 @@ public class Team implements Serializable {
 		}
 		return false;
 	}
+
 }

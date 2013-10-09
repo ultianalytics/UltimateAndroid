@@ -53,24 +53,46 @@ public class Game implements Serializable {
 	}
 	
 	public static boolean hasCurrentGame() {
-		return Current != null;
+		synchronized (FILE_NAME_PREFIX) {
+			return Current != null;
+		}
 	}
 	
-	public static void setCurrentGame(String gameId) {
-		if (gameId != null) {
-			Current = read(gameId);
+	public static void setCurrentGame(Game game) {
+		synchronized (FILE_NAME_PREFIX) {
+				Current = game;
+			Preferences.current().setCurrentGameFileName(game == null ? null : game.getGameId());
+			Preferences.current().save();
 		}
-		Preferences.current().setCurrentGameFileName(gameId);
-		Preferences.current().save();
+	}
+	
+	public static void setCurrentGameId(String gameId) {
+		synchronized (FILE_NAME_PREFIX) {
+			if (gameId == null) {
+				Current =  null;
+			} else {
+				if (hasCurrentGame() && Current.getGameId().equals(gameId)) {
+					// we already have this game...don't re-read it
+				} else {
+					Current = read(gameId);
+				}
+			}
+			Preferences.current().setCurrentGameFileName(gameId);
+			Preferences.current().save();
+		}
 	}
 	
 	public static String currentGameId() {
-		Game current = current();
-		return current == null ? null : current.getGameId();
+		synchronized (FILE_NAME_PREFIX) {
+			Game current = current();
+			return current == null ? null : current.getGameId();
+		}
 	}
 	
 	public static boolean isCurrentGame(String gameId) {
-		return gameId == null || currentGameId() == null ? false : currentGameId().equals(gameId);
+		synchronized (FILE_NAME_PREFIX) {
+			return gameId == null || currentGameId() == null ? false : currentGameId().equals(gameId);
+		}
 	}
 	
 	private static Game read(String gameId) {
