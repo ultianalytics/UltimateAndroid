@@ -37,6 +37,7 @@ public class Team implements Serializable {
 		super();
 		players = new ArrayList<Player>();
 		teamId = generateUniqueFileName();
+
 	}
 	
 	public static Team current() {

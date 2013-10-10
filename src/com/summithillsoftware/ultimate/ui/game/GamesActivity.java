@@ -1,13 +1,13 @@
 package com.summithillsoftware.ultimate.ui.game;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
-public class GamesActivity extends Activity {
+public class GamesActivity extends AbstractActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
