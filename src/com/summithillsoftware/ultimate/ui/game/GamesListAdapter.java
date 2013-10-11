@@ -77,7 +77,7 @@ public class GamesListAdapter extends BaseAdapter {
 			}
 			dateView.setText(startDateTime);
 		}
-		tournamentView.setText(game.getOpponentName());
+		tournamentView.setText(game.getTournamentName());
 		
 		return rowView;
 	}
