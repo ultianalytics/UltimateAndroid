@@ -1,15 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:ultimate="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        ultimate:showAsAction="never"
         android:title="@string/action_settings"/>
     
      <item
         android:id="@+id/action_games"
         android:orderInCategory="25"
-        android:showAsAction="ifRoom|withText"
+		android:showAsAction="always|withText"        
+        ultimate:showAsAction="always|withText"
         android:icon="@drawable/ic_action_paste"
         android:title="@string/action_games"/> 
         
@@ -17,13 +18,14 @@
         android:id="@+id/action_delete"
         android:orderInCategory="50"
         android:showAsAction="ifRoom|withText"
+        ultimate:showAsAction="ifRoom|withText"
         android:icon="@drawable/trash_white"
         android:title="@string/action_delete"/>    
         
     <item
         android:id="@+id/action_teams"
         android:orderInCategory="75"
-        android:showAsAction="never"
+        ultimate:showAsAction="never"
         android:title="@string/action_teams"/>        
 
 </menu>

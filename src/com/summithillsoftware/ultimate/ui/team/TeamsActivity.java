@@ -32,7 +32,7 @@ public class TeamsActivity extends AbstractActivity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_add) {
 			Intent intent = new Intent(this, TeamActivity.class);
 			intent.putExtra(TeamActivity.NEW_TEAM, true);

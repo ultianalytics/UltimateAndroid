@@ -1,9 +1,9 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:ultimate="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/action_add"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        ultimate:showAsAction="ifRoom|withText"
         android:title="@string/menuitem_player_add" 
         android:icon="@drawable/plus_white"
         />

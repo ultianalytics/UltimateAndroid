@@ -46,7 +46,7 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_delete) {
 			deleteClicked();
 			return true;
@@ -57,10 +57,10 @@ public class TeamActivity extends AbstractActivity {
 			goToGamesActivity();
 			return true;			
 		} else {
-			return super.onMenuItemSelected(featureId, item);
+			return onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void saveClicked(View v) {
 		if (isTeamValid()) {
 			boolean wasNewTeam = isNewTeam();

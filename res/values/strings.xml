@@ -25,6 +25,7 @@
     <string name="radio_team_playerdisplay_number">Number</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
+    <string name="menuitem_game_add">Add Team</string>    
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_save_and_add">Save, Add New</string>

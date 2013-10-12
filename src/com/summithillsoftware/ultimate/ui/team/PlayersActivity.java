@@ -35,7 +35,7 @@ public class PlayersActivity extends AbstractActivity {
 	}
 	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_add) {
 			Intent intent = new Intent(this, PlayerActivity.class);
 			intent.putExtra(PlayerActivity.NEW_PLAYER, true);
