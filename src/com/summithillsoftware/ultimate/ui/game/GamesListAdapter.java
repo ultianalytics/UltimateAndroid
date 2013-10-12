@@ -77,7 +77,10 @@ public class GamesListAdapter extends BaseAdapter {
 			}
 			dateView.setText(startDateTime);
 		}
-		tournamentView.setText(game.getTournamentName());
+		if (!game.getTournamentName().trim().isEmpty()) {
+			String tournamentDescription = UltimateApplication.current().getString(R.string.label_game_at_tournament) + " " + game.getTournamentName();
+			tournamentView.setText(tournamentDescription);
+		}
 		
 		return rowView;
 	}

@@ -54,7 +54,11 @@ public class TeamActivity extends AbstractActivity {
 			goToTeamsActivity();
 			return true;
 		} else if (item.getItemId() == R.id.action_games) {
-			goToGamesActivity();
+			if (isNewTeam() || Team.current().getPlayers().size() == 0) {
+				displayErrorMessage(getString(R.string.alert_team_no_games_without_players_title), getString(R.string.alert_team_no_games_without_players_message));
+			} else {
+				goToGamesActivity();
+			}
 			return true;			
 		} else {
 			return onOptionsItemSelected(item);

@@ -16,6 +16,7 @@
     <string name="placeholder_team_name">Team Name</string>
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
+    <string name="label_game_at_tournament">at</string>
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
     <string name="label_team_playerdisplay">Player Display:</string>
@@ -25,7 +26,7 @@
     <string name="radio_team_playerdisplay_number">Number</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
-    <string name="menuitem_game_add">Add Team</string>    
+    <string name="menuitem_game_add">New Game</string>    
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_save_and_add">Save, Add New</string>
@@ -43,6 +44,8 @@
     <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>
     <string name="alert_player_confirm_delete_title">Confirm Player Delete</string>
     <string name="alert_player_confirm_delete_message">Do you really want to delete this player?</string>
+    <string name="alert_team_no_games_without_players_title">Team Not Ready Yet</string>
+    <string name="alert_team_no_games_without_players_message">Before adding games for a team you must provide a team name and at least a few players.</string>    
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
     <string name="label_player_position">Position</string>

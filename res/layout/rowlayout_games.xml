@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:minHeight="66dp">
 	
     <ImageView
         android:id="@+id/icon_game"
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_description"
         android:src="@drawable/ic_action_paste" 
-		android:layout_marginTop="3dp" 
+		android:layout_marginTop="12dp" 
 		android:layout_marginBottom="3dp" />
 
     <LinearLayout
@@ -29,7 +30,7 @@
                 android:layout_marginLeft="10dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/DarkGray"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_game_tournament"
@@ -38,7 +39,7 @@
                 android:layout_marginLeft="10dp"
 				android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/DarkGray"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -50,6 +51,7 @@
                 android:id="@+id/label_vs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="@string/label_game_vs"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
