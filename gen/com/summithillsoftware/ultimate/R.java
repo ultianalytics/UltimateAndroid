@@ -1493,6 +1493,8 @@ containing a value of this type.
         public static final int title_activity_players=0x7f0a0016;
         public static final int title_activity_team=0x7f0a0015;
         public static final int title_activity_teams=0x7f0a0014;
+        public static final int toast_games_no_games_yet=0x7f0a0044;
+        public static final int toast_players_no_players_yet=0x7f0a0045;
     }
     public static final class style {
         /** 

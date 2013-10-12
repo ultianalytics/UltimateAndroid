@@ -56,5 +56,7 @@
     <string name="radio_player_gender_male">Male</string>
     <string name="radio_player_gender_female">Female</string>
     <string name="common_today">Today</string>
+    <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
+    <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
 
 </resources>

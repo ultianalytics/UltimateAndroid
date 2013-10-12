@@ -6,11 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class PlayersActivity extends AbstractActivity {
@@ -28,6 +31,14 @@ public class PlayersActivity extends AbstractActivity {
 		return true;
 	}
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (Team.current().getPlayers().size() == 0) {
+		     Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_LONG).show();
+		}
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();

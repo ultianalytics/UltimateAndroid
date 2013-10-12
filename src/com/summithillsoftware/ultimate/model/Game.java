@@ -153,6 +153,10 @@ public class Game implements Serializable {
 		return descriptions;
 	}
 	
+	public static int numberOfGamesForTeam(String teamId) {
+		return getAllGameFileNames(teamId).size();
+	}
+	
 	public static void deleteAllGamesForTeam(String teamId) {
 		List<String> gameFileNames = getAllGameFileNames(teamId);
 		// delete the games
