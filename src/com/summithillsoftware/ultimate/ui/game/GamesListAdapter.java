@@ -24,10 +24,10 @@ public class GamesListAdapter extends BaseAdapter {
 	public GamesListAdapter(Context context) {
 		super();
 		this.context = context;
-		resetPlayers();
+		resetGames();
 	}
 	
-	public void resetPlayers() {
+	public void resetGames() {
 		sortedGames = null;
 		notifyDataSetChanged();
 	}

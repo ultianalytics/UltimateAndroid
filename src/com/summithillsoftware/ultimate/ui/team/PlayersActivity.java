@@ -2,16 +2,16 @@ package com.summithillsoftware.ultimate.ui.team;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
@@ -35,7 +35,9 @@ public class PlayersActivity extends AbstractActivity {
 	protected void onStart() {
 		super.onStart();
 		if (Team.current().getPlayers().size() == 0) {
-		     Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_LONG).show();
+			Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
 		}
 	}
 
@@ -69,11 +71,15 @@ public class PlayersActivity extends AbstractActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Player player = (Player)getPlayersListViewAdapter().getItem(position);
-				Intent intent = new Intent(PlayersActivity.this, PlayerActivity.class);
-				intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
-				startActivity(intent);
+				goToPlayerActivity(player);
 			}
 
 		});
+	}
+	
+	private void goToPlayerActivity(Player player) {
+		Intent intent = new Intent(PlayersActivity.this, PlayerActivity.class);
+		intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
+		startActivity(intent);
 	}
 }

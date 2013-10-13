@@ -11,7 +11,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
@@ -179,16 +178,6 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	private void goToGamesActivity() {
-		// TODO...remove this
-		Game game = new Game();
-		game.setOpponentName("Bad Guys");
-		game.setTournamentName("Tournament of the stars");
-		game.save();
-		game = new Game();
-		game.setOpponentName("Bad Girls");
-		game.setTournamentName("Tournament of the stars");
-		game.save();
-		
 		startActivity(new Intent(this, GamesActivity.class));
 	}
 

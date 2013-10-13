@@ -49,6 +49,14 @@
             android:name="com.summithillsoftware.ultimate.ui.game.GamesActivity"
             android:label="@string/title_activity_games" >
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.game.GameActivity"
+            android:label="@string/title_activity_game"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GamesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.GamesActivity" />
+        </activity>
     </application>
 
 </manifest>
