@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <EditText
-        android:id="@+id/text_opponent_name"
+        android:id="@+id/text_game_opponent_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
@@ -16,7 +16,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/text_tourament_name"
+        android:id="@+id/text_game_tourament_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"

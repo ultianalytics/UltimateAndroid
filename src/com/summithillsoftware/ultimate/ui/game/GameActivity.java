@@ -125,7 +125,7 @@ public class GameActivity extends AbstractActivity {
 	}
 	
 	private TextView getOpponentNameTextView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent);
+		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent_name);
 	}
 	
 	private String getOpponentName() {
@@ -133,7 +133,7 @@ public class GameActivity extends AbstractActivity {
 	}
 	
 	private TextView getTournamentNameTextView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tournament);
+		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tourament_name);
 	}
 
 	private String getTournamentName() {

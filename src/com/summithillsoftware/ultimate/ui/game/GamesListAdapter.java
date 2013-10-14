@@ -62,9 +62,9 @@ public class GamesListAdapter extends BaseAdapter {
 			rowView = inflater.inflate(R.layout.rowlayout_games, null);
 		}
 	
-		TextView opponentNameView = (TextView)rowView.findViewById(R.id.text_game_opponent);
+		TextView opponentNameView = (TextView)rowView.findViewById(R.id.text_game_opponent_name);
 		TextView dateView = (TextView)rowView.findViewById(R.id.text_game_date);
-		TextView tournamentView = (TextView)rowView.findViewById(R.id.text_game_tournament);
+		TextView tournamentView = (TextView)rowView.findViewById(R.id.text_game_tournament_name);
 		
 		GameDescription game = getSortedGames().get(index);
 		opponentNameView.setText(game.getOpponentName());

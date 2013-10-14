@@ -33,7 +33,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/text_game_tournament"
+                android:id="@+id/text_game_tournament_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -56,7 +56,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/text_game_opponent"
+                android:id="@+id/text_game_opponent_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

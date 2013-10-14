@@ -1204,7 +1204,7 @@ containing a value of this type.
         public static final int trash_white=0x7f02005f;
     }
     public static final class id {
-        public static final int action_add=0x7f050080;
+        public static final int action_add=0x7f05007f;
         public static final int action_bar=0x7f05001a;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f050019;
@@ -1213,15 +1213,15 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050021;
         public static final int action_bar_title=0x7f050020;
         public static final int action_context_bar=0x7f05001b;
-        public static final int action_delete=0x7f05007f;
-        public static final int action_games=0x7f050082;
+        public static final int action_delete=0x7f05007e;
+        public static final int action_games=0x7f050081;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_bar=0x7f05002f;
         public static final int action_mode_bar_stub=0x7f05002e;
         public static final int action_mode_close_button=0x7f050022;
-        public static final int action_settings=0x7f050081;
-        public static final int action_teams=0x7f050083;
+        public static final int action_settings=0x7f050080;
+        public static final int action_teams=0x7f050082;
         public static final int activity_chooser_view_content=0x7f050023;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1244,7 +1244,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f050028;
         public static final int icon_game=0x7f050076;
-        public static final int icon_team=0x7f05007b;
+        public static final int icon_team=0x7f05007a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050025;
         public static final int label_game_first_point_oline=0x7f05004b;
@@ -1319,16 +1319,15 @@ containing a value of this type.
         public static final int teamsFragment=0x7f050047;
         public static final int textView1=0x7f05005d;
         public static final int text_game_date=0x7f050077;
-        public static final int text_game_opponent=0x7f05007a;
-        public static final int text_game_tournament=0x7f050078;
-        public static final int text_opponent_name=0x7f050048;
+        public static final int text_game_opponent_name=0x7f050048;
+        public static final int text_game_tourament_name=0x7f050049;
+        public static final int text_game_tournament_name=0x7f050078;
         public static final int text_player_name=0x7f05005b;
         public static final int text_player_number=0x7f05005e;
-        public static final int text_players_description=0x7f05007c;
-        public static final int text_players_number=0x7f05007d;
-        public static final int text_team_cloud_id=0x7f05007e;
+        public static final int text_players_description=0x7f05007b;
+        public static final int text_players_number=0x7f05007c;
+        public static final int text_team_cloud_id=0x7f05007d;
         public static final int text_team_name=0x7f05006a;
-        public static final int text_tourament_name=0x7f050049;
         public static final int title=0x7f050029;
         public static final int title_container=0x7f050030;
         public static final int top_action_bar=0x7f05001e;
