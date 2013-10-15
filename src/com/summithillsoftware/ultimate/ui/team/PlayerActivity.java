@@ -65,11 +65,11 @@ public class PlayerActivity extends AbstractActivity {
 	}
 	
 	private void deleteClicked() {
-		confirmDelete();
+		confirmAndDelete();
 	}
 	
-	private void confirmDelete() {
-		displayConfirmDialog(getString(R.string.alert_player_confirm_delete_title), getString(R.string.alert_player_confirm_delete_message), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
+	private void confirmAndDelete() {
+		displayConfirmDialog(getString(R.string.alert_player_confirm_delete_title), getString(R.string.alert_player_confirm_delete_message, getPlayer().getName()), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 				Team.current().removePlayer(getPlayer());
@@ -96,6 +96,7 @@ public class PlayerActivity extends AbstractActivity {
 			break;
 		}
 		getGenderRadioGroup().check(player.isMale() ? R.id.radio_player_gender_male : R.id.radio_player_gender_female);
+		getNameTextView().requestFocus();
 	}
 	
 	private void populateAndSaveTeam() {

@@ -25,7 +25,7 @@
     <string name="action_games">Games</string>
     
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
-    <string name="alert_team_confirm_delete_message">Do you really want to delete this team?</string>
+    <string name="alert_team_confirm_delete_message">Do you really want to delete team \"%1$s\"?</string>
     <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
     <string name="alert_team_delete_not_allowed_message">You cannot delete this team because it is the only team on this device.  Create another team and then retry.</string>
     <string name="alert_team_name_required_title">Team Name Required</string>
@@ -39,11 +39,11 @@
     <string name="alert_player_duplicate_name_title">Duplicate Name</string>
     <string name="alert_player_duplicate_name_message">Each player must have a unique name.  Please enter a different name for this player.</string>
     <string name="alert_player_confirm_delete_title">Confirm Player Delete</string>
-    <string name="alert_player_confirm_delete_message">Do you really want to delete this player?</string>
+    <string name="alert_player_confirm_delete_message">Do you really want to delete player \"%1$s\"?</string>
     <string name="alert_game_opponent_required_title">Opponent Name Required</string>
     <string name="alert_game_opponent_required_message">Please enter a name for the opponent</string>    
     <string name="alert_game_confirm_delete_title">Confirm Game Delete</string>
-    <string name="alert_game_confirm_delete_message">Do you really want to delete this game?</string>    
+    <string name="alert_game_confirm_delete_message">Do you really want to delete game vs. \"%1$s\"?</string>    
 
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>

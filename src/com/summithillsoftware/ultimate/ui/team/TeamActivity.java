@@ -88,14 +88,14 @@ public class TeamActivity extends AbstractActivity {
 	
 	private void deleteClicked() {
 		if (Team.numberOfTeams() > 1) {
-			confirmDelete();
+			confirmAndDelete();
 		} else {
 			displayErrorMessage(getString(R.string.alert_team_delete_not_allowed_title), getString(R.string.alert_team_delete_not_allowed_message));
 		}
 	}
 	
-	private void confirmDelete() {
-		displayConfirmDialog(getString(R.string.alert_team_confirm_delete_title), getString(R.string.alert_team_confirm_delete_message), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
+	private void confirmAndDelete() {
+		displayConfirmDialog(getString(R.string.alert_team_confirm_delete_title), getString(R.string.alert_team_confirm_delete_message, Team.current().getName()), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 				Team.current().delete();

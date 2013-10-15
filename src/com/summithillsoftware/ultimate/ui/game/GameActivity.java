@@ -31,6 +31,13 @@ public class GameActivity extends AbstractActivity {
 		super.onStart();
 		populateView();
 	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    menu.findItem(R.id.action_delete).setVisible(!isNewGame());
+	    return true;
+	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -103,7 +110,8 @@ public class GameActivity extends AbstractActivity {
 	}
 	
 	private void confirmAndDeleteGame() {
-		displayConfirmDialog(getString(R.string.alert_game_confirm_delete_title), getString(R.string.alert_game_confirm_delete_message), getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
+		String message = getString(R.string.alert_game_confirm_delete_message, Game.current().getOpponentName());
+		displayConfirmDialog(getString(R.string.alert_game_confirm_delete_title), message, getString(android.R.string.yes), getString(android.R.string.no), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 				Game.current().delete();
