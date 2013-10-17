@@ -9,7 +9,6 @@ public class Score implements Serializable{
 	
 	public Score() {
 		super();
-		this.ours = 1;
 	}
 	
 	public Score(int ours, int theirs) {
