@@ -9,6 +9,7 @@ public class Score implements Serializable{
 	
 	public Score() {
 		super();
+		this.ours = 1;
 	}
 	
 	public Score(int ours, int theirs) {
@@ -35,6 +36,18 @@ public class Score implements Serializable{
 
 	public String formatted() {
 		return ours + "-" + theirs;
+	}
+	
+	public boolean isOurLead() {
+		return ours > theirs;
+	}
+	
+	public boolean isTie() {
+		return ours == theirs;
+	}
+	
+	public boolean isTheirLead() {
+		return theirs > ours;
 	}
 
 

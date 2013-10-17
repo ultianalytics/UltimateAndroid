@@ -4,6 +4,8 @@
     <string name="app_name">Ultimate</string>
     <string name="hello_world">Hello world!</string>
     <string name="image_description">ImageDescription</string>
+    <string name="fake_date">April 99, 1999</string>
+    <string name="fake_score">6&#8211;8 (them)</string>
     
     <string name="common_today">Today</string>
     

@@ -1,7 +1,11 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -11,7 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.summithillsoftware.ultimate.DateUtil;
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
@@ -91,14 +97,46 @@ public class GameActivity extends AbstractActivity {
 		confirmAndDeleteGame();
 	}
 	
+	public void dateClicked(View v) {
+		
+	}
+	
+	public void scoreClicked(View v) {
+		goToActionActivity();
+	}
+	
 	private void populateView() {
 		if (isNewGame()) {
 			setTitle(getString(R.string.title_activity_game_new));
 			getSaveButton().setText(R.string.button_start);
 		} else {
-			getTournamentNameTextView().setText(Game.current().getTournamentName());
-			getOpponentNameTextView().setText(Game.current().getOpponentName());			
+			Game game = Game.current();
+			getTournamentNameTextView().setText(game.getTournamentName());
+			getOpponentNameTextView().setText(game.getOpponentName());		
+			if (game.getStartDateTime() != null) {
+				String startDateTime = DateFormat.getTimeInstance().format(game.getStartDateTime());
+				if (DateUtil.isToday(game.getStartDateTime())) {
+					startDateTime = UltimateApplication.current().getString(R.string.common_today) + " " + startDateTime;
+				} else {
+					startDateTime = SimpleDateFormat.getDateInstance().format(game.getStartDateTime()) + " " + startDateTime;
+				}
+				getDateView().setText(startDateTime);
+			}
+			String scoreFormatted = game.getScore().getOurs() + "-" + game.getScore().getTheirs() + " ";
+			if (game.getScore().isOurLead()) {
+				getScoreView().setTextColor(Color.GREEN);
+				scoreFormatted += "(us)";
+			} else if (game.getScore().isTheirLead()) {
+				getScoreView().setTextColor(Color.RED);
+				scoreFormatted += "(them)";
+			} else {
+				getScoreView().setTextColor(Color.WHITE);
+				scoreFormatted += "(tied)";
+			} 
+			getScoreView().setText(scoreFormatted);
 		}
+		getDateView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+		getScoreView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);		
 	}
 	
 	private void populateAndSaveGame() {
@@ -152,6 +190,14 @@ public class GameActivity extends AbstractActivity {
 		return (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_save);
 	}
 	
+	private TextView getDateView() {
+		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_date);
+	}
+	
+	private TextView getScoreView() {
+		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
+	}
+	
 //	private RadioGroup getFirstPointOlineRadioGroup() {
 //		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
 //	}
@@ -159,5 +205,9 @@ public class GameActivity extends AbstractActivity {
 //	private RadioGroup getGameToRadioGroup() {
 //		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_game_to);
 //	}
+	
+	private void goToActionActivity() {
+		
+	}
 
 }
