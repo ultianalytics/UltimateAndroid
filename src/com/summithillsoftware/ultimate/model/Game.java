@@ -19,6 +19,8 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Game implements Serializable {
 	private static final long serialVersionUID = -5725999403548435161L;
+	
+	public static final int TIME_BASED_GAME_POINT = 1000;
 	private static final String GAMES_DIRECTORY_NAME_PREFIX = "games-";	
 	private static final String FILE_NAME_PREFIX = "game-";
 	private static Game Current;
@@ -26,16 +28,40 @@ public class Game implements Serializable {
 	private String gameId;
 	private Date startDateTime;
 	private String opponentName;
-	private String tournamentName;	
-	private List<Player> currentLine;		
+	private String tournamentName;
+	private int gamePoint;
+	private boolean isFirstPointOline;
+	@SuppressWarnings("unused")
+	private String timeoutJson;
+	private List<Point> points;
+	private Wind wind;
+	
+	private List<Player> currentLine;	// server transient
+	private List<Player> lastDLine;	// server transient
+	private List<Player> lastOLine;	// server transient
+	private transient TimeoutDetails timeoutDetails; // server transient
+	@SuppressWarnings("unused")
+	private int periodsComplete; // server transient
+	@SuppressWarnings("unused")
+	private Event firstEventTweeted;  // server transient
+	@SuppressWarnings("unused")
+	private CessationEvent lastPeriodEnd; // server transient
+	@SuppressWarnings("unused")
+	private boolean arePointSummariesValid; // server transient
 	
 	public Game() {
 		super();
-		this.gameId = Game.generateUniqueFileName();
-		this.startDateTime = new Date();
-		this.opponentName = "";
-		this.tournamentName = "";
-		this.currentLine = new ArrayList<Player>();
+	}
+	
+	public static Game createGame() {
+		Game game = new Game();
+		game.gameId = Game.generateUniqueFileName();
+		game.startDateTime = new Date();
+		game.opponentName = "";
+		game.tournamentName = "";
+		game.currentLine = new ArrayList<Player>();
+		game.gamePoint = Preferences.current().getGamePoint();
+		return game;
 	}
 	
 	// returns NULL if no current game
@@ -273,5 +299,64 @@ public class Game implements Serializable {
 		return new Score();
 	}
 
+	public int getGamePoint() {
+		return gamePoint;
+	}
+
+	public void setGamePoint(int gamePoint) {
+		this.gamePoint = gamePoint;
+	}
+
+	public boolean isFirstPointOline() {
+		return isFirstPointOline;
+	}
+
+	public void setFirstPointOline(boolean isFirstPointOline) {
+		this.isFirstPointOline = isFirstPointOline;
+	}
+
+	public Wind getWind() {
+		return wind;
+	}
+
+	public void setWind(Wind wind) {
+		this.wind = wind;
+	}
+
+	public List<Player> getLastDLine() {
+		return lastDLine;
+	}
+
+	public void setLastDLine(List<Player> lastDLine) {
+		this.lastDLine = lastDLine;
+	}
+
+	public List<Player> getLastOLine() {
+		return lastOLine;
+	}
+
+	public void setLastOLine(List<Player> lastOLine) {
+		this.lastOLine = lastOLine;
+	}
+
+	public List<Point> getPoints() {
+		return points;
+	}
+
+	public void setPoints(List<Point> points) {
+		this.points = points;
+	}
+
+	public TimeoutDetails getTimeoutDetails() {
+		return timeoutDetails;
+	}
+
+	public void setTimeoutDetails(TimeoutDetails timeoutDetails) {
+		this.timeoutDetails = timeoutDetails;
+	}
+	
+	public boolean isTimeBasedGame() {
+		return gamePoint == TIME_BASED_GAME_POINT;
+	}
 
 }

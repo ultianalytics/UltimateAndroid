@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import static com.summithillsoftware.ultimate.model.Game.TIME_BASED_GAME_POINT;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -13,12 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.DateUtil;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class GameActivity extends AbstractActivity {
@@ -109,6 +113,9 @@ public class GameActivity extends AbstractActivity {
 		if (isNewGame()) {
 			setTitle(getString(R.string.title_activity_game_new));
 			getSaveButton().setText(R.string.button_start);
+			getTournamentNameTextView().setText(Preferences.current().getTournamentName());
+			populateGamePointView(Preferences.current().getGamePoint());
+			getFirstPointOlineRadioGroup().check(R.id.radio_game_start_offense);
 		} else {
 			Game game = Game.current();
 			getTournamentNameTextView().setText(game.getTournamentName());
@@ -134,17 +141,75 @@ public class GameActivity extends AbstractActivity {
 				scoreFormatted += "(tied)";
 			} 
 			getScoreView().setText(scoreFormatted);
+			getFirstPointOlineRadioGroup().check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
+			populateGamePointView(Game.current().getGamePoint());
 		}
+	
 		getDateView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		getScoreView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);		
 	}
 	
+	private void populateGamePointView(int gamePoint) {
+		int radioButtonId;
+		switch (gamePoint) {
+		case 9:
+			radioButtonId = R.id.radio_game_to_9;
+			break;
+		case 11:
+			radioButtonId = R.id.radio_game_to_11;
+			break;
+		case 13:
+			radioButtonId = R.id.radio_game_to_13;
+			break;
+		case 15:
+			radioButtonId = R.id.radio_game_to_15;
+			break;
+		case 17:
+			radioButtonId = R.id.radio_game_to_17;
+			break;
+		case TIME_BASED_GAME_POINT:
+			radioButtonId = R.id.radio_game_to_time;
+			break;			
+		default:
+			radioButtonId = R.id.radio_game_to_13;
+			break;
+		}
+		getGameToRadioGroup().check(radioButtonId);	
+	}
+	
 	private void populateAndSaveGame() {
-		Game game = isNewGame() ? new Game() : Game.current();
+		Game game = isNewGame() ? Game.createGame() : Game.current();
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
+		game.setFirstPointOline((getFirstPointOlineRadioGroup().getCheckedRadioButtonId() == R.id.radio_game_start_offense));
+		switch (getGameToRadioGroup().getCheckedRadioButtonId()) {
+		case R.id.radio_game_to_9:
+			game.setGamePoint(9);
+			break;
+		case R.id.radio_game_to_11:
+			game.setGamePoint(11);
+			break;
+		case R.id.radio_game_to_13:
+			game.setGamePoint(13);
+			break;
+		case R.id.radio_game_to_15:
+			game.setGamePoint(15);
+			break;
+		case R.id.radio_game_to_17:
+			game.setGamePoint(17);
+			break;
+		case R.id.radio_game_to_time:
+			game.setGamePoint(TIME_BASED_GAME_POINT);
+			break;			
+		default:
+			game.setGamePoint(Preferences.current().getGamePoint());
+			break;
+		}
 		game.save();
 		Game.setCurrentGame(game);
+		Preferences.current().setGamePoint(game.getGamePoint());
+		Preferences.current().setTournamentName(game.getTournamentName());
+		Preferences.current().save();
 	}
 	
 	private void confirmAndDeleteGame() {
@@ -198,13 +263,13 @@ public class GameActivity extends AbstractActivity {
 		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
 	}
 	
-//	private RadioGroup getFirstPointOlineRadioGroup() {
-//		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
-//	}
-//	
-//	private RadioGroup getGameToRadioGroup() {
-//		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_game_to);
-//	}
+	private RadioGroup getFirstPointOlineRadioGroup() {
+		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
+	}
+	
+	private RadioGroup getGameToRadioGroup() {
+		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_game_to);
+	}
 	
 	private void goToActionActivity() {
 		
