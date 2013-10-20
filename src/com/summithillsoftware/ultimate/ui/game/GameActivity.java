@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,14 +66,20 @@ public class GameActivity extends AbstractActivity {
 		case R.id.action_delete:
 			deleteClicked();
 			return true;
+		case R.id.action_action:
+			goToActionActivity();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	public void saveClicked(View v) {
+		boolean isNew = isNewGame();
 		if (isGameValid()) {
 			populateAndSaveGame();
-			finish();
+			if (isNew) {
+				goToActionActivity();
+			}
 		} 
 	}
 
@@ -256,7 +263,7 @@ public class GameActivity extends AbstractActivity {
 	}
 	
 	private void goToActionActivity() {
-		
+		startActivity(new Intent(GameActivity.this, GameActionActivity.class));
 	}
 
 }

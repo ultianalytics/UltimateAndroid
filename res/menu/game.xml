@@ -1,10 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:ultimate="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_action"
+        android:orderInCategory="50"
+        ultimate:showAsAction="always|withText"
+        android:icon="@drawable/game_action"
+        android:title="@string/action_action"/>    
+        
+    <item
         android:id="@+id/action_delete"
         android:orderInCategory="50"
         ultimate:showAsAction="ifRoom|withText"
         android:icon="@drawable/trash_white"
-        android:title="@string/action_delete"/>    
+        android:title="@string/action_delete"/>        
 
 </menu>

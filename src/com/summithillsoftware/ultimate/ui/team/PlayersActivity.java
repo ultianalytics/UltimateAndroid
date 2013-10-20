@@ -35,6 +35,7 @@ public class PlayersActivity extends AbstractActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		setTitle(getString(R.string.title_activity_players) + " - " + Team.current().getName());
 		if (Team.current().getPlayers().size() == 0) {
 			Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
