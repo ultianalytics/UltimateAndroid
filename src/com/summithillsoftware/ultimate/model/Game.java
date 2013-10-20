@@ -359,4 +359,7 @@ public class Game implements Serializable {
 		return gamePoint == TIME_BASED_GAME_POINT;
 	}
 
+	public void clearPointSummaries() {
+		// TODO...finish this
+	}
 }
