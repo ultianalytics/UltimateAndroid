@@ -22,6 +22,7 @@ public class PlayersActivity extends AbstractActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_players);
+		setupActionBar();  // Show the Up button in the action bar.
 		registerPlayerSelectedListener();
 	}
 
@@ -49,12 +50,16 @@ public class PlayersActivity extends AbstractActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_add) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			return navigateUp();
+		case R.id.action_add:
 			Intent intent = new Intent(this, PlayerActivity.class);
 			intent.putExtra(PlayerActivity.NEW_PLAYER, true);
 			startActivity(intent);
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 	
 	private ListView getPlayersListView() {

@@ -23,6 +23,7 @@ public class GamesActivity extends AbstractActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_games);
+		setupActionBar();  // Show the Up button in the action bar.
 		registerTeamSelectedListener();
 	}
 
@@ -32,13 +33,17 @@ public class GamesActivity extends AbstractActivity {
 		getMenuInflater().inflate(R.menu.games, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_add) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			return navigateUp();
+		case R.id.action_add:
 			goToGameActivity(true);
+			return true;
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

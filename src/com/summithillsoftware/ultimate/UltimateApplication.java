@@ -6,6 +6,7 @@ import android.app.Application;
 
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
+	private boolean isAppStartInProgress;
 	
 	public static UltimateApplication current() {
 		if (Current == null) {  // this is for unit testing (should have been populated by onCreate)
@@ -14,7 +15,12 @@ public class UltimateApplication extends Application {
 		return Current;
 	}
 
-    public final void onCreate() {
+	public UltimateApplication() {
+		super();
+		isAppStartInProgress = true;
+	}
+	
+	public final void onCreate() {
         super.onCreate(); 
         Current = this;
         ensureOneTeam();
@@ -23,5 +29,15 @@ public class UltimateApplication extends Application {
     private void ensureOneTeam() {
     	Team.current();
     }
+
+	public boolean isAppStartInProgress() {
+		return isAppStartInProgress;
+	}
+
+	public void setAppStartComplete() {
+		this.isAppStartInProgress = false;
+	}
+
+
     
 }

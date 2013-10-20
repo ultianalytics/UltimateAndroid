@@ -22,6 +22,7 @@ public class TeamActivity extends AbstractActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
+		setupActionBar();  // Show the Up button in the action bar.
 	}
 	
 	@Override
@@ -43,27 +44,30 @@ public class TeamActivity extends AbstractActivity {
 		getMenuInflater().inflate(R.menu.team, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_delete) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			return navigateUp();
+		case R.id.action_delete:
 			deleteClicked();
 			return true;
-		} else if (item.getItemId() == R.id.action_teams) {
+		case R.id.action_teams:
 			goToTeamsActivity();
 			return true;
-		} else if (item.getItemId() == R.id.action_games) {
+		case R.id.action_games:
 			if (isNewTeam() || Team.current().getPlayers().size() == 0) {
 				displayErrorMessage(getString(R.string.alert_team_no_games_without_players_title), getString(R.string.alert_team_no_games_without_players_message));
 			} else {
 				goToGamesActivity();
 			}
-			return true;			
-		} else {
-			return onOptionsItemSelected(item);
-		}
+			return true;
+		}		
+		return super.onOptionsItemSelected(item);
 	}
-
+	
+	
 	public void saveClicked(View v) {
 		if (isTeamValid()) {
 			boolean wasNewTeam = isNewTeam();

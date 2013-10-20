@@ -27,6 +27,7 @@ public class PlayerActivity extends AbstractActivity {
 			this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
 		}
 		setContentView(R.layout.activity_player);
+		setupActionBar();  // Show the Up button in the action bar.
 		populateView();
 	}
 
@@ -35,15 +36,17 @@ public class PlayerActivity extends AbstractActivity {
 		getMenuInflater().inflate(R.menu.player, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_delete) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			return navigateUp();
+		case R.id.action_delete:
 			deleteClicked();
 			return true;
-		} else {
-			return onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	public void saveClicked(View v) {

@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
 import com.summithillsoftware.ultimate.ui.AbstractActivity;
@@ -21,7 +22,10 @@ public class TeamsActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams);
 		registerTeamSelectedListener();
-		
+		if (UltimateApplication.current().isAppStartInProgress()) {
+			UltimateApplication.current().setAppStartComplete();
+			goToTeamActivity();
+		}
 	}
 
 	@Override
