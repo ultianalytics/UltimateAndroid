@@ -1,13 +1,33 @@
 package com.summithillsoftware.ultimate.model;
 
+import static com.summithillsoftware.ultimate.model.Action.Catch;
+import static com.summithillsoftware.ultimate.model.Action.EndOfFirstQuarter;
+import static com.summithillsoftware.ultimate.model.Action.EndOfFourthQuarter;
+import static com.summithillsoftware.ultimate.model.Action.EndOfOvertime;
+import static com.summithillsoftware.ultimate.model.Action.EndOfThirdQuarter;
+import static com.summithillsoftware.ultimate.model.Action.GameOver;
+import static com.summithillsoftware.ultimate.model.Action.Halftime;
+import static com.summithillsoftware.ultimate.model.Action.Pull;
+import static com.summithillsoftware.ultimate.model.Action.PullOb;
+import static com.summithillsoftware.ultimate.model.Action.Throwaway;
+import static com.summithillsoftware.ultimate.model.Action.Timeout;
+
 import java.io.Serializable;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static com.summithillsoftware.ultimate.model.Action.*;
 
 public abstract class Event implements Serializable {
 	private static final long serialVersionUID = 5756168445956393971L;
+	public static final EnumSet<Action> CESSATION_ACTIONS = EnumSet.of(
+			EndOfFirstQuarter,
+			Halftime,
+			EndOfThirdQuarter,
+			EndOfFourthQuarter,
+			EndOfOvertime,
+			GameOver,
+			Timeout);
 	
 	private Action action;
 	private long timestamp;
@@ -46,10 +66,6 @@ public abstract class Event implements Serializable {
 			details= new HashMap<String, Object>();
 		}
 		return details;
-	}
-
-	public void setDetails(Map<String, Object> details) {
-		this.details = details;
 	}
 
 	public boolean isHalftimeCause() {
@@ -169,9 +185,18 @@ public abstract class Event implements Serializable {
 		getDetails().put(key, value);
 	}
 	
-	public int getDetailIntValue(String key) {
+	public void setDetailBooleanValue(String key, boolean value) {
+		getDetails().put(key, value);
+	}
+	
+	public int getDetailIntValue(String key, int defaultValue) {
 		Integer value = (Integer)getDetails().get(key);
-		return value == null ? 0 : value.intValue();
+		return value == null ? defaultValue : value.intValue();
+	}
+	
+	public boolean getDetailBooleanValue(String key, boolean defaultValue) {
+		Boolean value = (Boolean)getDetails().get(key);
+		return value == null ? defaultValue : value.booleanValue();
 	}
 
 	protected abstract String getDescriptionForTeamAndOpponent(String teamName, String opponentName);
