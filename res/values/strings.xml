@@ -8,7 +8,16 @@
     <string name="fake_score">6&#8211;8 (them)</string>
     <string name="common_today">Today</string>
     <string name="common_versus_short">v.</string>
+    <string name="common_our">our</string>
     
+    <string name="event_description_pass">%1$s pass</string>
+    <string name="event_description_pass_to">Pass to %1$s</string>
+    <string name="event_description_pass_from_to">%1$s to %2$s</string>
+    <string name="event_description_drop">%1$s drop</string>
+    <string name="event_description_drop_from">%1$s pass dropped</string>
+	<string name="event_description_drop_to">%1$s dropped pass</string> 
+	<string name="event_description_drop_from_to">%1$s dropped from %2$s</string>
+        
     <string name="title_activity_teams">Teams</string>
     <string name="title_activity_team">Team</string>
     <string name="title_activity_players">Players</string>

@@ -1,14 +1,18 @@
 package com.summithillsoftware.ultimate.model;
 
+import static com.summithillsoftware.ultimate.model.Action.Callahan;
 import static com.summithillsoftware.ultimate.model.Action.Catch;
+import static com.summithillsoftware.ultimate.model.Action.Drop;
 import static com.summithillsoftware.ultimate.model.Action.EndOfFirstQuarter;
 import static com.summithillsoftware.ultimate.model.Action.EndOfFourthQuarter;
 import static com.summithillsoftware.ultimate.model.Action.EndOfOvertime;
 import static com.summithillsoftware.ultimate.model.Action.EndOfThirdQuarter;
 import static com.summithillsoftware.ultimate.model.Action.GameOver;
 import static com.summithillsoftware.ultimate.model.Action.Halftime;
+import static com.summithillsoftware.ultimate.model.Action.MiscPenalty;
 import static com.summithillsoftware.ultimate.model.Action.Pull;
 import static com.summithillsoftware.ultimate.model.Action.PullOb;
+import static com.summithillsoftware.ultimate.model.Action.Stall;
 import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 import static com.summithillsoftware.ultimate.model.Action.Timeout;
 
@@ -17,6 +21,8 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.summithillsoftware.ultimate.UltimateApplication;
 
 public abstract class Event implements Serializable {
 	private static final long serialVersionUID = 5756168445956393971L;
@@ -29,6 +35,13 @@ public abstract class Event implements Serializable {
 			GameOver,
 			Timeout);
 	
+	public static final EnumSet<Action> TURNOVER_ACTIONS = EnumSet.of(
+			Drop,
+			Throwaway,
+			Stall,
+			MiscPenalty,
+			Callahan);
+		
 	private Action action;
 	private long timestamp;
 	private Map<String, Object> details;
@@ -209,4 +222,11 @@ public abstract class Event implements Serializable {
 		return getDescription();
 	}
 	
+	public String getString(int resId) {
+		return UltimateApplication.current().getString(resId);
+	}
+	
+	public String getString(int resId, Object...formatArgs) {
+		return UltimateApplication.current().getString(resId, formatArgs);
+	}
 }
