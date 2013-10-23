@@ -9,7 +9,9 @@
     <string name="common_today">Today</string>
     <string name="common_versus_short">v.</string>
     <string name="common_our">our</string>
-    
+    <string name="common_hangtime_seconds">%1$s sec</string>
+
+    <string name="event_description_our_team">Our team</string>
     <string name="event_description_pass">%1$s pass</string>
     <string name="event_description_pass_to">Pass to %1$s</string>
     <string name="event_description_pass_from_to">%1$s to %2$s</string>
@@ -17,6 +19,18 @@
     <string name="event_description_drop_from">%1$s pass dropped</string>
 	<string name="event_description_drop_to">%1$s dropped pass</string> 
 	<string name="event_description_drop_from_to">%1$s dropped from %2$s</string>
+	<string name="event_description_throwaway">%1$s throwaway</string>	
+	<string name="event_description_stalled">%1$s was stalled</string>
+	<string name="event_description_penalized">%1$s penalized</string>
+	<string name="event_description_callahaned">%1$s callahan\'d</string>
+    <string name="event_description_o_goal">%1$s goal</string>
+    <string name="event_description_o_goal_from">%1$s pass for goal</string>
+    <string name="event_description_o_goal_from_to">%1$s goal (%2$s to %3$s)</string>	
+	<string name="event_description_pull_from">Pull from %1$ (%2$s sec)</string>    
+	<string name="event_description_pull">%1$ pull %2$s</string>
+	<string name="event_description_pull_from">Pull from %1$ %2$s</string>
+	<string name="event_description_pull_ob">%1$ pull</string>
+	<string name="event_description_pull_ob_from">Pull from %1$</string>	
         
     <string name="title_activity_teams">Teams</string>
     <string name="title_activity_team">Team</string>

@@ -2,7 +2,6 @@ package com.summithillsoftware.ultimate.model;
 
 import static com.summithillsoftware.ultimate.model.Action.Callahan;
 import static com.summithillsoftware.ultimate.model.Action.Catch;
-import static com.summithillsoftware.ultimate.model.Action.De;
 import static com.summithillsoftware.ultimate.model.Action.Drop;
 import static com.summithillsoftware.ultimate.model.Action.Goal;
 import static com.summithillsoftware.ultimate.model.Action.MiscPenalty;
@@ -23,7 +22,6 @@ public class OffenseEvent extends Event {
 			Drop,
 			Goal,
 			Throwaway,
-			De,
 			Callahan,
 			Stall,
 			MiscPenalty);
@@ -105,12 +103,12 @@ public class OffenseEvent extends Event {
 
 	@Override
 	protected String getDescriptionForTeamAndOpponent(String teamName,String opponentName) {
-		String our = StringUtil.current().ourCaptialized();
+		String ourTeam = StringUtil.getString(R.string.event_description_our_team);
 	    switch(getAction()) {
 	        case Catch: {
 	            if (isAnonymous()) {
 	            	// {team} pass
-	            	return getString(R.string.event_description_pass,(teamName == null ? our : teamName));
+	            	return getString(R.string.event_description_pass,(teamName == null ? ourTeam : teamName));
 	            } else if (isReceiverAnonymous()) {
 	            	// {passer} pass
 	            	return getString(R.string.event_description_pass,passer.getName());
@@ -125,7 +123,7 @@ public class OffenseEvent extends Event {
 	        case Drop: {
 	            if (isAnonymous()) {
 	            	// {{team} drop
-	            	return getString(R.string.event_description_drop,(teamName == null ? our : teamName));
+	            	return getString(R.string.event_description_drop,(teamName == null ? ourTeam : teamName));
 	            } else if (isReceiverAnonymous()) {
 	            	// {{passer} pass dropped
 	            	return getString(R.string.event_description_drop_from,passer.getName());
@@ -137,29 +135,41 @@ public class OffenseEvent extends Event {
 	            	return getString(R.string.event_description_drop_from_to, receiver.getName(), passer.getName());    
 	            }
 	        }
-//	        case Throwaway:{
-//	            return self.isAnonymous ?  [NSString stringWithFormat:@"%@ throwaway", (teamName == nil ? @"Our" : teamName)] : [NSString stringWithFormat:@"%@ throwaway", self.passer.name];     
-//	        }
-//	        case Stall:{
-//	            return self.isAnonymous ?  [NSString stringWithFormat:@"%@ was stalled", (teamName == nil ? @"Our" : teamName)] : [NSString stringWithFormat:@"%@ was stalled", self.passer.name];
-//	        }
-//	        case MiscPenalty:{
-//	            return self.isAnonymous ?  [NSString stringWithFormat:@"%@ penalized", (teamName == nil ? @"Our" : teamName)] : [NSString stringWithFormat:@"%@ penalized", self.passer.name];
-//	        }
-//	        case Goal: {
-//	            if (self.isAnonymous) {
-//	                return [NSString stringWithFormat:@"%@ goal", (teamName == nil ? @"Our" : teamName)]; 
-//	            } else if (self.isReceiverAnonymous) {
-//	                return [NSString stringWithFormat:@"%@ pass for goal", self.passer.name];
-//	            } else if (self.isPasserAnonymous) {
-//	                return [NSString stringWithFormat:@"%@ goal", self.receiver.name];
-//	            } else {
-//	                return [NSString stringWithFormat:@"%@ goal (%@ to %@)", (teamName == nil ? @"Our" : teamName), self.passer.name, self.receiver.name];            
-//	            }
-//	        }
-//	        case Callahan:{
-//	            return self.isAnonymous ?  [NSString stringWithFormat:@"%@ callahan'd", (teamName == nil ? @"Our" : teamName)] : [NSString stringWithFormat:@"%@ callahan'd", self.passer.name];
-//	        }
+	        case Throwaway:{
+	        	return isAnonymous() ? 
+	        			getString(R.string.event_description_throwaway,(teamName == null ? ourTeam : teamName)) : 
+	        			getString(R.string.event_description_throwaway,passer.getName());
+	        }
+	        case Stall:{
+	        	return isAnonymous() ? 
+	        			getString(R.string.event_description_stalled,(teamName == null ? ourTeam : teamName)) : 
+	        			getString(R.string.event_description_stalled,passer.getName());
+	        }
+	        case MiscPenalty:{
+	        	return isAnonymous() ? 
+	        			getString(R.string.event_description_penalized,(teamName == null ? ourTeam : teamName)) : 
+	        			getString(R.string.event_description_penalized,passer.getName());
+	        }
+	        case Callahan:{
+	        	return isAnonymous() ? 
+	        			getString(R.string.event_description_callahaned,(teamName == null ? ourTeam : teamName)) : 
+	        			getString(R.string.event_description_callahaned,passer.getName());
+	        }
+	        case Goal: {
+	            if (isAnonymous()) {
+	            	// {team} goal
+	            	return getString(R.string.event_description_o_goal,(teamName == null ? ourTeam : teamName));
+	            } else if (isReceiverAnonymous()) {
+	            	// {passer} pass for goal
+	            	return getString(R.string.event_description_o_goal_from,passer.getName());	            	
+	            } else if (isPasserAnonymous()) {
+	            	// {receiver} goal
+	            	return getString(R.string.event_description_o_goal, receiver.getName());
+	            } else {
+	            	// {team} goal ({passer} to {receiver})
+	            	return getString(R.string.event_description_o_goal_from_to, (teamName == null ? ourTeam : teamName), passer.getName(), receiver.getName());
+	            }
+	        }
 	        default:
 	            return "";
 	    }
