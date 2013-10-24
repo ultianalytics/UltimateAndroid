@@ -30,8 +30,22 @@
 	<string name="event_description_pull">%1$ pull %2$s</string>
 	<string name="event_description_pull_from">Pull from %1$ %2$s</string>
 	<string name="event_description_pull_ob">%1$ pull</string>
-	<string name="event_description_pull_ob_from">Pull from %1$</string>	
-        
+	<string name="event_description_pull_ob_from">Pull from %1$</string>
+	<string name="event_description_opponent_goal">Opponent goal</string>
+	<string name="event_description_opponent_goal_by">%1$ goal</string>
+	<string name="event_description_opponent_throwaway">Opponent throwaway</string>
+	<string name="event_description_opponent_throwaway_by">%1$ throwaway</string>
+	<string name="event_description_d">%1$ D</string>
+	<string name="event_description_d_by">D by %1$</string>
+	<string name="event_description_callahan">%1$ D</string>
+	<string name="event_description_callahan_by">D by %1$</string>	
+	<string name="event_description_end_of_first_quarter">End of 1st Qtr</string>
+	<string name="event_description_end_of_third_quarter">End of 3rd Qtr</string>
+	<string name="event_description_halftime">Halftime</string>
+	<string name="event_description_game_over">Game Over</string>
+	<string name="event_description_end_of_fourth_quarter">End of 4th Qtr</string>
+	<string name="event_description_end_of_overtime">End of an overtime</string>
+		
     <string name="title_activity_teams">Teams</string>
     <string name="title_activity_team">Team</string>
     <string name="title_activity_players">Players</string>

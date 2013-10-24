@@ -20,6 +20,24 @@ public class Player implements Serializable {
 		Player.ANONYMOUS_PLAYER.name = ANON_NAME;
 	}
 	
+	public static Player replaceWithSharedPlayer(Player player) {
+		if (player == null) {
+			return null;
+		}
+		if (player.isAnonymous()) {
+			return anonymous();
+		}
+		// If the player is in the current team then use that instance.
+		int teamPlayerIndex = Team.current().getPlayers().indexOf(player);
+		if (teamPlayerIndex > -1) {
+			Player teamPlayer = Team.current().getPlayers().get(teamPlayerIndex);
+			return teamPlayer;
+		} else {
+			Team.current().addPlayer(player);
+			return player;
+		}
+	}
+	
 	public Player() {
 		super();
 		name = "";

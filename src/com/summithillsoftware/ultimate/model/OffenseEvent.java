@@ -211,4 +211,8 @@ public class OffenseEvent extends Event {
 		return receiver;
 	}
 
+	public void useSharedPlayers() {
+		passer = Player.replaceWithSharedPlayer(passer);
+		receiver = Player.replaceWithSharedPlayer(receiver);
+	}
 }

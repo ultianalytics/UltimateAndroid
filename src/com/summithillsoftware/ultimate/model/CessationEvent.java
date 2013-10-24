@@ -11,6 +11,8 @@ import static com.summithillsoftware.ultimate.model.Action.Timeout;
 import java.util.Collections;
 import java.util.List;
 
+import com.summithillsoftware.ultimate.R;
+
 public class CessationEvent extends Event {
 	private static final long serialVersionUID = 8990822261864009064L;
 	private static final String NEXT_PERIOD_START_ONLINE_DETAIL = "nextPeriodStartO";
@@ -122,20 +124,25 @@ public class CessationEvent extends Event {
 	protected String getDescriptionForTeamAndOpponent(String teamName, String opponentName) {
 		switch (getAction()) {
         case EndOfFirstQuarter:
-            return "End of 1st Qtr";
+        	return getString(R.string.event_description_end_of_first_quarter);
         case EndOfThirdQuarter:
-            return "End of 3rd Qtr";
+        	return getString(R.string.event_description_end_of_third_quarter);
         case Halftime:
-            return "Halftime";
+        	return getString(R.string.event_description_halftime);
         case GameOver:
-            return "Game Over";
+        	return getString(R.string.event_description_game_over);
         case EndOfFourthQuarter:
-            return "End of 4th Qtr";
+        	return getString(R.string.event_description_end_of_fourth_quarter);
         case EndOfOvertime:
-            return "End of an overtime";
+        	return getString(R.string.event_description_end_of_overtime);
         default:
             return "";
 		}
 	}
+	
+	public void useSharedPlayers() {
+		// no-op
+	}
 }
+
 

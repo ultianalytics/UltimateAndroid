@@ -1,12 +1,10 @@
 package com.summithillsoftware.ultimate.model;
 
-import static com.summithillsoftware.ultimate.model.Action.*;
-import static com.summithillsoftware.ultimate.model.Action.Catch;
+import static com.summithillsoftware.ultimate.model.Action.Callahan;
 import static com.summithillsoftware.ultimate.model.Action.De;
-import static com.summithillsoftware.ultimate.model.Action.Drop;
 import static com.summithillsoftware.ultimate.model.Action.Goal;
-import static com.summithillsoftware.ultimate.model.Action.MiscPenalty;
-import static com.summithillsoftware.ultimate.model.Action.Stall;
+import static com.summithillsoftware.ultimate.model.Action.Pull;
+import static com.summithillsoftware.ultimate.model.Action.PullOb;
 import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 
 import java.text.DecimalFormat;
@@ -126,18 +124,22 @@ public class DefenseEvent extends Event {
 	            	return getString(R.string.event_description_pull_ob_from,defender.getName());	
 	            }
 	        }
-//	        case Goal: {
-//	            return opponentName == nil ? @"Opponent goal" : [NSString stringWithFormat:@"%@ Goal", opponentName];
-//	        }
-//	        case Throwaway:{
-//	            return opponentName == nil ? @"Opponent throwaway" : [NSString stringWithFormat:@"%@ throwaway", opponentName];
-//	        }
-//	        case De: {
-//	            return self.isAnonymous ? [NSString stringWithFormat:@"%@ D", (teamName == nil ? @"Our" : teamName)] :[NSString stringWithFormat:@"D by %@", self.defender.name];    
-//	        }
-//	        case Callahan: {
-//	            return self.isAnonymous ? [NSString stringWithFormat:@"%@ Callahan", (teamName == nil ? @"Our" : teamName)] :[NSString stringWithFormat:@"Callahan by %@", self.defender.name];
-//	        }
+	        case Goal: {
+	        	// Opponent goal || {opponent} Goal
+	        	return opponentName == null ? getString(R.string.event_description_opponent_goal) : getString(R.string.event_description_opponent_goal,opponentName);
+	        }
+	        case Throwaway:{
+	        	// Opponent throwaway || {opponent} throwaway	        	
+	        	return opponentName == null ? getString(R.string.event_description_opponent_throwaway) : getString(R.string.event_description_opponent_throwaway_by,opponentName);
+	        }
+	        case De: {
+	        	// {team|our} D || D by {player} 	        	
+	        	return defender == null ? getString(R.string.event_description_d, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_d_by,defender);
+	        }
+	        case Callahan: {
+	        	// {team|our} Callahan || Callahan by {player} 	        	
+	        	return defender == null ? getString(R.string.event_description_callahan, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_callahan_by,defender);	        	
+	        }
 	        default:
 	            return "";
 	    }
@@ -174,4 +176,7 @@ public class DefenseEvent extends Event {
 		return getDetailIntValue(HANGTIME_DETAIL_PROPERTY_NAME, 0);
 	}
 	
+	public void useSharedPlayers() {
+		defender = Player.replaceWithSharedPlayer(defender);
+	}
 }

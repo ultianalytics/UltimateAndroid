@@ -229,4 +229,6 @@ public abstract class Event implements Serializable {
 	public String getString(int resId, Object...formatArgs) {
 		return UltimateApplication.current().getString(resId, formatArgs);
 	}
+	
+	public abstract void useSharedPlayers();
 }
