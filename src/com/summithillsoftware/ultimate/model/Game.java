@@ -1,6 +1,12 @@
 package com.summithillsoftware.ultimate.model;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+import static com.summithillsoftware.ultimate.model.Action.EndOfFirstQuarter;
+import static com.summithillsoftware.ultimate.model.Action.EndOfFourthQuarter;
+import static com.summithillsoftware.ultimate.model.Action.EndOfOvertime;
+import static com.summithillsoftware.ultimate.model.Action.EndOfThirdQuarter;
+import static com.summithillsoftware.ultimate.model.Action.GameOver;
+import static com.summithillsoftware.ultimate.model.Action.Halftime;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +26,6 @@ import android.util.Log;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import static com.summithillsoftware.ultimate.model.Action.*;
 
 
 public class Game implements Serializable {
@@ -37,7 +42,6 @@ public class Game implements Serializable {
 	private String tournamentName;
 	private int gamePoint;
 	private boolean isFirstPointOline;
-	@SuppressWarnings("unused")
 	private String timeoutJson;
 	private List<Point> points;
 	private Wind wind;
