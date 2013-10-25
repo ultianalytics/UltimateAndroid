@@ -2,6 +2,9 @@ package com.summithillsoftware.ultimate.model;
 
 import android.annotation.SuppressLint;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 
 public class Player implements Serializable {
@@ -36,6 +39,14 @@ public class Player implements Serializable {
 			Team.current().addPlayer(player);
 			return player;
 		}
+	}
+	
+	public static List<Player>replaceAllWithSharedPlayers(List<Player> players) {
+		List<Player> replacementPlayers = new ArrayList<Player>();
+		for (Player player : players) {
+			replacementPlayers.add(replaceWithSharedPlayer(player));
+		}
+		return replacementPlayers;
 	}
 	
 	public Player() {
@@ -130,4 +141,17 @@ public class Player implements Serializable {
 		return "Player [name=" + name + "]";
 	}
 
+	public static Comparator<Player> PlayerNameComparator = new Comparator<Player>() {
+		public int compare(Player player1, Player player2) {
+			return player1.getName().compareTo(player2.getName());
+		}
+	};
+	
+	public static Comparator<Player> PlayerNumberComparator = new Comparator<Player>() {
+		public int compare(Player player1, Player player2) {
+			int player1Number = Integer.parseInt(player1.getNumber());
+			int player2Number = Integer.parseInt(player2.getNumber());
+			return Integer.valueOf(player1Number).compareTo(Integer.valueOf(player2Number));
+		}
+	};
 }

@@ -11,11 +11,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import android.util.Log;
 
+import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import static com.summithillsoftware.ultimate.model.Action.*;
+
 
 public class Game implements Serializable {
 	private static final long serialVersionUID = -5725999403548435161L;
@@ -40,13 +46,10 @@ public class Game implements Serializable {
 	private List<Player> lastDLine;	// server transient
 	private List<Player> lastOLine;	// server transient
 	private transient TimeoutDetails timeoutDetails; // server transient
-	@SuppressWarnings("unused")
 	private int periodsComplete; // server transient
 	@SuppressWarnings("unused")
 	private Event firstEventTweeted;  // server transient
-	@SuppressWarnings("unused")
 	private CessationEvent lastPeriodEnd; // server transient
-	@SuppressWarnings("unused")
 	private boolean arePointSummariesValid; // server transient
 	
 	public Game() {
@@ -146,6 +149,9 @@ public class Game implements Serializable {
 					Log.e(ULTIMATE, "Unable to close files when restoring game file", e2);
 				}
 			}
+		}
+		if (mergePlayersWithCurrentTeam) {
+			game.mergePlayersWithCurrentTeam();
 		}
 		return game;
 	}
@@ -257,7 +263,398 @@ public class Game implements Serializable {
 		}
 		return teamDir;
 	}
+	
+	private void mergePlayersWithCurrentTeam() {
+		for (Point point : points) {
+			point.useSharedPlayers();
+		}
+		currentLine = Player.replaceAllWithSharedPlayers(currentLine);
+		lastDLine = Player.replaceAllWithSharedPlayers(lastDLine);
+		lastOLine = Player.replaceAllWithSharedPlayers(lastOLine);
+	}
+	
+	private Point getCurrentPoint() {
+		if (points.size() == 0) {
+			return null;
+		} else {
+			return points.get(points.size() -1); // last point
+		}
+	}
+	
+	private boolean isPointOLine(Point point) {
+		updatePointSummaries();
+		return point.getSummary().isOline();
+	}
+	
+	private void updateLastLine(Event event) {
+		if (event.isFinalEventOfPoint()) {
+			if (isPointOLine(getCurrentPoint())) {
+				lastOLine = new ArrayList<Player>(currentLine);
+			} else {
+				lastDLine = new ArrayList<Player>(currentLine);
+			}
+		}
+	}
+	
+	public void clearPointSummaries() {
+		arePointSummariesValid = false;
+	}
 
+	public void addEvent(Event event) {
+		if (getCurrentPoint() == null || getCurrentPoint().isFinished()) {
+			Point newPoint = new Point();
+			addPoint(newPoint);
+		}
+		getCurrentPoint().addEvent(event);
+		getCurrentPoint().setLine(currentLine);
+		updateLastLine(event);
+		clearPointSummaries();
+		tweetEvent(event, getCurrentPoint(), false);
+	}
+	
+	public boolean hasEvents() {
+		return points.size() > 1 || getCurrentPoint().numberOfEvents() > 0;
+	}
+	
+	public boolean hasOneEvent() {
+		return points.size() == 1 && getCurrentPoint().numberOfEvents() == 1;
+	}
+	
+	private Event getLastEvent() {
+		return getCurrentPoint() == null ? null : getCurrentPoint().getLastEvent();
+	}
+	
+	public void removeLastEvent() {
+		Event lastEvent = getLastEvent();
+		if (lastEvent != null) {
+			tweetEvent(lastEvent, getCurrentPoint(), true);
+			getCurrentPoint().removeLastEvent();
+			if (getCurrentPoint().numberOfEvents() == 0) {
+				points.remove(points.size() - 1); // remove last point
+			}
+			if (lastEvent.isGoal() && getCurrentPoint() != null && getCurrentPoint().getLine() != null) {
+				currentLine = new ArrayList<Player>(getCurrentPoint().getLine());  // copy current line from the point which is now current
+			}
+			clearPointSummaries();
+		}
+	}
+	
+	private List<Point> pointsInMostRecentOrder() {
+		List<Point> pointsInMostRecentOrder = new ArrayList<Point>(points);
+		Collections.reverse(pointsInMostRecentOrder);
+		return pointsInMostRecentOrder;
+	}
+	
+	public List<Event>getLastEvents(int numberToRetrieve) {
+		Iterator<Point> reversePointIterator = pointsInMostRecentOrder().iterator();
+		
+		List<Event> answerList = new ArrayList<Event>();
+		while (reversePointIterator.hasNext() && answerList.size() < numberToRetrieve) {
+			Point point = reversePointIterator.next();
+			List<Event> pointEvents = point.getLastEvents(numberToRetrieve - answerList.size());
+			for (Event event : pointEvents) {
+				answerList.add(event);
+			}
+		}
+		return answerList;
+	}
+	
+	public int getNumberOfPoints() {
+		return points.size();
+	}
+	
+	private Point getPointAtMostRecentIndex(int index) {
+	    // points are stored in ascending order but we are being asked for an index in descending order
+		return points.isEmpty() ? null : points.get(points.size() - index - 1);
+	}
+	
+	public Score getScoreAtMostRecentIndex(int index) {
+		updatePointSummaries();
+		Point point = getPointAtMostRecentIndex(index);
+		return point == null ? null : point.getSummary().getScore();
+	}
+	
+	private Point lastPoint() {
+		return points.isEmpty() ? null : points.get(points.size() - 1);
+	}
+	
+	private String getPointNameForScore(Score score, boolean isMostRecent) {
+		if (isMostRecent && !(lastPoint().isFinished())) {
+			return getString(R.string.point_description_current);
+		} else {
+			return getString(R.string.point_description_score, score.getOurs(), score.getTheirs());
+		}
+	}
+	
+	public String getPointNameAtMostRecentIndex(int index) {
+		updatePointSummaries();
+		Score score = getScoreAtMostRecentIndex(index);
+		return getPointNameForScore(score, index == 0);
+	}
+	
+	public List<String> getPointNamesInMostRecentOrder() {
+		updatePointSummaries();
+		List<String> names = new ArrayList<String>();
+		boolean isMostRecent = true;
+		for (Point point : pointsInMostRecentOrder()) {
+			String pointName = getPointNameForScore(point.getSummary().getScore(), isMostRecent);
+			names.add(pointName);
+			isMostRecent = false;
+		}
+		return names;
+	}
+	
+	public int getHalftimePoint() {
+		return ((gamePoint == 0 ? Preferences.current().getGamePoint() : gamePoint) + 1) / 2;
+	}
+	
+	public boolean isTie() {
+		return getScore().isTie();
+	}
+	
+	public boolean doesGameAppearDone() {
+		updatePointSummaries();
+		if (isTimeBasedGame()) {
+			return hasEvents() && getLastEvent().getAction() == GameOver;
+		} else {
+			// have we reached the end point and leader has >= 2 lead?  
+			return getScore().getLeadingScore() >= gamePoint && 
+					getScore().getLeadingScore() >= getScore().getTrailingScore() + 2;
+		}
+	}
+	
+	public Action nextPeriodEnd() {
+		switch (getPeriodsComplete()) {
+		case 0:
+			return EndOfFirstQuarter;
+		case 1:
+			return Halftime;
+		case 2:
+			return EndOfThirdQuarter;
+		case 3:
+			if (isTie()) {
+				return EndOfFourthQuarter;
+			} else {
+				return GameOver;
+			}
+		default:
+			if (isTie()) {
+				return EndOfOvertime;
+			} else {
+				return GameOver;
+			}
+		}
+	}
+	
+	public boolean isHalftime() {
+		updatePointSummaries();
+		if (isTimeBasedGame()) {
+			Event lastEvent = getLastEvent();
+			return lastEvent.isCessationEvent() && ((CessationEvent)lastEvent).isHalftime();
+		} else {
+			return isNextEventImmediatelyAfterHalftime();
+		}
+	}
+	
+	public boolean isNextEventImmediatelyAfterHalftime() {
+		updatePointSummaries();
+		if (isTimeBasedGame()) {
+			return isHalftime();
+		} else {
+			if (getCurrentPoint() != null && getCurrentPoint().isFinished() && (!getCurrentPoint().getSummary().isAfterHalftime())) {
+				return getScore().getLeadingScore() == getHalftimePoint();
+			}
+			return false;
+		}
+		
+	}
+	
+	public boolean arePlayingOffense() {
+		updatePointSummaries();
+		if (getCurrentPoint() == null) {
+			return isFirstPointOline;
+		} else {
+			Event lastEvent = getLastEvent();
+			if (isNextEventImmediatelyAfterHalftime() || lastEvent.isPeriodEnd()) {
+				return isNextPointAfterPeriodEndOline();
+			} else {
+				return lastEvent.isNextEventOffense();
+			}
+		}
+	}
+	
+	public boolean isPointOline(Point point) {
+		updatePointSummaries();
+		return point.getSummary().isOline();
+	}
+	
+	public boolean isFirstPoint(Point point) {
+		return !points.isEmpty() && points.get(0) == point;
+	}
+	
+	public boolean isCurrentlyOline() {
+		updatePointSummaries();
+		if (getCurrentPoint() == null) {
+			return isFirstPointOline;
+		} else if (isNextEventImmediatelyAfterHalftime() || getLastEvent().isPeriodEnd()) {
+			return isNextPointAfterPeriodEndOline();
+		} else if (getCurrentPoint().isFinished()) {
+			return !getCurrentPoint().isOurPoint();
+		} 
+		return isPointOline(getCurrentPoint());
+	}
+	
+	public Point findPreviousPoint(Point startingPoint) {
+		updatePointSummaries();
+		return startingPoint.getSummary().getPreviousPoint();
+	}
+	
+	public List<Player> currentLineSorted() {
+		ArrayList<Player> sortedList = new ArrayList<Player>(currentLine);
+		if (Team.current().isDisplayingPlayerNumber()) {
+			Collections.sort(sortedList, Player.PlayerNumberComparator);
+		} else {
+			Collections.sort(sortedList, Player.PlayerNameComparator);
+		}
+		return sortedList;
+	}
+	
+	public void clearCurrentLine() {
+		currentLine.clear();
+	}
+	
+	public void resetCurrentLine() {
+		currentLine = new ArrayList<Player>(currentLine);
+	}
+	
+	public void makeCurentLineLastLine(boolean useOline) {
+		currentLine = new ArrayList<Player>(useOline ? lastOLine : lastDLine);
+	}
+	
+	public boolean isAfterHalftimeStarted() {
+		updatePointSummaries();
+		if (isTimeBasedGame()) {
+			return getPeriodsComplete() >= 2 && !isHalftime();
+		} else {
+			return getCurrentPoint() != null && getCurrentPoint().getSummary().isAfterHalftime();
+		}
+	
+	}
+	
+	private boolean isAfterHalftime() {
+		if (isTimeBasedGame()) {
+			return getPeriodsComplete() >= 2;
+		} else {
+			return isAfterHalftimeStarted() || isNextEventImmediatelyAfterHalftime();
+		}
+	}
+	
+	public CessationEvent getLastPeriodEnd() {
+		updatePointSummaries();
+		return lastPeriodEnd;
+	}
+	
+	private boolean isNextPointOlineAfterPeriodsFinished(int periodsFinished) {
+		return (((isFirstPointOline()  ? 1 : 0) + periodsFinished) % 2) == 1;
+	}
+	
+	public boolean canNextPointBePull() {
+		Event lastEvent = getLastEvent();
+		return lastEvent == null  ? true : lastEvent.isGoal() || lastEvent.isPeriodEnd();
+	}
+	
+	public boolean canNextPointBeDLinePull() {
+		Event lastEvent = getLastEvent();
+		if (lastEvent == null) {
+			return !isFirstPointOline();
+		}
+		if (isTimeBasedGame()) {
+			if (lastEvent.isOurGoal()) {
+				return true;
+			} else if (lastEvent.isPeriodEnd()) {
+				boolean isNextPointOline = isNextPointAfterPeriodEndOline();
+				return !isNextPointOline;
+			} else {
+				return false;
+			}
+		} else {
+			return lastEvent.isOurGoal() || (lastEvent.isTheirGoal() && isNextEventImmediatelyAfterHalftime() && isFirstPointOline);
+		}
+	}
+	
+	private boolean isNextPointAfterPeriodEndOline() {
+		int periodsFinished = isTimeBasedGame() ? getPeriodsComplete() : (isAfterHalftime() ? 1 : 0);
+	    if (periodsFinished >= 4) {
+	        return getLastPeriodEnd().isNextOvertimePeriodStartingOline();
+	    } else {
+	        return isNextPointOlineAfterPeriodsFinished(periodsFinished);
+	    }
+
+	}
+	
+	public boolean isPointInProgess() {
+		Event lastEvent = getLastEvent();
+		return lastEvent != null && !lastEvent.isGoal() && !lastEvent.isPeriodEnd();
+		
+	}
+	
+	public Set<Player> getPlayers() {
+		HashSet<Player> players = new HashSet<Player>();
+		players.addAll(currentLine);
+		players.addAll(lastOLine);
+		players.addAll(lastDLine);
+		for (Point point : points) {
+			players.addAll(point.getPlayers());
+		}
+		return players;
+	}
+	
+	private void updatePointSummaries() {
+		if (!arePointSummariesValid) {
+			int periodEndCount = 0;
+			Score score = new Score(0,0);
+			Point lastPoint = null;
+			for (Point point : points) {
+				PointSummary summary = new PointSummary();
+				summary.setFinished(point.isFinished());
+				if (point.isPeriodEnd()) {
+					lastPeriodEnd = point.getPeriodEnd();
+				}
+				if (summary.isFinished()) {
+					if (point.isOurPoint()) {
+						score.incOurs();
+					} else {
+						score.incTheirs();
+					}
+				}
+				summary.setScore(score.copy());
+				if (isTimeBasedGame()) {
+					summary.setAfterHalftime(periodEndCount > 2);
+					if (lastPoint == null || lastPoint.isPeriodEnd()) {
+						summary.setOline(isNextPointOlineAfterPeriodsFinished(periodEndCount));
+					} else {
+						summary.setOline(!lastPoint.isOurPoint());
+					}
+				} else {
+					summary.setAfterHalftime(lastPoint != null && (getHalftimePoint() <= lastPoint.getSummary().getScore().getLeadingScore()));
+					boolean isFirstPointAfterHalftime = lastPoint != null &&
+							summary.isAfterHalftime() && !lastPoint.getSummary().isAfterHalftime();
+					summary.setOline(lastPoint == null ? isFirstPointOline : (isFirstPointAfterHalftime ? !isFirstPointOline : !lastPoint.isOurPoint()));
+				}
+				summary.setElapsedSeconds(point.getTimeEndedSeconds() - point.getTimeStartedSeconds());
+				summary.setPreviousPoint(lastPoint);
+				point.setSummary(summary);
+				lastPoint = point;
+			}
+			periodsComplete = periodEndCount;
+			arePointSummariesValid = true;
+		}
+	}
+	
+	private void tweetEvent(Event event, Point point, boolean isUndo) {
+		// TODO...finish this
+	}
+	
 	public Date getStartDateTime() {
 		return startDateTime;
 	}
@@ -295,8 +692,12 @@ public class Game implements Serializable {
 	}
 	
 	public Score getScore() {
-		// TODO...FINISH
-		return new Score();
+		updatePointSummaries();
+		if (getCurrentPoint() == null) {
+			return new Score(0,0);
+		} else {
+			return getCurrentPoint().getSummary().getScore();
+		}
 	}
 
 	public int getGamePoint() {
@@ -343,23 +744,114 @@ public class Game implements Serializable {
 		return points;
 	}
 
-	public void setPoints(List<Point> points) {
-		this.points = points;
+	private void addPoint(Point point) {
+		points.add(point);
 	}
 
-	public TimeoutDetails getTimeoutDetails() {
-		return timeoutDetails;
-	}
-
-	public void setTimeoutDetails(TimeoutDetails timeoutDetails) {
-		this.timeoutDetails = timeoutDetails;
-	}
-	
 	public boolean isTimeBasedGame() {
 		return gamePoint == TIME_BASED_GAME_POINT;
 	}
-
-	public void clearPointSummaries() {
-		// TODO...finish this
+	
+	public String getString(int resId) {
+		return UltimateApplication.current().getString(resId);
 	}
+	
+	public String getString(int resId, Object...formatArgs) {
+		return UltimateApplication.current().getString(resId, formatArgs);
+	}
+	
+	public int getPeriodsComplete() {
+		updatePointSummaries();
+		return periodsComplete;
+	}
+
+	/*
+	 * Substitutions
+	 */
+	
+	public void addSubstitution(PlayerSubstitution substitution) {
+		getCurrentPoint().getSubstitutions().add(substitution);
+		adjustLineForSubstitution(substitution);
+	}
+	
+	public boolean removeLastSubstitutionForCurrentPoint() {
+		PlayerSubstitution lastSub = getCurrentPoint().lastSubstitution();
+		if (lastSub != null) {
+			getCurrentPoint().getSubstitutions().remove(lastSub);
+			return adjustLineForSubstitutionUndo(lastSub);
+		}
+		return false;
+	}
+	
+	// most recent first 
+	public List<PlayerSubstitution> substitutionsForCurrentPoint() {
+		Point point = getCurrentPoint();
+		if (point == null || point.isFinished()) {
+			return Collections.emptyList();
+		} else {
+			List<PlayerSubstitution> subs = new ArrayList<PlayerSubstitution>(point.getSubstitutions());
+			Collections.reverse(subs);
+			return subs;
+		}
+	}
+	
+	private void adjustLineForSubstitution(PlayerSubstitution sub) {
+		currentLine.remove(sub.getFromPlayer());
+		if (currentLine.size() < 7) {
+			currentLine.add(sub.getToPlayer());
+		}
+	}
+	
+	private boolean adjustLineForSubstitutionUndo(PlayerSubstitution sub) {
+	    if (!currentLine.contains(sub.getToPlayer()) || currentLine.contains(sub.getFromPlayer())) {
+	        return false;
+	    }
+	    currentLine.remove(sub.getToPlayer());
+	    if (currentLine.size() < 7) {
+	        currentLine.add(sub.getFromPlayer());
+	    }
+	    return true;
+	}
+	
+	/*
+	 * Timeouts
+	 */
+	
+	public void setTimeoutDetails(TimeoutDetails timeoutDetails) {
+		this.timeoutDetails = timeoutDetails;
+		if (timeoutDetails != null) {
+			// TODO...write out timeoutJson
+		} else {
+			timeoutJson = null;
+		}
+	}
+	
+	public TimeoutDetails getTimeoutDetails() {
+		if (timeoutDetails == null) {
+			if (timeoutJson != null) {
+				// TODO...read-in JSON and set timeoutDetails var
+			} else {
+				timeoutDetails = new TimeoutDetails();
+				timeoutDetails.setQuotaPerHalf(Preferences.current().getTimeoutsPerHalf());
+				timeoutDetails.setQuotaFloaters(Preferences.current().getTimeoutFloatersPerGame());
+			}
+		}
+		return timeoutDetails;
+	}
+
+	public int availableTimeouts() {
+		if (timeoutDetails == null) {
+			return 0;
+		}
+		int totalAvailableFirstHalf = timeoutDetails.getQuotaPerHalf() + timeoutDetails.getQuotaFloaters();
+	    if (isAfterHalftime()) {
+	        int floatersAvailableAfterFirstHalf = Math.min(totalAvailableFirstHalf - timeoutDetails.getTakenFirstHalf(), timeoutDetails.getQuotaFloaters());
+	        int totalAvailableSecondHalf = timeoutDetails.getQuotaPerHalf() + floatersAvailableAfterFirstHalf;
+	        return totalAvailableSecondHalf - timeoutDetails.getTakenSecondHalf();
+	    } else {
+	        return totalAvailableFirstHalf - timeoutDetails.getTakenFirstHalf();
+	    }
+	}
+
+	
 }

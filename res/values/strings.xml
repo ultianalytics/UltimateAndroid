@@ -10,7 +10,10 @@
     <string name="common_versus_short">v.</string>
     <string name="common_our">our</string>
     <string name="common_hangtime_seconds">%1$s sec</string>
-
+    
+    <string name="point_description_current">Current</string>
+	<string name="point_description_score">%1$d-%2$d</string>
+    
     <string name="event_description_our_team">Our team</string>
     <string name="event_description_pass">%1$s pass</string>
     <string name="event_description_pass_to">Pass to %1$s</string>

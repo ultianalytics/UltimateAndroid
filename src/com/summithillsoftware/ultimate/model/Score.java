@@ -25,12 +25,20 @@ public class Score implements Serializable{
 		this.ours = ours;
 	}
 	
+	public void incOurs() {
+		this.ours++;
+	}
+	
 	public int getTheirs() {
 		return theirs;
 	}
 	
 	public void setTheirs(int theirs) {
 		this.theirs = theirs;
+	}
+	
+	public void incTheirs() {
+		this.theirs++;
 	}
 
 	public String formatted() {
@@ -47,6 +55,18 @@ public class Score implements Serializable{
 	
 	public boolean isTheirLead() {
 		return theirs > ours;
+	}
+	
+	public int getLeadingScore() {
+		return Math.max(ours, theirs);
+	}
+	
+	public int getTrailingScore() {
+		return Math.min(ours, theirs);
+	}
+	
+	public Score copy() {
+		return new Score(ours, theirs);
 	}
 
 
