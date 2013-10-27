@@ -26,6 +26,8 @@ import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class GameActivity extends AbstractActivity {
 	public static final String NEW_GAME = "NewGame";
+	
+//	private Menu menu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class GameActivity extends AbstractActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 	    super.onPrepareOptionsMenu(menu);
 	    menu.findItem(R.id.action_delete).setVisible(!isNewGame());
+	    menu.findItem(R.id.action_action).setVisible(!isNewGame());
 	    return true;
 	}
 
@@ -78,6 +81,7 @@ public class GameActivity extends AbstractActivity {
 		if (isGameValid()) {
 			populateAndSaveGame();
 			if (isNew) {
+				getIntent().removeExtra(NEW_GAME);
 				goToActionActivity();
 			}
 		} 
@@ -122,13 +126,13 @@ public class GameActivity extends AbstractActivity {
 			String scoreFormatted = game.getScore().getOurs() + "-" + game.getScore().getTheirs() + " ";
 			if (game.getScore().isOurLead()) {
 				getScoreView().setTextColor(Color.GREEN);
-				scoreFormatted += "(us)";
+				scoreFormatted += "(" + getString(R.string.common_us) + ")";
 			} else if (game.getScore().isTheirLead()) {
 				getScoreView().setTextColor(Color.RED);
-				scoreFormatted += "(them)";
+				scoreFormatted += "(" + getString(R.string.common_them) + ")";
 			} else {
 				getScoreView().setTextColor(Color.WHITE);
-				scoreFormatted += "(tied)";
+				scoreFormatted += "(" + getString(R.string.common_tied) + ")";
 			} 
 			getScoreView().setText(scoreFormatted);
 			getFirstPointOlineRadioGroup().check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
@@ -137,7 +141,8 @@ public class GameActivity extends AbstractActivity {
 		}
 	
 		getDateView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
-		getScoreView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);		
+		getScoreView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+
 	}
 	
 	private void populateGamePointView(int gamePoint) {

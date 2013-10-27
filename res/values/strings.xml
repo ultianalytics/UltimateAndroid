@@ -9,6 +9,9 @@
     <string name="common_today">Today</string>
     <string name="common_versus_short">v.</string>
     <string name="common_our">our</string>
+    <string name="common_us">us</string>
+    <string name="common_them">them</string>
+    <string name="common_tied">tied</string>
     <string name="common_hangtime_seconds">%1$s sec</string>
     
     <string name="point_description_current">Current</string>
@@ -65,6 +68,7 @@
     <string name="action_teams">Teams</string>
     <string name="action_games">Games</string>
     <string name="action_action">Action</string>
+	<string name="action_line">Line</string>    
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
     <string name="alert_team_confirm_delete_message">Do you really want to delete team \"%1$s\"?</string>
     <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
@@ -95,6 +99,8 @@
     <string name="label_player_gender">Gender</string>
     <string name="label_game_first_point_oline">Our team start</string>
     <string name="label_game_game_to">Game to</string>
+    <string name="label_line_field">Field</string>
+    <string name="label_line_bench">Bench</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -104,6 +110,10 @@
     <string name="button_save">Save</string>
     <string name="button_save_and_add">Save, Add New</string>
     <string name="button_start">Start Game</string>
+    <string name="button_line_last_oline">Last O-Line</string>
+    <string name="button_line_last_dline">Last D-Line</string>
+    <string name="button_line_clear">Clear</string>
+    <string name="button_line_substitution">Substitution</string>
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
     <string name="radio_team_playerdisplay_name">Name</string>
@@ -123,6 +133,7 @@
     <string name="radio_game_to_time">Time</string>
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
+    
 
 
 </resources>

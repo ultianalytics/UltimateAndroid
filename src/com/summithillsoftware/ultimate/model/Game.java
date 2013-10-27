@@ -58,15 +58,15 @@ public class Game implements Serializable {
 	
 	public Game() {
 		super();
+		gameId = Game.generateUniqueFileName();
+		points = new ArrayList<Point>();
+		currentLine = new ArrayList<Player>();
+		opponentName = "";
+		tournamentName = "";
 	}
 	
 	public static Game createGame() {
 		Game game = new Game();
-		game.gameId = Game.generateUniqueFileName();
-		game.startDateTime = new Date();
-		game.opponentName = "";
-		game.tournamentName = "";
-		game.currentLine = new ArrayList<Player>();
 		game.gamePoint = Preferences.current().getGamePoint();
 		return game;
 	}
@@ -273,8 +273,12 @@ public class Game implements Serializable {
 			point.useSharedPlayers();
 		}
 		currentLine = Player.replaceAllWithSharedPlayers(currentLine);
-		lastDLine = Player.replaceAllWithSharedPlayers(lastDLine);
-		lastOLine = Player.replaceAllWithSharedPlayers(lastOLine);
+		if (lastDLine != null) {
+			lastDLine = Player.replaceAllWithSharedPlayers(lastDLine);
+		}
+		if (lastOLine != null) {
+			lastOLine = Player.replaceAllWithSharedPlayers(lastOLine);
+		}
 	}
 	
 	private Point getCurrentPoint() {
@@ -409,7 +413,7 @@ public class Game implements Serializable {
 	}
 	
 	public int getHalftimePoint() {
-		return ((gamePoint == 0 ? Preferences.current().getGamePoint() : gamePoint) + 1) / 2;
+		return ((getGamePoint() == 0 ? Preferences.current().getGamePoint() : getGamePoint()) + 1) / 2;
 	}
 	
 	public boolean isTie() {
@@ -422,7 +426,7 @@ public class Game implements Serializable {
 			return hasEvents() && getLastEvent().getAction() == GameOver;
 		} else {
 			// have we reached the end point and leader has >= 2 lead?  
-			return getScore().getLeadingScore() >= gamePoint && 
+			return getScore().getLeadingScore() >= getGamePoint() && 
 					getScore().getLeadingScore() >= getScore().getTrailingScore() + 2;
 		}
 	}
@@ -705,6 +709,9 @@ public class Game implements Serializable {
 	}
 
 	public int getGamePoint() {
+		if (gamePoint == 0) {
+			gamePoint = Preferences.current().getGamePoint();
+		}
 		return gamePoint;
 	}
 
@@ -753,7 +760,7 @@ public class Game implements Serializable {
 	}
 
 	public boolean isTimeBasedGame() {
-		return gamePoint == TIME_BASED_GAME_POINT;
+		return getGamePoint() == TIME_BASED_GAME_POINT;
 	}
 	
 	public String getString(int resId) {
