@@ -68,6 +68,7 @@ public class Game implements Serializable {
 	public static Game createGame() {
 		Game game = new Game();
 		game.gamePoint = Preferences.current().getGamePoint();
+		game.currentLine = Team.current().getDefaultLine();
 		return game;
 	}
 	

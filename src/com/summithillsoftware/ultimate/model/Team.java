@@ -325,5 +325,29 @@ public class Team implements Serializable {
 		}
 		return false;
 	}
+	
+	public List<Player> getDefaultLine() {
+		List<Player> sortedPlayers = getPlayersSorted(); 
+		List<Player> line = new ArrayList<Player>();
+	    int maleCount = 0;
+	    int femaleCount = 0;
+	    for (Player player : sortedPlayers) {
+			if (isMixed()) {
+				if (player.isMale() && maleCount < 4) {
+					line.add(player);
+					maleCount++;
+				} else if (!player.isMale() && femaleCount < 4) {
+					line.add(player);
+					femaleCount++;
+				}
+			} else {
+				line.add(player);
+			}
+			if (line.size() >= 7) {
+				break;
+			}
+		}
+	    return line;
+	}
 
 }
