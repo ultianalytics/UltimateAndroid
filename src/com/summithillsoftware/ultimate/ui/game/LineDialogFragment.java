@@ -7,12 +7,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -21,6 +21,9 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 
 public class LineDialogFragment extends DialogFragment {
+	private static int BUTTON_WIDTH = 120;
+	private static int BUTTON_HEIGHT = 60;
+	private static int BUTTON_MARGIN = 2;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,8 +61,8 @@ public class LineDialogFragment extends DialogFragment {
     private void populateButtonContainer(ViewGroup buttonContainer, List<Player> players, boolean isField) {
     	buttonContainer.removeAllViews();
     	int maxButtonsPerRow = playerButtonsPerRow();
-    	ViewGroup buttonRowView = addButtonRowLayout(buttonContainer);
-    	buttonRowView.addView(createButtonContainerLabel(isField ? "Field"  : "Bench"));
+    	LinearLayout buttonRowView = addButtonRowLayout(buttonContainer);
+    	addButtonOrLabelToRow(buttonRowView,createButtonContainerLabel(isField ? "Field"  : "Bench"));
     	int numberOfButtonsInRow = 1;  
     	for (Player player : players) {
     		if (numberOfButtonsInRow >= maxButtonsPerRow) {
@@ -68,16 +71,22 @@ public class LineDialogFragment extends DialogFragment {
     		}
     		PlayerLineButton button = createLineButton(player);
     		button.setOnField(isField);
-	        buttonRowView.addView(button);
+    		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
 		}
     }
     
-    private ViewGroup addButtonRowLayout(ViewGroup buttonContainer) {
+    private LinearLayout addButtonRowLayout(ViewGroup buttonContainer) {
     	LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );	
-    	ViewGroup buttonRow = (ViewGroup)inflater.inflate(R.layout.line_row, null);
+    	LinearLayout buttonRow = (LinearLayout)inflater.inflate(R.layout.line_row, null);
     	buttonContainer.addView(buttonRow);
     	return buttonRow;
+    }
+    
+    private void addButtonOrLabelToRow(LinearLayout buttonRowView, View buttonOrLabel) {
+    	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BUTTON_WIDTH, BUTTON_HEIGHT);
+        layoutParams.setMargins(BUTTON_MARGIN, BUTTON_MARGIN, BUTTON_MARGIN, BUTTON_MARGIN);
+        buttonRowView.addView(buttonOrLabel,layoutParams);
     }
     
     private int playerButtonsPerRow() {
@@ -88,7 +97,7 @@ public class LineDialogFragment extends DialogFragment {
     private TextView createButtonContainerLabel(String name) {
     	TextView label = new TextView(getActivity());
     	label.setText(name);
-    	label.setWidth(buttonWidth());
+    	label.setWidth(BUTTON_WIDTH);
     	label.setPadding(6,0,0,0);
     	label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
     	return label;
@@ -96,22 +105,16 @@ public class LineDialogFragment extends DialogFragment {
     
     private PlayerLineButton createLineButton(Player player) {
     	PlayerLineButton button = (PlayerLineButton) getActivity().getLayoutInflater().inflate(R.layout.line_button, null);
-//		PlayerLineButton button = new PlayerLineButton(getActivity());
 		button.setPlayer(player);
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  buttonClicked((PlayerLineButton)v);
              }
          });	
-        button.setWidth(buttonWidth());
-        button.setMaxLines(1);
-        button.setEllipsize(TextUtils.TruncateAt.END);
+        button.setWidth(BUTTON_WIDTH);
         return button;
     }
-    
-    private int buttonWidth() {
-    	return 120;
-    }
+
     
     private void buttonClicked(PlayerLineButton button) {
     	
