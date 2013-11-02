@@ -95,7 +95,8 @@ public class LineDialogFragment extends DialogFragment {
     }
     
     private PlayerLineButton createLineButton(Player player) {
-		PlayerLineButton button = new PlayerLineButton(getActivity());
+    	PlayerLineButton button = (PlayerLineButton) getActivity().getLayoutInflater().inflate(R.layout.line_button, null);
+//		PlayerLineButton button = new PlayerLineButton(getActivity());
 		button.setPlayer(player);
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {

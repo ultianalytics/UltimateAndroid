@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.Button;
 
 import com.summithillsoftware.ultimate.model.Game;
@@ -13,8 +14,14 @@ public class PlayerLineButton extends Button {
 
 	public PlayerLineButton(Context context) {
 		super(context);
+	} 
+	public PlayerLineButton(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
 	}
-
+	public PlayerLineButton(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -46,5 +53,7 @@ public class PlayerLineButton extends Button {
 	private boolean isPlayerOnField(Player player) {
 		return Game.current().getCurrentLine().contains(player);
 	}
+
+
 
 }
