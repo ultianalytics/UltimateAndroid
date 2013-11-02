@@ -14,6 +14,11 @@
              <solid  android:color="#308d9e"/>       
          </shape>
      </item>  
+    <item android:state_enabled="false">
+         <shape android:shape="rectangle"  >
+             <solid  android:color="@android:color/transparent" />       
+         </shape>
+     </item>       
     <item >
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />

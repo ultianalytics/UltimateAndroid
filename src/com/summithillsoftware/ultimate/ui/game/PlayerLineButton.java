@@ -44,9 +44,11 @@ public class PlayerLineButton extends Button {
 	
 	private void updateStyle() {
 		if (player.isAnonymous() || (!isOnField() && isPlayerOnField(player))) {
-//			setBackgroundColor(getResources().getColor(android.R.color.transparent));
+			setEnabled(false);
 		} else {
-//			setBackgroundColor(color.Red);
+			setEnabled(true);
+			// TODO...adjust background to match playing time
+			// TODO...show gender and number of points played
 		}
 	}
 	
