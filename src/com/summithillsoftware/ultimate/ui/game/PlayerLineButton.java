@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
+import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
@@ -30,7 +31,8 @@ public class PlayerLineButton extends Button {
 		this.player = player;
 		String description = player.isAnonymous() ? "open" : (Team.current().isDisplayingPlayerNumber() ? player.getNumber() : player.getName());
 		this.setText(description);
-		updateStyle();
+		setTag(player.getName());
+		updateView();
 	}
 
 	public boolean isOnField() {
@@ -39,21 +41,36 @@ public class PlayerLineButton extends Button {
 
 	public void setOnField(boolean isOnField) {
 		this.isOnField = isOnField;
-		updateStyle();
+		updateView();
 	}
 	
-	private void updateStyle() {
+	public void updateView() {
 		if (player.isAnonymous() || (!isOnField() && isPlayerOnField(player))) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);
-			// TODO...adjust background to match playing time
 			// TODO...show gender and number of points played
 		}
+		if (isEnabled()) {
+			setTextColor(getResources().getColor(R.color.White));
+		} else {
+			if (isOnField) {
+				setTextColor(getResources().getColor(R.color.DarkOrange));
+			} else {
+				setTextColor(getResources().getColor(R.color.DarkOliveGreen));
+			}
+		}
 	}
+
 	
 	private boolean isPlayerOnField(Player player) {
 		return Game.current().getCurrentLine().contains(player);
+	}
+	
+	@Override
+	public String toString() {
+		return "PlayerLineButton [player=" + player.getName() + ", isOnField="
+				+ isOnField + ", tag=" + getTag() +"]";
 	}
 
 

@@ -19,6 +19,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.ui.AbstractActivity;
 
 public class LineDialogFragment extends DialogFragment {
 	private static int BUTTON_WIDTH = 120;
@@ -114,12 +115,30 @@ public class LineDialogFragment extends DialogFragment {
         button.setWidth(BUTTON_WIDTH);
         return button;
     }
-
     
-    private void buttonClicked(PlayerLineButton button) {
-    	
+    private void buttonClicked(PlayerLineButton clickedButton) {
+    	if (clickedButton.isOnField()) {  // player on field
+    		Game.current().removeFromCurrentLine(clickedButton.getPlayer());
+    		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
+    		clickedButton.setPlayer(Player.anonymous());
+    		benchButton.updateView();
+    	} else {  // player on bench
+    		if (Game.current().getCurrentLine().size() < 7) {
+	    		Game.current().addToCurrentLine(clickedButton.getPlayer());
+	    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
+	    		fieldButton.setPlayer(clickedButton.getPlayer());
+	    		fieldButton.updateView();
+    		} else {
+    			// TODO...sound warning (can't add add more to field)
+    		}
+    	}
+    	clickedButton.updateView();
     }
 
+    private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
+    	ViewGroup containerView = (ViewGroup)getView().findViewById(onField ? R.id.lineFieldPlayers : R.id.lineBenchPlayers);
+    	return (PlayerLineButton) AbstractActivity.findFirstViewWithTag(containerView, player.getName());
+    }
 
 
 }

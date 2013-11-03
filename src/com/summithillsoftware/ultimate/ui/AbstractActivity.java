@@ -2,12 +2,18 @@ package com.summithillsoftware.ultimate.ui;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class AbstractActivity extends ActionBarActivity {
 	
@@ -20,6 +26,45 @@ public class AbstractActivity extends ActionBarActivity {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+	}
+	
+	public static List<View> findViewsWithTag(ViewGroup viewGroup, Object tag){
+	    List<View> answerList = new ArrayList<View>();
+	    
+	    if (viewGroup.getTag().equals(tag)) {
+	    	answerList.add(viewGroup);
+	    }
+	    final int numberOfChildren = viewGroup.getChildCount();
+	    for (int i=0; i < numberOfChildren; i++){
+	        final View childView = viewGroup.getChildAt(i);
+	        if (childView.getTag().equals(tag)) {
+	        	answerList.add(childView);
+	        }
+	        if(childView instanceof ViewGroup){
+	        	answerList.addAll(findViewsWithTag((ViewGroup)childView, tag));
+	        }
+	    }
+
+	    return answerList;
+	}
+	
+	public static View findFirstViewWithTag(ViewGroup viewGroup, Object tag){
+	    final int numberOfChildren = viewGroup.getChildCount();
+	    
+	    for (int i = 0; i < numberOfChildren; i++) {
+	    	final View childView = viewGroup.getChildAt(i);
+	        if (tag.equals(childView.getTag())) {
+	        	return childView;
+	        }
+	        if (childView instanceof ViewGroup) {
+	        	View hit = findFirstViewWithTag((ViewGroup)childView, tag);
+	        	if (hit != null) {
+	        		return hit;
+	        	}
+	        }
+	    }
+
+	    return null;
 	}
 	
 	protected boolean navigateUp() {

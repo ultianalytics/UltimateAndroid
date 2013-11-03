@@ -691,6 +691,16 @@ public class Game implements Serializable {
 	public List<Player> getCurrentLine() {
 		return currentLine;
 	}
+	
+	public void addToCurrentLine(Player player) {
+		if (currentLine.size() < 7) {
+			currentLine.add(player);
+		}
+	}
+	
+	public void removeFromCurrentLine(Player player) {
+		currentLine.remove(player);
+	}
 
 	public void setCurrentLine(List<Player> currentLine) {
 		this.currentLine = currentLine;
