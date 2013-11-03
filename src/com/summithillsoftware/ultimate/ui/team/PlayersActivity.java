@@ -14,9 +14,9 @@ import android.widget.Toast;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class PlayersActivity extends AbstractActivity {
+public class PlayersActivity extends UltimateActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

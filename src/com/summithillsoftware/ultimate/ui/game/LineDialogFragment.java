@@ -19,7 +19,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
 public class LineDialogFragment extends DialogFragment {
 	private static int BUTTON_WIDTH = 120;
@@ -71,7 +71,7 @@ public class LineDialogFragment extends DialogFragment {
     			numberOfButtonsInRow = 0;
     		}
     		PlayerLineButton button = createLineButton(player);
-    		button.setOnField(isField);
+    		button.setButtonOnFieldView(isField);
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
 		}
@@ -117,7 +117,7 @@ public class LineDialogFragment extends DialogFragment {
     }
     
     private void buttonClicked(PlayerLineButton clickedButton) {
-    	if (clickedButton.isOnField()) {  // player on field
+    	if (clickedButton.isButtonOnFieldView()) {  // player on field
     		Game.current().removeFromCurrentLine(clickedButton.getPlayer());
     		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
     		clickedButton.setPlayer(Player.anonymous());
@@ -137,7 +137,7 @@ public class LineDialogFragment extends DialogFragment {
 
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
     	ViewGroup containerView = (ViewGroup)getView().findViewById(onField ? R.id.lineFieldPlayers : R.id.lineBenchPlayers);
-    	return (PlayerLineButton) AbstractActivity.findFirstViewWithTag(containerView, player.getName());
+    	return (PlayerLineButton) UltimateActivity.findFirstViewWithTag(containerView, player.getName());
     }
 
 

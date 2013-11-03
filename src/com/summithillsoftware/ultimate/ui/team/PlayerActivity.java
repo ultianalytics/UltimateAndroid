@@ -14,9 +14,9 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerPosition;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class PlayerActivity extends AbstractActivity {
+public class PlayerActivity extends UltimateActivity {
 	public static final String NEW_PLAYER = "NewPlayer";
 	public static final String PLAYER_NAME = "PlayerName";
 

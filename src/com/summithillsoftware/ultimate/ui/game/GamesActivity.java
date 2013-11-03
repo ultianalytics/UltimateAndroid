@@ -15,9 +15,9 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class GamesActivity extends AbstractActivity {
+public class GamesActivity extends UltimateActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

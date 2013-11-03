@@ -11,7 +11,7 @@ import com.summithillsoftware.ultimate.model.Team;
 
 public class PlayerLineButton extends Button {
 	private Player player;
-	private boolean isOnField;
+	private boolean isButtonOnFieldView;
 
 	public PlayerLineButton(Context context) {
 		super(context);
@@ -35,17 +35,17 @@ public class PlayerLineButton extends Button {
 		updateView();
 	}
 
-	public boolean isOnField() {
-		return isOnField;
+	public boolean isButtonOnFieldView() {
+		return isButtonOnFieldView;
 	}
 
-	public void setOnField(boolean isOnField) {
-		this.isOnField = isOnField;
+	public void setButtonOnFieldView(boolean isOnField) {
+		this.isButtonOnFieldView = isOnField;
 		updateView();
 	}
 	
 	public void updateView() {
-		if (player.isAnonymous() || (!isOnField() && isPlayerOnField(player))) {
+		if (player.isAnonymous() || (!isButtonOnFieldView() && isPlayerOnField(player))) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);
@@ -54,7 +54,7 @@ public class PlayerLineButton extends Button {
 		if (isEnabled()) {
 			setTextColor(getResources().getColor(R.color.White));
 		} else {
-			if (isOnField) {
+			if (isButtonOnFieldView) {
 				setTextColor(getResources().getColor(R.color.DarkOrange));
 			} else {
 				setTextColor(getResources().getColor(R.color.DarkOliveGreen));
@@ -69,8 +69,8 @@ public class PlayerLineButton extends Button {
 	
 	@Override
 	public String toString() {
-		return "PlayerLineButton [player=" + player.getName() + ", isOnField="
-				+ isOnField + ", tag=" + getTag() +"]";
+		return "PlayerLineButton [player=" + player.getName() + ", isOnFieldView="
+				+ isButtonOnFieldView + ", tag=" + getTag() +"]";
 	}
 
 

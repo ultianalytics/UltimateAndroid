@@ -15,7 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AbstractActivity extends ActionBarActivity {
+public class UltimateActivity extends ActionBarActivity {
 	
 	
 	/**

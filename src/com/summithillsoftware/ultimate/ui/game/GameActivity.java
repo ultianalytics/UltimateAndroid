@@ -22,9 +22,9 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class GameActivity extends AbstractActivity {
+public class GameActivity extends UltimateActivity {
 	public static final String NEW_GAME = "NewGame";
 	
 //	private Menu menu;

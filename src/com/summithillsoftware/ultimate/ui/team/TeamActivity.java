@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
 
-public class TeamActivity extends AbstractActivity {
+public class TeamActivity extends UltimateActivity {
 	public static final String NEW_TEAM = "NewTeam";
 	
 	@Override

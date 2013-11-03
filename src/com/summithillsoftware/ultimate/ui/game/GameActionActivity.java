@@ -8,9 +8,9 @@ import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
-import com.summithillsoftware.ultimate.ui.AbstractActivity;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class GameActionActivity extends AbstractActivity {
+public class GameActionActivity extends UltimateActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
