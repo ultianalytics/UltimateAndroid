@@ -1199,13 +1199,14 @@ containing a value of this type.
         public static final int ic_action_users=0x7f020059;
         public static final int ic_launcher=0x7f02005a;
         public static final int line_button_background=0x7f02005b;
-        public static final int plus_group_white=0x7f02005c;
-        public static final int plus_person_white=0x7f02005d;
-        public static final int plus_white=0x7f02005e;
-        public static final int social_group=0x7f02005f;
-        public static final int social_person=0x7f020060;
-        public static final int team=0x7f020061;
-        public static final int trash_white=0x7f020062;
+        public static final int line_selection_action_button_background=0x7f02005c;
+        public static final int plus_group_white=0x7f02005d;
+        public static final int plus_person_white=0x7f02005e;
+        public static final int plus_white=0x7f02005f;
+        public static final int social_group=0x7f020060;
+        public static final int social_person=0x7f020061;
+        public static final int team=0x7f020062;
+        public static final int trash_white=0x7f020063;
     }
     public static final class id {
         public static final int action_action=0x7f050086;
@@ -1803,6 +1804,7 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0022;
+        public static final int buttonLineAction=0x7f0b0082;
         public static final int buttonLinePlayer=0x7f0b0081;
     }
     public static final class styleable {

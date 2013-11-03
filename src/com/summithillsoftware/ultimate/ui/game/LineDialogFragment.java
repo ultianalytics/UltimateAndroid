@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
@@ -25,6 +27,8 @@ public class LineDialogFragment extends DialogFragment {
 	private static int BUTTON_WIDTH = 120;
 	private static int BUTTON_HEIGHT = 60;
 	private static int BUTTON_MARGIN = 2;
+	
+	private Vibrator vibrator;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,7 +133,7 @@ public class LineDialogFragment extends DialogFragment {
 	    		fieldButton.setPlayer(clickedButton.getPlayer());
 	    		fieldButton.updateView();
     		} else {
-    			// TODO...sound warning (can't add add more to field)
+    			errorVibrate();
     		}
     	}
     	clickedButton.updateView();
@@ -140,5 +144,20 @@ public class LineDialogFragment extends DialogFragment {
     	return (PlayerLineButton) UltimateActivity.findFirstViewWithTag(containerView, player.getName());
     }
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (vibrator != null) {
+			vibrator.cancel();
+		}
+	}
+
+	
+	public void errorVibrate() {
+		if (vibrator == null) {
+			vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+		}
+		vibrator.vibrate(500); // 500 milliseconds
+	}
 
 }

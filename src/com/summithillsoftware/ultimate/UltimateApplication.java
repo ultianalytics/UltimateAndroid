@@ -1,8 +1,10 @@
 package com.summithillsoftware.ultimate;
 
-import com.summithillsoftware.ultimate.model.Team;
-
 import android.app.Application;
+import android.content.Context;
+import android.os.Vibrator;
+
+import com.summithillsoftware.ultimate.model.Team;
 
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
@@ -38,6 +40,5 @@ public class UltimateApplication extends Application {
 		this.isAppStartInProgress = false;
 	}
 
-
-    
+   
 }
