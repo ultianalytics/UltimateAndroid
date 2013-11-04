@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
@@ -55,6 +56,12 @@ public class LineDialogFragment extends DialogFragment {
         registerClearButtonClickListener();	
 	}
     
+	@Override
+	public void onDismiss (DialogInterface dialog) {
+		Game.current().save();
+		super.onDismiss(dialog);
+	}
+	
     private void populateView() {
     	populateFieldAndBench();
     	getLastLineButton().setText(isPointOline() ? R.string.button_line_last_oline : R.string.button_line_last_dline);
