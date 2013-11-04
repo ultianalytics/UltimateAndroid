@@ -1,8 +1,6 @@
 package com.summithillsoftware.ultimate;
 
 import android.app.Application;
-import android.content.Context;
-import android.os.Vibrator;
 
 import com.summithillsoftware.ultimate.model.Team;
 

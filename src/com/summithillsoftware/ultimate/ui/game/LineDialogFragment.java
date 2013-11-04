@@ -13,11 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
@@ -33,7 +33,9 @@ public class LineDialogFragment extends DialogFragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_line, container, false);
+		View view =  inflater.inflate(R.layout.fragment_line, container, false);
+
+		return view;
     }
   
     /** The system calls this only when creating the layout in a dialog. */
@@ -48,9 +50,17 @@ public class LineDialogFragment extends DialogFragment {
 	public void onStart() {
 		super.onStart();
 		populateView();
+        registerLastLineButtonClickListener();
+        registerSubstitutionButtonClickListener();
+        registerClearButtonClickListener();	
 	}
     
     private void populateView() {
+    	populateFieldAndBench();
+    	getLastLineButton().setText(isPointOline() ? R.string.button_line_last_oline : R.string.button_line_last_dline);
+    }
+    
+    private void populateFieldAndBench() {
     	ViewGroup buttonContainer = (ViewGroup)getView().findViewById(R.id.lineFieldPlayers);
     	List<Player> players = new ArrayList<Player>(Game.current().currentLineSorted());
     	while (players.size() < 7) {
@@ -152,6 +162,51 @@ public class LineDialogFragment extends DialogFragment {
 		}
 	}
 
+	private void registerLastLineButtonClickListener() {
+		getLastLineButton().setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	List<Player> lastLine = LineDialogFragment.this.isPointOline() ? Game.current().getLastOLine() : Game.current().getLastOLine();
+            	if (lastLine == null) {
+            		lastLine = new ArrayList<Player>();
+            	} 
+            	Game.current().setCurrentLine(lastLine);
+            	populateFieldAndBench();
+            }
+        });
+	}
+	
+	private void registerSubstitutionButtonClickListener() {
+		getSubstitutionButton().setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO ...finish
+            }
+        });
+	}
+	
+	private void registerClearButtonClickListener() {
+		getClearButton().setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	Game.current().setCurrentLine(new ArrayList<Player>());
+            	populateFieldAndBench();
+            }
+        });
+	}
+	
+	private Button getLastLineButton() {
+		return (Button)getView().findViewById(R.id.button_last_line);
+	}
+	
+	private Button getSubstitutionButton() {
+		return (Button)getView().findViewById(R.id.substitution);
+	}
+	
+	private Button getClearButton() {
+		return (Button)getView().findViewById(R.id.clear);
+	}
+	
+	private boolean isPointOline() {
+		return Game.current().isCurrentlyOline();
+	}
 	
 	public void errorVibrate() {
 		if (vibrator == null) {
