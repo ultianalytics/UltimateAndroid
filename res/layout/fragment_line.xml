@@ -5,6 +5,51 @@
     android:background="@color/White"
     android:orientation="vertical" >
     
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp" >
+
+        <RelativeLayout
+            android:id="@+id/doneButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true">
+
+            <ImageButton
+                android:id="@+id/doneImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/image_description"
+                android:src="@drawable/ic_action_tick" android:gravity="center_vertical"/>
+
+            <Button
+                android:id="@+id/doneButton"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-8sp" 
+                android:layout_marginTop="-8sp"
+                android:layout_alignBaseline="@id/doneImageButton"
+                android:layout_toRightOf="@id/doneImageButton"
+                android:text="@string/button_done" android:gravity="center_vertical"/>
+            
+        </RelativeLayout>
+
+        <!-- Separator -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/doneButtons"
+            android:background="@android:color/black" />
+    </RelativeLayout>
+        
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/lineFieldPlayers"

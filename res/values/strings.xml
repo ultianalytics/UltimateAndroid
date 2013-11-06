@@ -114,6 +114,7 @@
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>
     <string name="button_line_substitution">Substitution</string>
+	<string name="button_done">DONE</string>
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
     <string name="radio_team_playerdisplay_name">Name</string>
