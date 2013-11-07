@@ -51,6 +51,7 @@ public class GameActionActivity extends UltimateActivity {
 	    
 	    if (isLargeScreen) { 
 	        // The device is using a large layout, so show the fragment as a dialog
+	    	lineDialog.setCancelable(false);
 	    	lineDialog.show(fragmentManager, "dialog");
 	    } else {
 	        // The device is smaller, so show the fragment fullscreen

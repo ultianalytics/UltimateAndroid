@@ -5,7 +5,6 @@
     android:background="@color/White"
     android:orientation="vertical" >
     
-    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,30 +14,45 @@
             android:id="@+id/doneButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true">
+            android:layout_alignParentLeft="true" >
 
             <ImageButton
                 android:id="@+id/doneImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/image_description"
-                android:src="@drawable/ic_action_tick" android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_action_tick" />
 
             <Button
                 android:id="@+id/doneButton"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="-8sp" 
-                android:layout_marginTop="-8sp"
                 android:layout_alignBaseline="@id/doneImageButton"
+                android:layout_marginBottom="-8sp"
+                android:layout_marginLeft="6dp"
                 android:layout_toRightOf="@id/doneImageButton"
-                android:text="@string/button_done" android:gravity="center_vertical"/>
-            
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:onClick="doneClicked"
+                android:text="@string/button_done"
+                android:textColor="@color/ultimate_gray"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- vertical divider -->
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/doneButton"
+                android:background="@color/LightGrey" />
         </RelativeLayout>
 
         <!-- Separator -->
@@ -47,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/doneButtons"
-            android:background="@android:color/black" />
+            android:background="@color/ultimate_gray" />
+        
     </RelativeLayout>
         
     <LinearLayout

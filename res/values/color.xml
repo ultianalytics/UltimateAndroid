@@ -4,6 +4,7 @@
     <color name="list_name">#FFFFFF</color>
 	<color name="list_name_current">#FF0000</color>
 	<color name="form_separator">#303030</color>
+	<color name="ultimate_gray">#828282</color>
 
 	
 	<!--  misc colors -->

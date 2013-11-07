@@ -5,16 +5,17 @@ import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,12 +55,7 @@ public class LineDialogFragment extends DialogFragment {
         registerLastLineButtonClickListener();
         registerSubstitutionButtonClickListener();
         registerClearButtonClickListener();	
-	}
-    
-	@Override
-	public void onDismiss (DialogInterface dialog) {
-		Game.current().save();
-		super.onDismiss(dialog);
+        registerDoneButtonClickListener();
 	}
 	
     private void populateView() {
@@ -197,6 +193,19 @@ public class LineDialogFragment extends DialogFragment {
             	populateFieldAndBench();
             }
         });
+	}
+	
+	private void registerDoneButtonClickListener() {
+		Button doneButton = (Button)getView().findViewById(R.id.doneButton);
+		ImageButton doneImageButton = (ImageButton)getView().findViewById(R.id.doneImageButton);
+		OnClickListener listener = new View.OnClickListener() {
+            public void onClick(View v) {
+            	Game.current().save();
+            	dismiss();
+            }
+        };
+        doneButton.setOnClickListener(listener);
+        doneImageButton.setOnClickListener(listener);
 	}
 	
 	private Button getLastLineButton() {
