@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -51,6 +52,7 @@ public class LineDialogFragment extends DialogFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+		updateViewWidth();
 		populateView();
         registerLastLineButtonClickListener();
         registerSubstitutionButtonClickListener();
@@ -229,6 +231,19 @@ public class LineDialogFragment extends DialogFragment {
 			vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 		}
 		vibrator.vibrate(500); // 500 milliseconds
+	}
+	
+	private void updateViewWidth() {
+    	LayoutParams params = getView().getLayoutParams();
+    	params.width=getPreferredWidth();
+    	getView().setLayoutParams(params);
+	}
+	
+	private int getPreferredWidth() {
+    	int numberOfButtons = playerButtonsPerRow();
+    	int width = numberOfButtons * BUTTON_WIDTH;
+    	width = width + (BUTTON_MARGIN * 2 * numberOfButtons);
+    	return width;
 	}
 
 }

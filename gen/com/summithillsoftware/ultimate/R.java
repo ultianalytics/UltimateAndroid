@@ -1429,7 +1429,6 @@ containing a value of this type.
         public static final int rowlayout_players=0x7f03002c;
         public static final int rowlayout_teams=0x7f03002d;
         public static final int support_simple_spinner_dropdown_item=0x7f03002e;
-        public static final int toolbar_vertical_button_separator=0x7f03002f;
     }
     public static final class menu {
         public static final int game=0x7f0c0000;
