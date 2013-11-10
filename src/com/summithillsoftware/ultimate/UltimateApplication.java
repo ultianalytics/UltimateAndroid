@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate;
 
 import android.app.Application;
+import android.content.res.Configuration;
 
 import com.summithillsoftware.ultimate.model.Team;
 
@@ -36,6 +37,10 @@ public class UltimateApplication extends Application {
 
 	public void setAppStartComplete() {
 		this.isAppStartInProgress = false;
+	}
+	
+	public boolean isLandscape() {
+		return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
 
    

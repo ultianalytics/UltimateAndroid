@@ -21,13 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
 public class LineDialogFragment extends DialogFragment {
-	private static int BUTTON_WIDTH = 120;
+	private static int BUTTON_WIDTH = 110;
 	private static int BUTTON_HEIGHT = 60;
 	private static int BUTTON_MARGIN = 2;
 	
@@ -110,8 +111,7 @@ public class LineDialogFragment extends DialogFragment {
     }
     
     private int playerButtonsPerRow() {
-    	// TODO...make this smarter based on size of display
-    	return 4;
+    	return (UltimateApplication.current().isLandscape()) ? 6 : 4;
     }
     
     private TextView createButtonContainerLabel(String name) {
