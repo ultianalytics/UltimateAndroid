@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.model;
 
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +12,6 @@ import java.io.Serializable;
 import android.util.Log;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
 public class Preferences implements Serializable {
 	private static final long serialVersionUID = 5150758800160380679L;

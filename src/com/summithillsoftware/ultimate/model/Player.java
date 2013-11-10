@@ -1,11 +1,12 @@
 package com.summithillsoftware.ultimate.model;
 
-import android.annotation.SuppressLint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+import android.annotation.SuppressLint;
 
 public class Player implements Serializable {
 	private static final long serialVersionUID = 7079444636975701164L;

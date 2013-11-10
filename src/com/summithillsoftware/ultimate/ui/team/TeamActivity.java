@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -113,7 +114,7 @@ public class TeamActivity extends UltimateActivity {
 			if (!Team.current().isDefaultTeamName()) {
 				getNameTextView().setText(Team.current().getName());
 			}
-			getTeamTypeRadioGroup().check(Team.current().isMixed() ? R.id.radio_team_type_mixed : R.id.radio_team_type_uni);
+			getMixedTeamCheckBox().setChecked(Team.current().isMixed());
 			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
 		}
 		
@@ -129,7 +130,7 @@ public class TeamActivity extends UltimateActivity {
 	private void populateAndSaveTeam() {
 		Team team = isNewTeam() ? new Team() : Team.current();
 		team.setName(getTeamName());
-		team.setMixed(getTeamTypeRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_type_mixed);
+		team.setMixed(getMixedTeamCheckBox().isChecked());
 		team.setDisplayingPlayerNumber(getPlayerDisplayRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_playerdisplay_number);
 		team.save();
 		Team.setCurrentTeamId(team.getTeamId());
@@ -142,8 +143,8 @@ public class TeamActivity extends UltimateActivity {
 		return (TextView)findViewById(R.id.teamFragment).findViewById(R.id.text_team_name);
 	}
 	
-	private RadioGroup getTeamTypeRadioGroup() {
-		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_type);
+	private CheckBox getMixedTeamCheckBox() {
+		return (CheckBox)findViewById(R.id.teamFragment).findViewById(R.id.mixedTeamCheckbox);
 	}
 	
 	private RadioGroup getPlayerDisplayRadioGroup() {

@@ -37,7 +37,7 @@ public class PlayersActivity extends UltimateActivity {
 		super.onStart();
 		setTitle(getString(R.string.title_activity_players) + " - " + Team.current().getName());
 		if (Team.current().getPlayers().size() == 0) {
-			Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.toast_players_no_players_yet), Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}

@@ -95,8 +95,9 @@
     <string name="label_team_playerdisplay">Player Display:</string>
     <string name="label_team_players">Players</string>
     <string name="label_team_player_number">Number</string>
-    <string name="label_player_position">Position</string>
-    <string name="label_player_gender">Gender</string>
+    <string name="label_team_mixed">Mixed (co-ed)</string>
+    <string name="label_player_position">Position:</string>
+    <string name="label_player_gender">Gender:</string>
     <string name="label_game_first_point_oline">Our team start</string>
     <string name="label_game_game_to">Game to</string>
     <string name="label_line_field">Field</string>

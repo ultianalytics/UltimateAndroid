@@ -19,44 +19,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin" >
-
+        
         <TableRow
-            android:id="@+id/tableRow1"
+            android:id="@+id/tableRow0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/label_team_type"
+            <CheckBox
+                android:id="@+id/mixedTeamCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/label_team_type"
-                android:maxLength="50"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <RadioGroup
-                android:id="@+id/radiogroup_team_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <RadioButton
-                    android:id="@+id/radio_team_type_uni"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_team_type_uni"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/radio_team_type_mixed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_team_type_mixed"
-                    android:checked="false" />
-                
-            </RadioGroup>
-
+                android:text="@string/label_team_mixed" />
+            
         </TableRow>
-        
+
         <include layout="@layout/form_group_separator"/>
 
         <TableRow
