@@ -73,7 +73,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
-        android:background="@color/Black"
+        android:background="@drawable/line_selection_action_button_background"
         android:orientation="horizontal"
         android:gravity="center" >
 
@@ -131,7 +131,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
-        android:background="@color/Black"
+        android:background="@drawable/line_selection_action_button_background"
         android:orientation="horizontal"
         android:gravity="center" >
 
