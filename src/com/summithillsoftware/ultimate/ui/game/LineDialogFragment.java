@@ -103,10 +103,14 @@ public class LineDialogFragment extends DialogFragment {
     	boolean hasPointStarted = hasPointStarted();
     	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
     	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
-    	configureMode(hasPointStarted);
+    	configureMode();
     }
     
-    private void configureMode(boolean isCorrection) {
+    private void configureMode() {
+    	boolean isCorrection = true;
+    	if (hasPointStarted()) {
+    		isCorrection = getModeRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_change_type_correction;
+    	}
     	getLineButtonToolbar().setVisibility(isCorrection ? View.VISIBLE : View.GONE);
     	getSubstitutionRadioGroup().setVisibility(isCorrection ? View.GONE : View.VISIBLE);
     }
@@ -206,8 +210,7 @@ public class LineDialogFragment extends DialogFragment {
 	private void registerChangeModeRadioListener() {
 		getModeRadioGroup().setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				boolean isCorrection = checkedId == R.id.radio_line_change_type_correction;
-				configureMode(isCorrection);
+				configureMode();
 			}
 		});
 	}
