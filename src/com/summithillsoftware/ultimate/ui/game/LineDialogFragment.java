@@ -103,9 +103,7 @@ public class LineDialogFragment extends DialogFragment {
     	boolean hasPointStarted = hasPointStarted();
     	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
     	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
-    	if (hasPointStarted) {
-    		configureMode(false);
-    	}
+    	configureMode(hasPointStarted);
     }
     
     private void configureMode(boolean isCorrection) {
