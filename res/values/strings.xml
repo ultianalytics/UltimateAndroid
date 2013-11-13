@@ -133,6 +133,10 @@
     <string name="radio_game_to_15">15</string>
     <string name="radio_game_to_17">17</string>
     <string name="radio_game_to_time">Time</string>
+    <string name="radio_line_change_type_substitution">Substitution</string>
+    <string name="radio_line_change_type_correction">Correction</string>
+    <string name="radio_line_substitution_type_injury">Injury</string>
+    <string name="radio_line_substitution_type_other">Other</string>    
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
     

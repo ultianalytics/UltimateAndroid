@@ -56,12 +56,12 @@ public class LineDialogFragment extends DialogFragment {
 		updateViewWidth();
 		populateView();
         registerLastLineButtonClickListener();
-        registerSubstitutionButtonClickListener();
         registerClearButtonClickListener();	
         registerDoneButtonClickListener();
 	}
 	
     private void populateView() {
+    	configureViews();
     	populateFieldAndBench();
     	getLastLineButton().setText(isPointOline() ? R.string.button_line_last_oline : R.string.button_line_last_dline);
     }
@@ -95,6 +95,18 @@ public class LineDialogFragment extends DialogFragment {
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
 		}
+    }
+    
+    private void configureViews() {
+    	boolean hasPointStarted = hasPointStarted();
+    	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
+    	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
+    }
+    
+    private void configureActionButtons() {
+    	boolean hasPointStarted = hasPointStarted();
+    	getLastLineButton().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);      
+    	getClearButton().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);        	
     }
     
     private LinearLayout addButtonRowLayout(ViewGroup buttonContainer) {
@@ -180,14 +192,6 @@ public class LineDialogFragment extends DialogFragment {
         });
 	}
 	
-	private void registerSubstitutionButtonClickListener() {
-		getSubstitutionButton().setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // TODO ...finish
-            }
-        });
-	}
-	
 	private void registerClearButtonClickListener() {
 		getClearButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -214,12 +218,24 @@ public class LineDialogFragment extends DialogFragment {
 		return (Button)getView().findViewById(R.id.button_last_line);
 	}
 	
-	private Button getSubstitutionButton() {
-		return (Button)getView().findViewById(R.id.substitution);
-	}
-	
 	private Button getClearButton() {
 		return (Button)getView().findViewById(R.id.clear);
+	}
+	
+	private View getModeRadioGroup() {
+		return (View)getView().findViewById(R.id.radio_line_change_type);
+	}
+	
+	private View getSubstitutionRadioGroup() {
+		return (View)getView().findViewById(R.id.radio_line_substitution_type);
+	}
+	
+	private View getLineButtonToolbar() {
+		return (View)getView().findViewById(R.id.lineButtonToolbar);
+	}
+	
+	private View getHeaderSeparator() {
+		return (View)getView().findViewById(R.id.line_change_separator);
 	}
 	
 	private boolean isPointOline() {
@@ -244,6 +260,11 @@ public class LineDialogFragment extends DialogFragment {
     	int width = numberOfButtons * BUTTON_WIDTH;
     	width = width + (BUTTON_MARGIN * 2 * numberOfButtons);
     	return width;
+	}
+	
+	private boolean hasPointStarted() {
+		// TODO...implement correctly
+		return true;
 	}
 
 }
