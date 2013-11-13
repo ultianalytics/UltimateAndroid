@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -58,6 +59,7 @@ public class LineDialogFragment extends DialogFragment {
         registerLastLineButtonClickListener();
         registerClearButtonClickListener();	
         registerDoneButtonClickListener();
+        registerChangeModeRadioListener();
 	}
 	
     private void populateView() {
@@ -101,12 +103,14 @@ public class LineDialogFragment extends DialogFragment {
     	boolean hasPointStarted = hasPointStarted();
     	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
     	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
+    	if (hasPointStarted) {
+    		configureMode(false);
+    	}
     }
     
-    private void configureActionButtons() {
-    	boolean hasPointStarted = hasPointStarted();
-    	getLastLineButton().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);      
-    	getClearButton().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);        	
+    private void configureMode(boolean isCorrection) {
+    	getLineButtonToolbar().setVisibility(isCorrection ? View.VISIBLE : View.GONE);
+    	getSubstitutionRadioGroup().setVisibility(isCorrection ? View.GONE : View.VISIBLE);
     }
     
     private LinearLayout addButtonRowLayout(ViewGroup buttonContainer) {
@@ -201,6 +205,15 @@ public class LineDialogFragment extends DialogFragment {
         });
 	}
 	
+	private void registerChangeModeRadioListener() {
+		getModeRadioGroup().setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				boolean isCorrection = checkedId == R.id.radio_line_change_type_correction;
+				configureMode(isCorrection);
+			}
+		});
+	}
+	
 	private void registerDoneButtonClickListener() {
 		Button doneButton = (Button)getView().findViewById(R.id.doneButton);
 		ImageButton doneImageButton = (ImageButton)getView().findViewById(R.id.doneImageButton);
@@ -222,12 +235,12 @@ public class LineDialogFragment extends DialogFragment {
 		return (Button)getView().findViewById(R.id.clear);
 	}
 	
-	private View getModeRadioGroup() {
-		return (View)getView().findViewById(R.id.radio_line_change_type);
+	private RadioGroup getModeRadioGroup() {
+		return (RadioGroup)getView().findViewById(R.id.radio_line_change_type);
 	}
 	
-	private View getSubstitutionRadioGroup() {
-		return (View)getView().findViewById(R.id.radio_line_substitution_type);
+	private RadioGroup getSubstitutionRadioGroup() {
+		return (RadioGroup)getView().findViewById(R.id.radio_line_substitution_type);
 	}
 	
 	private View getLineButtonToolbar() {
@@ -267,4 +280,17 @@ public class LineDialogFragment extends DialogFragment {
 		return true;
 	}
 
+//	private void transitionToSubstitutionMode {
+//		ObjectAnimator animY = ObjectAnimator.ofFloat(view, "y", 100f);
+//		arrayListObjectAnimators.add(animY);//ArrayList of ObjectAnimators
+//
+//		ObjectAnimator animY1 = ObjectAnimator.ofFloat(view, "x", 0f);
+//		arrayListObjectAnimators.add(animY1);
+//		...
+//		ObjectAnimator[] objectAnimators = arrayListObjectAnimators.toArray(new ObjectAnimator[arrayListObjectAnimators.size()]);
+//		AnimatorSet animSetXY = new AnimatorSet();
+//		animSetXY.playTogether(objectAnimators);
+//		animSetXY.duration(1000);//1sec
+//		animSetXY.start();
+//	}
 }
