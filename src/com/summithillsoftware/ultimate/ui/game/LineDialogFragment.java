@@ -1,13 +1,13 @@
 package com.summithillsoftware.ultimate.ui.game;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +27,21 @@ import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
-public class LineDialogFragment extends DialogFragment {
+public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_WIDTH = 110;
 	private static int BUTTON_HEIGHT = 60;
 	private static int BUTTON_MARGIN = 2;
+	private static String LINE_STATE_PROPERTY = "line";
 	
-	private Vibrator vibrator;
+	private ArrayList<Player> line = new ArrayList<Player>();
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		line = new ArrayList<Player>(Game.current().currentLineSorted());
+	}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +70,21 @@ public class LineDialogFragment extends DialogFragment {
         registerChangeModeRadioListener();
 	}
 	
+	@Override
+	public void onSaveInstanceState(Bundle bundle) {
+		super.onSaveInstanceState(bundle);
+		bundle.putSerializable(LINE_STATE_PROPERTY, line);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onViewStateRestored(Bundle savedInstanceState) {
+		super.onViewStateRestored(savedInstanceState);
+		if (savedInstanceState != null) {
+			line = (ArrayList<Player>)savedInstanceState.getSerializable(LINE_STATE_PROPERTY);
+		}
+	}
+	
     private void populateView() {
     	configureViews();
     	populateFieldAndBench();
@@ -70,7 +93,7 @@ public class LineDialogFragment extends DialogFragment {
     
     private void populateFieldAndBench() {
     	ViewGroup buttonContainer = (ViewGroup)getView().findViewById(R.id.lineFieldPlayers);
-    	List<Player> players = new ArrayList<Player>(Game.current().currentLineSorted());
+    	List<Player> players = new ArrayList<Player>(line);
     	while (players.size() < 7) {
 			players.add(Player.anonymous());
 		}
@@ -107,12 +130,9 @@ public class LineDialogFragment extends DialogFragment {
     }
     
     private void configureMode() {
-    	boolean isCorrection = true;
-    	if (hasPointStarted()) {
-    		isCorrection = getModeRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_change_type_correction;
-    	}
-    	getLineButtonToolbar().setVisibility(isCorrection ? View.VISIBLE : View.GONE);
-    	getSubstitutionRadioGroup().setVisibility(isCorrection ? View.GONE : View.VISIBLE);
+    	boolean  isSubstitution = !isSubstitution();
+    	getLineButtonToolbar().setVisibility(isSubstitution ? View.GONE : View.VISIBLE);
+    	getSubstitutionRadioGroup().setVisibility(isSubstitution ? View.VISIBLE : View.GONE);
     }
     
     private LinearLayout addButtonRowLayout(ViewGroup buttonContainer) {
@@ -146,22 +166,22 @@ public class LineDialogFragment extends DialogFragment {
 		button.setPlayer(player);
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-                 buttonClicked((PlayerLineButton)v);
+                 playerButtonClicked((PlayerLineButton)v);
              }
          });	
         button.setWidth(BUTTON_WIDTH);
         return button;
     }
     
-    private void buttonClicked(PlayerLineButton clickedButton) {
+    private void playerButtonClicked(PlayerLineButton clickedButton) {
     	if (clickedButton.isButtonOnFieldView()) {  // player on field
-    		Game.current().removeFromCurrentLine(clickedButton.getPlayer());
+    		line.remove(clickedButton.getPlayer());
     		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
     		clickedButton.setPlayer(Player.anonymous());
     		benchButton.updateView();
     	} else {  // player on bench
-    		if (Game.current().getCurrentLine().size() < 7) {
-	    		Game.current().addToCurrentLine(clickedButton.getPlayer());
+    		if (line.size() < 7) {
+	    		line.add(clickedButton.getPlayer());
 	    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
 	    		fieldButton.setPlayer(clickedButton.getPlayer());
 	    		fieldButton.updateView();
@@ -177,14 +197,6 @@ public class LineDialogFragment extends DialogFragment {
     	return (PlayerLineButton) UltimateActivity.findFirstViewWithTag(containerView, player.getName());
     }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (vibrator != null) {
-			vibrator.cancel();
-		}
-	}
-
 	private void registerLastLineButtonClickListener() {
 		getLastLineButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -192,7 +204,7 @@ public class LineDialogFragment extends DialogFragment {
             	if (lastLine == null) {
             		lastLine = new ArrayList<Player>();
             	} 
-            	Game.current().setCurrentLine(lastLine);
+            	line = new ArrayList<Player>(lastLine);
             	populateFieldAndBench();
             }
         });
@@ -201,7 +213,7 @@ public class LineDialogFragment extends DialogFragment {
 	private void registerClearButtonClickListener() {
 		getClearButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	Game.current().setCurrentLine(new ArrayList<Player>());
+            	line = new ArrayList<Player>();
             	populateFieldAndBench();
             }
         });
@@ -220,8 +232,10 @@ public class LineDialogFragment extends DialogFragment {
 		ImageButton doneImageButton = (ImageButton)getView().findViewById(R.id.doneImageButton);
 		OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
-            	Game.current().save();
-            	dismiss();
+            	if (validateChanges()) {
+            		saveLineChangesToGame();
+            		dismiss();
+            	}
             }
         };
         doneButton.setOnClickListener(listener);
@@ -255,14 +269,7 @@ public class LineDialogFragment extends DialogFragment {
 	private boolean isPointOline() {
 		return Game.current().isCurrentlyOline();
 	}
-	
-	public void errorVibrate() {
-		if (vibrator == null) {
-			vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-		}
-		vibrator.vibrate(500); // 500 milliseconds
-	}
-	
+
 	private void updateViewWidth() {
     	LayoutParams params = getView().getLayoutParams();
     	params.width=getPreferredWidth();
@@ -276,22 +283,55 @@ public class LineDialogFragment extends DialogFragment {
     	return width;
 	}
 	
+	private void saveLineChangesToGame() {
+		if (isSubstitution()) {
+			if (validateChanges()) {
+				// TODO...create the substitutions and add to the game
+        		Game.current().save();
+			}
+		} else {
+			Game.current().setCurrentLine(line);
+    		Game.current().save();
+		}
+	}
+	
+	private boolean isSubstitution() {
+		return hasPointStarted() && getModeRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_change_type_substitution;	
+	}
+	
+	private boolean validateChanges() {
+		if (isSubstitution() && line.size() != Game.current().currentLineSorted().size()) {
+			displayErrorMessage(getString(R.string.alert_line_mismatched_substitutions_title), getString(R.string.alert_line_mismatched_substitutions_message));
+			return false;
+		} 
+		return true;
+	}
+	
+	private boolean hasLineChanged() {
+		return new HashSet(line).equals(new HashSet(Game.current().getCurrentLine()));
+	}
+	
+	private void confirmExitViewFromSubstitutionModeWithoutChanges() {
+		displayConfirmDialog(
+				getString(R.string.alert_line_substitutions_no_change_title),
+				getString(R.string.alert_line_substitutions_no_change_message),
+				getString(R.string.common_retry),
+				getString(android.R.string.no),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface,
+							int paramInt) {
+						// TODO handle answer
+					}
+				});
+	}
+	
 	private boolean hasPointStarted() {
 		// TODO...implement correctly
 		return true;
 	}
 
-//	private void transitionToSubstitutionMode {
-//		ObjectAnimator animY = ObjectAnimator.ofFloat(view, "y", 100f);
-//		arrayListObjectAnimators.add(animY);//ArrayList of ObjectAnimators
-//
-//		ObjectAnimator animY1 = ObjectAnimator.ofFloat(view, "x", 0f);
-//		arrayListObjectAnimators.add(animY1);
-//		...
-//		ObjectAnimator[] objectAnimators = arrayListObjectAnimators.toArray(new ObjectAnimator[arrayListObjectAnimators.size()]);
-//		AnimatorSet animSetXY = new AnimatorSet();
-//		animSetXY.playTogether(objectAnimators);
-//		animSetXY.duration(1000);//1sec
-//		animSetXY.start();
-//	}
+
+
+
 }
