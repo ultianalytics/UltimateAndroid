@@ -1,11 +1,12 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import java.util.List;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 
@@ -32,20 +33,19 @@ public class PlayerLineButton extends Button {
 		String description = player.isAnonymous() ? "open" : (Team.current().isDisplayingPlayerNumber() ? player.getNumber() : player.getName());
 		this.setText(description);
 		setTag(player.getName());
-		updateView();
 	}
 
 	public boolean isButtonOnFieldView() {
 		return isButtonOnFieldView;
 	}
 
-	public void setButtonOnFieldView(boolean isOnField) {
+	public void setButtonOnFieldView(boolean isOnField, List<Player> playersOnField) {
 		this.isButtonOnFieldView = isOnField;
-		updateView();
+		updateView(playersOnField);
 	}
 	
-	public void updateView() {
-		if (player.isAnonymous() || (!isButtonOnFieldView() && isPlayerOnField(player))) {
+	public void updateView(List<Player> playersOnField) {
+		if (player.isAnonymous() || (!isButtonOnFieldView() && playersOnField.contains(player))) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);
@@ -60,11 +60,6 @@ public class PlayerLineButton extends Button {
 				setTextColor(getResources().getColor(R.color.DarkOliveGreen));
 			}
 		}
-	}
-
-	
-	private boolean isPlayerOnField(Player player) {
-		return Game.current().getCurrentLine().contains(player);
 	}
 	
 	@Override

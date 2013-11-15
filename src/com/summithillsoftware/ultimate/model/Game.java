@@ -792,8 +792,12 @@ public class Game implements Serializable {
 	 */
 	
 	public void addSubstitution(PlayerSubstitution substitution) {
-		getCurrentPoint().getSubstitutions().add(substitution);
-		adjustLineForSubstitution(substitution);
+		if (isPointInProgess()) {
+			getCurrentPoint().getSubstitutions().add(substitution);
+			adjustLineForSubstitution(substitution);
+		} else {
+			System.out.println("Error..can't add subsitution to a point which is not in progress");
+		}
 	}
 	
 	public boolean removeLastSubstitutionForCurrentPoint() {

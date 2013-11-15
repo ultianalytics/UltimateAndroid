@@ -10,7 +10,7 @@ public class PlayerSubstitution implements Serializable {
 	private Player fromPlayer;
 	private Player toPlayer;
 	private SubstitutionReason reason;
-	private long timestamp;
+	private long timestamp = System.currentTimeMillis();
 	
 	public void useSharedPlayers() {
 		fromPlayer = Player.replaceWithSharedPlayer(fromPlayer);

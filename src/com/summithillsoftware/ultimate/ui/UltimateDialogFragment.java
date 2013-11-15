@@ -48,7 +48,7 @@ public class UltimateDialogFragment extends DialogFragment {
  		errorDialog.setButton(BUTTON_POSITIVE, yesButtonText, yesHandler);
  		errorDialog.setButton(BUTTON_NEGATIVE, noButtonText, new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+			public void onClick(DialogInterface paramDialogInterface, int buttonPressed) {
 			}
  		});
  		errorDialog.show();

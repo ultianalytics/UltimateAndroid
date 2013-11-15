@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,6 +26,8 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.model.PlayerSubstitution;
+import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
@@ -116,7 +119,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     			numberOfButtonsInRow = 0;
     		}
     		PlayerLineButton button = createLineButton(player);
-    		button.setButtonOnFieldView(isField);
+    		button.setButtonOnFieldView(isField, line);
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
 		}
@@ -130,7 +133,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
     
     private void configureMode() {
-    	boolean  isSubstitution = !isSubstitution();
+    	boolean  isSubstitution = isSubstitution();
     	getLineButtonToolbar().setVisibility(isSubstitution ? View.GONE : View.VISIBLE);
     	getSubstitutionRadioGroup().setVisibility(isSubstitution ? View.VISIBLE : View.GONE);
     }
@@ -178,18 +181,18 @@ public class LineDialogFragment extends UltimateDialogFragment {
     		line.remove(clickedButton.getPlayer());
     		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
     		clickedButton.setPlayer(Player.anonymous());
-    		benchButton.updateView();
+    		benchButton.updateView(line);
     	} else {  // player on bench
     		if (line.size() < 7) {
 	    		line.add(clickedButton.getPlayer());
 	    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
 	    		fieldButton.setPlayer(clickedButton.getPlayer());
-	    		fieldButton.updateView();
+	    		fieldButton.updateView(line);
     		} else {
     			errorVibrate();
     		}
     	}
-    	clickedButton.updateView();
+    	clickedButton.updateView(line);
     }
 
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
@@ -233,8 +236,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
             	if (validateChanges()) {
-            		saveLineChangesToGame();
-            		dismiss();
+                	if (isSubstitution() && !hasLineChanged()) {
+                		confirmDismissInSubstitutionModeWithoutChanges();
+                	} else {
+                		saveAndDismiss();
+                	}
             	}
             }
         };
@@ -286,12 +292,33 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private void saveLineChangesToGame() {
 		if (isSubstitution()) {
 			if (validateChanges()) {
-				// TODO...create the substitutions and add to the game
+				addSubstitutionsToGame();
         		Game.current().save();
 			}
 		} else {
 			Game.current().setCurrentLine(line);
     		Game.current().save();
+		}
+	}
+	
+	private void addSubstitutionsToGame() {
+		Set<Player> lineBefore = new HashSet<Player>(Game.current().getCurrentLine());
+		Set<Player> lineAfter = new HashSet<Player>(line);
+		List<Player> playersOut = new ArrayList<Player>(lineBefore);
+		playersOut.removeAll(lineAfter);
+		List<Player> playersIn = new ArrayList<Player>(lineAfter);
+		playersIn.removeAll(lineBefore);
+		if (playersOut.size() == playersIn.size()) {
+			for (int i = 0; i < playersOut.size(); i++) {
+				PlayerSubstitution substitution = new PlayerSubstitution();
+				substitution.setFromPlayer(playersOut.get(i));
+				substitution.setToPlayer(playersIn.get(i));
+				substitution.setReason(getSubstitutionRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_substitution_type_injury ? 
+						SubstitutionReason.SubstitutionReasonInjury : SubstitutionReason.SubstitutionReasonOther);
+				Game.current().addSubstitution(substitution);
+			}
+		} else {
+			System.out.println("Error...sub in/out don't match");
 		}
 	}
 	
@@ -307,21 +334,35 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		return true;
 	}
 	
-	private boolean hasLineChanged() {
-		return new HashSet(line).equals(new HashSet(Game.current().getCurrentLine()));
+	private void saveAndDismiss() {
+		saveLineChangesToGame();
+		dismiss();
 	}
 	
-	private void confirmExitViewFromSubstitutionModeWithoutChanges() {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private boolean hasLineChanged() {
+		if (line.size() != Game.current().getCurrentLine().size()) {
+			return true;
+		}
+		HashSet currentLine = new HashSet(Game.current().getCurrentLine());
+		for (Player player: line) {
+			if (!currentLine.contains(player)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void confirmDismissInSubstitutionModeWithoutChanges() {
 		displayConfirmDialog(
 				getString(R.string.alert_line_substitutions_no_change_title),
 				getString(R.string.alert_line_substitutions_no_change_message),
-				getString(R.string.common_retry),
-				getString(android.R.string.no),
+				getString(android.R.string.ok),
+				getString(android.R.string.cancel),				
 				new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface paramDialogInterface,
-							int paramInt) {
-						// TODO handle answer
+					public void onClick(DialogInterface paramDialogInterface, int buttonClicked) {
+						saveAndDismiss();
 					}
 				});
 	}
