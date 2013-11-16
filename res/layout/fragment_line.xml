@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/White"
     android:gravity="center"
-    android:animateLayoutChanges="true"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -74,8 +74,8 @@
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:background="@drawable/line_selection_action_button_background"
-        android:orientation="horizontal"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radio_line_change_type_correction"
@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
-        android:padding="4dp"
-        android:background="@color/LightGrey" >
+        android:background="@color/LightGrey"
+        android:padding="4dp" >
 
         <Button
             android:id="@+id/button_last_line"
@@ -124,7 +124,7 @@
             android:layout_alignParentRight="true"
             android:text="@string/button_line_clear" />
     </RelativeLayout>
-    
+
     <RadioGroup
         android:id="@+id/radio_line_substitution_type"
         android:layout_width="fill_parent"
@@ -132,8 +132,8 @@
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:background="@drawable/line_selection_action_button_background"
-        android:orientation="horizontal"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radio_line_substitution_type_injury"
@@ -150,17 +150,48 @@
             android:text="@string/radio_line_substitution_type_other" />
     </RadioGroup>
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:id="@+id/lineBenchPlayers"
+        <ScrollView
+            android:id="@+id/lineBenchPlayersScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/lineBenchPlayers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
+        <SlidingDrawer
+            android:id="@+id/subsitutesDrawer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:content="@+id/subsitutesDrawerContent"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:handle="@+id/subsitutesDrawerHandle" >
+
+            <ImageView
+                android:id="@+id/subsitutesDrawerHandle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/image_description"
+                android:src="@drawable/substitutes_sliding_drawer_handle" />
+
+            <FrameLayout
+                android:id="@+id/subsitutesDrawerContent"
+                android:background="@drawable/line_substitutions_sliding_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" >
+            </FrameLayout>
+            
+        </SlidingDrawer>
+        
+    </FrameLayout>
 
 </LinearLayout>

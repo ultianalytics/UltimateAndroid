@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -15,11 +17,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -32,6 +36,7 @@ import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
+@SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_WIDTH = 110;
 	private static int BUTTON_HEIGHT = 60;
@@ -50,7 +55,6 @@ public class LineDialogFragment extends UltimateDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.fragment_line, container, false);
-
 		return view;
     }
   
@@ -71,6 +75,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
         registerClearButtonClickListener();	
         registerDoneButtonClickListener();
         registerChangeModeRadioListener();
+        registerLayoutListener();
 	}
 	
 	@Override
@@ -129,6 +134,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	boolean hasPointStarted = hasPointStarted();
     	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
     	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
+    	getSubstitutionsSlidingDrawer().setVisibility(doesPointHaveSubstitutions() ? View.VISIBLE : View.GONE);
     	configureMode();
     }
     
@@ -248,6 +254,33 @@ public class LineDialogFragment extends UltimateDialogFragment {
         doneImageButton.setOnClickListener(listener);
 	}
 	
+	private void registerLayoutListener() {
+		final View view = getBenchContainer();
+		ViewTreeObserver vto = view.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@SuppressLint("NewApi")
+			@Override
+			public void onGlobalLayout() {
+				ViewTreeObserver observer = view.getViewTreeObserver();
+				LineDialogFragment.this.handleBenchContainerLayedOut();
+				// remove the listener so we don't keep getting called	
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+					observer.removeOnGlobalLayoutListener(this);
+		        } else {
+		        	observer.removeGlobalOnLayoutListener(this);
+		        }
+				
+			}
+		});
+	}
+	
+	private void handleBenchContainerLayedOut() {
+		if (doesPointHaveSubstitutions()) {
+			int benchContainerHeight = getSubstitutionsSlidingDrawer().getLayoutParams().height = getBenchContainer().getHeight();
+			getSubstitutionsSlidingDrawer().getLayoutParams().height = benchContainerHeight;
+		}
+	}
+
 	private Button getLastLineButton() {
 		return (Button)getView().findViewById(R.id.button_last_line);
 	}
@@ -262,6 +295,14 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private RadioGroup getSubstitutionRadioGroup() {
 		return (RadioGroup)getView().findViewById(R.id.radio_line_substitution_type);
+	}
+	
+	private SlidingDrawer getSubstitutionsSlidingDrawer() {
+		return (SlidingDrawer)getView().findViewById(R.id.subsitutesDrawer);
+	}
+	
+	private ViewGroup getBenchContainer() {
+		return (ViewGroup)getView().findViewById(R.id.lineBenchPlayersScrollView);
 	}
 	
 	private View getLineButtonToolbar() {
@@ -368,6 +409,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private boolean hasPointStarted() {
+		// TODO...implement correctly
+		return true;
+	}
+	
+	private boolean doesPointHaveSubstitutions() {
 		// TODO...implement correctly
 		return true;
 	}
