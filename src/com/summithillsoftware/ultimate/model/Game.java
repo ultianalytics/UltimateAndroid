@@ -49,12 +49,13 @@ public class Game implements Serializable {
 	private List<Player> currentLine;	// server transient
 	private List<Player> lastDLine;	// server transient
 	private List<Player> lastOLine;	// server transient
-	private transient TimeoutDetails timeoutDetails; // server transient
 	private int periodsComplete; // server transient
 	@SuppressWarnings("unused")
 	private Event firstEventTweeted;  // server transient
 	private CessationEvent lastPeriodEnd; // server transient
-	private boolean arePointSummariesValid; // server transient
+	
+	private transient TimeoutDetails timeoutDetails; // local and server transient
+	private transient boolean arePointSummariesValid; // local and server transient
 	
 	public Game() {
 		super();
@@ -322,11 +323,11 @@ public class Game implements Serializable {
 	}
 	
 	public boolean hasEvents() {
-		return points.size() > 1 || getCurrentPoint().numberOfEvents() > 0;
+		return points.size() > 1 || (getCurrentPoint() != null && getCurrentPoint().numberOfEvents() > 0);
 	}
 	
 	public boolean hasOneEvent() {
-		return points.size() == 1 && getCurrentPoint().numberOfEvents() == 1;
+		return points.size() == 1 && (getCurrentPoint() != null && getCurrentPoint().numberOfEvents() == 1);
 	}
 	
 	private Event getLastEvent() {
@@ -812,13 +813,18 @@ public class Game implements Serializable {
 	// most recent first 
 	public List<PlayerSubstitution> substitutionsForCurrentPoint() {
 		Point point = getCurrentPoint();
-		if (point == null || point.isFinished()) {
-			return Collections.emptyList();
-		} else {
+		if (doesCurrentPointHaveSubstitutions() && !point.isFinished()) {
 			List<PlayerSubstitution> subs = new ArrayList<PlayerSubstitution>(point.getSubstitutions());
 			Collections.reverse(subs);
 			return subs;
+		} else {
+			return Collections.emptyList();
 		}
+	}
+	
+	public boolean doesCurrentPointHaveSubstitutions() {
+		Point point = getCurrentPoint();
+		return point == null ? false : !point.getSubstitutions().isEmpty();
 	}
 	
 	private void adjustLineForSubstitution(PlayerSubstitution sub) {

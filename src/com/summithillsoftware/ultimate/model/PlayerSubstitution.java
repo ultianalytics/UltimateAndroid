@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ public class PlayerSubstitution implements Serializable {
 	private Player fromPlayer;
 	private Player toPlayer;
 	private SubstitutionReason reason;
-	private long timestamp = System.currentTimeMillis();
+	private int timestamp;
 	
 	public void useSharedPlayers() {
 		fromPlayer = Player.replaceWithSharedPlayer(fromPlayer);
@@ -40,10 +41,10 @@ public class PlayerSubstitution implements Serializable {
 	public void setReason(SubstitutionReason reason) {
 		this.reason = reason;
 	}
-	public long getTimestamp() {
+	public int getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
 	}
 	public static long getSerialversionuid() {
@@ -84,6 +85,16 @@ public class PlayerSubstitution implements Serializable {
 			return false;
 		return true;
 	}
+	
+	public static Comparator<PlayerSubstitution> TimestampAndNameComparator = new Comparator<PlayerSubstitution>() {
+		public int compare(PlayerSubstitution playerSub1, PlayerSubstitution playerSub2) {
+			if (playerSub1.getTimestamp() == playerSub2.getTimestamp()) {
+				return playerSub1.getFromPlayer().getName().compareTo(playerSub2.getFromPlayer().getName());
+			}
+			// descending order
+			return Integer.valueOf(playerSub2.getTimestamp()).compareTo(Integer.valueOf(playerSub1.getTimestamp()));
+		}
+	};
 	
 
 	

@@ -107,6 +107,8 @@
     <string name="label_game_game_to">Game to</string>
     <string name="label_line_field">Field</string>
     <string name="label_line_bench">Bench</string>
+	<string name="label_line_substitution_out">OUT</string>
+	<string name="label_line_substitution_in">IN</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>

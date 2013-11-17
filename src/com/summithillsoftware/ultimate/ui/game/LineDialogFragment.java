@@ -22,17 +22,21 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.Action;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
@@ -47,6 +51,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		// TODO...delete this code 
+		if (!Game.current().hasEvents()) { // force an event so game can have a substitution
+			Game.current().addEvent(new DefenseEvent(Action.Pull, Player.anonymous()));
+		}
+		
 		super.onCreate(savedInstanceState);
 		line = new ArrayList<Player>(Game.current().currentLineSorted());
 	}
@@ -55,6 +64,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.fragment_line, container, false);
+		if (doesPointHaveSubstitutions()) {
+			initializeSubstitutionsListView((ListView)view.findViewById(R.id.substitutionsList));
+		}
 		return view;
     }
   
@@ -91,6 +103,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		if (savedInstanceState != null) {
 			line = (ArrayList<Player>)savedInstanceState.getSerializable(LINE_STATE_PROPERTY);
 		}
+	}
+	
+	private void initializeSubstitutionsListView(ListView listView) {
+		SubstitutionsListAdaptor adaptor = new SubstitutionsListAdaptor(this.getActivity());
+		listView.setAdapter(adaptor);
 	}
 	
     private void populateView() {
@@ -345,6 +362,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void addSubstitutionsToGame() {
+		int timestamp = UniqueTimestampGenerator.current().uniqueTimeIntervalSinceReferenceDateSeconds(); // give each sub the same timestamp so we can re-combine them
 		Set<Player> lineBefore = new HashSet<Player>(Game.current().getCurrentLine());
 		Set<Player> lineAfter = new HashSet<Player>(line);
 		List<Player> playersOut = new ArrayList<Player>(lineBefore);
@@ -354,6 +372,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		if (playersOut.size() == playersIn.size()) {
 			for (int i = 0; i < playersOut.size(); i++) {
 				PlayerSubstitution substitution = new PlayerSubstitution();
+				substitution.setTimestamp(timestamp);
 				substitution.setFromPlayer(playersOut.get(i));
 				substitution.setToPlayer(playersIn.get(i));
 				substitution.setReason(getSubstitutionRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_substitution_type_injury ? 
@@ -411,13 +430,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private boolean hasPointStarted() {
-		// TODO...implement correctly
-		return true;
+		return Game.current().isPointInProgess();
 	}
 	
 	private boolean doesPointHaveSubstitutions() {
-		// TODO...implement correctly
-		return true;
+		return Game.current().doesCurrentPointHaveSubstitutions();
 	}
 
 
