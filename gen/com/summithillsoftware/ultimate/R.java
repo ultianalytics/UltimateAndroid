@@ -1208,9 +1208,10 @@ containing a value of this type.
         public static final int plus_white=0x7f020061;
         public static final int social_group=0x7f020062;
         public static final int social_person=0x7f020063;
-        public static final int substitutes_sliding_drawer_handle=0x7f020064;
-        public static final int team=0x7f020065;
-        public static final int trash_white=0x7f020066;
+        public static final int substitutes_horizontal_sliding_drawer_handle=0x7f020064;
+        public static final int substitutes_sliding_drawer_handle=0x7f020065;
+        public static final int team=0x7f020066;
+        public static final int trash_white=0x7f020067;
     }
     public static final class id {
         public static final int action_action=0x7f050091;

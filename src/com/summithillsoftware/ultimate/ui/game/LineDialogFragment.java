@@ -276,8 +276,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private void handleBenchContainerLayedOut() {
 		if (doesPointHaveSubstitutions()) {
+			SlidingDrawer drawer = getSubstitutionsSlidingDrawer();
+			ViewGroup.MarginLayoutParams drawerMarginParams = (ViewGroup.MarginLayoutParams)drawer.getLayoutParams();
 			int benchContainerHeight = getSubstitutionsSlidingDrawer().getLayoutParams().height = getBenchContainer().getHeight();
-			getSubstitutionsSlidingDrawer().getLayoutParams().height = benchContainerHeight;
+			getSubstitutionsSlidingDrawer().getLayoutParams().height = benchContainerHeight - drawerMarginParams.topMargin - drawerMarginParams.bottomMargin;
 		}
 	}
 
