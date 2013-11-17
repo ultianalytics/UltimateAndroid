@@ -803,9 +803,13 @@ public class Game implements Serializable {
 	
 	public boolean removeLastSubstitutionForCurrentPoint() {
 		PlayerSubstitution lastSub = getCurrentPoint().lastSubstitution();
-		if (lastSub != null) {
-			getCurrentPoint().getSubstitutions().remove(lastSub);
-			return adjustLineForSubstitutionUndo(lastSub);
+		return removeSubstitutionForCurrentPoint(lastSub);
+	}
+	
+	public boolean removeSubstitutionForCurrentPoint(PlayerSubstitution substitution) {
+		if (substitution != null) {
+			getCurrentPoint().getSubstitutions().remove(substitution);
+			return adjustLineForSubstitutionUndo(substitution);
 		}
 		return false;
 	}

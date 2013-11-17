@@ -65,7 +65,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
             Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.fragment_line, container, false);
 		if (doesPointHaveSubstitutions()) {
-			initializeSubstitutionsListView((ListView)view.findViewById(R.id.substitutionsList));
+			initializeSubstitutionsListView(view);
 		}
 		return view;
     }
@@ -87,6 +87,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
         registerClearButtonClickListener();	
         registerDoneButtonClickListener();
         registerChangeModeRadioListener();
+        registerUndoSubstitutionClickListener();
         registerLayoutListener();
 	}
 	
@@ -105,9 +106,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
 	}
 	
-	private void initializeSubstitutionsListView(ListView listView) {
+	private void initializeSubstitutionsListView(View view) {
 		SubstitutionsListAdaptor adaptor = new SubstitutionsListAdaptor(this.getActivity());
-		listView.setAdapter(adaptor);
+		getSubstitutionsList(view).setAdapter(adaptor);
 	}
 	
     private void populateView() {
@@ -271,6 +272,15 @@ public class LineDialogFragment extends UltimateDialogFragment {
         doneImageButton.setOnClickListener(listener);
 	}
 	
+	private void registerUndoSubstitutionClickListener() {
+		getView().findViewById(R.id.undoLastSubsitutionButton).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	SubstitutionsListAdaptor substitutionListAdaptor = (SubstitutionsListAdaptor)getSubstitutionsList(getView()).getAdapter();
+            	substitutionListAdaptor.removeMostRecentSubstitutionSetFromGame();
+            }
+        });
+	}
+	
 	private void registerLayoutListener() {
 		final View view = getBenchContainer();
 		ViewTreeObserver vto = view.getViewTreeObserver();
@@ -328,6 +338,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		return (View)getView().findViewById(R.id.lineButtonToolbar);
 	}
 	
+	private ListView getSubstitutionsList(View view) {
+		return (ListView)view.findViewById(R.id.substitutionsList);
+	}
+
 	private View getHeaderSeparator() {
 		return (View)getView().findViewById(R.id.line_change_separator);
 	}

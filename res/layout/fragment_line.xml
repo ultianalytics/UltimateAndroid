@@ -184,11 +184,18 @@
                 android:contentDescription="@string/image_description"
                 android:src="@drawable/substitutes_horizontal_sliding_drawer_handle" />
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/subsitutesDrawerContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:background="@drawable/line_substitutions_sliding_drawer_background" >
+
+                <Button
+                    android:id="@+id/undoLastSubsitutionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_line_substitution_undo" />
 
                 <ListView
                     android:id="@+id/substitutionsList"
@@ -196,7 +203,7 @@
                     android:layout_height="wrap_content" >
                 </ListView>
                 
-            </FrameLayout>
+            </LinearLayout>
             
         </SlidingDrawer>
         

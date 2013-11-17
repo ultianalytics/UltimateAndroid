@@ -67,8 +67,14 @@ public class SubstitutionsListAdaptor extends BaseAdapter {
 		return rowView;
 	}
 	
-
-
-
+	public void removeMostRecentSubstitutionSetFromGame() {
+		if (!playerSubstitutionSets.isEmpty()) {
+			PlayerSubstitutionSet lastPlayerSubstitutionsSet = playerSubstitutionSets.get(0);
+			for (PlayerSubstitution playerSub : lastPlayerSubstitutionsSet.getSubstitutions()) {
+				Game.current().removeSubstitutionForCurrentPoint(playerSub);
+			}
+			resetPlayerSubstitutionSets();
+		}
+	}
 
 }

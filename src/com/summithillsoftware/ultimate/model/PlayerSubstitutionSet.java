@@ -26,6 +26,7 @@ public class PlayerSubstitutionSet {
 				sets.add(new PlayerSubstitutionSet(playerSubsInSet));
 			}
 			playerSubsInSet.add(playerSubstitution);
+			lastTimestamp = playerSubstitution.getTimestamp();
 		}
 		return sets;
 	}
