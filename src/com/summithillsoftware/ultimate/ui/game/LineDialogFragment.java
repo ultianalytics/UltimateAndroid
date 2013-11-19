@@ -12,7 +12,9 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
+import com.summithillsoftware.ultimate.ui.OnHorizontalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
@@ -48,6 +51,8 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private static String LINE_STATE_PROPERTY = "line";
 	
 	private ArrayList<Player> line = new ArrayList<Player>();
+	private GestureDetector slidingDrawerContentGestureDetector;
+	private GestureDetector benchContentGestureDetector;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
         registerDoneButtonClickListener();
         registerChangeModeRadioListener();
         registerUndoSubstitutionClickListener();
+        if (doesPointHaveSubstitutions()) {
+        	registerBenchContainerSwipeListener();
+            registerSlidingDrawerContainerSwipeListener();
+        }
         registerLayoutListener();
 	}
 	
@@ -301,7 +310,43 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		});
 	}
 	
-	private void handleBenchContainerLayedOut() {
+	private void registerSlidingDrawerContainerSwipeListener() {
+		slidingDrawerContentGestureDetector = new GestureDetector(getActivity(), new OnHorizontalSwipeGestureListener() {
+			@Override
+			public void onHorizontalSwipe(boolean isRightToLeft) {
+				if (!isRightToLeft) {
+					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateClose();
+				}
+			}
+		});
+		
+		getSubstitutionsSlidingDrawerContainer().setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return slidingDrawerContentGestureDetector.onTouchEvent(event);
+			}
+		});
+	}
+	
+	private void registerBenchContainerSwipeListener() {  // if swipe left then open substitutions sliding drawer
+		benchContentGestureDetector = new GestureDetector(getActivity(), new OnHorizontalSwipeGestureListener() {
+			@Override
+			public void onHorizontalSwipe(boolean isRightToLeft) {
+				if (isRightToLeft) {
+					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateOpen();
+				}
+			}
+		});
+		
+		getBenchContainer().setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return benchContentGestureDetector.onTouchEvent(event);
+			}
+		});
+	}
+	
+	private void handleBenchContainerLayedOut() { // if swipe right then close substitutions sliding drawer
 		if (doesPointHaveSubstitutions()) {
 			SlidingDrawer drawer = getSubstitutionsSlidingDrawer();
 			ViewGroup.MarginLayoutParams drawerMarginParams = (ViewGroup.MarginLayoutParams)drawer.getLayoutParams();
@@ -328,6 +373,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private SlidingDrawer getSubstitutionsSlidingDrawer() {
 		return (SlidingDrawer)getView().findViewById(R.id.subsitutesDrawer);
+	}
+	
+	private View getSubstitutionsSlidingDrawerContainer() {
+		return (View)getView().findViewById(R.id.subsitutesDrawerContent);
 	}
 	
 	private ViewGroup getBenchContainer() {
