@@ -159,12 +159,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:id="@+id/lineBenchPlayers"
-                android:layout_width="match_parent"
+            <android.gesture.GestureOverlayView
+                android:id="@+id/benchGestureOverlay"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:gestureColor="@android:color/transparent"
+                android:uncertainGestureColor="@android:color/transparent"
+                android:eventsInterceptionEnabled="true" >
+
+                <LinearLayout
+                    android:id="@+id/lineBenchPlayers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                </LinearLayout>
+                
+            </android.gesture.GestureOverlayView>
+
         </ScrollView>
 
         <SlidingDrawer
@@ -188,8 +199,8 @@
                 android:id="@+id/subsitutesDrawerContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/line_substitutions_sliding_drawer_background" >
+                android:background="@drawable/line_substitutions_sliding_drawer_background"
+                android:orientation="vertical" >
 
                 <Button
                     android:id="@+id/undoLastSubsitutionButton"
@@ -202,11 +213,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
                 </ListView>
-                
             </LinearLayout>
-            
         </SlidingDrawer>
-        
     </FrameLayout>
 
 </LinearLayout>

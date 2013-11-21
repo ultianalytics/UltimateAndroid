@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,8 +11,15 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.gesture.Gesture;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
+import android.gesture.GestureOverlayView;
+import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+import android.gesture.Prediction;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -42,6 +51,7 @@ import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
 import com.summithillsoftware.ultimate.ui.OnHorizontalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
+import com.summithillsoftware.ultimate.ui.UltimateGestures;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
@@ -52,7 +62,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private ArrayList<Player> line = new ArrayList<Player>();
 	private GestureDetector slidingDrawerContentGestureDetector;
-	private GestureDetector benchContentGestureDetector;
+	GestureLibrary gestureLibrary;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
 		
 		super.onCreate(savedInstanceState);
+		gestureLibrary = GestureLibraries.fromRawResource(getActivity(), R.raw.gestures);
+        if (!gestureLibrary.load()) {
+        	Log.e(ULTIMATE, "Failed to load gestures");
+        	// TODO...disable gesture handling
+         } 
 		line = new ArrayList<Player>(Game.current().currentLineSorted());
 	}
 	
@@ -329,19 +344,16 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerBenchContainerSwipeListener() {  // if swipe left then open substitutions sliding drawer
-		benchContentGestureDetector = new GestureDetector(getActivity(), new OnHorizontalSwipeGestureListener() {
+		getBenchContainerGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
-			public void onHorizontalSwipe(boolean isRightToLeft) {
-				if (isRightToLeft) {
-					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateOpen();
-				}
-			}
-		});
-		
-		getBenchContainer().setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return benchContentGestureDetector.onTouchEvent(event);
+			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
+				ArrayList<Prediction> predictions = gestureLibrary.recognize(gesture);
+				if (predictions.size() > 0) {
+					Prediction topPrediction = predictions.get(0);
+					if (topPrediction.name.equals(UltimateGestures.SWIPE_LEFT) && topPrediction.score > 1.0) {
+						LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateOpen();
+					}
+		        }
 			}
 		});
 	}
@@ -381,6 +393,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private ViewGroup getBenchContainer() {
 		return (ViewGroup)getView().findViewById(R.id.lineBenchPlayersScrollView);
+	}
+	
+	private GestureOverlayView getBenchContainerGestureOverlay() {
+		return (GestureOverlayView)getView().findViewById(R.id.benchGestureOverlay);
 	}
 	
 	private View getLineButtonToolbar() {
