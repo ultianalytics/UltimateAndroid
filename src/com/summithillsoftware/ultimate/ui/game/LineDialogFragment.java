@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate.ui.game;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,18 +10,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.gesture.Gesture;
-import android.gesture.GestureLibraries;
-import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
-import android.gesture.Prediction;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -48,10 +40,9 @@ import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
-import com.summithillsoftware.ultimate.ui.OnHorizontalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
-import com.summithillsoftware.ultimate.ui.UltimateGestures;
+import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
@@ -61,8 +52,6 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private static String LINE_STATE_PROPERTY = "line";
 	
 	private ArrayList<Player> line = new ArrayList<Player>();
-	private GestureDetector slidingDrawerContentGestureDetector;
-	GestureLibrary gestureLibrary;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,11 +61,6 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
 		
 		super.onCreate(savedInstanceState);
-		gestureLibrary = GestureLibraries.fromRawResource(getActivity(), R.raw.gestures);
-        if (!gestureLibrary.load()) {
-        	Log.e(ULTIMATE, "Failed to load gestures");
-        	// TODO...disable gesture handling
-         } 
 		line = new ArrayList<Player>(Game.current().currentLineSorted());
 	}
 	
@@ -325,20 +309,13 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		});
 	}
 	
-	private void registerSlidingDrawerContainerSwipeListener() {
-		slidingDrawerContentGestureDetector = new GestureDetector(getActivity(), new OnHorizontalSwipeGestureListener() {
+	private void registerSlidingDrawerContainerSwipeListener() {  // if swipe right then close the substitutions sliding drawer
+		getBenchContainerGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
-			public void onHorizontalSwipe(boolean isRightToLeft) {
-				if (!isRightToLeft) {
+			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
+				if (UltimateGestureHelper.current().isSwipeRight(gesture)) {
 					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateClose();
 				}
-			}
-		});
-		
-		getSubstitutionsSlidingDrawerContainer().setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return slidingDrawerContentGestureDetector.onTouchEvent(event);
 			}
 		});
 	}
@@ -347,13 +324,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		getBenchContainerGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
 			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
-				ArrayList<Prediction> predictions = gestureLibrary.recognize(gesture);
-				if (predictions.size() > 0) {
-					Prediction topPrediction = predictions.get(0);
-					if (topPrediction.name.equals(UltimateGestures.SWIPE_LEFT) && topPrediction.score > 1.0) {
-						LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateOpen();
-					}
-		        }
+				if (UltimateGestureHelper.current().isSwipeLeft(gesture)) {
+					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateClose();
+				}
 			}
 		});
 	}
@@ -385,10 +358,6 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private SlidingDrawer getSubstitutionsSlidingDrawer() {
 		return (SlidingDrawer)getView().findViewById(R.id.subsitutesDrawer);
-	}
-	
-	private View getSubstitutionsSlidingDrawerContainer() {
-		return (View)getView().findViewById(R.id.subsitutesDrawerContent);
 	}
 	
 	private ViewGroup getBenchContainer() {

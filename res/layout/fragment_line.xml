@@ -163,9 +163,11 @@
                 android:id="@+id/benchGestureOverlay"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:eventsInterceptionEnabled="true"
+                android:fadeDuration="0"
+                android:fadeOffset="0"
                 android:gestureColor="@android:color/transparent"
-                android:uncertainGestureColor="@android:color/transparent"
-                android:eventsInterceptionEnabled="true" >
+                android:uncertainGestureColor="@android:color/transparent" >
 
                 <LinearLayout
                     android:id="@+id/lineBenchPlayers"
@@ -173,9 +175,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
                 </LinearLayout>
-                
             </android.gesture.GestureOverlayView>
-
         </ScrollView>
 
         <SlidingDrawer
@@ -195,26 +195,41 @@
                 android:contentDescription="@string/image_description"
                 android:src="@drawable/substitutes_horizontal_sliding_drawer_handle" />
 
-            <LinearLayout
-                android:id="@+id/subsitutesDrawerContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/line_substitutions_sliding_drawer_background"
-                android:orientation="vertical" >
+            <android.gesture.GestureOverlayView
+                android:id="@+id/substitutionsDrawerContentGestureOverlay"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:eventsInterceptionEnabled="true"
+                android:fadeDuration="0"
+                android:fadeOffset="0"
+                android:gestureColor="@android:color/transparent"
+                android:uncertainGestureColor="@android:color/transparent" >
 
-                <Button
-                    android:id="@+id/undoLastSubsitutionButton"
+                <LinearLayout
+                    android:id="@+id/subsitutesDrawerContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_line_substitution_undo" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/line_substitutions_sliding_drawer_background"
+                    android:orientation="vertical" >
 
-                <ListView
-                    android:id="@+id/substitutionsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </ListView>
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/undoLastSubsitutionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_line_substitution_undo" />
+
+                    <ListView
+                        android:id="@+id/substitutionsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                    </ListView> 
+                    
+                </LinearLayout>
+                
+            </android.gesture.GestureOverlayView>
+            
         </SlidingDrawer>
+        
     </FrameLayout>
 
 </LinearLayout>
