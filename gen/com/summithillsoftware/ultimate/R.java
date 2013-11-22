@@ -1340,9 +1340,9 @@ containing a value of this type.
         public static final int split_action_bar=0x7f06001c;
         public static final int submit_area=0x7f06003f;
         public static final int subsitutesDrawer=0x7f06006e;
-        public static final int subsitutesDrawerContent=0x7f06006f;
+        public static final int subsitutesDrawerContent=0x7f060071;
         public static final int subsitutesDrawerHandle=0x7f060070;
-        public static final int substitutionsDrawerContentGestureOverlay=0x7f060071;
+        public static final int substitutionsDrawerContentGestureOverlay=0x7f06006f;
         public static final int substitutionsList=0x7f060073;
         public static final int tabMode=0x7f060002;
         public static final int tableRow0=0x7f060084;

@@ -310,7 +310,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerSlidingDrawerContainerSwipeListener() {  // if swipe right then close the substitutions sliding drawer
-		getBenchContainerGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
+		getSubstitutionsDrawerContentGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
 			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
 				if (UltimateGestureHelper.current().isSwipeRight(gesture)) {
@@ -366,6 +366,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private GestureOverlayView getBenchContainerGestureOverlay() {
 		return (GestureOverlayView)getView().findViewById(R.id.benchGestureOverlay);
+	}
+	
+	private GestureOverlayView getSubstitutionsDrawerContentGestureOverlay() {
+		return (GestureOverlayView)getView().findViewById(R.id.substitutionsDrawerContentGestureOverlay);
 	}
 	
 	private View getLineButtonToolbar() {
