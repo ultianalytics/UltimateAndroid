@@ -64,6 +64,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private View headerSeperator;
 	
 	private ArrayList<Player> line = new ArrayList<Player>();
+	private Set<Player> originalLine = new HashSet<Player>();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -181,7 +182,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     			numberOfButtonsInRow = 0;
     		}
     		PlayerLineButton button = createLineButton(player);
-    		button.setButtonOnFieldView(isField, line);
+    		button.setButtonOnFieldView(isField, line, originalLine);
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
 		}
@@ -244,18 +245,18 @@ public class LineDialogFragment extends UltimateDialogFragment {
     		line.remove(clickedButton.getPlayer());
     		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
     		clickedButton.setPlayer(Player.anonymous());
-    		benchButton.updateView(line);
+    		benchButton.updateView(line, originalLine);
     	} else {  // player on bench
     		if (line.size() < 7) {
 	    		line.add(clickedButton.getPlayer());
 	    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
 	    		fieldButton.setPlayer(clickedButton.getPlayer());
-	    		fieldButton.updateView(line);
+	    		fieldButton.updateView(line, originalLine);
     		} else {
     			errorVibrate();
     		}
     	}
-    	clickedButton.updateView(line);
+    	clickedButton.updateView(line, originalLine);
     }
 
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
@@ -481,6 +482,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private void resetLine() {
 		line = new ArrayList<Player>(Game.current().currentLineSorted());	
+		originalLine = new HashSet<Player>(line);
 	}
 	
 	private boolean hasPointStarted() {

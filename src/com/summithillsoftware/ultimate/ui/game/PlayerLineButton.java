@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game;
 
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -39,16 +40,18 @@ public class PlayerLineButton extends Button {
 		return isButtonOnFieldView;
 	}
 
-	public void setButtonOnFieldView(boolean isOnField, List<Player> playersOnField) {
+	public void setButtonOnFieldView(boolean isOnField, List<Player> playersOnField, Set<Player>originalLine) {
 		this.isButtonOnFieldView = isOnField;
-		updateView(playersOnField);
+		updateView(playersOnField, originalLine);
 	}
 	
-	public void updateView(List<Player> playersOnField) {
-		if (player.isAnonymous() || (!isButtonOnFieldView() && playersOnField.contains(player))) {
+	public void updateView(List<Player> playersOnField, Set<Player>originalLine) {
+		boolean isPlayerOnField = !player.isAnonymous() && playersOnField.contains(player);
+		if (player.isAnonymous() || (!isButtonOnFieldView() && isPlayerOnField)) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);
+			updateViewForChangeStatus(isPlayerOnField, originalLine);
 			// TODO...show gender and number of points played
 		}
 		if (isEnabled()) {
@@ -66,6 +69,12 @@ public class PlayerLineButton extends Button {
 	public String toString() {
 		return "PlayerLineButton [player=" + player.getName() + ", isOnFieldView="
 				+ isButtonOnFieldView + ", tag=" + getTag() +"]";
+	}
+
+	private void updateViewForChangeStatus(boolean isPlayerOnField, Set<Player>originalLine) {
+		boolean playerLineStatusChanged = (isPlayerOnField != originalLine.contains(player));
+		// dim a player that moved between line and bench
+		getBackground().setAlpha(playerLineStatusChanged ? 150 : 255);
 	}
 
 
