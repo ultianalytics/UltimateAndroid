@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -72,7 +73,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
 		
 		super.onCreate(savedInstanceState);
-		line = new ArrayList<Player>(Game.current().currentLineSorted());
+		resetLine();
 	}
 	
 	@Override
@@ -106,6 +107,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
             registerSlidingDrawerContainerSwipeListener();
         }
         registerLayoutListener();
+        registerSlidingDrawerClosedListener();
 	}
 	
 	@Override
@@ -314,6 +316,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
             public void onClick(View v) {
             	SubstitutionsListAdaptor substitutionListAdaptor = (SubstitutionsListAdaptor)getSubstitutionsList(getView()).getAdapter();
             	substitutionListAdaptor.removeMostRecentSubstitutionSetFromGame();
+            	resetLine();
+            	populateFieldAndBench();
+            	substitutesSlidingDrawer.animateClose();
             }
         });
 	}
@@ -345,6 +350,15 @@ public class LineDialogFragment extends UltimateDialogFragment {
 				if (UltimateGestureHelper.current().isSwipeRight(gesture)) {
 					LineDialogFragment.this.substitutesSlidingDrawer.animateClose();
 				}
+			}
+		});
+	}
+	
+	private void registerSlidingDrawerClosedListener() {  
+		substitutesSlidingDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
+			@Override
+			public void onDrawerClosed() {
+            	configureViews();
 			}
 		});
 	}
@@ -463,6 +477,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 						saveAndDismiss();
 					}
 				});
+	}
+	
+	private void resetLine() {
+		line = new ArrayList<Player>(Game.current().currentLineSorted());	
 	}
 	
 	private boolean hasPointStarted() {
