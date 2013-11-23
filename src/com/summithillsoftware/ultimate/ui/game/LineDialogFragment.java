@@ -51,6 +51,17 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_MARGIN = 2;
 	private static String LINE_STATE_PROPERTY = "line";
 	
+	private Button lastLineButton;
+	private Button clearButton;
+	private RadioGroup changeTypeRadioGroup;
+	private RadioGroup substitutionTypeRadioGroup;
+	private SlidingDrawer substitutesSlidingDrawer;
+	private ViewGroup benchContainerView;
+	private GestureOverlayView benchContainerGestureOverlay;
+	private GestureOverlayView substitutionsDrawerGestureOverlay;
+	private View toolbar;
+	private View headerSeperator;
+	
 	private ArrayList<Player> line = new ArrayList<Player>();
 	
 	@Override
@@ -68,9 +79,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.fragment_line, container, false);
-		if (doesPointHaveSubstitutions()) {
-			initializeSubstitutionsListView(view);
-		}
+		connectWidgets(view);
 		return view;
     }
   
@@ -114,6 +123,26 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
 	}
 	
+	private void connectWidgets(View view) {
+		lastLineButton = (Button)view.findViewById(R.id.button_last_line);
+		clearButton = (Button)view.findViewById(R.id.clear);
+		changeTypeRadioGroup = (RadioGroup)view.findViewById(R.id.radio_line_change_type);
+		substitutionTypeRadioGroup = (RadioGroup)view.findViewById(R.id.radio_line_substitution_type);
+		substitutesSlidingDrawer = (SlidingDrawer)view.findViewById(R.id.subsitutesDrawer);
+		benchContainerView = (ViewGroup)view.findViewById(R.id.lineBenchPlayersScrollView);
+		benchContainerGestureOverlay = (GestureOverlayView)view.findViewById(R.id.benchGestureOverlay);
+		substitutionsDrawerGestureOverlay = (GestureOverlayView)view.findViewById(R.id.substitutionsDrawerContentGestureOverlay);
+		toolbar = (View)view.findViewById(R.id.lineButtonToolbar);
+		headerSeperator = (View)view.findViewById(R.id.line_change_separator);
+		if (doesPointHaveSubstitutions()) {
+			initializeSubstitutionsListView(getSubstitutionsList(view));
+		}		
+	}
+	
+	private ListView getSubstitutionsList(View view) {
+		return (ListView)view.findViewById(R.id.substitutionsList);
+	}
+	
 	private void initializeSubstitutionsListView(View view) {
 		SubstitutionsListAdaptor adaptor = new SubstitutionsListAdaptor(this.getActivity());
 		getSubstitutionsList(view).setAdapter(adaptor);
@@ -122,7 +151,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     private void populateView() {
     	configureViews();
     	populateFieldAndBench();
-    	getLastLineButton().setText(isPointOline() ? R.string.button_line_last_oline : R.string.button_line_last_dline);
+    	lastLineButton.setText(isPointOline() ? R.string.button_line_last_oline : R.string.button_line_last_dline);
     }
     
     private void populateFieldAndBench() {
@@ -158,16 +187,16 @@ public class LineDialogFragment extends UltimateDialogFragment {
     
     private void configureViews() {
     	boolean hasPointStarted = hasPointStarted();
-    	getHeaderSeparator().setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
-    	getModeRadioGroup().setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
-    	getSubstitutionsSlidingDrawer().setVisibility(doesPointHaveSubstitutions() ? View.VISIBLE : View.GONE);
+    	headerSeperator.setVisibility(hasPointStarted ? View.GONE : View.VISIBLE);
+    	changeTypeRadioGroup.setVisibility(hasPointStarted ? View.VISIBLE : View.GONE);  
+    	substitutesSlidingDrawer.setVisibility(doesPointHaveSubstitutions() ? View.VISIBLE : View.GONE);
     	configureMode();
     }
     
     private void configureMode() {
     	boolean  isSubstitution = isSubstitution();
-    	getLineButtonToolbar().setVisibility(isSubstitution ? View.GONE : View.VISIBLE);
-    	getSubstitutionRadioGroup().setVisibility(isSubstitution ? View.VISIBLE : View.GONE);
+    	toolbar.setVisibility(isSubstitution ? View.GONE : View.VISIBLE);
+    	substitutionTypeRadioGroup.setVisibility(isSubstitution ? View.VISIBLE : View.GONE);
     }
     
     private LinearLayout addButtonRowLayout(ViewGroup buttonContainer) {
@@ -233,7 +262,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
 
 	private void registerLastLineButtonClickListener() {
-		getLastLineButton().setOnClickListener(new View.OnClickListener() {
+		lastLineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	List<Player> lastLine = LineDialogFragment.this.isPointOline() ? Game.current().getLastOLine() : Game.current().getLastOLine();
             	if (lastLine == null) {
@@ -246,7 +275,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerClearButtonClickListener() {
-		getClearButton().setOnClickListener(new View.OnClickListener() {
+		clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	line = new ArrayList<Player>();
             	populateFieldAndBench();
@@ -255,7 +284,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerChangeModeRadioListener() {
-		getModeRadioGroup().setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		changeTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				configureMode();
 			}
@@ -290,7 +319,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerLayoutListener() {
-		final View view = getBenchContainer();
+		final View view = benchContainerView;
 		ViewTreeObserver vto = view.getViewTreeObserver();
 		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			@SuppressLint("NewApi")
@@ -310,22 +339,22 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void registerSlidingDrawerContainerSwipeListener() {  // if swipe right then close the substitutions sliding drawer
-		getSubstitutionsDrawerContentGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
+		substitutionsDrawerGestureOverlay.addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
 			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
 				if (UltimateGestureHelper.current().isSwipeRight(gesture)) {
-					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateClose();
+					LineDialogFragment.this.substitutesSlidingDrawer.animateClose();
 				}
 			}
 		});
 	}
 	
 	private void registerBenchContainerSwipeListener() {  // if swipe left then open substitutions sliding drawer
-		getBenchContainerGestureOverlay().addOnGesturePerformedListener(new OnGesturePerformedListener() {
+		benchContainerGestureOverlay.addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
 			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
 				if (UltimateGestureHelper.current().isSwipeLeft(gesture)) {
-					LineDialogFragment.this.getSubstitutionsSlidingDrawer().animateClose();
+					LineDialogFragment.this.substitutesSlidingDrawer.animateClose();
 				}
 			}
 		});
@@ -333,55 +362,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private void handleBenchContainerLayedOut() { // if swipe right then close substitutions sliding drawer
 		if (doesPointHaveSubstitutions()) {
-			SlidingDrawer drawer = getSubstitutionsSlidingDrawer();
-			ViewGroup.MarginLayoutParams drawerMarginParams = (ViewGroup.MarginLayoutParams)drawer.getLayoutParams();
-			int benchContainerHeight = getSubstitutionsSlidingDrawer().getLayoutParams().height = getBenchContainer().getHeight();
-			getSubstitutionsSlidingDrawer().getLayoutParams().height = benchContainerHeight - drawerMarginParams.topMargin - drawerMarginParams.bottomMargin;
+			ViewGroup.MarginLayoutParams drawerMarginParams = (ViewGroup.MarginLayoutParams)substitutesSlidingDrawer.getLayoutParams();
+			int benchContainerHeight = substitutesSlidingDrawer.getLayoutParams().height = benchContainerView.getHeight();
+			substitutesSlidingDrawer.getLayoutParams().height = benchContainerHeight - drawerMarginParams.topMargin - drawerMarginParams.bottomMargin;
 		}
-	}
-
-	private Button getLastLineButton() {
-		return (Button)getView().findViewById(R.id.button_last_line);
-	}
-	
-	private Button getClearButton() {
-		return (Button)getView().findViewById(R.id.clear);
-	}
-	
-	private RadioGroup getModeRadioGroup() {
-		return (RadioGroup)getView().findViewById(R.id.radio_line_change_type);
-	}
-	
-	private RadioGroup getSubstitutionRadioGroup() {
-		return (RadioGroup)getView().findViewById(R.id.radio_line_substitution_type);
-	}
-	
-	private SlidingDrawer getSubstitutionsSlidingDrawer() {
-		return (SlidingDrawer)getView().findViewById(R.id.subsitutesDrawer);
-	}
-	
-	private ViewGroup getBenchContainer() {
-		return (ViewGroup)getView().findViewById(R.id.lineBenchPlayersScrollView);
-	}
-	
-	private GestureOverlayView getBenchContainerGestureOverlay() {
-		return (GestureOverlayView)getView().findViewById(R.id.benchGestureOverlay);
-	}
-	
-	private GestureOverlayView getSubstitutionsDrawerContentGestureOverlay() {
-		return (GestureOverlayView)getView().findViewById(R.id.substitutionsDrawerContentGestureOverlay);
-	}
-	
-	private View getLineButtonToolbar() {
-		return (View)getView().findViewById(R.id.lineButtonToolbar);
-	}
-	
-	private ListView getSubstitutionsList(View view) {
-		return (ListView)view.findViewById(R.id.substitutionsList);
-	}
-
-	private View getHeaderSeparator() {
-		return (View)getView().findViewById(R.id.line_change_separator);
 	}
 	
 	private boolean isPointOline() {
@@ -427,7 +411,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 				substitution.setTimestamp(timestamp);
 				substitution.setFromPlayer(playersOut.get(i));
 				substitution.setToPlayer(playersIn.get(i));
-				substitution.setReason(getSubstitutionRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_substitution_type_injury ? 
+				substitution.setReason(substitutionTypeRadioGroup.getCheckedRadioButtonId() == R.id.radio_line_substitution_type_injury ? 
 						SubstitutionReason.SubstitutionReasonInjury : SubstitutionReason.SubstitutionReasonOther);
 				Game.current().addSubstitution(substitution);
 			}
@@ -437,7 +421,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private boolean isSubstitution() {
-		return hasPointStarted() && getModeRadioGroup().getCheckedRadioButtonId() == R.id.radio_line_change_type_substitution;	
+		return hasPointStarted() && changeTypeRadioGroup.getCheckedRadioButtonId() == R.id.radio_line_change_type_substitution;	
 	}
 	
 	private boolean validateChanges() {
