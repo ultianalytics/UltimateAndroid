@@ -1212,6 +1212,7 @@ containing a value of this type.
         public static final int substitutes_sliding_drawer_handle=0x7f020065;
         public static final int team=0x7f020066;
         public static final int trash_white=0x7f020067;
+        public static final int undo_button_background=0x7f020068;
     }
     public static final class id {
         public static final int action_action=0x7f060097;
@@ -1846,6 +1847,7 @@ containing a value of this type.
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
         public static final int buttonLineAction=0x7f0c0082;
         public static final int buttonLinePlayer=0x7f0c0081;
+        public static final int buttonUndo=0x7f0c0083;
     }
     public static final class styleable {
         /**  ============================================ 
