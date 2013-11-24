@@ -41,17 +41,17 @@ import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
+import com.summithillsoftware.ultimate.ui.Size;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
-	private static int BUTTON_WIDTH = 110;
-	private static int BUTTON_HEIGHT = 60;
 	private static int BUTTON_MARGIN = 2;
 	private static String LINE_STATE_PROPERTY = "line";
 	
+	// widgets
 	private Button lastLineButton;
 	private Button clearButton;
 	private RadioGroup changeTypeRadioGroup;
@@ -63,6 +63,8 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private View toolbar;
 	private View headerSeperator;
 	
+	private int buttonWidth;
+	private int buttonHeight;
 	private ArrayList<Player> line = new ArrayList<Player>();
 	private Set<Player> originalLine = new HashSet<Player>();
 	
@@ -96,6 +98,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+		calculateButtonSize();
 		updateViewWidth();
 		populateView();
         registerLastLineButtonClickListener();
@@ -210,7 +213,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
     
     private void addButtonOrLabelToRow(LinearLayout buttonRowView, View buttonOrLabel) {
-    	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BUTTON_WIDTH, BUTTON_HEIGHT);
+    	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(buttonWidth, buttonHeight);
         layoutParams.setMargins(BUTTON_MARGIN, BUTTON_MARGIN, BUTTON_MARGIN, BUTTON_MARGIN);
         buttonRowView.addView(buttonOrLabel,layoutParams);
     }
@@ -222,22 +225,26 @@ public class LineDialogFragment extends UltimateDialogFragment {
     private TextView createButtonContainerLabel(String name) {
     	TextView label = new TextView(getActivity());
     	label.setText(name);
-    	label.setWidth(BUTTON_WIDTH);
+    	label.setWidth(buttonWidth);
     	label.setPadding(6,0,0,0);
     	label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
     	return label;
     }
     
     private PlayerLineButton createLineButton(Player player) {
-    	PlayerLineButton button = (PlayerLineButton) getActivity().getLayoutInflater().inflate(R.layout.line_button, null);
+    	PlayerLineButton button = createPlayerLineButton();
 		button.setPlayer(player);
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  playerButtonClicked((PlayerLineButton)v);
              }
          });	
-        button.setWidth(BUTTON_WIDTH);
+        button.setWidth(buttonWidth);
         return button;
+    }
+    
+    private PlayerLineButton createPlayerLineButton() {
+    	return (PlayerLineButton) getActivity().getLayoutInflater().inflate(R.layout.line_button, null);
     }
     
     private void playerButtonClicked(PlayerLineButton clickedButton) {
@@ -395,9 +402,20 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private int getPreferredWidth() {
     	int numberOfButtons = playerButtonsPerRow();
-    	int width = numberOfButtons * BUTTON_WIDTH;
+    	int width = numberOfButtons * buttonWidth;
     	width = width + (BUTTON_MARGIN * 2 * numberOfButtons);
     	return width;
+	}
+	
+	private void calculateButtonSize() {
+		int numberOfButtons = playerButtonsPerRow();
+		Size size = getScreenSize();
+		int marginSpace = (BUTTON_MARGIN * 2 * numberOfButtons);
+		int availableWidth = size.width - (marginSpace * 4);
+		buttonWidth = availableWidth / numberOfButtons;
+		
+		float textHeight = createPlayerLineButton().getTextSize();
+		buttonHeight = (int)textHeight * 3;
 	}
 	
 	private void saveLineChangesToGame() {
