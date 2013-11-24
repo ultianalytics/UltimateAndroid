@@ -12,8 +12,11 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class UltimateActivity extends ActionBarActivity {
 	
@@ -46,6 +49,12 @@ public class UltimateActivity extends ActionBarActivity {
 	    }
 
 	    return answerList;
+	}
+	
+	public static int convertToPixelValue(int dpValue) {
+		final float scale = UltimateApplication.current().getResources().getDisplayMetrics().density;
+		int pixels = (int) (dpValue * scale + 0.5f);
+		return pixels;
 	}
 	
 	public static View findFirstViewWithTag(ViewGroup viewGroup, Object tag){
@@ -103,4 +112,11 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.show();
 	}
 
+	public Size getScreenSize() {
+		Display display = getWindowManager().getDefaultDisplay();
+		@SuppressWarnings("deprecation")
+		Size size = new Size(display.getWidth(), display.getHeight());
+//		display.getSize(point);
+		return size;
+	}
 }

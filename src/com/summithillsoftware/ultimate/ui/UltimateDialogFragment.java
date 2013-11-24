@@ -53,4 +53,8 @@ public class UltimateDialogFragment extends DialogFragment {
  		});
  		errorDialog.show();
 	}
+	
+	protected Size getScreenSize() {
+		return ((UltimateActivity)getActivity()).getScreenSize();
+	}
 }
