@@ -2,4 +2,5 @@
 <com.summithillsoftware.ultimate.ui.game.PlayerLineButton xmlns:android="http://schemas.android.com/apk/res/android"
      style="@style/buttonLinePlayer"
      android:maxLines="1"
+     android:padding="6dp"
      android:ellipsize="end" />
