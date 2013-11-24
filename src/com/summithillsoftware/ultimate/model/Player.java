@@ -85,6 +85,9 @@ public class Player implements Serializable {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	public String getPlayerNumberDescription() {
+		return getNumber() == null || getNumber().isEmpty() ? getName() : getNumber();
+	}
 	public boolean isMale() {
 		return isMale;
 	}
@@ -150,9 +153,20 @@ public class Player implements Serializable {
 	
 	public static Comparator<Player> PlayerNumberComparator = new Comparator<Player>() {
 		public int compare(Player player1, Player player2) {
-			int player1Number = Integer.parseInt(player1.getNumber());
-			int player2Number = Integer.parseInt(player2.getNumber());
+			int player1Number = getNumber(player1.getNumber());
+			int player2Number = getNumber(player2.getNumber());
 			return Integer.valueOf(player1Number).compareTo(Integer.valueOf(player2Number));
+		}
+		
+		private int getNumber(String numberAsString) {
+			if (numberAsString == null || numberAsString.isEmpty()) {
+				return 0;
+			}
+			try {
+				return Integer.parseInt(numberAsString);
+			} catch (Exception e) {
+				return 0;
+			}
 		}
 	};
 }

@@ -31,7 +31,7 @@ public class PlayerLineButton extends Button {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-		String description = player.isAnonymous() ? "open" : (Team.current().isDisplayingPlayerNumber() ? player.getNumber() : player.getName());
+		String description = player.isAnonymous() ? "open" : (Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
 		this.setText(description);
 		setTag(player.getName());
 	}
