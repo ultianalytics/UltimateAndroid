@@ -28,6 +28,12 @@ public class PlayerLineButton extends Button {
 	public Player getPlayer() {
 		return player;
 	}
+	
+	@Override
+	public String toString() {
+		return "PlayerLineButton [player=" + player.getName() + ", isOnFieldView="
+				+ isButtonOnFieldView + ", tag=" + getTag() +"]";
+	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
@@ -54,9 +60,14 @@ public class PlayerLineButton extends Button {
 			updateViewForChangeStatus(isPlayerOnField, originalLine);
 			// TODO...show gender and number of points played
 		}
+		updateViewForEnabledStatus();
+	}
+	private void updateViewForEnabledStatus() {
 		if (isEnabled()) {
 			setTextColor(getResources().getColor(R.color.White));
+			setShadowLayer(0.6f, 1, 1, 0xFF000000);
 		} else {
+			setShadowLayer(0.6f, 1, 1, 0x00000000); // hide the shadow by making it transparent alpha
 			if (isButtonOnFieldView) {
 				setTextColor(getResources().getColor(R.color.DarkOrange));
 			} else {
@@ -65,12 +76,6 @@ public class PlayerLineButton extends Button {
 		}
 	}
 	
-	@Override
-	public String toString() {
-		return "PlayerLineButton [player=" + player.getName() + ", isOnFieldView="
-				+ isButtonOnFieldView + ", tag=" + getTag() +"]";
-	}
-
 	private void updateViewForChangeStatus(boolean isPlayerOnField, Set<Player>originalLine) {
 		boolean playerLineStatusChanged = (isPlayerOnField != originalLine.contains(player));
 		// dim a player that moved between line and bench
