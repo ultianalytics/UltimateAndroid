@@ -2,7 +2,6 @@ package com.summithillsoftware.ultimate.ui.game;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -46,22 +45,7 @@ public class GameActionActivity extends UltimateActivity {
 	private void showLineDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    LineDialogFragment lineDialog = new LineDialogFragment();
-	 // TODO...make this conditional based on screen size	    
-	    boolean isLargeScreen = true;
-	    
-	    if (isLargeScreen) { 
-	        // The device is using a large layout, so show the fragment as a dialog
-	    	lineDialog.setCancelable(false);
-	    	lineDialog.show(fragmentManager, "dialog");
-	    } else {
-	        // The device is smaller, so show the fragment fullscreen
-	        FragmentTransaction transaction = fragmentManager.beginTransaction();
-	        // For a little polish, specify a transition animation
-	        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-	        // To make it fullscreen, use the 'content' root view as the container
-	        // for the fragment, which is always the root view for the activity
-	        transaction.add(android.R.id.content, lineDialog).addToBackStack(null).commit();
-	    }
+    	lineDialog.show(fragmentManager, "dialog");
 	}
 
 

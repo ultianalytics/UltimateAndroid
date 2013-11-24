@@ -91,7 +91,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        registerDialogCancelListener(dialog);
         return dialog;
     }
     
@@ -378,6 +380,15 @@ public class LineDialogFragment extends UltimateDialogFragment {
 				if (UltimateGestureHelper.current().isSwipeLeft(gesture)) {
 					LineDialogFragment.this.substitutesSlidingDrawer.animateClose();
 				}
+			}
+		});
+	}
+	
+	private void registerDialogCancelListener(Dialog dialog) {
+		dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				// Nothing yet...just coded in case we want to commit changes later
 			}
 		});
 	}
