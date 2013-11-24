@@ -12,8 +12,11 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 
 public class PlayerLineButton extends Button {
+	private static final int[] LINE_STATE_CHANGED = { R.attr.state_changed };
+	
 	private Player player;
 	private boolean isButtonOnFieldView;
+	boolean playerLineStatusChanged;
 
 	public PlayerLineButton(Context context) {
 		super(context);
@@ -77,11 +80,24 @@ public class PlayerLineButton extends Button {
 	}
 	
 	private void updateViewForChangeStatus(boolean isPlayerOnField, Set<Player>originalLine) {
-		boolean playerLineStatusChanged = (isPlayerOnField != originalLine.contains(player));
-		// dim a player that moved between line and bench
-		getBackground().setAlpha(playerLineStatusChanged ? 150 : 255);
+		playerLineStatusChanged = (isPlayerOnField != originalLine.contains(player));
+		refreshDrawableState();
 	}
 
-
+	@Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        // If the player has changed from/top line/bench then we merge our custom message unread state into
+        // the existing drawable state before returning it.
+        if (playerLineStatusChanged && isEnabled()) {
+            // Add extra state.
+            final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+ 
+            mergeDrawableStates(drawableState, LINE_STATE_CHANGED);
+ 
+            return drawableState;
+        } else {
+            return super.onCreateDrawableState(extraSpace);
+        }
+    }
 
 }
