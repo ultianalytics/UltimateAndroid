@@ -16,8 +16,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
@@ -29,6 +31,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -62,6 +65,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private GestureOverlayView substitutionsDrawerGestureOverlay;
 	private View toolbar;
 	private View headerSeperator;
+	private ViewGroup benchOverlay;
 	
 	private int buttonWidth;
 	private int buttonHeight;
@@ -113,7 +117,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
             registerSlidingDrawerContainerSwipeListener();
         }
         registerLayoutListener();
-        registerSlidingDrawerClosedListener();
+        registerSlidingDrawerOpenAndCloseListeners();
 	}
 	
 	@Override
@@ -142,6 +146,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		substitutionsDrawerGestureOverlay = (GestureOverlayView)view.findViewById(R.id.substitutionsDrawerContentGestureOverlay);
 		toolbar = (View)view.findViewById(R.id.lineButtonToolbar);
 		headerSeperator = (View)view.findViewById(R.id.line_change_separator);
+		benchOverlay = (ViewGroup)view.findViewById(R.id.benchOverlay);
 		if (doesPointHaveSubstitutions()) {
 			initializeSubstitutionsListView(getSubstitutionsList(view));
 		}		
@@ -364,13 +369,20 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		});
 	}
 	
-	private void registerSlidingDrawerClosedListener() {  
+	private void registerSlidingDrawerOpenAndCloseListeners() {  
 		substitutesSlidingDrawer.setOnDrawerCloseListener(new OnDrawerCloseListener() {
 			@Override
 			public void onDrawerClosed() {
+				enableBenchInteraction(true);
             	configureViews();
 			}
 		});
+		substitutesSlidingDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+			@Override
+			public void onDrawerOpened() {
+				enableBenchInteraction(false);
+			}
+		});		
 	}
 	
 	private void registerBenchContainerSwipeListener() {  // if swipe left then open substitutions sliding drawer
@@ -378,7 +390,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 			@Override
 			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
 				if (UltimateGestureHelper.current().isSwipeLeft(gesture)) {
-					LineDialogFragment.this.substitutesSlidingDrawer.animateClose();
+					LineDialogFragment.this.substitutesSlidingDrawer.animateOpen();
 				}
 			}
 		});
@@ -507,6 +519,24 @@ public class LineDialogFragment extends UltimateDialogFragment {
 						saveAndDismiss();
 					}
 				});
+	}
+	
+	private void enableBenchInteraction(boolean allow) {
+		if (allow) {
+			benchOverlay.removeAllViews();
+		} else {
+			View overlay = new View(getActivity());
+			overlay.setBackgroundColor(0x00000000);  // transparent
+			overlay.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
+					return true;  // ignore all touches
+				}
+			});
+	    	ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(benchContainerView.getWidth(), benchContainerView.getHeight());
+	    	benchOverlay.addView(overlay,layoutParams);
+		}
+		
 	}
 	
 	private void resetLine() {

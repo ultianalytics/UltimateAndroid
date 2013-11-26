@@ -175,9 +175,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
                 </LinearLayout>
+                
             </android.gesture.GestureOverlayView>
+            
         </ScrollView>
 
+        <FrameLayout
+            android:id="@+id/benchOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
+                
         <SlidingDrawer
             android:id="@+id/subsitutesDrawer"
             android:layout_width="match_parent"
@@ -234,6 +243,8 @@
             </android.gesture.GestureOverlayView>
             
         </SlidingDrawer>
+        
+
         
     </FrameLayout>
 
