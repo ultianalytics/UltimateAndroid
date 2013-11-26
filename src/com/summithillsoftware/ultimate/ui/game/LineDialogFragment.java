@@ -48,6 +48,7 @@ import com.summithillsoftware.ultimate.ui.Size;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
@@ -66,6 +67,8 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private View toolbar;
 	private View headerSeperator;
 	private ViewGroup benchOverlay;
+	ViewGroup lineFieldPlayers;
+	ViewGroup lineBenchPlayers;
 	
 	private int buttonWidth;
 	private int buttonHeight;
@@ -136,6 +139,8 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void connectWidgets(View view) {
+		lineFieldPlayers = (ViewGroup)view.findViewById(R.id.lineFieldPlayers);
+		lineBenchPlayers = (ViewGroup)view.findViewById(R.id.lineBenchPlayers);
 		lastLineButton = (Button)view.findViewById(R.id.button_last_line);
 		clearButton = (Button)view.findViewById(R.id.clear);
 		changeTypeRadioGroup = (RadioGroup)view.findViewById(R.id.radio_line_change_type);
@@ -168,16 +173,14 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
     
     private void populateFieldAndBench() {
-    	ViewGroup buttonContainer = (ViewGroup)getView().findViewById(R.id.lineFieldPlayers);
     	List<Player> players = new ArrayList<Player>(line);
     	while (players.size() < 7) {
 			players.add(Player.anonymous());
 		}
-    	populateButtonContainer(buttonContainer, players, true);
+    	populateButtonContainer(lineFieldPlayers, players, true);
     	
-    	buttonContainer = (ViewGroup)getView().findViewById(R.id.lineBenchPlayers);
     	players = Team.current().getPlayersSorted();
-    	populateButtonContainer(buttonContainer, players, false);
+    	populateButtonContainer(lineBenchPlayers, players, false);
     }
     
     private void populateButtonContainer(ViewGroup buttonContainer, List<Player> players, boolean isField) {
@@ -262,10 +265,14 @@ public class LineDialogFragment extends UltimateDialogFragment {
     		benchButton.updateView(line, originalLine);
     	} else {  // player on bench
     		if (line.size() < 7) {
-	    		line.add(clickedButton.getPlayer());
-	    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
-	    		fieldButton.setPlayer(clickedButton.getPlayer());
-	    		fieldButton.updateView(line, originalLine);
+    			if (validateMoveToField(clickedButton.getPlayer())) {
+		    		line.add(clickedButton.getPlayer());
+		    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
+		    		fieldButton.setPlayer(clickedButton.getPlayer());
+		    		fieldButton.updateView(line, originalLine);
+    			} else {
+    				errorVibrate();
+    			}
     		} else {
     			errorVibrate();
     		}
@@ -273,6 +280,39 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	clickedButton.updateView(line, originalLine);
     }
 
+    private boolean validateMoveToField(Player player) {
+    	if (Team.current().isMixed()) {
+    		int maleCount = 0;
+    		int femaleCount = 0;
+    		for (View view : ViewHelper.allDescendentViews(lineFieldPlayers, PlayerLineButton.class)) {
+				Player linePlayer = ((PlayerLineButton)view).getPlayer();
+				if (!linePlayer.isAnonymous()) {
+					
+					if (linePlayer.isMale()) {
+						maleCount++;
+					} else {
+						femaleCount++;
+					}
+					
+					if (maleCount >= 4 && player.isMale()) {
+						displayMixedTeamWouldBeOutOfBalanceError(true);
+						return false;
+					} else if (femaleCount >= 4 && player.isFemale()) {
+						displayMixedTeamWouldBeOutOfBalanceError(false);
+						return false;
+					} 
+				}
+			}
+    		return true;
+    	} else {
+    		return true;
+    	}
+    }
+    
+    private void displayMixedTeamWouldBeOutOfBalanceError(boolean isAtMaleLimit) {
+    	// TODO...finish this
+    }
+    
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
     	ViewGroup containerView = (ViewGroup)getView().findViewById(onField ? R.id.lineFieldPlayers : R.id.lineBenchPlayers);
     	return (PlayerLineButton) UltimateActivity.findFirstViewWithTag(containerView, player.getName());

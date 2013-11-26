@@ -1,5 +1,9 @@
 package com.summithillsoftware.ultimate.ui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +15,35 @@ public class ViewHelper {
 			return true;
 		}
 		return false;
+	}
+	
+	public static List<View> allChildViews(View view) {
+		if (view instanceof ViewGroup) {
+			List<View> views = new ArrayList<View>();
+			for(int i=0; i<((ViewGroup)view).getChildCount(); ++i) {
+				views.add(((ViewGroup)view).getChildAt(i));
+			}
+			return views;
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	public static List<View> allDescendentViews(View view, @SuppressWarnings("rawtypes") Class viewType) {
+		List<View> views = new ArrayList<View>();
+		addDescendentViews(view, viewType, views);
+		return views;
+	}
+	
+	public static void addDescendentViews(View view, @SuppressWarnings("rawtypes") Class viewType, List<View> viewList) {
+		if (view.getClass() == viewType) {
+			viewList.add(view);
+		}
+		if (view instanceof ViewGroup) {
+			for(int i=0; i<((ViewGroup)view).getChildCount(); ++i) {
+				addDescendentViews(((ViewGroup)view).getChildAt(i), viewType, viewList);
+			}
+		} 
 	}
 
 }

@@ -89,10 +89,13 @@ public class Player implements Serializable {
 		return getNumber() == null || getNumber().isEmpty() ? getName() : getNumber();
 	}
 	public boolean isMale() {
-		return isMale;
+		return !isAnonymous() && isMale;
 	}
 	public void setMale(boolean isMale) {
 		this.isMale = isMale;
+	}
+	public boolean isFemale() {
+		return !isAnonymous() && !isMale;
 	}
 	public String getLeaguevineJson() {
 		return leaguevineJson;
