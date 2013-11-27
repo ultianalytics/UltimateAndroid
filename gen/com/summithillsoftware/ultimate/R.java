@@ -1221,10 +1221,12 @@ containing a value of this type.
         public static final int social_group=0x7f020062;
         public static final int social_person=0x7f020063;
         public static final int substitutes_horizontal_sliding_drawer_handle=0x7f020064;
-        public static final int substitutes_sliding_drawer_handle=0x7f020065;
+        public static final int substitutes_vertical_sliding_drawer_handle=0x7f020065;
         public static final int team=0x7f020066;
-        public static final int trash_white=0x7f020067;
-        public static final int undo_button_background=0x7f020068;
+        public static final int too_many_females_on_field=0x7f020067;
+        public static final int too_many_males_on_field=0x7f020068;
+        public static final int trash_white=0x7f020069;
+        public static final int undo_button_background=0x7f02006a;
     }
     public static final class id {
         public static final int action_action=0x7f060092;
