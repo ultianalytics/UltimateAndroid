@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -67,8 +68,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private View toolbar;
 	private View headerSeperator;
 	private ViewGroup benchOverlay;
-	ViewGroup lineFieldPlayers;
-	ViewGroup lineBenchPlayers;
+	private ViewGroup lineFieldPlayers;
+	private ViewGroup lineBenchPlayers;
+	private ImageView errorImageView;
+	private TextView fieldContainerLabel;
 	
 	private int buttonWidth;
 	private int buttonHeight;
@@ -152,6 +155,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		toolbar = (View)view.findViewById(R.id.lineButtonToolbar);
 		headerSeperator = (View)view.findViewById(R.id.line_change_separator);
 		benchOverlay = (ViewGroup)view.findViewById(R.id.benchOverlay);
+		errorImageView = (ImageView)view.findViewById(R.id.errorImageView);
 		if (doesPointHaveSubstitutions()) {
 			initializeSubstitutionsListView(getSubstitutionsList(view));
 		}		
@@ -187,7 +191,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	buttonContainer.removeAllViews();
     	int maxButtonsPerRow = playerButtonsPerRow();
     	LinearLayout buttonRowView = addButtonRowLayout(buttonContainer);
-    	addButtonOrLabelToRow(buttonRowView,createButtonContainerLabel(isField ? "Field"  : "Bench"));
+    	TextView containerLabel = createButtonContainerLabel(isField ? "Field"  : "Bench");
+    	if (isField) {
+    		fieldContainerLabel = containerLabel;
+    	}
+    	addButtonOrLabelToRow(buttonRowView,containerLabel);
     	int numberOfButtonsInRow = 1;  
     	for (Player player : players) {
     		if (numberOfButtonsInRow >= maxButtonsPerRow) {
@@ -310,7 +318,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
     
     private void displayMixedTeamWouldBeOutOfBalanceError(boolean isAtMaleLimit) {
-    	// TODO...finish this
+    	fieldContainerLabel.setVisibility(View.INVISIBLE);
+    	errorImageView.setVisibility(View.VISIBLE);
+    	errorImageView.setImageResource(isAtMaleLimit ? R.drawable.too_many_males_on_field : R.drawable.too_many_females_on_field);
+    	// TODO...center error image using label's rect
+    	// TODO...fade out error and fade label back in
     }
     
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {

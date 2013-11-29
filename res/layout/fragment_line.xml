@@ -92,12 +92,31 @@
             android:text="@string/radio_line_change_type_substitution" />
     </RadioGroup>
 
-    <LinearLayout
-        android:id="@+id/lineFieldPlayers"
+    
+    <FrameLayout
+        android:id="@+id/lineFieldPlayersContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:layout_height="match_parent" >
+        
+	    <LinearLayout
+	        android:id="@+id/lineFieldPlayers"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	    </LinearLayout>
+	    
+	            
+        <ImageView 
+            android:id="@+id/errorImageView"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginTop="4dp"
+        	android:layout_marginRight="6dp"
+        	android:src="@drawable/too_many_females_on_field"
+        	android:visibility="invisible"
+        	android:contentDescription="@string/image_description" />
+        
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/lineButtonToolbar"
