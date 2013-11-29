@@ -36,6 +36,7 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.SoundPlayer;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
@@ -279,10 +280,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		    		fieldButton.setPlayer(clickedButton.getPlayer());
 		    		fieldButton.updateView(line, originalLine);
     			} else {
-    				errorVibrate();
+    				errorSoundAndVibrate();
     			}
     		} else {
-    			errorVibrate();
+    			errorSoundAndVibrate();
     		}
     	}
     	clickedButton.updateView(line, originalLine);
@@ -318,9 +319,11 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
     
     private void displayMixedTeamWouldBeOutOfBalanceError(boolean isAtMaleLimit) {
+    	SoundPlayer.current().playErrorSound();
     	fieldContainerLabel.setVisibility(View.INVISIBLE);
     	errorImageView.setVisibility(View.VISIBLE);
     	errorImageView.setImageResource(isAtMaleLimit ? R.drawable.too_many_males_on_field : R.drawable.too_many_females_on_field);
+    	
     	// TODO...center error image using label's rect
     	// TODO...fade out error and fade label back in
     }

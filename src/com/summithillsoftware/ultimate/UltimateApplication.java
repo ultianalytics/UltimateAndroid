@@ -25,6 +25,7 @@ public class UltimateApplication extends Application {
         super.onCreate(); 
         Current = this;
         ensureOneTeam();
+        SoundPlayer.current().loadSounds();
     }  
     
     private void ensureOneTeam() {

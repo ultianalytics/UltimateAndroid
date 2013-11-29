@@ -2,6 +2,9 @@ package com.summithillsoftware.ultimate.ui;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
+
+import com.summithillsoftware.ultimate.SoundPlayer;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +22,8 @@ public class UltimateDialogFragment extends DialogFragment {
 		}
 	}
 	
-	protected void errorVibrate() {
+	protected void errorSoundAndVibrate() {
+	   	SoundPlayer.current().playErrorSound();
 		if (vibrator == null) {
 			vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 		}
