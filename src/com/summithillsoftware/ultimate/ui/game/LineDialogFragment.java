@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.animation.Animator.AnimatorListener;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -46,6 +50,7 @@ import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
+import com.summithillsoftware.ultimate.ui.DefaultAnimatorListener;
 import com.summithillsoftware.ultimate.ui.Size;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
@@ -320,12 +325,28 @@ public class LineDialogFragment extends UltimateDialogFragment {
     
     private void displayMixedTeamWouldBeOutOfBalanceError(boolean isAtMaleLimit) {
     	SoundPlayer.current().playErrorSound();
-    	fieldContainerLabel.setVisibility(View.INVISIBLE);
+    	
+    	// TODO...center error image using label's rect
+    	
+    	fieldContainerLabel.setAlpha(0);
     	errorImageView.setVisibility(View.VISIBLE);
     	errorImageView.setImageResource(isAtMaleLimit ? R.drawable.too_many_males_on_field : R.drawable.too_many_females_on_field);
     	
-    	// TODO...center error image using label's rect
-    	// TODO...fade out error and fade label back in
+    	AnimatorSet animationSet = new AnimatorSet();
+    	ObjectAnimator errorImageViewHide = ObjectAnimator.ofFloat(errorImageView, View.ALPHA, 0f);
+    	ObjectAnimator fieldContainerLabelShow = ObjectAnimator.ofFloat(fieldContainerLabel, View.ALPHA, 1f);
+    	animationSet.play(fieldContainerLabelShow).with(errorImageViewHide);
+    	animationSet.setDuration(3000);
+    	animationSet.addListener(new DefaultAnimatorListener() {
+    		@Override
+    		public void onAnimationEnd(Animator animation) {
+    	    	errorImageView.setVisibility(View.INVISIBLE);
+    	    	errorImageView.setAlpha(1f);
+    		}
+    	});
+    	animationSet.start();
+    	
+
     }
     
     private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
