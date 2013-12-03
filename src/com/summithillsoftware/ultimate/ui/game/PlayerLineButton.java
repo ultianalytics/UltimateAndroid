@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.widget.Button;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 
@@ -40,7 +41,9 @@ public class PlayerLineButton extends Button {
 
 	public void setPlayer(Player player) {
 		this.player = player;
-		String description = player.isAnonymous() ? "open" : (Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+		String description = player.isAnonymous() ? 
+				UltimateApplication.current().getString(R.string.button_line_field_slot_open) : 
+					(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
 		this.setText(description);
 		setTag(player.getName());
 	}

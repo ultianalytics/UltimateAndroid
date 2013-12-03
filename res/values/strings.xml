@@ -123,6 +123,8 @@
     <string name="button_line_clear">Clear</string>
     <string name="button_line_substitution">Substitution</string>
     <string name="button_line_substitution_undo">Undo Last Substitution</string>    
+	<string name="button_line_field_slot_open">open</string>   
+	<string name="button_action_unknown_player">UNKNOWN</string>	
 	<string name="button_done">DONE</string>
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
