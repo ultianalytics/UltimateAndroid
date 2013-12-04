@@ -4,7 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+    <com.summithillsoftware.ultimate.ui.game.GameActionInitiatorPlayerButton
+        android:id="@+id/initiatorPlayerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameActionInitiatorPlayer"
+        android:text="@string/button_action_unknown_player" />
 
+    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+        android:id="@+id/catchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameAction"
+        android:text="@string/button_action_catch" />
+
+    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+        android:id="@+id/DropButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameAction"
+        android:text="@string/button_action_drop" />
+
+    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+        android:id="@+id/GoalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameAction"
+        android:text="@string/button_action_goal" />
+
+    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+        android:id="@+id/deButton"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameAction"
+        android:text="@string/button_action_de" />
 
 </LinearLayout>
 
