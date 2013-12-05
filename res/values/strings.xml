@@ -129,6 +129,7 @@
 	<string name="button_action_drop">Drop</string>
 	<string name="button_action_goal">Goal</string>
 	<string name="button_action_de">D</string>
+	<string name="button_action_pull">Pull</string>
 	<string name="button_action_throwaway">Throwaway</string>
 	<string name="button_action_undo">Undo</string>
 	<string name="button_action_timeouts">Timeouts (\"%1$d\" free)</string>

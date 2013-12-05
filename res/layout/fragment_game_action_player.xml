@@ -11,6 +11,16 @@
         style="@style/buttonGameActionInitiatorPlayer"
         android:text="@string/button_action_unknown_player" />
 
+    <ImageView
+        android:id="@+id/passingDirectionArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+		android:layout_marginRight="4dp"        
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/image_description"
+        android:src="@drawable/arrow_pass_direction" />
+
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/catchButton"
         android:layout_width="wrap_content"
@@ -19,19 +29,27 @@
         android:text="@string/button_action_catch" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
-        android:id="@+id/DropButton"
+        android:id="@+id/dropButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/buttonGameAction"
         android:text="@string/button_action_drop" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
-        android:id="@+id/GoalButton"
+        android:id="@+id/goalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/buttonGameAction"
         android:text="@string/button_action_goal" />
 
+    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+        android:id="@+id/pullButton"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonGameAction"
+        android:text="@string/button_action_pull" />
+        
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/deButton"
         android:visibility="invisible"

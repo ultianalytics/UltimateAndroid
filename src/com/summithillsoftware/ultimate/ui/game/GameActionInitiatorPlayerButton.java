@@ -34,11 +34,13 @@ public class GameActionInitiatorPlayerButton extends Button {
 	
 	public void setPlayer(Player player) {
 		this.player = player;
-		String description = player.isAnonymous() ? 
-				UltimateApplication.current().getString(R.string.button_action_unknown_player) : 
-					(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
-		this.setText(description);
-		setTag(player.getName());
+		if (player != null) {
+			String description = player.isAnonymous() ? 
+					UltimateApplication.current().getString(R.string.button_action_unknown_player) : 
+						(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+			this.setText(description);
+			setTag(player.getName());
+		}
 	}
 	
 	private void updateViewForSelectedStatus() {
