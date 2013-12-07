@@ -74,7 +74,7 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	}
 	
 	private void configureButtonVisibility() {
-		initiatorPlayerButton.setVisibility((player != null) ? View.VISIBLE : View.GONE);
+		initiatorPlayerButton.setVisibility((player != null) ? View.VISIBLE : View.INVISIBLE);
 		passingDirectionArrow.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
 		catchButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
 		dropButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
