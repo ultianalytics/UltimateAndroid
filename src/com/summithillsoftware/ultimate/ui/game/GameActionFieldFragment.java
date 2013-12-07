@@ -44,7 +44,7 @@ public class GameActionFieldFragment extends UltimateFragment {
 	
 	private void addPlayerFragments() {
 		playerFragments = new ArrayList<GameActionPlayerFragment>();
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
 			ft.add(R.id.playerFragments, playerFragment);
