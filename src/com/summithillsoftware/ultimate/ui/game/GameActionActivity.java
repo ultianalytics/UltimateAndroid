@@ -8,15 +8,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class GameActionActivity extends UltimateActivity {
+public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_action);
+		getFieldFragment().setGameActionEventListener(this);
 		setupActionBar();  // Show the Up button in the action bar.		
 	}
 
@@ -67,6 +70,24 @@ public class GameActionActivity extends UltimateActivity {
 	
 	private GameActionRecentEventsFragment getRecentEventsFragment() {
 		return (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
+	}
+
+	@Override
+	public void newEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void initialPlayerSelected(Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

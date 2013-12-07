@@ -18,6 +18,7 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	private boolean isOffense;
 	private boolean isFirstEventOfPoint;
 	private boolean isSelected;
+	private GameActionEventListener gameActionEventListener;
 	
 	// widgets
 	private GameActionInitiatorPlayerButton initiatorPlayerButton;
@@ -127,6 +128,13 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 		populateView();
+	}
+	public GameActionEventListener getGameActionEventListener() {
+		return gameActionEventListener;
+	}
+	public void setGameActionEventListener(
+			GameActionEventListener gameActionEventListener) {
+		this.gameActionEventListener = gameActionEventListener;
 	}
 
 }

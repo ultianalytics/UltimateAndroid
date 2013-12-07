@@ -10,11 +10,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
-public class GameActionFieldFragment extends UltimateFragment {
+public class GameActionFieldFragment extends UltimateFragment implements GameActionEventListener {
+	private GameActionEventListener gameActionEventListener;
+	
 	// widgets
 	private GameActionButton throwawayButton;
 	private GameActionButton opponentGoalButton;
@@ -48,6 +51,7 @@ public class GameActionFieldFragment extends UltimateFragment {
 			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 			for (int i = 0; i <= 7; i++) {
 				GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
+				playerFragment.setGameActionEventListener(this);
 				ft.add(R.id.playerFragments, playerFragment, fragmentTagForPlayer(i));
 			}
 			ft.commit(); 
@@ -104,6 +108,35 @@ public class GameActionFieldFragment extends UltimateFragment {
 	
 	private String fragmentTagForPlayer(int i) {
 		return "PlayerFrag" + i;
+	}
+
+	public GameActionEventListener getGameActionEventListener() {
+		return gameActionEventListener;
+	}
+
+	public void setGameActionEventListener(
+			GameActionEventListener gameActionEventListener) {
+		this.gameActionEventListener = gameActionEventListener;
+	}
+
+	
+	
+	@Override
+	public void newEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void initialPlayerSelected(Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
