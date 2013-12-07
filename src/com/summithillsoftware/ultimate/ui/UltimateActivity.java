@@ -119,4 +119,12 @@ public class UltimateActivity extends ActionBarActivity {
 //		display.getSize(point);
 		return size;
 	}
+	
+	public ViewGroup getRootView() {
+		return (ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content);
+	}
+	
+	public ViewGroup getRootContentView() {
+		return (ViewGroup)getRootView().getChildAt(0);
+	}
 }

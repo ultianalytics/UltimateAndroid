@@ -12,7 +12,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_game_action_recent_events, container);
+		View view = inflater.inflate(R.layout.fragment_game_action_recent_events, null);
 		return view;
 	}
 

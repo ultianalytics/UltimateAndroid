@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.summithillsoftware.ultimate.R;
@@ -17,31 +18,44 @@ import com.summithillsoftware.ultimate.ui.UltimateFragment;
 public class GameActionFieldFragment extends UltimateFragment {
 	// widgets
 	private List<GameActionPlayerFragment> playerFragments;
+	private GameActionButton throwawayButton;
+	private GameActionButton opponentGoalButton;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_game_action_field, container);
+		View view = inflater.inflate(R.layout.fragment_game_action_field, null);
 		return view;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		addPlayerFragments();
 		connectWidgets(view);
-//		populateView();
+		registerWidgetListeners();
+		populateView();
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
-	private void connectWidgets(View view) {
+	@Override
+	public void onStart() {
+		super.onStart();
+		populateView();
+	}
+	
+	private void addPlayerFragments() {
 		playerFragments = new ArrayList<GameActionPlayerFragment>();
-		FragmentManager fragmentManager = getChildFragmentManager();
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment1)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment2)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment3)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment4)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment5)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment6)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragment7)));
-		playerFragments.add((GameActionPlayerFragment)(fragmentManager.findFragmentById(R.id.playerFragmentAnonymous)));
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		for (int i = 0; i <= 7; i++) {
+			GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
+			ft.add(R.id.playerFragments, playerFragment);
+			playerFragments.add(playerFragment);
+		}
+		ft.commit(); 
+	}
+	
+	private void connectWidgets(View view) {
+		throwawayButton = (GameActionButton)view.findViewById(R.id.throwawayButton);
+		opponentGoalButton = (GameActionButton)view.findViewById(R.id.opponentGoalButton);
 	}
 	
 	private void populateView() {
@@ -59,5 +73,29 @@ public class GameActionFieldFragment extends UltimateFragment {
 	private GameActionPlayerFragment getAnonymousPlayerFragment() {
 		return playerFragments.get(7);
 	}
+	
+	private void registerWidgetListeners() {
+		throwawayButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleThrowawayPressed();
+			}
+		});
+		opponentGoalButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleOpponentGoalPressed();
+			}
+		});		
+	}
+	
+	private void handleThrowawayPressed() {
+		// TODO...finish
+	}
+
+	private void handleOpponentGoalPressed() {
+		//	TODO...finish
+	}
+
 
 }

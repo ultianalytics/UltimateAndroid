@@ -30,9 +30,9 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_game_action_player, container);
+		View view = inflater.inflate(R.layout.fragment_game_action_player, null);
 		connectWidgets(view);
-		registerButtonListening();
+		registerWidgetListeners();
 		populateView();
 		return view;
 	}
@@ -47,7 +47,7 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		deButton = (GameActionButton)view.findViewById(R.id.deButton);
 	}
 	
-	private void registerButtonListening() {
+	private void registerWidgetListeners() {
 		registerActionButtonListener(catchButton, Action.Catch);
 		registerActionButtonListener(dropButton, Action.Drop);
 		registerActionButtonListener(goalButton, Action.Goal);
@@ -64,11 +64,13 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	}
 	
 	private void populateView() {
-		configureButtonVisibility();
-		if (player != null) {
-			initiatorPlayerButton.setPlayer(player);
-			initiatorPlayerButton.setSelected(isSelected);
-		} 
+		if (getView() != null) {
+			configureButtonVisibility();
+			if (player != null) {
+				initiatorPlayerButton.setPlayer(player);
+				initiatorPlayerButton.setSelected(isSelected);
+			} 
+		}
 	}
 	
 	private void configureButtonVisibility() {
