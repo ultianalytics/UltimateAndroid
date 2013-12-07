@@ -1,6 +1,5 @@
 package com.summithillsoftware.ultimate.ui.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class GameActionFieldFragment extends UltimateFragment {
 	// widgets
-	private List<GameActionPlayerFragment> playerFragments;
 	private GameActionButton throwawayButton;
 	private GameActionButton opponentGoalButton;
 	
@@ -32,7 +30,6 @@ public class GameActionFieldFragment extends UltimateFragment {
 		addPlayerFragments();
 		connectWidgets(view);
 		registerWidgetListeners();
-		populateView();
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
@@ -43,14 +40,14 @@ public class GameActionFieldFragment extends UltimateFragment {
 	}
 	
 	private void addPlayerFragments() {
-		playerFragments = new ArrayList<GameActionPlayerFragment>();
-		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-		for (int i = 0; i <= 7; i++) {
-			GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
-			ft.add(R.id.playerFragments, playerFragment);
-			playerFragments.add(playerFragment);
+		if (getAnonymousPlayerFragment() == null) {  // don't add if already there
+			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+			for (int i = 0; i <= 7; i++) {
+				GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
+				ft.add(R.id.playerFragments, playerFragment, fragmentTagForPlayer(i));
+			}
+			ft.commit(); 
 		}
-		ft.commit(); 
 	}
 	
 	private void connectWidgets(View view) {
@@ -62,16 +59,16 @@ public class GameActionFieldFragment extends UltimateFragment {
 		List<Player> line = Game.current().currentLineSorted();
 		for (int i = 0; i < 7; i++) {
 			if (line.size() >= i) {
-				playerFragments.get(i).setPlayer(line.get(i));
+				getPlayerFragment(i).setPlayer(line.get(i));
 			} else {
-				playerFragments.get(i).setPlayer(null);
+				getPlayerFragment(i).setPlayer(null);
 			}
 		}
 		getAnonymousPlayerFragment().setPlayer(Player.anonymous());
 	}
 	
 	private GameActionPlayerFragment getAnonymousPlayerFragment() {
-		return playerFragments.get(7);
+		return getPlayerFragment(7);
 	}
 	
 	private void registerWidgetListeners() {
@@ -97,5 +94,12 @@ public class GameActionFieldFragment extends UltimateFragment {
 		//	TODO...finish
 	}
 
+	private GameActionPlayerFragment getPlayerFragment(int i) {
+		return (GameActionPlayerFragment)getChildFragmentManager().findFragmentByTag(fragmentTagForPlayer(i));
+	}
+	
+	private String fragmentTagForPlayer(int i) {
+		return "PlayerFrag" + i;
+	}
 
 }
