@@ -1232,8 +1232,8 @@ containing a value of this type.
         public static final int undo_button_background=0x7f02006d;
     }
     public static final class id {
-        public static final int action_action=0x7f0600a2;
-        public static final int action_add=0x7f0600a5;
+        public static final int action_action=0x7f0600a1;
+        public static final int action_add=0x7f0600a4;
         public static final int action_bar=0x7f06001c;
         public static final int action_bar_activity_content=0x7f060015;
         public static final int action_bar_container=0x7f06001b;
@@ -1242,14 +1242,14 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_delete=0x7f0600a3;
-        public static final int action_games=0x7f0600a7;
-        public static final int action_line=0x7f0600a4;
+        public static final int action_delete=0x7f0600a2;
+        public static final int action_games=0x7f0600a6;
+        public static final int action_line=0x7f0600a3;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f0600a6;
-        public static final int action_teams=0x7f0600a8;
+        public static final int action_settings=0x7f0600a5;
+        public static final int action_teams=0x7f0600a7;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1284,8 +1284,8 @@ containing a value of this type.
         public static final int home=0x7f060014;
         public static final int homeAsUp=0x7f060005;
         public static final int icon=0x7f06002a;
-        public static final int icon_game=0x7f060098;
-        public static final int icon_team=0x7f06009c;
+        public static final int icon_game=0x7f060097;
+        public static final int icon_team=0x7f06009b;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f060027;
         public static final int initiatorPlayerButton=0x7f06005c;
@@ -1297,7 +1297,7 @@ containing a value of this type.
         public static final int label_player_position=0x7f060082;
         public static final int label_team_playerdisplay=0x7f060090;
         public static final int label_team_players=0x7f060095;
-        public static final int label_vs=0x7f06009b;
+        public static final int label_vs=0x7f06009a;
         public static final int lineBenchPlayers=0x7f060076;
         public static final int lineBenchPlayersScrollView=0x7f060074;
         public static final int lineButtonToolbar=0x7f06006e;
@@ -1380,22 +1380,21 @@ containing a value of this type.
         public static final int teamFragment=0x7f060042;
         public static final int teamsFragment=0x7f060043;
         public static final int textView1=0x7f060080;
-        public static final int text_game_date=0x7f060099;
+        public static final int text_game_date=0x7f060098;
         public static final int text_game_opponent_name=0x7f060046;
         public static final int text_game_tourament_name=0x7f060047;
-        public static final int text_game_tournament_name=0x7f06009a;
-        public static final int text_line_substitution_set_in=0x7f0600a0;
-        public static final int text_line_substitution_set_out=0x7f06009f;
+        public static final int text_game_tournament_name=0x7f060099;
+        public static final int text_line_substitution_set_in=0x7f06009f;
+        public static final int text_line_substitution_set_out=0x7f06009e;
         public static final int text_player_name=0x7f06007e;
         public static final int text_player_number=0x7f060081;
-        public static final int text_players_description=0x7f06009d;
-        public static final int text_players_number=0x7f06009e;
-        public static final int text_team_cloud_id=0x7f0600a1;
+        public static final int text_players_description=0x7f06009c;
+        public static final int text_players_number=0x7f06009d;
+        public static final int text_team_cloud_id=0x7f0600a0;
         public static final int text_team_name=0x7f06008d;
         public static final int throwawayButton=0x7f06005a;
         public static final int title=0x7f06002b;
         public static final int top_action_bar=0x7f060020;
-        public static final int undefinedButton=0x7f060097;
         public static final int undoLastSubsitutionButton=0x7f06007c;
         public static final int up=0x7f060021;
         public static final int useLogo=0x7f060003;
@@ -1471,14 +1470,13 @@ containing a value of this type.
         public static final int fragment_team=0x7f030028;
         public static final int fragment_teams=0x7f030029;
         public static final int game_action_initiator_player_button=0x7f03002a;
-        public static final int game_action_player_button=0x7f03002b;
-        public static final int line_button=0x7f03002c;
-        public static final int line_row=0x7f03002d;
-        public static final int rowlayout_games=0x7f03002e;
-        public static final int rowlayout_players=0x7f03002f;
-        public static final int rowlayout_substitutions=0x7f030030;
-        public static final int rowlayout_teams=0x7f030031;
-        public static final int support_simple_spinner_dropdown_item=0x7f030032;
+        public static final int line_button=0x7f03002b;
+        public static final int line_row=0x7f03002c;
+        public static final int rowlayout_games=0x7f03002d;
+        public static final int rowlayout_players=0x7f03002e;
+        public static final int rowlayout_substitutions=0x7f03002f;
+        public static final int rowlayout_teams=0x7f030030;
+        public static final int support_simple_spinner_dropdown_item=0x7f030031;
     }
     public static final class menu {
         public static final int game=0x7f0d0000;
