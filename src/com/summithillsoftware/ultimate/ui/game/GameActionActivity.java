@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -42,11 +44,31 @@ public class GameActionActivity extends UltimateActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private void populateView() {
+		getFieldFragment().refresh();
+		getRecentEventsFragment().refresh();
+	}
+	
 	private void showLineDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    LineDialogFragment lineDialog = new LineDialogFragment();
     	lineDialog.show(fragmentManager, "dialog");
+	    lineDialog.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface paramDialogInterface) {
+				populateView();
+			}
+		});
 	}
+	
+	private GameActionFieldFragment getFieldFragment() {
+		return (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
+	}
+	
+	private GameActionRecentEventsFragment getRecentEventsFragment() {
+		return (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
+	}
+
 
 
 }

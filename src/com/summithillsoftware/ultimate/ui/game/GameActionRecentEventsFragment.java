@@ -16,4 +16,8 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		return view;
 	}
 
+	public void refresh() {
+		// TODO...finish
+	}
+	
 }

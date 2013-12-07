@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
@@ -60,6 +61,7 @@ import com.summithillsoftware.ultimate.ui.ViewHelper;
 public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_MARGIN = 2;
 	private static String LINE_STATE_PROPERTY = "line";
+	private OnDismissListener onDismissListener;
 	
 	// widgets
 	private Button lastLineButton;
@@ -143,6 +145,14 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		super.onViewStateRestored(savedInstanceState);
 		if (savedInstanceState != null) {
 			line = (ArrayList<Player>)savedInstanceState.getSerializable(LINE_STATE_PROPERTY);
+		}
+	}
+	
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		super.onDismiss(dialog);
+		if (onDismissListener != null) {
+			onDismissListener.onDismiss(dialog);
 		}
 	}
 	
@@ -626,6 +636,16 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private boolean doesPointHaveSubstitutions() {
 		return Game.current().doesCurrentPointHaveSubstitutions();
 	}
+
+	public OnDismissListener getOnDismissListener() {
+		return onDismissListener;
+	}
+
+	public void setOnDismissListener(OnDismissListener onDismissListener) {
+		this.onDismissListener = onDismissListener;
+	}
+
+
 
 
 

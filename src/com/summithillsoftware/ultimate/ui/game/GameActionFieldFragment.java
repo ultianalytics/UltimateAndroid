@@ -39,6 +39,10 @@ public class GameActionFieldFragment extends UltimateFragment {
 		populateView();
 	}
 	
+	public void refresh() {
+		populateView();
+	}
+	
 	private void addPlayerFragments() {
 		if (getAnonymousPlayerFragment() == null) {  // don't add if already there
 			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -58,7 +62,7 @@ public class GameActionFieldFragment extends UltimateFragment {
 	private void populateView() {
 		List<Player> line = Game.current().currentLineSorted();
 		for (int i = 0; i < 7; i++) {
-			if (line.size() >= i) {
+			if (line.size() > i) {
 				getPlayerFragment(i).setPlayer(line.get(i));
 			} else {
 				getPlayerFragment(i).setPlayer(null);
@@ -101,5 +105,6 @@ public class GameActionFieldFragment extends UltimateFragment {
 	private String fragmentTagForPlayer(int i) {
 		return "PlayerFrag" + i;
 	}
+
 
 }
