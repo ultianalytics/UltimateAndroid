@@ -27,6 +27,16 @@
         android:layout_gravity="center_vertical"
         android:padding="6dp"
         style="@style/buttonGameAction"
-        android:text="@string/button_action_opponent_goal" />  
+        android:text="@string/button_action_opponent_goal" />
+
+     <TextView
+         android:id="@+id/pickInitialPlayerInstructionsTextView"
+         android:textSize="16sp"
+         android:textColor="@color/Orange"
+         android:layout_width="200dp"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_vertical"
+         android:layout_margin="10dp"
+         android:text="@string/label_game_action_pick_initial_player" />
 	
 </LinearLayout>

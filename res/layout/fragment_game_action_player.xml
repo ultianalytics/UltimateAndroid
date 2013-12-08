@@ -12,6 +12,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="6dp"
+        android:gravity="top|left"
         android:text="@string/button_action_unknown_player" />
 
     <ImageView

@@ -110,6 +110,7 @@
     <string name="label_line_bench">Bench</string>
 	<string name="label_line_substitution_out">OUT</string>
 	<string name="label_line_substitution_in">IN</string>
+	<string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
