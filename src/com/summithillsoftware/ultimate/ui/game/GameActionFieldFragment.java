@@ -82,8 +82,13 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	private void refreshButtons() {
 		boolean isOffense = Game.current().arePlayingOffense();
 		boolean isFirstEventOfPoint = !Game.current().isPointInProgess();		
-		throwawayButton.setVisibility(isOffense ? View.GONE : View.VISIBLE);  
-		opponentGoalButton.setVisibility(isOffense ? View.GONE : View.VISIBLE);		
+		if (isOffense) {
+			throwawayButton.setVisibility(View.GONE);  // will be made visible later if a passer is selected
+			opponentGoalButton.setVisibility(View.GONE);	
+		} else {
+			throwawayButton.setVisibility(isFirstEventOfPoint ? View.GONE : View.VISIBLE);  
+			opponentGoalButton.setVisibility(isFirstEventOfPoint ? View.GONE : View.VISIBLE);
+		}
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
 			playerFragment.setOffense(isOffense);

@@ -121,6 +121,9 @@ public class GameActionPlayerFragment extends UltimateFragment {
 				notifyNewEvent(new DefenseEvent(action, Player.anonymous()));
 			}
 			break;		
+		case Pull:
+			notifyNewEvent(new DefenseEvent(action, player));
+			break;					
 		case De:
 			notifyNewEvent(new DefenseEvent(action, player));
 			break;				
