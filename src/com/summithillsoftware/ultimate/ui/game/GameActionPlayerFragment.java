@@ -81,10 +81,10 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	
 	private void configureButtonVisibility() {
 		initiatorPlayerButton.setVisibility((player != null) ? View.VISIBLE : View.INVISIBLE);
-		passingDirectionArrow.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
-		catchButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
-		dropButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
-		goalButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
+		passingDirectionArrow.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
+		catchButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
+		dropButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
+		goalButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
 		pullButton.setVisibility((player != null) && !isOffense && isFirstEventOfPoint ? View.VISIBLE : View.GONE);
 		deButton.setVisibility((player != null) && !isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
 	}
@@ -143,8 +143,8 @@ public class GameActionPlayerFragment extends UltimateFragment {
 			gameActionEventListener.initialPlayerSelected(this.player);
 		}
 	}
-	public boolean isFragmentForPlayer(Player player) {
-		return player != null && player.equals(player);
+	public boolean isFragmentForPlayer(Player aPlayer) {
+		return player != null && player.equals(aPlayer);
 	}
 	
 	
@@ -174,6 +174,7 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	}
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
+		initiatorPlayerButton.setSelected(this.isSelected);
 		populateView();
 	}
 	public GameActionEventListener getGameActionEventListener() {

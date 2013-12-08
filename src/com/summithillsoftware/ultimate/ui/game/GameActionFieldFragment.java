@@ -76,12 +76,14 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			}
 		}
 		getAnonymousPlayerFragment().setPlayer(Player.anonymous());
-		refreshPlayerFragments();
+		refreshButtons();
 	}
 	
-	private void refreshPlayerFragments() {
+	private void refreshButtons() {
 		boolean isOffense = Game.current().arePlayingOffense();
-		boolean isFirstEventOfPoint = !Game.current().isPointInProgess();
+		boolean isFirstEventOfPoint = !Game.current().isPointInProgess();		
+		throwawayButton.setVisibility((isOffense && !isFirstEventOfPoint) || !isOffense ? View.VISIBLE : View.GONE);
+		opponentGoalButton.setVisibility(isOffense ? View.GONE : View.VISIBLE);		
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
 			playerFragment.setOffense(isOffense);
@@ -95,6 +97,8 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 				selectedPlayer = ((OffenseEvent)lastEvent).getReceiver();
 			}
 			updateSelectedPlayer(selectedPlayer);
+		} else {
+			updateSelectedPlayer(null);
 		}
 	}
 	
@@ -135,11 +139,18 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	}
 	
 	private void handleThrowawayPressed() {
-		// TODO...finish
+		if (Game.current().arePlayingOffense()) {
+			GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();
+			if (selectedFragment != null && selectedFragment.getPlayer() != null) {
+				notifyNewEvent(new OffenseEvent(Action.Throwaway, selectedFragment.getPlayer()));
+			}
+		} else {
+			notifyNewEvent(new DefenseEvent(Action.Throwaway, Player.anonymous()));
+		}
 	}
 
 	private void handleOpponentGoalPressed() {
-		//	TODO...finish
+		notifyNewEvent(new DefenseEvent(Action.Goal, Player.anonymous()));
 	}
 
 	private GameActionPlayerFragment getPlayerFragment(int i) {

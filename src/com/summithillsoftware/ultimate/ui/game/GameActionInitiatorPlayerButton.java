@@ -44,7 +44,7 @@ public class GameActionInitiatorPlayerButton extends Button {
 	}
 	
 	private void updateViewForSelectedStatus() {
-		setTextColor(getResources().getColor(isSelected() ? R.color.LightGrey : R.color.White));
+		setTextColor(getResources().getColor(isSelected() ? R.color.DarkGray : R.color.White));
 	}
 	
 
