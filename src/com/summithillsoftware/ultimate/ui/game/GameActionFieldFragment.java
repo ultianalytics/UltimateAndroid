@@ -37,13 +37,13 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		addPlayerFragments();
 		connectWidgets(view);
-		registerWidgetListeners();
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
+		registerWidgetListeners();
 		populateView();
 	}
 	
@@ -56,7 +56,6 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 			for (int i = 0; i <= 7; i++) {
 				GameActionPlayerFragment playerFragment = new GameActionPlayerFragment();
-				playerFragment.setGameActionEventListener(this);
 				ft.add(R.id.playerFragments, playerFragment, fragmentTagForPlayer(i));
 			}
 			ft.commit(); 
@@ -139,6 +138,10 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 				handleOpponentGoalPressed();
 			}
 		});		
+		for (int i = 0; i <= 7; i++) {
+			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
+			playerFragment.setGameActionEventListener(this);
+		}
 	}
 	
 	private GameActionPlayerFragment getSelectedPlayerFragment() {
