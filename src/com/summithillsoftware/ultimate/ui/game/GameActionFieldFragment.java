@@ -82,12 +82,12 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	private void refreshButtons() {
 		boolean isOffense = Game.current().arePlayingOffense();
 		boolean isFirstEventOfPoint = !Game.current().isPointInProgess();		
-		throwawayButton.setVisibility((isOffense && !isFirstEventOfPoint) || !isOffense ? View.VISIBLE : View.GONE);
+		throwawayButton.setVisibility(isOffense ? View.GONE : View.VISIBLE);  
 		opponentGoalButton.setVisibility(isOffense ? View.GONE : View.VISIBLE);		
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
 			playerFragment.setOffense(isOffense);
-			playerFragment.setFirstEventOfPoint(isFirstEventOfPoint);
+			playerFragment.setFirstPointOfEvent(isFirstEventOfPoint);
 		}
 		
 		Player selectedPlayer = null;
@@ -96,16 +96,18 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			if (lastEvent != null && lastEvent.getAction() == Action.Catch) {
 				selectedPlayer = ((OffenseEvent)lastEvent).getReceiver();
 			}
-			updateSelectedPlayer(selectedPlayer);
-		} else {
-			updateSelectedPlayer(null);
-		}
+		} 
+		updateSelectedPasser(selectedPlayer);
 	}
 	
-	private void updateSelectedPlayer(Player selectedPlayer) {
+	private void updateSelectedPasser(Player selectedPlayer) {
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
 			playerFragment.setSelected(playerFragment.isFragmentForPlayer(selectedPlayer));
+			playerFragment.setInitialPlayerBeenSelected(selectedPlayer != null);
+		}
+		if (selectedPlayer != null) {
+			throwawayButton.setVisibility(View.VISIBLE);
 		}
 	}
         
@@ -197,8 +199,8 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	}
 
 	@Override
-	public void initialPlayerSelected(Player selectedPlayer) {
-		updateSelectedPlayer(selectedPlayer);
+	public void initialOffensePlayerSelected(Player selectedPlayer) {
+		updateSelectedPasser(selectedPlayer);
 	}
 
 

@@ -19,7 +19,8 @@ import com.summithillsoftware.ultimate.ui.UltimateFragment;
 public class GameActionPlayerFragment extends UltimateFragment {
 	private Player player;
 	private boolean isOffense;
-	private boolean isFirstEventOfPoint;
+	private boolean isFirstPointOfEvent;
+	private boolean hasInitialPlayerBeenSelected;
 	private boolean isSelected;
 	private GameActionEventListener gameActionEventListener;
 	
@@ -61,7 +62,7 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		initiatorPlayerButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handlePlayerSelected();
+				handleOffensePasserSelected();
 			}
 		});
 		
@@ -81,12 +82,12 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	
 	private void configureButtonVisibility() {
 		initiatorPlayerButton.setVisibility((player != null) ? View.VISIBLE : View.INVISIBLE);
-		passingDirectionArrow.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
-		catchButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
-		dropButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
-		goalButton.setVisibility((player != null) && isOffense && !isFirstEventOfPoint && !isSelected() ? View.VISIBLE : View.GONE);
-		pullButton.setVisibility((player != null) && !isOffense && isFirstEventOfPoint ? View.VISIBLE : View.GONE);
-		deButton.setVisibility((player != null) && !isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
+		passingDirectionArrow.setVisibility((player != null) && isOffense && hasInitialPlayerBeenSelected && !isSelected() ? View.VISIBLE : View.GONE);
+		catchButton.setVisibility((player != null) && isOffense && hasInitialPlayerBeenSelected && !isSelected() ? View.VISIBLE : View.GONE);
+		dropButton.setVisibility((player != null) && isOffense && hasInitialPlayerBeenSelected && !isSelected() ? View.VISIBLE : View.GONE);
+		goalButton.setVisibility((player != null) && isOffense && hasInitialPlayerBeenSelected && !isSelected() ? View.VISIBLE : View.GONE);
+		pullButton.setVisibility((player != null) && !isOffense && isFirstPointOfEvent ? View.VISIBLE : View.GONE);
+		deButton.setVisibility((player != null) && !isOffense && !isFirstPointOfEvent ? View.VISIBLE : View.GONE);
 	}
 	
 	private void registerActionButtonListener(Button button, final Action action) {
@@ -128,8 +129,8 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		}
 	}
 	
-	private void handlePlayerSelected() {
-		notifyPlayerSelected();
+	private void handleOffensePasserSelected() {
+		notifyOffensePasserSelected();
 	}
 	
 	private void notifyNewEvent(Event event) {
@@ -138,9 +139,9 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		}
 	}
 	
-	private void notifyPlayerSelected() {
+	private void notifyOffensePasserSelected() {
 		if (gameActionEventListener != null) {
-			gameActionEventListener.initialPlayerSelected(this.player);
+			gameActionEventListener.initialOffensePlayerSelected(this.player);
 		}
 	}
 	public boolean isFragmentForPlayer(Player aPlayer) {
@@ -162,11 +163,8 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		this.isOffense = isOffense;
 		populateView();
 	}
-	public boolean isFirstEventOfPoint() {
-		return isFirstEventOfPoint;
-	}
-	public void setFirstEventOfPoint(boolean isFirstEventOfPoint) {
-		this.isFirstEventOfPoint = isFirstEventOfPoint;
+	public void setInitialPlayerBeenSelected(boolean initalPlayerSelected) {
+		this.hasInitialPlayerBeenSelected = initalPlayerSelected;
 		populateView();
 	}
 	public boolean isSelected() {
@@ -183,6 +181,10 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	public void setGameActionEventListener(
 			GameActionEventListener gameActionEventListener) {
 		this.gameActionEventListener = gameActionEventListener;
+	}
+
+	public void setFirstPointOfEvent(boolean isFirstPointOfEvent) {
+		this.isFirstPointOfEvent = isFirstPointOfEvent;
 	}
 
 }

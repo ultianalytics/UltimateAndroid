@@ -86,7 +86,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 
 	@Override
-	public void initialPlayerSelected(Player player) {
+	public void initialOffensePlayerSelected(Player player) {
 		// no-op ...don't care about this 
 	}
 

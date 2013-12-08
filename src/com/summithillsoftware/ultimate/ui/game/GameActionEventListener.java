@@ -9,6 +9,6 @@ public interface GameActionEventListener {
 	
 	public void removeEvent(Event event);
 	
-	public void initialPlayerSelected(Player player);
+	public void initialOffensePlayerSelected(Player player);
 
 }
