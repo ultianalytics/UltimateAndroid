@@ -10,6 +10,9 @@ import android.widget.ImageView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
+import com.summithillsoftware.ultimate.model.Event;
+import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
@@ -94,11 +97,49 @@ public class GameActionPlayerFragment extends UltimateFragment {
 	}
 	
 	private void handleActionClicked(Action action) {
-		// TODO...callback listener with action and player
+		switch (action) {
+		case Catch:
+			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+			break;
+		case Drop:
+			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+			break;
+		case Goal:
+			if (isOffense) {
+				notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+			} else {
+				notifyNewEvent(new DefenseEvent(action, Player.anonymous()));
+			}
+			break;		
+		case Throwaway:
+			if (isOffense) {
+				notifyNewEvent(new OffenseEvent(action, Player.anonymous()));
+			} else {
+				notifyNewEvent(new DefenseEvent(action, Player.anonymous()));
+			}
+			break;		
+		case De:
+			notifyNewEvent(new DefenseEvent(action, player));
+			break;				
+		default:
+			break;
+		}
 	}
 	
 	private void handlePlayerSelected() {
-		// TODO...callback listener with player that is selected
+		notifyPlayerSelected();
+	}
+	
+	private void notifyNewEvent(Event event) {
+		if (gameActionEventListener != null) {
+			gameActionEventListener.newEvent(event);
+		}
+	}
+	
+	private void notifyPlayerSelected() {
+		if (gameActionEventListener != null) {
+			gameActionEventListener.initialPlayerSelected(this.player);
+		}
 	}
 	
 	public Player getPlayer() {

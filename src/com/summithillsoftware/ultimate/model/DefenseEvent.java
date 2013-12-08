@@ -134,11 +134,11 @@ public class DefenseEvent extends Event {
 	        }
 	        case De: {
 	        	// {team|our} D || D by {player} 	        	
-	        	return defender == null ? getString(R.string.event_description_d, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_d_by,defender);
+	        	return defender == null ? getString(R.string.event_description_d, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_d_by,defender.getName());
 	        }
 	        case Callahan: {
 	        	// {team|our} Callahan || Callahan by {player} 	        	
-	        	return defender == null ? getString(R.string.event_description_callahan, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_callahan_by,defender);	        	
+	        	return defender == null ? getString(R.string.event_description_callahan, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_callahan_by,defender.getName());	        	
 	        }
 	        default:
 	            return "";

@@ -74,8 +74,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void newEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+		Game.createGame().addEvent(event);
+		populateView();
+		System.out.println("Added new event: " + event);
 	}
 
 	@Override
@@ -86,8 +87,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void initialPlayerSelected(Player player) {
-		// TODO Auto-generated method stub
-		
+		// no-op ...don't care about this 
 	}
 
 

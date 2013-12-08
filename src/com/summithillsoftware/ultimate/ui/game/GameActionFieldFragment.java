@@ -10,8 +10,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Action;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
@@ -73,8 +76,35 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			}
 		}
 		getAnonymousPlayerFragment().setPlayer(Player.anonymous());
+		refreshPlayerFragments();
 	}
 	
+	private void refreshPlayerFragments() {
+		boolean isOffense = Game.current().arePlayingOffense();
+		boolean isFirstEventOfPoint = !Game.current().isPointInProgess();
+		for (int i = 0; i <= 7; i++) {
+			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
+			playerFragment.setOffense(isOffense);
+			playerFragment.setFirstEventOfPoint(isFirstEventOfPoint);
+		}
+		
+		Player selectedPlayer = null;
+		if (isOffense && !isFirstEventOfPoint) {
+			Event lastEvent = Game.current().getLastEvent();
+			if (lastEvent != null && lastEvent.getAction() == Action.Catch) {
+				selectedPlayer = ((OffenseEvent)lastEvent).getReceiver();
+			}
+			updateSelectedPlayer(selectedPlayer);
+		}
+	}
+	
+	private void updateSelectedPlayer(Player selectedPlayer) {
+		for (int i = 0; i <= 7; i++) {
+			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
+			playerFragment.setSelected(playerFragment.getPlayer().equals(selectedPlayer));
+		}
+	}
+        
 	private GameActionPlayerFragment getAnonymousPlayerFragment() {
 		return getPlayerFragment(7);
 	}
@@ -92,6 +122,16 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 				handleOpponentGoalPressed();
 			}
 		});		
+	}
+	
+	private GameActionPlayerFragment getSelectedPlayerFragment() {
+		for (int i = 0; i < 7; i++) {
+			GameActionPlayerFragment fragment = getPlayerFragment(i);
+			if (fragment.isSelected()) {
+				return fragment;
+			}
+		}
+		return null;
 	}
 	
 	private void handleThrowawayPressed() {
@@ -118,25 +158,36 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			GameActionEventListener gameActionEventListener) {
 		this.gameActionEventListener = gameActionEventListener;
 	}
-
 	
+	private void notifyNewEvent(Event event) {
+		if (gameActionEventListener != null) {
+			gameActionEventListener.newEvent(event);
+		}
+	}
 	
 	@Override
 	public void newEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+		GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();
+		if (event.isOffense()) {
+			if (selectedFragment != null) {
+				((OffenseEvent)event).setPasser(selectedFragment.getPlayer());
+			}
+		} else {
+			if (selectedFragment != null && event.isD()) {
+				((DefenseEvent)event).setDefender(selectedFragment.getPlayer());
+			}
+		}
+		notifyNewEvent(event);
 	}
 
 	@Override
 	public void removeEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+		// no-op...don't remove events in this fragment
 	}
 
 	@Override
-	public void initialPlayerSelected(Player player) {
-		// TODO Auto-generated method stub
-		
+	public void initialPlayerSelected(Player selectedPlayer) {
+		updateSelectedPlayer(selectedPlayer);
 	}
 
 

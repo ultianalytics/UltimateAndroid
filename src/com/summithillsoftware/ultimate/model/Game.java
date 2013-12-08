@@ -330,7 +330,7 @@ public class Game implements Serializable {
 		return points.size() == 1 && (getCurrentPoint() != null && getCurrentPoint().numberOfEvents() == 1);
 	}
 	
-	private Event getLastEvent() {
+	public Event getLastEvent() {
 		return getCurrentPoint() == null ? null : getCurrentPoint().getLastEvent();
 	}
 	
