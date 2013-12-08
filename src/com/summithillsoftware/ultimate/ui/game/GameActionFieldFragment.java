@@ -101,7 +101,7 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	private void updateSelectedPlayer(Player selectedPlayer) {
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
-			playerFragment.setSelected(playerFragment.getPlayer().equals(selectedPlayer));
+			playerFragment.setSelected(playerFragment.isFragmentForPlayer(selectedPlayer));
 		}
 	}
         

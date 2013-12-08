@@ -74,7 +74,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void newEvent(Event event) {
-		Game.createGame().addEvent(event);
+		Game.current().addEvent(event);
 		populateView();
 		System.out.println("Added new event: " + event);
 	}

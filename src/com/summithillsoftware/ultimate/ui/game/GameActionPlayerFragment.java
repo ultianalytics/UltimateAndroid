@@ -77,6 +77,8 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		}
 	}
 	
+	
+	
 	private void configureButtonVisibility() {
 		initiatorPlayerButton.setVisibility((player != null) ? View.VISIBLE : View.INVISIBLE);
 		passingDirectionArrow.setVisibility((player != null) && isOffense && !isFirstEventOfPoint ? View.VISIBLE : View.GONE);
@@ -141,6 +143,10 @@ public class GameActionPlayerFragment extends UltimateFragment {
 			gameActionEventListener.initialPlayerSelected(this.player);
 		}
 	}
+	public boolean isFragmentForPlayer(Player player) {
+		return player != null && player.equals(player);
+	}
+	
 	
 	public Player getPlayer() {
 		return player;
