@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.summithillsoftware.ultimate.ui.game.GameActionInitiatorPlayerButton xmlns:android="http://schemas.android.com/apk/res/android"
-     style="@style/buttonGameActionInitiatorPlayer"
-     android:maxLines="1"
-     android:padding="6dp"
-     android:ellipsize="end" />

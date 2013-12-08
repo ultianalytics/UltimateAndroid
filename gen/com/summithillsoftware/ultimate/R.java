@@ -1470,14 +1470,13 @@ containing a value of this type.
         public static final int fragment_players=0x7f030027;
         public static final int fragment_team=0x7f030028;
         public static final int fragment_teams=0x7f030029;
-        public static final int game_action_initiator_player_button=0x7f03002a;
-        public static final int line_button=0x7f03002b;
-        public static final int line_row=0x7f03002c;
-        public static final int rowlayout_games=0x7f03002d;
-        public static final int rowlayout_players=0x7f03002e;
-        public static final int rowlayout_substitutions=0x7f03002f;
-        public static final int rowlayout_teams=0x7f030030;
-        public static final int support_simple_spinner_dropdown_item=0x7f030031;
+        public static final int line_button=0x7f03002a;
+        public static final int line_row=0x7f03002b;
+        public static final int rowlayout_games=0x7f03002c;
+        public static final int rowlayout_players=0x7f03002d;
+        public static final int rowlayout_substitutions=0x7f03002e;
+        public static final int rowlayout_teams=0x7f03002f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030030;
     }
     public static final class menu {
         public static final int game=0x7f0d0000;
