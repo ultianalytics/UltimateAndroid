@@ -3,6 +3,7 @@
     
     <string name="app_name">Ultimate</string>
     <string name="undefined">UNDEFINED</string> 
+    <string name="blank"></string>
     <string name="hello_world">Hello world!</string>
     <string name="image_description">ImageDescription</string>
     <string name="fake_date">April 99, 1999</string>
@@ -135,7 +136,8 @@
 	<string name="button_action_throwaway">T\nh\nr\no\nw\na\nw\na\ny</string>
 	<string name="button_action_opponent_goal">Their\nGoal</string>
 	<string name="button_action_undo">Undo</string>
-	<string name="button_action_timeouts">Timeouts (\"%1$d\" free)</string>
+	<string name="button_action_timeouts">Timeouts\n(\"%1$d\" free)</string>
+	<string name="button_action_game_over">Game\nOver</string>
 	<string name="button_done">DONE</string>
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>

@@ -70,7 +70,7 @@ public class Point implements Serializable {
 	public List<Event> getLastEvents(int numberToRetrieve) {
 		int actualNumber = Math.min(events.size(),numberToRetrieve);
 		if (actualNumber > 0) {
-			ArrayList<Event> subList = (ArrayList<Event>) events.subList(events.size() - actualNumber, events.size());
+			List<Event> subList = (List<Event>) events.subList(events.size() - actualNumber, events.size());
 			Collections.reverse(subList);
 			return subList;
 		} else {

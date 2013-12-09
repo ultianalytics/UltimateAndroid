@@ -373,6 +373,16 @@ public class Game implements Serializable {
 		return points.size();
 	}
 	
+	public int getNumberOfEvents() {
+		int count = 0;
+		if (hasEvents()) { 
+			for (Point point : points) {
+				count = count + point.numberOfEvents();
+			}
+		}
+		return count;
+	}
+	
 	private Point getPointAtMostRecentIndex(int index) {
 	    // points are stored in ascending order but we are being asked for an index in descending order
 		return points.isEmpty() ? null : points.get(points.size() - index - 1);
