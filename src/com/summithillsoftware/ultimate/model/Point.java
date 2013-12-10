@@ -42,7 +42,7 @@ public class Point implements Serializable {
 	public Event getEventAtMostRecentIndex(int index) {
 		// events are stored in ascending order but we are being asked for an index in descending order
 		if (events.size() > index ) {
-			return events.get(index);
+			return events.get(events.size() - index - 1);
 		} else {
 			return null;
 		}
