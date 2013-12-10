@@ -779,6 +779,7 @@ public class Game implements Serializable {
 
 	private void addPoint(Point point) {
 		points.add(point);
+		clearPointSummaries();
 	}
 
 	public boolean isTimeBasedGame() {
