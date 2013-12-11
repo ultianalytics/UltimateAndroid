@@ -95,7 +95,16 @@
     <string name="alert_line_mismatched_substitutions_title">Mismatched Substitutions</string>
     <string name="alert_line_mismatched_substitutions_message">You have chosen to do a substitution but the line now has more or less players than when you started</string>    
     <string name="alert_line_substitutions_no_change_title">No Changes Made</string>
-    <string name="alert_line_substitutions_no_change_message">You have chosen to do a substitution but no changes have been made on the line.</string>       
+    <string name="alert_line_substitutions_no_change_message">You have chosen to do a substitution but no changes have been made on the line.</string>
+	<string name="alert_action_halftime_title">Half Time!</string>
+	<string name="alert_action_halftime_message_receive">Our team will RECEIVE on the next point</string>
+	<string name="alert_action_halftime_message_defend">Our team will DEFEND on the next point</string>
+	<string name="alert_action_wind_speed_reminder">REMINDER: check wind speed</string>
+	<string name="alert_action_gameover_title">Game Over?</string>
+	<string name="alert_action_gameover_message">This game appears to be over.  Please confirm.</string> 
+	<string name="alert_action_gameover_yes">Yes, done</string> 
+	<string name="alert_action_gameover_no">No, not yet</string> 
+           
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -169,7 +178,5 @@
     <string name="radio_line_substitution_type_other">Other</string>    
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
-    
-
 
 </resources>

@@ -6,7 +6,7 @@ public class Wind implements Serializable {
 	private static final long serialVersionUID = 2664427416715306579L;
 	
 	private int mph;
-	private int directionDegrees;
+	private int directionDegrees = -1;
 	private boolean isFirstPullLeftToRight;
 	
 	public int getMph() {
@@ -26,6 +26,10 @@ public class Wind implements Serializable {
 	}
 	public void setFirstPullLeftToRight(boolean isFirstPullLeftToRight) {
 		this.isFirstPullLeftToRight = isFirstPullLeftToRight;
+	}
+	
+	public boolean isSpecified() {
+		return mph != 0 && directionDegrees > -1;
 	}
 
 }

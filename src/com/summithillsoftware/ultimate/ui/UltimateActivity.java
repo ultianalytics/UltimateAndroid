@@ -99,16 +99,21 @@ public class UltimateActivity extends ActionBarActivity {
 	}
 	
 	protected void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler) {
+		displayConfirmDialog(title, message, yesButtonText, noButtonText, yesHandler, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+				// no-op
+			}
+ 		});
+	}
+	
+	protected void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler, DialogInterface.OnClickListener noHandler) {
 		AlertDialog errorDialog = new AlertDialog.Builder(this).create();
  		errorDialog.setTitle(title);
  		errorDialog.setMessage(message);
  		errorDialog.setCancelable(false);
  		errorDialog.setButton(BUTTON_POSITIVE, yesButtonText, yesHandler);
- 		errorDialog.setButton(BUTTON_NEGATIVE, noButtonText, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-			}
- 		});
+ 		errorDialog.setButton(BUTTON_NEGATIVE, noButtonText, noHandler);
  		errorDialog.show();
 	}
 

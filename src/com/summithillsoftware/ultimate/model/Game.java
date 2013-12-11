@@ -750,6 +750,9 @@ public class Game implements Serializable {
 	}
 
 	public Wind getWind() {
+		if (wind == null) {
+			wind = new Wind();
+		}
 		return wind;
 	}
 
