@@ -33,7 +33,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setTitle(getString(R.string.common_versus_short) + " " + Game.current().getOpponentName());
+		updateTitle();
 	}
 	
 	@Override
@@ -49,8 +49,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void populateView() {
+		updateTitle();
 		getFieldFragment().refresh();
 		getRecentEventsFragment().refresh();
+	}
+	
+	private void updateTitle() {
+		String score = GameActivity.formatScore(Game.current(), this);
+		setTitle(getString(R.string.common_versus_short) + " " + Game.current().getOpponentName() + " : " + score);
 	}
 	
 	private void showLineDialog() {
@@ -77,12 +83,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	public void newEvent(Event event) {
 		Game.current().addEvent(event);
 		populateView();
+		Game.current().save();
 	}
 
 	@Override
 	public void removeLastEvent() {
 		Game.current().removeLastEvent();
 		populateView();
+		Game.current().save();
 	}
 
 	@Override

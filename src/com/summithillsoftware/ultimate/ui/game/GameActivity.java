@@ -5,6 +5,7 @@ import static com.summithillsoftware.ultimate.model.Game.TIME_BASED_GAME_POINT;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -123,18 +124,9 @@ public class GameActivity extends UltimateActivity {
 				}
 				getDateView().setText(startDateTime);
 			}
-			String scoreFormatted = game.getScore().getOurs() + "-" + game.getScore().getTheirs() + " ";
-			if (game.getScore().isOurLead()) {
-				getScoreView().setTextColor(Color.GREEN);
-				scoreFormatted += "(" + getString(R.string.common_us) + ")";
-			} else if (game.getScore().isTheirLead()) {
-				getScoreView().setTextColor(Color.RED);
-				scoreFormatted += "(" + getString(R.string.common_them) + ")";
-			} else {
-				getScoreView().setTextColor(Color.WHITE);
-				scoreFormatted += "(" + getString(R.string.common_tied) + ")";
-			} 
+			String scoreFormatted = formatScore(game, this);
 			getScoreView().setText(scoreFormatted);
+			getScoreView().setTextColor(getScoreColor(game));
 			getFirstPointOlineRadioGroup().check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
 			populateGamePointView(Game.current().getGamePoint());
 			getOpponentNameTextView().requestFocus();
@@ -269,6 +261,28 @@ public class GameActivity extends UltimateActivity {
 	
 	private void goToActionActivity() {
 		startActivity(new Intent(GameActivity.this, GameActionActivity.class));
+	}
+	
+	public static String formatScore(Game game, Context context) {
+		String scoreFormatted = game.getScore().getOurs() + "-" + game.getScore().getTheirs() + " ";
+		if (game.getScore().isOurLead()) {
+			scoreFormatted += "(" + context.getString(R.string.common_us) + ")";
+		} else if (game.getScore().isTheirLead()) {
+			scoreFormatted += "(" + context.getString(R.string.common_them) + ")";
+		} else {
+			scoreFormatted += "(" + context.getString(R.string.common_tied) + ")";
+		} 
+		return scoreFormatted;
+	}
+	
+	public static int getScoreColor(Game game) {
+		if (game.getScore().isOurLead()) {
+			return Color.GREEN;
+		} else if (game.getScore().isTheirLead()) {
+			return Color.RED;
+		} else {
+			return Color.RED;
+		} 
 	}
 
 }
