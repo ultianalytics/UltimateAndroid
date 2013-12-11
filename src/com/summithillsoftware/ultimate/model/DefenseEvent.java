@@ -126,7 +126,7 @@ public class DefenseEvent extends Event {
 	        }
 	        case Goal: {
 	        	// Opponent goal || {opponent} Goal
-	        	return opponentName == null ? getString(R.string.event_description_opponent_goal) : getString(R.string.event_description_opponent_goal,opponentName);
+	        	return opponentName == null ? getString(R.string.event_description_opponent_goal) : getString(R.string.event_description_opponent_goal_by, opponentName);
 	        }
 	        case Throwaway:{
 	        	// Opponent throwaway || {opponent} throwaway	        	
