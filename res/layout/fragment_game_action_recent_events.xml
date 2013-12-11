@@ -53,7 +53,7 @@
             android:id="@+id/cessationButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_action_game_over" />
+            android:text="@string/button_action_cessation_game_over" />
     </LinearLayout>
 
 </RelativeLayout>

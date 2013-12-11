@@ -7,8 +7,10 @@ public interface GameActionEventListener {
 	
 	public void newEvent(Event event);
 	
-	public void removeEvent(Event event);
+	public void removeLastEvent();
 	
 	public void initialOffensePlayerSelected(Player player);
+	
+	public void timeoutInfoRequested();
 
 }

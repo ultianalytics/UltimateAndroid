@@ -117,9 +117,11 @@
     <string name="placeholder_player_number">Player Number</string>
     <string name="placeholder_opponent_name">Opponent Name</string>
     <string name="placeholder_tournament_name">Tournament Name</string>
+    
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_save_and_add">Save, Add New</string>
+	<string name="button_done">DONE</string>    
     <string name="button_start">Start Game</string>
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
@@ -136,9 +138,14 @@
 	<string name="button_action_throwaway">T\nh\nr\no\nw\na\nw\na\ny</string>
 	<string name="button_action_opponent_goal">Their\nGoal</string>
 	<string name="button_action_undo">Undo</string>
-	<string name="button_action_timeouts">Timeouts\n(\"%1$d\" free)</string>
-	<string name="button_action_game_over">Game\nOver</string>
-	<string name="button_done">DONE</string>
+	<string name="button_action_timeouts">Timeouts\n(%1$d free)</string>
+	<string name="button_action_cessation_game_over">Game\nOver</string>
+	<string name="button_action_cessation_first_quarter">End 1st\nQuarter</string>
+	<string name="button_action_cessation_halftime">Halftime</string>
+	<string name="button_action_cessation_third_quarter">End 3rd\nQuarter</string>
+	<string name="button_action_cessation_fourth_quarter">End 4th\nQuarter</string>
+	<string name="button_action_cessation_overtime">End\nOvertime</string>	
+
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
     <string name="radio_team_playerdisplay_name">Name</string>

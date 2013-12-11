@@ -208,13 +208,18 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	}
 
 	@Override
-	public void removeEvent(Event event) {
+	public void removeLastEvent() {
 		// no-op...don't remove events in this fragment
 	}
 
 	@Override
 	public void initialOffensePlayerSelected(Player selectedPlayer) {
 		updateSelectedPasser(selectedPlayer);
+	}
+
+	@Override
+	public void timeoutInfoRequested() {
+		// no-op...don't handle timeout info in this fragment
 	}
 
 

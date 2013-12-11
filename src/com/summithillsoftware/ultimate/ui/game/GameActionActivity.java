@@ -20,6 +20,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_action);
 		getFieldFragment().setGameActionEventListener(this);
+		getRecentEventsFragment().setGameActionEventListener(this);
 		setupActionBar();  // Show the Up button in the action bar.		
 	}
 
@@ -76,13 +77,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	public void newEvent(Event event) {
 		Game.current().addEvent(event);
 		populateView();
-		System.out.println("Added new event: " + event);
 	}
 
 	@Override
-	public void removeEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+	public void removeLastEvent() {
+		Game.current().removeLastEvent();
+		populateView();
 	}
 
 	@Override
@@ -90,6 +90,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		// no-op ...don't care about this 
 	}
 
+	@Override
+	public void timeoutInfoRequested() {
+		// TODO Auto-generated method stub
+	}
 
 
 }
