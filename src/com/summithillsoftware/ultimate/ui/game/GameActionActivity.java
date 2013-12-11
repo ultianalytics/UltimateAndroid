@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.CessationEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
@@ -172,8 +173,8 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	
 	private CessationEvent createNextPeriodEndEvent() {
-		// TODO finish
-		return null;
+	    Action nextPeriodEnd = Game.current().nextPeriodEnd();
+	    return CessationEvent.createWithAction(nextPeriodEnd);
 	}
 
 

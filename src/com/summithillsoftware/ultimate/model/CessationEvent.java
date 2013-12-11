@@ -17,7 +17,7 @@ public class CessationEvent extends Event {
 	private static final long serialVersionUID = 8990822261864009064L;
 	private static final String NEXT_PERIOD_START_ONLINE_DETAIL = "nextPeriodStartO";
 
-	public static CessationEvent createWithEvent(Action action) {
+	public static CessationEvent createWithAction(Action action) {
 		CessationEvent evt = new CessationEvent();
 		evt.setAction(action);
 		if (CESSATION_ACTIONS.contains(action)) {
@@ -28,13 +28,13 @@ public class CessationEvent extends Event {
 	}
 	
 	public static CessationEvent createEndOfFourthQuarterWithOlineStartNextPeriod(boolean startOline) {
-		CessationEvent evt = CessationEvent.createWithEvent(EndOfFourthQuarter);
+		CessationEvent evt = CessationEvent.createWithAction(EndOfFourthQuarter);
 		evt.setDetailBooleanValue(NEXT_PERIOD_START_ONLINE_DETAIL,startOline);
 		return evt;
 	}
 	
 	public static CessationEvent createEndOfOvertimeWithOlineStartNextPeriod(boolean startOline) {
-		CessationEvent evt = CessationEvent.createWithEvent(EndOfFourthQuarter);
+		CessationEvent evt = CessationEvent.createWithAction(EndOfFourthQuarter);
 		evt.setDetailBooleanValue(NEXT_PERIOD_START_ONLINE_DETAIL,startOline);
 		return evt;
 	}
