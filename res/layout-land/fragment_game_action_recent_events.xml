@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent" >
-
-    <include layout="@layout/include_game_action_recent_events_list" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/timeoutButton"
@@ -19,9 +17,13 @@
 
         <Button
             android:id="@+id/cessationButton"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_action_cessation_game_over" />
     </LinearLayout>
 
-</RelativeLayout>
+    <include
+        layout="@layout/include_game_action_recent_events_list"
+		android:layout_height="wrap_content" />
+
+</LinearLayout>
