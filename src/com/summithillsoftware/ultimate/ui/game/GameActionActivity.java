@@ -1,7 +1,6 @@
 package com.summithillsoftware.ultimate.ui.game;
 
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
