@@ -52,8 +52,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	private void populateView() {
 		updateTitle();
-		getFieldFragment().refresh();
-		getRecentEventsFragment().refresh();
+		if (getFieldFragment() != null) {
+			getFieldFragment().refresh();
+		}
+		if (getRecentEventsFragment() != null) {
+			getRecentEventsFragment().refresh();
+		}
 	}
 	
 	private void updateTitle() {
@@ -65,12 +69,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    LineDialogFragment lineDialog = new LineDialogFragment();
     	lineDialog.show(fragmentManager, "dialog");
-	    lineDialog.setOnDismissListener(new OnDismissListener() {
-			@Override
-			public void onDismiss(DialogInterface paramDialogInterface) {
-				populateView();
-			}
-		});
+	}
+	
+	public void lineDialogDismissed() { // call back from dialog
+		populateView();
 	}
 	
 	private GameActionFieldFragment getFieldFragment() {

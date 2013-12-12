@@ -42,8 +42,6 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.SoundPlayer;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.model.Action;
-import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerSubstitution;
@@ -61,7 +59,6 @@ import com.summithillsoftware.ultimate.ui.ViewHelper;
 public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_MARGIN = 2;
 	private static String LINE_STATE_PROPERTY = "line";
-	private OnDismissListener onDismissListener;
 	
 	// widgets
 	private Button lastLineButton;
@@ -87,11 +84,6 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO...delete this code 
-		if (!Game.current().hasEvents()) { // force an event so game can have a substitution
-			Game.current().addEvent(new DefenseEvent(Action.Pull, Player.anonymous()));
-		}
-		
 		super.onCreate(savedInstanceState);
 		resetLine();
 	}
@@ -150,9 +142,10 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	@Override
 	public void onDismiss(DialogInterface dialog) {
+		GameActionActivity activity = (GameActionActivity)getActivity();
 		super.onDismiss(dialog);
-		if (onDismissListener != null) {
-			onDismissListener.onDismiss(dialog);
+		if (activity != null) {
+			activity.lineDialogDismissed();
 		}
 	}
 	
@@ -636,18 +629,5 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private boolean doesPointHaveSubstitutions() {
 		return Game.current().doesCurrentPointHaveSubstitutions();
 	}
-
-	public OnDismissListener getOnDismissListener() {
-		return onDismissListener;
-	}
-
-	public void setOnDismissListener(OnDismissListener onDismissListener) {
-		this.onDismissListener = onDismissListener;
-	}
-
-
-
-
-
 
 }
