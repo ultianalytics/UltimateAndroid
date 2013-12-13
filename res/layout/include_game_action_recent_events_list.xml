@@ -8,6 +8,7 @@
         style="@style/buttonUndo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="6dp"
         android:text="@string/button_action_undo" />
 
@@ -18,23 +19,18 @@
         android:layout_toRightOf="@id/undoLastEventButton"
         android:orientation="vertical" >
 
-        <TextView
+        <include
             android:id="@+id/event1TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/blank" />
+            layout="@layout/include_game_action_recent_event" />
 
-        <TextView
+        <include
             android:id="@+id/event2TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/blank" />
+            layout="@layout/include_game_action_recent_event" />
 
-        <TextView
+        <include
             android:id="@+id/event3TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/blank" />
+            layout="@layout/include_game_action_recent_event" />
+
     </LinearLayout>
 
 </RelativeLayout>

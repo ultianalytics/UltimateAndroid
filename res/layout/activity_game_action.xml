@@ -15,6 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
         <fragment
             android:id="@+id/recentsFragment"
             android:name="com.summithillsoftware.ultimate.ui.game.GameActionRecentEventsFragment"
