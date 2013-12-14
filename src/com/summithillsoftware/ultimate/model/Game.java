@@ -70,6 +70,7 @@ public class Game implements Serializable {
 		Game game = new Game();
 		game.gamePoint = Preferences.current().getGamePoint();
 		game.currentLine = Team.current().getDefaultLine();
+		game.startDateTime = new Date();
 		return game;
 	}
 	
@@ -676,6 +677,9 @@ public class Game implements Serializable {
 	}
 	
 	public Date getStartDateTime() {
+		if (startDateTime == null) {
+			startDateTime = new Date();
+		}
 		return startDateTime;
 	}
 
