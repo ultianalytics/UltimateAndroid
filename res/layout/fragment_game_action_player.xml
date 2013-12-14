@@ -7,14 +7,16 @@
     <com.summithillsoftware.ultimate.ui.game.GameActionInitiatorPlayerButton
         android:id="@+id/initiatorPlayerButton"
         style="@style/buttonGameActionInitiatorPlayer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="30"
         android:layout_height="wrap_content"
         android:gravity="top|left"
         android:text="@string/button_action_unknown_player" />
 
     <ImageView
         android:id="@+id/passingDirectionArrow"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="10"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="2dp"
@@ -25,28 +27,32 @@
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/catchButton"
         style="@style/buttonGameAction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="20"        
         android:layout_height="wrap_content"
         android:text="@string/button_action_catch" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/dropButton"
         style="@style/buttonGameAction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="20"        
         android:layout_height="wrap_content"
         android:text="@string/button_action_drop" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/goalButton"
         style="@style/buttonGameAction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="20"        
         android:layout_height="wrap_content"
         android:text="@string/button_action_goal" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/pullButton"
         style="@style/buttonGameAction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="20"        
         android:layout_height="wrap_content"
         android:text="@string/button_action_pull"
         android:visibility="invisible" />
@@ -54,7 +60,8 @@
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
         android:id="@+id/deButton"
         style="@style/buttonGameAction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="20"
         android:layout_height="wrap_content"
         android:text="@string/button_action_de"
         android:visibility="invisible" />

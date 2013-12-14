@@ -18,6 +18,7 @@
         android:layout_height="match_parent"
         style="@style/buttonGameAction"
         android:padding="6dp"
+        android:maxLines="50"
         android:text="@string/button_action_throwaway" />
     
      <com.summithillsoftware.ultimate.ui.game.GameActionButton
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:padding="6dp"
+        android:maxLines="2"        
         style="@style/buttonGameAction"
         android:text="@string/button_action_opponent_goal" />
 
