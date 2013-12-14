@@ -29,7 +29,6 @@
         style="@style/buttonGameAction"
         android:layout_width="0dp"
         android:layout_weight="20"        
-        android:layout_height="wrap_content"
         android:text="@string/button_action_catch" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
@@ -37,7 +36,6 @@
         style="@style/buttonGameAction"
         android:layout_width="0dp"
         android:layout_weight="20"        
-        android:layout_height="wrap_content"
         android:text="@string/button_action_drop" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
@@ -45,7 +43,6 @@
         style="@style/buttonGameAction"
         android:layout_width="0dp"
         android:layout_weight="20"        
-        android:layout_height="wrap_content"
         android:text="@string/button_action_goal" />
 
     <com.summithillsoftware.ultimate.ui.game.GameActionButton
@@ -53,7 +50,6 @@
         style="@style/buttonGameAction"
         android:layout_width="0dp"
         android:layout_weight="20"        
-        android:layout_height="wrap_content"
         android:text="@string/button_action_pull"
         android:visibility="invisible" />
 
@@ -62,7 +58,6 @@
         style="@style/buttonGameAction"
         android:layout_width="0dp"
         android:layout_weight="20"
-        android:layout_height="wrap_content"
         android:text="@string/button_action_de"
         android:visibility="invisible" />
 
