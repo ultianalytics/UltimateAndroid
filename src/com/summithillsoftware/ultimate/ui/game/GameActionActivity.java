@@ -60,8 +60,8 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void updateTitle() {
-		String score = GameActivity.formatScore(Game.current(), this);
-		setTitle(getString(R.string.common_versus_short) + " " + Game.current().getOpponentName() + " : " + score);
+		String score = GameActivity.formatScore(game(), this);
+		setTitle(getString(R.string.common_versus_short) + " " + game().getOpponentName() + " : " + score);
 	}
 	
 	private void showLineDialog() {
@@ -84,13 +84,13 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void newEvent(Event event) {
-		Game.current().addEvent(event);
+		game().addEvent(event);
 		populateView();
-		Game.current().save();
+		game().save();
 	    if (event.causesDirectionChange()) {
-	    	if (event.isGoal() && Game.current().isNextEventImmediatelyAfterHalftime() && !Game.current().isTimeBasedGame()) {
+	    	if (event.isGoal() && game().isNextEventImmediatelyAfterHalftime() && !game().isTimeBasedGame()) {
 	    		showHalftimeWarning();
-	    	} else if (Game.current().doesGameAppearDone()) {
+	    	} else if (event.isGoal() && game().doesGameAppearDone()) {
 	    		confirmGameOver();
 	    	} else if (event.causesLineChange()) {
 	    		showLineDialog();
@@ -100,9 +100,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void removeLastEvent() {
-		Game.current().removeLastEvent();
+		game().removeLastEvent();
 		populateView();
-		Game.current().save();
+		game().save();
 	}
 
 	@Override
@@ -121,8 +121,8 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		//	        [[Tweeter getCurrent] tweetHalftimeWithoutEvent];
 		//	    }
 		
-		String message = Game.current().isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
-		if (Game.current().getWind().isSpecified()) {
+		String message = game().isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
+		if (game().getWind().isSpecified()) {
 			message = message + "\n\n" + getString(R.string.alert_action_wind_speed_reminder);
 		}
 		displayConfirmDialog(
@@ -140,7 +140,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void confirmGameOver() {
-		final Game game = Game.current();
+		final Game game = game();
 		String message = game.isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
 		if (game.getWind().isSpecified()) {
 			message = message + "\n\n" + getString(R.string.alert_action_wind_speed_reminder);
@@ -174,10 +174,13 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	
 	private CessationEvent createNextPeriodEndEvent() {
-	    Action nextPeriodEnd = Game.current().nextPeriodEnd();
+	    Action nextPeriodEnd = game().nextPeriodEnd();
 	    return CessationEvent.createWithAction(nextPeriodEnd);
 	}
 
+	private Game game() {
+		return Game.current();
+	}
 
 	
 }
