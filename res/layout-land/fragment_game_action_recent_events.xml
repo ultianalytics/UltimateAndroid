@@ -13,6 +13,7 @@
             android:id="@+id/cessationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/buttonGameSpecialAction" 
             android:layout_alignParentLeft="true"
             android:text="@string/button_action_cessation_game_over" />
 
@@ -20,6 +21,7 @@
             android:id="@+id/timeoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+			style="@style/buttonGameSpecialAction"             
             android:layout_alignParentRight="true"
             android:text="@string/button_action_timeouts" />
     </RelativeLayout>

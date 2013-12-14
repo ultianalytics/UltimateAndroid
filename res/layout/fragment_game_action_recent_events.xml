@@ -15,12 +15,14 @@
             android:id="@+id/timeoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/buttonGameSpecialAction"
             android:text="@string/button_action_timeouts" />
 
         <Button
             android:id="@+id/cessationButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/buttonGameSpecialAction"            
             android:text="@string/button_action_cessation_game_over" />
     </LinearLayout>
 

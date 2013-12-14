@@ -82,5 +82,9 @@
         <item name="android:padding">6dp</item>
         <item name="android:ellipsize">end</item>
     </style>
+    
+    <style name="buttonGameSpecialAction" parent="@android:style/Widget.Button">
+        <item name="android:textSize">15sp</item>
+    </style>
 
 </resources>

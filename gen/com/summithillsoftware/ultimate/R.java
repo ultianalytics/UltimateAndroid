@@ -1920,6 +1920,7 @@ containing a value of this type.
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
         public static final int buttonGameAction=0x7f0c0088;
         public static final int buttonGameActionInitiatorPlayer=0x7f0c0089;
+        public static final int buttonGameSpecialAction=0x7f0c008a;
         public static final int buttonLineAction=0x7f0c0086;
         public static final int buttonLinePlayer=0x7f0c0085;
         public static final int buttonUndo=0x7f0c0087;
