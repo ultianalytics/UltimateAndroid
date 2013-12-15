@@ -1117,6 +1117,9 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f090011;
         public static final int activity_vertical_margin=0x7f090012;
+        public static final int game_action_button_height=0x7f090015;
+        public static final int game_action_button_margin=0x7f090016;
+        public static final int game_action_button_text_size=0x7f090014;
         public static final int line_toolbar_button_margin=0x7f090013;
     }
     public static final class drawable {
@@ -1920,7 +1923,6 @@ containing a value of this type.
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
         public static final int buttonGameAction=0x7f0c0088;
         public static final int buttonGameActionInitiatorPlayer=0x7f0c0089;
-        public static final int buttonGameSpecialAction=0x7f0c008a;
         public static final int buttonLineAction=0x7f0c0086;
         public static final int buttonLinePlayer=0x7f0c0085;
         public static final int buttonUndo=0x7f0c0087;
