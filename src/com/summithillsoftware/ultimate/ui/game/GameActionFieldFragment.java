@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -24,8 +25,10 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	
 	// widgets
 	private GameActionButton throwawayButton;
+	private GameActionButton opponentThrowawayButton;
 	private GameActionButton opponentGoalButton;
 	private TextView pickInitialPlayerInstructionsTextView;
+	private Space defenseRightFiller;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +67,10 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	
 	private void connectWidgets(View view) {
 		throwawayButton = (GameActionButton)view.findViewById(R.id.throwawayButton);
+		opponentThrowawayButton = (GameActionButton)view.findViewById(R.id.opponentThrowawayButton);
 		opponentGoalButton = (GameActionButton)view.findViewById(R.id.opponentGoalButton);
 		pickInitialPlayerInstructionsTextView = (TextView)view.findViewById(R.id.pickInitialPlayerInstructionsTextView);
+		defenseRightFiller = (Space)view.findViewById(R.id.defenseRightFiller);
 	}
 	
 	private void populateView() {
@@ -87,11 +92,15 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		if (isOffense) {
 			opponentGoalButton.setVisibility(View.GONE);
 			throwawayButton.setVisibility(View.GONE);  // will be made visible later if a passer is selected
+			opponentThrowawayButton.setVisibility(View.GONE);  
 			pickInitialPlayerInstructionsTextView.setVisibility(View.VISIBLE);  // will be made invisible later if a passer is selected
+			defenseRightFiller.setVisibility(View.GONE);
 		} else {
 			opponentGoalButton.setVisibility(isFirstEventOfPoint ? View.GONE : View.VISIBLE);			
-			throwawayButton.setVisibility(isFirstEventOfPoint ? View.GONE : View.VISIBLE);  
+			throwawayButton.setVisibility(View.GONE);
+			opponentThrowawayButton.setVisibility(isFirstEventOfPoint ? View.GONE : View.VISIBLE);  
 			pickInitialPlayerInstructionsTextView.setVisibility(View.GONE);
+			defenseRightFiller.setVisibility(View.VISIBLE);
 		}
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
@@ -132,6 +141,12 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 				handleThrowawayPressed();
 			}
 		});
+		opponentThrowawayButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleThrowawayPressed();
+			}
+		});		
 		opponentGoalButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

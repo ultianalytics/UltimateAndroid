@@ -145,6 +145,7 @@
 	<string name="button_action_de">D</string>
 	<string name="button_action_pull">Pull</string>
 	<string name="button_action_throwaway">T\nh\nr\no\nw\na\nw\na\ny</string>
+	<string name="button_action_opponent_throwaway">Their\nThrow\naway</string>	
 	<string name="button_action_opponent_goal">Their\nGoal</string>
 	<string name="button_action_undo">Undo\nLast</string>
 	<string name="button_action_timeouts">Timeouts\n(%1$d free)</string>
