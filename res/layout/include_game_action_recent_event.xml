@@ -4,4 +4,5 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/blank"
-    android:textSize="16sp" />
+    android:layout_marginBottom="4sp"
+    android:textSize="@dimen/game_action_recent_event_text_size" />

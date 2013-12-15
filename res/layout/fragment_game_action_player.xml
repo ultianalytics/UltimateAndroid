@@ -8,7 +8,7 @@
         android:id="@+id/initiatorPlayerButton"
         style="@style/buttonGameActionInitiatorPlayer"
         android:layout_width="0dp"
-        android:layout_weight="30"
+        android:layout_weight="40"
         android:layout_height="wrap_content"
         android:gravity="top|left"
         android:text="@string/button_action_unknown_player" />

@@ -75,7 +75,7 @@
     </style>
     
     <style name="buttonGameActionInitiatorPlayer" parent="@android:style/Widget.Button">
-        <item name="android:textSize">@dimen/game_action_button_text_size</item>
+        <item name="android:textSize">@dimen/game_action_initiator_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:gravity">center</item>

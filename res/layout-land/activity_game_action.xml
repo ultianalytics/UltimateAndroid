@@ -14,14 +14,14 @@
             android:id="@+id/fieldFragment"
             android:name="com.summithillsoftware.ultimate.ui.game.GameActionFieldFragment"
             android:layout_width="0dp"
-            android:layout_weight="60"
+            android:layout_weight="55"
             android:layout_height="wrap_content" />
 
         <fragment
             android:id="@+id/recentsFragment"
             android:name="com.summithillsoftware.ultimate.ui.game.GameActionRecentEventsFragment"
             android:layout_width="0dp"
-            android:layout_weight="40"
+            android:layout_weight="45"
             android:layout_height="wrap_content" />
 
 </LinearLayout>

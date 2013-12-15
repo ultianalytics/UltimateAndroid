@@ -1117,9 +1117,11 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f090011;
         public static final int activity_vertical_margin=0x7f090012;
-        public static final int game_action_button_height=0x7f090015;
-        public static final int game_action_button_margin=0x7f090016;
+        public static final int game_action_button_height=0x7f090016;
+        public static final int game_action_button_margin=0x7f090017;
         public static final int game_action_button_text_size=0x7f090014;
+        public static final int game_action_initiator_text_size=0x7f090015;
+        public static final int game_action_recent_event_text_size=0x7f090018;
         public static final int line_toolbar_button_margin=0x7f090013;
     }
     public static final class drawable {

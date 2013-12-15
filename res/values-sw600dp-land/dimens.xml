@@ -1,0 +1,9 @@
+<resources>
+
+    <dimen name="game_action_button_text_size">16sp</dimen>
+    <dimen name="game_action_initiator_text_size">18sp</dimen>
+    <dimen name="game_action_button_height">46dp</dimen>
+    <dimen name="game_action_button_margin">4dp</dimen>
+    <dimen name="game_action_recent_event_text_size">18sp</dimen>
+
+</resources>
