@@ -1119,8 +1119,14 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f090012;
         public static final int game_action_button_height=0x7f090016;
         public static final int game_action_button_margin=0x7f090017;
+        /** 
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    
+         */
         public static final int game_action_button_text_size=0x7f090014;
         public static final int game_action_initiator_text_size=0x7f090015;
+        public static final int game_action_portrait_recents_seperator_space=0x7f090019;
         public static final int game_action_recent_event_text_size=0x7f090018;
         public static final int line_toolbar_button_margin=0x7f090013;
     }

@@ -11,5 +11,6 @@
     <dimen name="game_action_button_height">36dp</dimen>
     <dimen name="game_action_button_margin">2dp</dimen>
     <dimen name="game_action_recent_event_text_size">16sp</dimen>
+    <dimen name="game_action_portrait_recents_seperator_space">10sp</dimen>
 
 </resources>

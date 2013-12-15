@@ -17,7 +17,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="@dimen/game_action_portrait_recents_seperator_space"/>
 
         <fragment
             android:id="@+id/recentsFragment"
