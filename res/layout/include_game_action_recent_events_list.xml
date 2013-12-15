@@ -6,6 +6,7 @@
     <Button
         android:id="@+id/undoLastEventButton"
         style="@style/buttonUndo"
+        android:textSize="@dimen/game_action_button_undo_button_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -1125,6 +1125,8 @@ containing a value of this type.
     
          */
         public static final int game_action_button_text_size=0x7f090014;
+        public static final int game_action_button_undo_button_size=0x7f09001b;
+        public static final int game_action_initiator_instructions_text_size=0x7f09001a;
         public static final int game_action_initiator_text_size=0x7f090015;
         public static final int game_action_portrait_recents_seperator_space=0x7f090019;
         public static final int game_action_recent_event_text_size=0x7f090018;

@@ -53,7 +53,7 @@
         android:layout_margin="10dp"
         android:text="@string/label_game_action_pick_initial_player"
         android:textColor="@color/Orange"
-        android:textSize="16sp" />
+        android:textSize="@dimen/game_action_initiator_instructions_text_size" />
 
     <Space
         android:id="@+id/defenseRightFiller"
