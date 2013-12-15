@@ -3,9 +3,39 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent" >
 
-    <include layout="@layout/include_game_action_recent_events_list" />
+    <Button
+        android:id="@+id/undoLastEventButton"
+        style="@style/buttonUndo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/button_action_undo"
+        android:textSize="@dimen/game_action_button_undo_button_size" />
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/undoLastEventButton"
+		android:layout_toLeftOf="@+id/specialActionButtons"        
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/event1TextView"
+            layout="@layout/include_game_action_recent_event" />
+
+        <include
+            android:id="@+id/event2TextView"
+            layout="@layout/include_game_action_recent_event" />
+
+        <include
+            android:id="@+id/event3TextView"
+            layout="@layout/include_game_action_recent_event" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/specialActionButtons"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -13,18 +43,18 @@
 
         <Button
             android:id="@+id/timeoutButton"
+            style="@style/buttonGameAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/buttonGameAction"
-            android:maxLines="2"  
+            android:maxLines="2"
             android:text="@string/button_action_timeouts" />
 
         <Button
             android:id="@+id/cessationButton"
+            style="@style/buttonGameAction"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            style="@style/buttonGameAction"       
-            android:maxLines="2"     
+            android:maxLines="2"
             android:text="@string/button_action_cessation_game_over" />
     </LinearLayout>
 
