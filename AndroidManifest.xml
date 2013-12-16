@@ -76,7 +76,7 @@
                 android:value="com.summithillsoftware.ultimate.ui.game.GamesActivity" />
         </activity>
         <activity
-            android:name="com.summithillsoftware.ultimate.ui.game.GameActionActivity"
+            android:name="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity"
             android:label="@string/title_activity_game_action"             
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
             <meta-data

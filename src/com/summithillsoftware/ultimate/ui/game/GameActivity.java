@@ -24,6 +24,7 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
 public class GameActivity extends UltimateActivity {
 	public static final String NEW_GAME = "NewGame";

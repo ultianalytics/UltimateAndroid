@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.game;
+package com.summithillsoftware.ultimate.ui.game.action;
 
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Player;

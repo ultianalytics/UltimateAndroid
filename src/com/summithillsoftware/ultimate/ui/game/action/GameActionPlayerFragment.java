@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.game;
+package com.summithillsoftware.ultimate.ui.game.action;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

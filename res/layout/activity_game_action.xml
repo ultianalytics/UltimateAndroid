@@ -11,7 +11,7 @@
 
         <fragment
             android:id="@+id/fieldFragment"
-            android:name="com.summithillsoftware.ultimate.ui.game.GameActionFieldFragment"
+            android:name="com.summithillsoftware.ultimate.ui.game.action.GameActionFieldFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -21,7 +21,7 @@
 
         <fragment
             android:id="@+id/recentsFragment"
-            android:name="com.summithillsoftware.ultimate.ui.game.GameActionRecentEventsFragment"
+            android:name="com.summithillsoftware.ultimate.ui.game.action.GameActionRecentEventsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

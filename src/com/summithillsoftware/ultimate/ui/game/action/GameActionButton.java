@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.game;
+package com.summithillsoftware.ultimate.ui.game.action;
 
 import android.content.Context;
 import android.util.AttributeSet;

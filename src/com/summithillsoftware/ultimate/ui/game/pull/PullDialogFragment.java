@@ -24,7 +24,7 @@ import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
-import com.summithillsoftware.ultimate.ui.game.GameActionActivity;
+import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
 public class PullDialogFragment extends UltimateDialogFragment {
 	private static final String PLAYER_NAME_ARG = "playerName";

@@ -13,7 +13,7 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+    <com.summithillsoftware.ultimate.ui.game.action.GameActionButton
         android:id="@+id/throwawayButton"
         style="@style/buttonGameAction"
         android:layout_width="0dp"
@@ -23,7 +23,7 @@
         android:padding="6dp"
         android:text="@string/button_action_throwaway" />
     
-    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+    <com.summithillsoftware.ultimate.ui.game.action.GameActionButton
         android:id="@+id/opponentThrowawayButton"
         style="@style/buttonGameAction"
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
         android:padding="2dp"
         android:text="@string/button_action_opponent_throwaway" />    
 
-    <com.summithillsoftware.ultimate.ui.game.GameActionButton
+    <com.summithillsoftware.ultimate.ui.game.action.GameActionButton
         android:id="@+id/opponentGoalButton"
         style="@style/buttonGameAction"
         android:layout_width="0dp"

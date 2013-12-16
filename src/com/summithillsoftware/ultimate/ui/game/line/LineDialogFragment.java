@@ -53,7 +53,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
-import com.summithillsoftware.ultimate.ui.game.GameActionActivity;
+import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
