@@ -9,10 +9,12 @@ import android.view.MenuItem;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.CessationEvent;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
 
@@ -74,6 +76,21 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		populateView();
 	}
 	
+	private void showPullDialog(DefenseEvent pullEvent) {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    PullDialogFragment pullDialog = new PullDialogFragment();
+	    pullDialog.setPlayer(pullEvent.getDefender());
+	    pullDialog.show(fragmentManager, "dialog");
+	}
+	
+	public void pullDialogDismissed(DefenseEvent pullEvent) { // call back from dialog
+		if (pullEvent != null) {
+			game().addEvent(pullEvent);
+			populateView();
+			game().save();
+		}
+	}
+	
 	private GameActionFieldFragment getFieldFragment() {
 		return (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
 	}
@@ -84,18 +101,22 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	@Override
 	public void newEvent(Event event) {
-		game().addEvent(event);
-		populateView();
-		game().save();
-	    if (event.causesDirectionChange()) {
-	    	if (event.isGoal() && game().isNextEventImmediatelyAfterHalftime() && !game().isTimeBasedGame()) {
-	    		showHalftimeWarning();
-	    	} else if (event.isGoal() && game().doesGameAppearDone()) {
-	    		confirmGameOver();
-	    	} else if (event.causesLineChange()) {
-	    		showLineDialog();
-	    	}
-	    }
+		if (event.isPull()) {
+			showPullDialog((DefenseEvent)event);
+		} else {
+			game().addEvent(event);
+			populateView();
+			game().save();
+		    if (event.causesDirectionChange()) {
+		    	if (event.isGoal() && game().isNextEventImmediatelyAfterHalftime() && !game().isTimeBasedGame()) {
+		    		showHalftimeWarning();
+		    	} else if (event.isGoal() && game().doesGameAppearDone()) {
+		    		confirmGameOver();
+		    	} else if (event.causesLineChange()) {
+		    		showLineDialog();
+		    	}
+		    }
+		}
 	}
 
 	@Override

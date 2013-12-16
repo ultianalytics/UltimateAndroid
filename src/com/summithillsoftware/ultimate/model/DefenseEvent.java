@@ -105,7 +105,8 @@ public class DefenseEvent extends Event {
 	        	int hangTime = getPullHangtimeMilliseconds();
 	        	if (hangTime > 0) {
 	        		DecimalFormat formatter = new DecimalFormat("##0.0");
-	        		hangtimeString = "(" + getString(R.string.event_description_pass_to, formatter.format(getPullHangtimeMilliseconds())) + ")";
+	        		float hangtimeSeconds = ((float)hangTime)/1000f;
+	        		hangtimeString = " (" + getString(R.string.event_description_pull_seconds_short, formatter.format(hangtimeSeconds)) + ")";
 	        	}
 	            if (isAnonymous()) {
 	            	// {team} pull ({seconds} sec)

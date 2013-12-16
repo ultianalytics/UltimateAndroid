@@ -35,9 +35,9 @@
     <string name="event_description_o_goal">%1$s goal</string>
     <string name="event_description_o_goal_from">%1$s pass for goal</string>
     <string name="event_description_o_goal_from_to">%1$s goal (%2$s to %3$s)</string>	
-	<string name="event_description_pull_from">Pull from %1$s (%2$s sec)</string>    
-	<string name="event_description_pull">%1$s pull %2$s</string>
-	<string name="event_description_pull_from">Pull from %1$s %2$s</string>
+	<string name="event_description_pull">%1$s pull%2$s</string>
+	<string name="event_description_pull_from">Pull from %1$s%2$s</string>
+	<string name="event_description_pull_seconds_short">%1$s sec</string>	
 	<string name="event_description_pull_ob">%1$s pull</string>
 	<string name="event_description_pull_ob_from">Pull from %1$s</string>
 	<string name="event_description_opponent_goal">Opponent goal</string>
@@ -121,6 +121,9 @@
 	<string name="label_line_substitution_out">OUT</string>
 	<string name="label_line_substitution_in">IN</string>
 	<string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>	
+	<string name="label_game_action_pull_instructions_begin">Disc pulled&#8230;</string>
+	<string name="label_game_action_pull_instructions_end">&#8230;tap a buton when:</string>
+	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -155,6 +158,9 @@
 	<string name="button_action_cessation_third_quarter">End 3rd\nQuarter</string>
 	<string name="button_action_cessation_fourth_quarter">End 4th\nQuarter</string>
 	<string name="button_action_cessation_overtime">End\nOvertime</string>	
+	<string name="button_pull_caught">Caught/Landed</string>	
+	<string name="button_pull_caught_no_time">Caught/Landed - no hang time</string>
+	<string name="button_pull_out_of_bounds">Out of Bounds</string>
 
     <string name="radio_team_type_uni">Uni</string>
     <string name="radio_team_type_mixed">Mixed</string>
