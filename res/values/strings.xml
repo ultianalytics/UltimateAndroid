@@ -38,8 +38,8 @@
 	<string name="event_description_pull">%1$s pull%2$s</string>
 	<string name="event_description_pull_from">Pull from %1$s%2$s</string>
 	<string name="event_description_pull_seconds_short">%1$s sec</string>	
-	<string name="event_description_pull_ob">%1$s pull</string>
-	<string name="event_description_pull_ob_from">Pull from %1$s</string>
+	<string name="event_description_pull_ob">%1$s OB pull</string>
+	<string name="event_description_pull_ob_from">OB pull from %1$s</string>
 	<string name="event_description_opponent_goal">Opponent goal</string>
 	<string name="event_description_opponent_goal_by">%1$s goal</string>
 	<string name="event_description_opponent_throwaway">Opponent throwaway</string>

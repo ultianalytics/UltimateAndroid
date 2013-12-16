@@ -2,16 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:orientation="vertical" >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
     	android:gravity="center"
+    	android:layout_margin="10dp"
         android:text="@string/label_game_action_pull_instructions_begin" />
 
     <ProgressBar
         android:id="@+id/progressBar"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -19,30 +23,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
     	android:gravity="center"        
+		android:textSize="18sp"    	
+		android:layout_margin="10dp"
         android:text="@string/label_game_action_pull_instructions_end" />
 
     <Button
         android:id="@+id/inboundMeasureHangTimeButton"
+        style="@style/standardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/button_pull_caught" />
     
     <Button
         android:id="@+id/inboundNoHangTimeButton"
+        style="@style/standardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:layout_margin="10dp"        
         android:text="@string/button_pull_caught_no_time" />
     
     <Button
         android:id="@+id/outOfBoundsButton"
+        style="@style/standardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/button_pull_out_of_bounds" />
     
     <Button
         android:id="@+id/cancelButton"
+        style="@style/redButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/button_cancel" />
 
 </LinearLayout>

@@ -1117,20 +1117,21 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f090011;
         public static final int activity_vertical_margin=0x7f090012;
-        public static final int game_action_button_height=0x7f090016;
-        public static final int game_action_button_margin=0x7f090017;
+        public static final int game_action_button_height=0x7f090017;
+        public static final int game_action_button_margin=0x7f090018;
         /** 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     
          */
-        public static final int game_action_button_text_size=0x7f090014;
-        public static final int game_action_button_undo_button_size=0x7f09001b;
-        public static final int game_action_initiator_instructions_text_size=0x7f09001a;
-        public static final int game_action_initiator_text_size=0x7f090015;
-        public static final int game_action_portrait_recents_seperator_space=0x7f090019;
-        public static final int game_action_recent_event_text_size=0x7f090018;
+        public static final int game_action_button_text_size=0x7f090015;
+        public static final int game_action_button_undo_button_size=0x7f09001c;
+        public static final int game_action_initiator_instructions_text_size=0x7f09001b;
+        public static final int game_action_initiator_text_size=0x7f090016;
+        public static final int game_action_portrait_recents_seperator_space=0x7f09001a;
+        public static final int game_action_recent_event_text_size=0x7f090019;
         public static final int line_toolbar_button_margin=0x7f090013;
+        public static final int standard_button_text_size=0x7f090014;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1222,20 +1223,20 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int arrow_pass_direction=0x7f020057;
         public static final int game_action=0x7f020058;
-        public static final int game_action_button_background=0x7f020059;
-        public static final int game_action_initiator_player_button_background=0x7f02005a;
-        public static final int ic_action_paste=0x7f02005b;
-        public static final int ic_action_tick=0x7f02005c;
-        public static final int ic_action_users=0x7f02005d;
-        public static final int ic_launcher=0x7f02005e;
-        public static final int line_button_background=0x7f02005f;
-        public static final int line_selection_action_button_background=0x7f020060;
-        public static final int line_substitutions_sliding_drawer_background=0x7f020061;
-        public static final int plus_group_white=0x7f020062;
-        public static final int plus_person_white=0x7f020063;
-        public static final int plus_white=0x7f020064;
-        public static final int social_group=0x7f020065;
-        public static final int social_person=0x7f020066;
+        public static final int game_action_initiator_player_button_background=0x7f020059;
+        public static final int ic_action_paste=0x7f02005a;
+        public static final int ic_action_tick=0x7f02005b;
+        public static final int ic_action_users=0x7f02005c;
+        public static final int ic_launcher=0x7f02005d;
+        public static final int line_button_background=0x7f02005e;
+        public static final int line_selection_action_button_background=0x7f02005f;
+        public static final int line_substitutions_sliding_drawer_background=0x7f020060;
+        public static final int plus_group_white=0x7f020061;
+        public static final int plus_person_white=0x7f020062;
+        public static final int plus_white=0x7f020063;
+        public static final int social_group=0x7f020064;
+        public static final int social_person=0x7f020065;
+        public static final int standard_button_background=0x7f020066;
         public static final int substitutes_horizontal_sliding_drawer_handle=0x7f020067;
         public static final int substitutes_vertical_sliding_drawer_handle=0x7f020068;
         public static final int team=0x7f020069;
@@ -1946,11 +1947,13 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0c000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0c0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
-        public static final int buttonGameAction=0x7f0c0088;
-        public static final int buttonGameActionInitiatorPlayer=0x7f0c0089;
+        public static final int buttonGameAction=0x7f0c008a;
+        public static final int buttonGameActionInitiatorPlayer=0x7f0c008b;
         public static final int buttonLineAction=0x7f0c0086;
         public static final int buttonLinePlayer=0x7f0c0085;
         public static final int buttonUndo=0x7f0c0087;
+        public static final int redButton=0x7f0c0089;
+        public static final int standardButton=0x7f0c0088;
     }
     public static final class styleable {
         /**  ============================================ 
