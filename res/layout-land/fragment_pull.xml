@@ -13,34 +13,32 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content" 
             android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="@string/label_game_action_pull_instructions_begin"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="@string/label_game_action_pull_instructions_end"
-            android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/label_game_action_pull_instructions_complete"
+                android:textSize="18sp" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/inboundMeasureHangTimeButton"
             style="@style/standardButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:text="@string/button_pull_caught" />
 
         <Button
@@ -48,7 +46,7 @@
             style="@style/standardButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:text="@string/button_pull_caught_no_time" />
 
         <Button
@@ -56,7 +54,7 @@
             style="@style/standardButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:text="@string/button_pull_out_of_bounds" />
 
         <Button
@@ -64,7 +62,7 @@
             style="@style/redButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
+            android:layout_margin="4dp"
             android:text="@string/button_cancel" />
     </LinearLayout>
 

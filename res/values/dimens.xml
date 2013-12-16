@@ -15,5 +15,6 @@
     <dimen name="game_action_portrait_recents_seperator_space">6sp</dimen>
 	<dimen name="game_action_initiator_instructions_text_size">14sp</dimen>
 	<dimen name="game_action_button_undo_button_size">14sp</dimen>
+	<dimen name="game_action_pull_buttons_height">38dp</dimen>
 
 </resources>

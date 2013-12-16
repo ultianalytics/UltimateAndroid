@@ -123,6 +123,7 @@
 	<string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>	
 	<string name="label_game_action_pull_instructions_begin">Disc pulled&#8230;</string>
 	<string name="label_game_action_pull_instructions_end">&#8230;tap a button when:</string>
+	<string name="label_game_action_pull_instructions_complete">Disc pulled&#8230;tap a button when:</string>	
 	<string name="label_game_action_pull_total_hangtime">Hang Time:\n\n%1$s seconds\n</string>
 	<string name="label_game_specialevent_only_one">Only choice for this button is&#8230;</string>	
 	<string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>	
