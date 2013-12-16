@@ -53,7 +53,7 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 
 	private Event getOriginalEvent() {
 		Action action = Action.valueOf(getArguments().getString(
-				PLAYER_NAME1_ARG));
+				ACTION_ARG));
 		if (getArguments().getBoolean(IS_OFFENSE_ARG, false)) {
 			OffenseEvent event = new OffenseEvent(action, getPlayerOne());
 			event.setReceiver(getPlayerTwo());
@@ -121,9 +121,9 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 		eventChoiceRadioGroup = (RadioGroup) view
 				.findViewById(R.id.eventChoiceRadioGroup);
 		eventChoice1 = (RadioButton) view.findViewById(R.id.eventChoice1);
-		eventChoice1 = (RadioButton) view.findViewById(R.id.eventChoice2);
-		eventChoice1 = (RadioButton) view.findViewById(R.id.eventChoice3);
-		eventChoice1 = (RadioButton) view.findViewById(R.id.eventChoice4);
+		eventChoice2 = (RadioButton) view.findViewById(R.id.eventChoice2);
+		eventChoice3 = (RadioButton) view.findViewById(R.id.eventChoice3);
+		eventChoice4 = (RadioButton) view.findViewById(R.id.eventChoice4);
 	}
 
 	private void populateView() {
@@ -155,6 +155,7 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 			eventChoice4.setText(event.toString());
 			eventChoice4.setVisibility(View.VISIBLE);
 		}
+		eventChoice1.setChecked(true);
 	}
 
 	private Event createEventToAdd() {

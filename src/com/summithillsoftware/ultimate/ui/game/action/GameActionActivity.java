@@ -17,6 +17,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
+import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
 
@@ -85,6 +86,13 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	    pullDialog.show(fragmentManager, "dialog");
 	}
 	
+	private void showSpecialEventDialog(Event event) {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    SpecialEventDialogFragment spcEvtDialog = new SpecialEventDialogFragment();
+	    spcEvtDialog.setOriginalEvent(event);
+	    spcEvtDialog.show(fragmentManager, "dialog");
+	}
+	
 	public void newPull(DefenseEvent pullEvent) { // call back from dialog
 		if (pullEvent != null) {
 			game().addEvent(pullEvent);
@@ -119,6 +127,11 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    	}
 		    }
 		}
+	}
+	
+	@Override
+	public void potentialNewEvent(Event event) {
+		showSpecialEventDialog(event);
 	}
 
 	@Override

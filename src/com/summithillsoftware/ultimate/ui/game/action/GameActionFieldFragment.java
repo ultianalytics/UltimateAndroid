@@ -207,21 +207,25 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		}
 	}
 	
+	private void notifyPotentialNewEvent(Event event) {
+		if (gameActionEventListener != null) {
+			gameActionEventListener.potentialNewEvent(event);
+		}
+	}
+	
 	@Override
 	public void newEvent(Event event) {
-		GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();
-		if (event.isOffense()) {
-			if (selectedFragment != null) {
-				((OffenseEvent)event).setPasser(selectedFragment.getPlayer());
-			}
-		} else {
-			if (selectedFragment != null && event.isD()) {
-				((DefenseEvent)event).setDefender(selectedFragment.getPlayer());
-			}
-		}
+		populatePlayerOne(event);
 		notifyNewEvent(event);
 	}
 
+	
+	@Override
+	public void potentialNewEvent(Event event) {
+		populatePlayerOne(event);
+		notifyPotentialNewEvent(event);
+	}
+	
 	@Override
 	public void removeLastEvent() {
 		// no-op...don't remove events in this fragment
@@ -237,5 +241,17 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		// no-op...don't handle timeout info in this fragment
 	}
 
+	private void populatePlayerOne(Event event) {
+		GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();
+		if (event.isOffense()) {
+			if (selectedFragment != null) {
+				((OffenseEvent)event).setPasser(selectedFragment.getPlayer());
+			}
+		} else {
+			if (selectedFragment != null && event.isD()) {
+				((DefenseEvent)event).setDefender(selectedFragment.getPlayer());
+			}
+		}
+	}
 
 }

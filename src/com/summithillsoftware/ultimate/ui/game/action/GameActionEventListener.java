@@ -7,6 +7,8 @@ public interface GameActionEventListener {
 	
 	public void newEvent(Event event);
 	
+	public void potentialNewEvent(Event event);
+	
 	public void removeLastEvent();
 	
 	public void initialOffensePlayerSelected(Player player);

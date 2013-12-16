@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -94,38 +95,45 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleActionClicked(action);
+				handleActionClicked(action, false);
+			}
+		});
+		button.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				handleActionClicked(action, true);
+				return true;
 			}
 		});
 	}
 	
-	private void handleActionClicked(Action action) {
+	private void handleActionClicked(Action action, boolean isLongPress) {
 		switch (action) {
 		case Catch:
-			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player), isLongPress);
 			break;
 		case Drop:
-			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+			notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player), isLongPress);
 			break;
 		case Goal:
 			if (isOffense) {
-				notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player));
+				notifyNewEvent(new OffenseEvent(action, Player.anonymous(), player), isLongPress);
 			} else {
-				notifyNewEvent(new DefenseEvent(action, Player.anonymous()));
+				notifyNewEvent(new DefenseEvent(action, Player.anonymous()), isLongPress);
 			}
 			break;		
 		case Throwaway:
 			if (isOffense) {
-				notifyNewEvent(new OffenseEvent(action, Player.anonymous()));
+				notifyNewEvent(new OffenseEvent(action, Player.anonymous()), isLongPress);
 			} else {
-				notifyNewEvent(new DefenseEvent(action, Player.anonymous()));
+				notifyNewEvent(new DefenseEvent(action, Player.anonymous()), isLongPress);
 			}
 			break;		
 		case Pull:
-			notifyNewEvent(new DefenseEvent(action, player));
+			notifyNewEvent(new DefenseEvent(action, player), isLongPress);
 			break;					
 		case De:
-			notifyNewEvent(new DefenseEvent(action, player));
+			notifyNewEvent(new DefenseEvent(action, player), isLongPress);
 			break;				
 		default:
 			break;
@@ -136,9 +144,13 @@ public class GameActionPlayerFragment extends UltimateFragment {
 		notifyOffensePasserSelected();
 	}
 	
-	private void notifyNewEvent(Event event) {
+	private void notifyNewEvent(Event event, boolean isPotential) {
 		if (gameActionEventListener != null) {
-			gameActionEventListener.newEvent(event);
+			if (isPotential) {
+				gameActionEventListener.potentialNewEvent(event);
+			} else {
+				gameActionEventListener.newEvent(event);
+			}
 		}
 	}
 	
