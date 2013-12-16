@@ -101,13 +101,9 @@ public class DefenseEvent extends Event {
 		String ourTeam = StringUtil.getString(R.string.event_description_our_team);
 	    switch(getAction()) {
 	        case Pull: {
-	        	String hangtimeString = "";
-	        	int hangTime = getPullHangtimeMilliseconds();
-	        	if (hangTime > 0) {
-	        		DecimalFormat formatter = new DecimalFormat("##0.0");
-	        		float hangtimeSeconds = ((float)hangTime)/1000f;
-	        		hangtimeString = " (" + getString(R.string.event_description_pull_seconds_short, formatter.format(hangtimeSeconds)) + ")";
-	        	}
+	        	String hangtimeString = getFormattedPullHangtimeSeconds();
+	        	hangtimeString = hangtimeString == null ? "" : 
+	        		" (" + getString(R.string.event_description_pull_seconds_short, hangtimeString) + ")";
 	            if (isAnonymous()) {
 	            	// {team} pull ({seconds} sec)
 	            	return getString(R.string.event_description_pull,(teamName == null ? ourTeam : teamName), hangtimeString);
@@ -175,6 +171,17 @@ public class DefenseEvent extends Event {
 	
 	public int getPullHangtimeMilliseconds() {
 		return getDetailIntValue(HANGTIME_DETAIL_PROPERTY_NAME, 0);
+	}
+	
+	public String getFormattedPullHangtimeSeconds() {
+    	int hangTime = getPullHangtimeMilliseconds();
+    	if (hangTime > 0) {
+    		DecimalFormat formatter = new DecimalFormat("##0.0");
+    		float hangtimeSeconds = ((float)hangTime)/1000f;
+    		return formatter.format(hangtimeSeconds);
+    	} else {
+    		return null;
+    	}
 	}
 	
 	public void useSharedPlayers() {

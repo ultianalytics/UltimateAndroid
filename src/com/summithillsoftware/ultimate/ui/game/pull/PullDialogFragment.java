@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
@@ -22,10 +24,12 @@ public class PullDialogFragment extends UltimateDialogFragment {
 	private static final String PULL_BEGIN_TIME_ARG = "pullBegin";	
 	
 	// widgets
+	private ViewSwitcher viewSwitcher;
 	private Button inboundMeasureHangTimeButton;
 	private Button inboundNoHangTimeButton;
 	private Button outOfBoundsButton;
 	private Button cancelButton;
+	private TextView hangtimeTotal;
 	
 	public void setPlayer(Player player) {
 		Bundle args = new Bundle();
@@ -97,13 +101,13 @@ public class PullDialogFragment extends UltimateDialogFragment {
 		inboundNoHangTimeButton = (Button)view.findViewById(R.id.inboundNoHangTimeButton);
 		outOfBoundsButton = (Button)view.findViewById(R.id.outOfBoundsButton);
 		cancelButton = (Button)view.findViewById(R.id.cancelButton);
+		viewSwitcher = (ViewSwitcher)view.findViewById(R.id.viewSwitcher);
+		hangtimeTotal = (TextView)view.findViewById(R.id.hangtimeTotal);
 	}
 	
     private void populateView() {
-
-    	
+   	
     }
-    
  
 	private void registerWidgetListeners() {
 		inboundMeasureHangTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +115,8 @@ public class PullDialogFragment extends UltimateDialogFragment {
             	DefenseEvent pullEvent = new DefenseEvent(Action.Pull, getPlayer());
             	long hangTimeMs = System.currentTimeMillis() - getArguments().getLong(PULL_BEGIN_TIME_ARG);
             	pullEvent.setPullHangtimeMilliseconds((int)hangTimeMs);
-            	notifyAndDismiss(pullEvent);
+            	showHangtimeView(pullEvent);
+            	notifyPullComplete(pullEvent);
             }
         });
 		inboundNoHangTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +136,18 @@ public class PullDialogFragment extends UltimateDialogFragment {
         });		
 	}
 	
+	private void showHangtimeView(DefenseEvent pullEvent) {
+		hangtimeTotal.setText(getString(R.string.label_game_action_pull_total_hangtime, pullEvent.getFormattedPullHangtimeSeconds()));
+		viewSwitcher.showNext();
+	}
+	
 	private void notifyAndDismiss(DefenseEvent pullEvent) {
-    	((GameActionActivity)getActivity()).pullDialogDismissed(pullEvent);
+		notifyPullComplete(pullEvent);
     	dismiss();
+	}
+	
+	private void notifyPullComplete(DefenseEvent pullEvent) {
+    	((GameActionActivity)getActivity()).pullDialogDismissed(pullEvent);
 	}
 	
 	private void registerDialogCancelListener(Dialog dialog) {
