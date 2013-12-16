@@ -122,7 +122,7 @@
 	<string name="label_line_substitution_in">IN</string>
 	<string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>	
 	<string name="label_game_action_pull_instructions_begin">Disc pulled&#8230;</string>
-	<string name="label_game_action_pull_instructions_end">&#8230;tap a buton when:</string>
+	<string name="label_game_action_pull_instructions_end">&#8230;tap a button when:</string>
 	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
