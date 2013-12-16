@@ -1,8 +1,12 @@
 package com.summithillsoftware.ultimate.ui.game.pull;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,6 +143,20 @@ public class PullDialogFragment extends UltimateDialogFragment {
 	private void showHangtimeView(DefenseEvent pullEvent) {
 		hangtimeTotal.setText(getString(R.string.label_game_action_pull_total_hangtime, pullEvent.getFormattedPullHangtimeSeconds()));
 		viewSwitcher.showNext();
+		
+		// start a timer to dismiss
+		final Runnable dismisser = new Runnable() {
+			public void run() {
+				dismiss();
+			}
+		};
+		final Handler dismissHandler = new Handler();
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				dismissHandler.post(dismisser);
+			}
+		}, 1500);
 	}
 	
 	private void notifyAndDismiss(DefenseEvent pullEvent) {
