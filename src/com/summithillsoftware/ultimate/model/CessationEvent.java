@@ -119,6 +119,14 @@ public class CessationEvent extends Event {
 	public List<Player> getPlayers() {
 		return (List<Player>)Collections.EMPTY_LIST;
 	}
+	
+	public  Player getPlayerOne() {
+		return null;
+	}
+	
+	public Player getPlayerTwo() {
+		return null;
+	}
 
 	@Override
 	protected String getDescriptionForTeamAndOpponent(String teamName, String opponentName) {

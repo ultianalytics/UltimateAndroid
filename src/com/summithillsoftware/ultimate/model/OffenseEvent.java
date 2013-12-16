@@ -179,16 +179,16 @@ public class OffenseEvent extends Event {
 		return passer;
 	}
 
-	public void setPasser(Player passer) {
-		this.passer = passer;
+	public void setPasser(Player aPasser) {
+		this.passer = aPasser == null ? Player.anonymous() : aPasser;
 	}
 
 	public Player getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(Player receiver) {
-		this.receiver = receiver;
+	public void setReceiver(Player aReceiver) {
+		this.receiver = aReceiver == null ? Player.anonymous() : aReceiver;
 	}
 	
 	protected void ensureValid() {

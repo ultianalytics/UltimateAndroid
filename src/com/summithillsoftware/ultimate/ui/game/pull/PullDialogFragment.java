@@ -84,25 +84,6 @@ public class PullDialogFragment extends UltimateDialogFragment {
         registerWidgetListeners();
 	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle bundle) {
-		super.onSaveInstanceState(bundle);
-	}
-
-	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		super.onViewStateRestored(savedInstanceState);
-	}
-	
-	@Override
-	public void onDismiss(DialogInterface dialog) {
-		GameActionActivity activity = (GameActionActivity)getActivity();
-		super.onDismiss(dialog);
-		if (activity != null) {
-			activity.lineDialogDismissed();
-		}
-	}
-	
 	private void connectWidgets(View view) {
 		inboundMeasureHangTimeButton = (Button)view.findViewById(R.id.inboundMeasureHangTimeButton);
 		inboundNoHangTimeButton = (Button)view.findViewById(R.id.inboundNoHangTimeButton);

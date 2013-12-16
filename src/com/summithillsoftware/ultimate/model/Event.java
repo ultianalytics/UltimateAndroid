@@ -178,6 +178,10 @@ public abstract class Event implements Serializable {
 	
 	public abstract List<Player> getPlayers();
 	
+	public abstract Player getPlayerOne();
+	
+	public abstract Player getPlayerTwo();
+	
 	public boolean isAnonymous() {
 		return false;
 	}

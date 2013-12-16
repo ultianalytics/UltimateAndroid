@@ -164,6 +164,10 @@ public class DefenseEvent extends Event {
 	public Player getPlayerOne() {
 		return defender;
 	}
+	
+	public Player getPlayerTwo() {
+		return null;
+	}
 
 	public void setPullHangtimeMilliseconds(int hangtimeMs) {
 		setDetailIntValue(HANGTIME_DETAIL_PROPERTY_NAME, hangtimeMs);
