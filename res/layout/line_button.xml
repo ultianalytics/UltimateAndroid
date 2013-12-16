@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.summithillsoftware.ultimate.ui.game.PlayerLineButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.summithillsoftware.ultimate.ui.game.line.PlayerLineButton xmlns:android="http://schemas.android.com/apk/res/android"
      style="@style/buttonLinePlayer"
      android:maxLines="1"
      android:padding="6dp"

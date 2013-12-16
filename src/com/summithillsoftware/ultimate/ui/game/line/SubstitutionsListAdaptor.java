@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.game;
+package com.summithillsoftware.ultimate.ui.game.line;
 
 import java.util.List;
 
