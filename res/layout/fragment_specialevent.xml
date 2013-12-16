@@ -3,18 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="20dp" >
 
     <TextView
         android:id="@+id/eventTypeDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_game_specialevent_only_one" />
+        android:visibility="gone"
+        android:text="@string/label_game_specialevent_only_one"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="14sp"  />
 
     <RadioGroup
         android:id="@+id/eventChoiceRadioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/eventChoice1"
@@ -26,39 +30,44 @@
             android:id="@+id/eventChoice2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@string/undefined" />
+            android:text="@string/undefined"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/eventChoice3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:visibility="gone"            
-            android:text="@string/undefined" />
+            android:text="@string/undefined"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/eventChoice4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:visibility="gone"            
-            android:text="@string/undefined" />
+            android:text="@string/undefined"
+            android:visibility="gone" />
     </RadioGroup>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginTop="26dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/cancelButton"
+            style="@style/standardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/saveButton"
+            style="@style/standardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/button_save" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

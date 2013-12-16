@@ -133,7 +133,8 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 
 			eventTypeDescriptionLabel
 					.setText(getString(R.string.label_game_specialevent_d));
-
+			eventTypeDescriptionLabel.setVisibility(View.VISIBLE);
+			
 			event.setAction(Action.Callahan);
 			eventChoice2.setText(event.toString());
 			eventChoice2.setVisibility(View.VISIBLE);
@@ -142,6 +143,7 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 
 			eventTypeDescriptionLabel
 					.setText(getString(R.string.label_game_specialevent_turnover));
+			eventTypeDescriptionLabel.setVisibility(View.VISIBLE);
 
 			event.setAction(Action.Stall);
 			eventChoice2.setText(event.toString());
