@@ -83,7 +83,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	    pullDialog.show(fragmentManager, "dialog");
 	}
 	
-	public void pullDialogDismissed(DefenseEvent pullEvent) { // call back from dialog
+	public void newPull(DefenseEvent pullEvent) { // call back from dialog
 		if (pullEvent != null) {
 			game().addEvent(pullEvent);
 			populateView();

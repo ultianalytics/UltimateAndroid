@@ -9,10 +9,13 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -132,4 +135,29 @@ public class UltimateActivity extends ActionBarActivity {
 	public ViewGroup getRootContentView() {
 		return (ViewGroup)getRootView().getChildAt(0);
 	}
+	
+	public void lockOrientation() {
+		int orientation = getResources().getConfiguration().orientation;
+		int rotation = getWindowManager().getDefaultDisplay().getRotation();
+		if (orientation == Configuration.ORIENTATION_LANDSCAPE
+				&& (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_90)) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else if (orientation == Configuration.ORIENTATION_PORTRAIT
+				&& (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_90)) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else if (orientation == Configuration.ORIENTATION_LANDSCAPE
+				&& (rotation == Surface.ROTATION_180 || rotation == Surface.ROTATION_270)) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+		} else {
+			if (orientation == Configuration.ORIENTATION_PORTRAIT
+					&& (rotation == Surface.ROTATION_180 || rotation == Surface.ROTATION_270)) {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+			}
+		}
+	}
+	
+	public void unLockOrientation() {
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+	}
+
 }

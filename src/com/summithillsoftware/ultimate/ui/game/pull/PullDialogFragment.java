@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game.pull;
 
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,6 +9,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,19 +138,20 @@ public class PullDialogFragment extends UltimateDialogFragment {
         });
 		cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	dismiss();
+            	dismissDialog();
             }
         });		
 	}
 	
 	private void showHangtimeView(DefenseEvent pullEvent) {
+		((GameActionActivity)getActivity()).lockOrientation();
 		hangtimeTotal.setText(getString(R.string.label_game_action_pull_total_hangtime, pullEvent.getFormattedPullHangtimeSeconds()));
 		viewSwitcher.showNext();
 		
 		// start a timer to dismiss
 		final Runnable dismisser = new Runnable() {
 			public void run() {
-				dismiss();
+				dismissDialog();
 			}
 		};
 		final Handler dismissHandler = new Handler();
@@ -155,17 +159,18 @@ public class PullDialogFragment extends UltimateDialogFragment {
 			@Override
 			public void run() {
 				dismissHandler.post(dismisser);
+				((GameActionActivity)getActivity()).unLockOrientation();
 			}
-		}, 1500);
+		}, 2000);
 	}
 	
 	private void notifyAndDismiss(DefenseEvent pullEvent) {
 		notifyPullComplete(pullEvent);
-    	dismiss();
+    	dismissDialog();
 	}
 	
 	private void notifyPullComplete(DefenseEvent pullEvent) {
-    	((GameActionActivity)getActivity()).pullDialogDismissed(pullEvent);
+    	((GameActionActivity)getActivity()).newPull(pullEvent);
 	}
 	
 	private void registerDialogCancelListener(Dialog dialog) {
@@ -175,6 +180,15 @@ public class PullDialogFragment extends UltimateDialogFragment {
 				// Nothing yet...just coded in case we want to do something here later
 			}
 		});
+	}
+	
+	private void dismissDialog() {
+		// make sure no crash if rotate while waiting for timer to pop
+		try {
+			dismiss();
+		} catch (Exception e) {
+			Log.w(ULTIMATE, "Error dismissing dialog", e);
+		}
 	}
 	
 }
