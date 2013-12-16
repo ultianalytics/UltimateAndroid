@@ -49,6 +49,10 @@ public class DefenseEvent extends Event {
 		return getAction() == Callahan;
 	}
 	
+	public boolean 	isD() {
+		return getAction() == De;
+	}
+	
 	public boolean isPull() {
 		return getAction() == Pull || getAction() == PullOb;
 	}

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Space;
 import android.widget.TextView;
@@ -138,21 +139,42 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		throwawayButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleThrowawayPressed();
+				handleThrowawayPressed(false);
+			}
+		});
+		throwawayButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				handleThrowawayPressed(true);
+				return true;
 			}
 		});
 		opponentThrowawayButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleThrowawayPressed();
+				handleThrowawayPressed(false);
 			}
-		});		
+		});
+		opponentThrowawayButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				handleThrowawayPressed(true);
+				return true;
+			}
+		});
 		opponentGoalButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleOpponentGoalPressed();
+				handleOpponentGoalPressed(false);
 			}
-		});		
+		});
+		opponentGoalButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				handleOpponentGoalPressed(true);
+				return true;
+			}
+		});
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
 			playerFragment.setGameActionEventListener(this);
@@ -169,19 +191,19 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		return null;
 	}
 	
-	private void handleThrowawayPressed() {
+	private void handleThrowawayPressed(boolean isPotential) {
 		if (Game.current().arePlayingOffense()) {
 			GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();
 			if (selectedFragment != null && selectedFragment.getPlayer() != null) {
-				notifyNewEvent(new OffenseEvent(Action.Throwaway, selectedFragment.getPlayer()));
+				notifyNewEvent(new OffenseEvent(Action.Throwaway, selectedFragment.getPlayer()), isPotential);
 			}
 		} else {
-			notifyNewEvent(new DefenseEvent(Action.Throwaway, Player.anonymous()));
+			notifyNewEvent(new DefenseEvent(Action.Throwaway, Player.anonymous()), isPotential);
 		}
 	}
 
-	private void handleOpponentGoalPressed() {
-		notifyNewEvent(new DefenseEvent(Action.Goal, Player.anonymous()));
+	private void handleOpponentGoalPressed(boolean isPotential) {
+		notifyNewEvent(new DefenseEvent(Action.Goal, Player.anonymous()), isPotential);
 	}
 
 	private GameActionPlayerFragment getPlayerFragment(int i) {
@@ -201,9 +223,13 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		this.gameActionEventListener = gameActionEventListener;
 	}
 	
-	private void notifyNewEvent(Event event) {
+	private void notifyNewEvent(Event event, boolean isPotential) {
 		if (gameActionEventListener != null) {
-			gameActionEventListener.newEvent(event);
+			if (isPotential) {
+				gameActionEventListener.potentialNewEvent(event);
+			} else {
+				gameActionEventListener.newEvent(event);
+			}
 		}
 	}
 	
@@ -216,7 +242,7 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	@Override
 	public void newEvent(Event event) {
 		populatePlayerOne(event);
-		notifyNewEvent(event);
+		notifyNewEvent(event, false);
 	}
 
 	

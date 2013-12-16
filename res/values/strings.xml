@@ -46,8 +46,8 @@
 	<string name="event_description_opponent_throwaway_by">%1$s throwaway</string>
 	<string name="event_description_d">%1$s D</string>
 	<string name="event_description_d_by">D by %1$s</string>
-	<string name="event_description_callahan">%1$s D</string>
-	<string name="event_description_callahan_by">D by %1$s</string>	
+	<string name="event_description_callahan">%1$s callahan</string>
+	<string name="event_description_callahan_by">Callahan by %1$s</string>	
 	<string name="event_description_end_of_first_quarter">End of 1st Qtr</string>
 	<string name="event_description_end_of_third_quarter">End of 3rd Qtr</string>
 	<string name="event_description_halftime">Halftime</string>
