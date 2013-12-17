@@ -1,192 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical" >
-	
-	    <RelativeLayout
-	        android:layout_margin="@dimen/activity_horizontal_margin"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
-	
-	        <TextView
-	            android:id="@+id/label_game_date"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:clickable="true"
-	            android:onClick="dateClicked"
-	            android:text="@string/fake_date"
-	            android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	        <TextView
-	            android:id="@+id/label_game_score"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/fake_score"
-	            android:clickable="true"
-	            android:onClick="scoreClicked"            
-	            android:layout_alignParentRight="true"
-	            android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	    </RelativeLayout>
-	
-	    <EditText
-	        android:id="@+id/text_game_opponent_name"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_margin="@dimen/activity_horizontal_margin"
-	        android:ems="10"
-	        android:hint="@string/placeholder_opponent_name"
-	        android:inputType="textCapWords|textNoSuggestions" >
-	
-	    </EditText>
-	
-	    <EditText
-	        android:id="@+id/text_game_tourament_name"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_margin="@dimen/activity_horizontal_margin"
-	        android:ems="10"
-	        android:hint="@string/placeholder_tournament_name"
-	        android:inputType="textCapWords|textNoSuggestions" >
-	
-	    </EditText>
-	    
-	    <TableLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_margin="@dimen/activity_horizontal_margin" >
-	
-	        <TableRow
-	            android:id="@+id/tableRow1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp" >
-	
-	            <TextView
-	                android:id="@+id/label_game_first_point_oline"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="4dp"
-	                android:text="@string/label_game_first_point_oline"
-	                android:maxLength="50"
-	                android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	            <RadioGroup
-	                android:id="@+id/radiogroup_game_first_point_oline"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content" >
-	
-	                <RadioButton
-	                    android:id="@+id/radio_game_start_offense"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:text="@string/radio_game_start_offense"
-	                    android:checked="false" />
-	
-	                <RadioButton
-	                    android:id="@+id/radio_game_start_defense"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:text="@string/radio_game_start_defense"
-	                    android:checked="false" />
-	                
-	            </RadioGroup>
-	
-	        </TableRow>
-	        
-	        <TableRow
-	            android:id="@+id/tableRow2"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp"  >
-	
-	            <TextView
-	                android:id="@+id/label_game_game_to"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="4dp"
-	                android:text="@string/label_game_game_to"
-	                android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	            <RadioGroup
-	                android:id="@+id/radiogroup_game_game_to"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content">
-	
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_9"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="false"
-	                    android:text="@string/radio_game_to_9" />
-	
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_11"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="false"
-	                    android:text="@string/radio_game_to_11" />
-	                
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_13"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="true"
-	                    android:text="@string/radio_game_to_13" />
-	                
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_15"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="false"
-	                    android:text="@string/radio_game_to_15" />
-	                
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_17"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="false"
-	                    android:text="@string/radio_game_to_17" />
-	                
-	                <RadioButton
-	                    android:id="@+id/radio_game_to_time"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:checked="false"
-	                    android:text="@string/radio_game_to_time" />
-	                
-	            </RadioGroup>
-	            
-	        </TableRow>
-	
-	
-	    </TableLayout>
-	
-	    <LinearLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_margin="@dimen/activity_horizontal_margin" >
-	
-	        <Button
-	            android:id="@+id/button_save"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/button_save"
-	            android:onClick="saveClicked" />
-	
-	        <Button
-	            android:id="@+id/button_cancel"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/button_cancel"
-	            android:onClick="cancelClicked" />
-	    </LinearLayout>
-	
-	</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin" >
+
+            <TextView
+                android:id="@+id/label_game_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="dateClicked"
+                android:text="@string/fake_date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/label_game_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:onClick="scoreClicked"
+                android:text="@string/fake_score"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/text_game_opponent_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:ems="10"
+            android:hint="@string/placeholder_opponent_name"
+            android:inputType="textCapWords|textNoSuggestions" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/text_game_tourament_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:ems="10"
+            android:hint="@string/placeholder_tournament_name"
+            android:inputType="textCapWords|textNoSuggestions" >
+        </EditText>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin" >
+
+            <TableRow
+                android:id="@+id/tableRowGameTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" >
+
+                <TextView
+                    android:id="@+id/label_game_game_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/label_game_game_to"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/spinner_game_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRowStartOline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" >
+
+                <TextView
+                    android:id="@+id/label_game_first_point_oline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:maxLength="50"
+                    android:text="@string/label_game_first_point_oline"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_game_first_point_oline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <RadioButton
+                        android:id="@+id/radio_game_start_offense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/radio_game_start_offense" />
+
+                    <RadioButton
+                        android:id="@+id/radio_game_start_defense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/radio_game_start_defense" />
+                </RadioGroup>
+            </TableRow>
+
+
+
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin" >
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="saveClicked"
+                android:text="@string/button_save" />
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="cancelClicked"
+                android:text="@string/button_cancel" />
+        </LinearLayout>
+    </LinearLayout>
 
 </ScrollView>

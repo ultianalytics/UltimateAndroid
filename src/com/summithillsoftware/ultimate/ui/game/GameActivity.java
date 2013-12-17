@@ -4,6 +4,8 @@ import static com.summithillsoftware.ultimate.model.Game.TIME_BASED_GAME_POINT;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.DateUtil;
@@ -28,6 +32,8 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
 public class GameActivity extends UltimateActivity {
 	public static final String NEW_GAME = "NewGame";
+	private List<Integer> gameToScores;
+	private List<String> gameToNames;
 	
 //	private Menu menu;
 
@@ -139,31 +145,14 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void populateGamePointView(int gamePoint) {
-		int radioButtonId;
-		switch (gamePoint) {
-		case 9:
-			radioButtonId = R.id.radio_game_to_9;
-			break;
-		case 11:
-			radioButtonId = R.id.radio_game_to_11;
-			break;
-		case 13:
-			radioButtonId = R.id.radio_game_to_13;
-			break;
-		case 15:
-			radioButtonId = R.id.radio_game_to_15;
-			break;
-		case 17:
-			radioButtonId = R.id.radio_game_to_17;
-			break;
-		case TIME_BASED_GAME_POINT:
-			radioButtonId = R.id.radio_game_to_time;
-			break;			
-		default:
-			radioButtonId = R.id.radio_game_to_13;
-			break;
-		}
-		getGameToRadioGroup().check(radioButtonId);	
+		Spinner spinner = getGameToSpinner();
+		
+        List<String> optionsList = getGameToNames();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, optionsList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        int gameToIndex = getGameToScores().indexOf(gamePoint);
+        spinner.setSelection(gameToIndex);
 	}
 	
 	private void populateAndSaveGame() {
@@ -171,29 +160,9 @@ public class GameActivity extends UltimateActivity {
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
 		game.setFirstPointOline((getFirstPointOlineRadioGroup().getCheckedRadioButtonId() == R.id.radio_game_start_offense));
-		switch (getGameToRadioGroup().getCheckedRadioButtonId()) {
-		case R.id.radio_game_to_9:
-			game.setGamePoint(9);
-			break;
-		case R.id.radio_game_to_11:
-			game.setGamePoint(11);
-			break;
-		case R.id.radio_game_to_13:
-			game.setGamePoint(13);
-			break;
-		case R.id.radio_game_to_15:
-			game.setGamePoint(15);
-			break;
-		case R.id.radio_game_to_17:
-			game.setGamePoint(17);
-			break;
-		case R.id.radio_game_to_time:
-			game.setGamePoint(TIME_BASED_GAME_POINT);
-			break;			
-		default:
-			game.setGamePoint(Preferences.current().getGamePoint());
-			break;
-		}
+		int gameToIndex = getGameToSpinner().getSelectedItemPosition();
+		int gameToPoint = getGameToScores().get(gameToIndex);
+		game.setGamePoint(gameToPoint);
 		game.save();
 		Game.setCurrentGame(game);
 		Preferences.current().setGamePoint(game.getGamePoint());
@@ -256,8 +225,8 @@ public class GameActivity extends UltimateActivity {
 		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
 	}
 	
-	private RadioGroup getGameToRadioGroup() {
-		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_game_to);
+	private Spinner getGameToSpinner() {
+		return (Spinner)findViewById(R.id.gameFragment).findViewById(R.id.spinner_game_to);
 	}
 	
 	private void goToActionActivity() {
@@ -284,6 +253,32 @@ public class GameActivity extends UltimateActivity {
 		} else {
 			return Color.RED;
 		} 
+	}
+	
+	private List<Integer> getGameToScores() {
+		if (gameToScores == null) {
+			gameToScores = new ArrayList<Integer>();
+			gameToScores.add(9);
+			gameToScores.add(11);
+			gameToScores.add(13);
+			gameToScores.add(15);
+			gameToScores.add(17);
+			gameToScores.add(TIME_BASED_GAME_POINT);
+		}
+		return gameToScores;
+	}
+	
+	private List<String> getGameToNames() {
+		if (gameToNames == null) {
+			gameToNames = new ArrayList<String>();
+			gameToNames.add(getString(R.string.spinner_game_to_9));
+			gameToNames.add(getString(R.string.spinner_game_to_11));
+			gameToNames.add(getString(R.string.spinner_game_to_13));
+			gameToNames.add(getString(R.string.spinner_game_to_15));
+			gameToNames.add(getString(R.string.spinner_game_to_17));
+			gameToNames.add(getString(R.string.spinner_game_to_time));
+		}
+		return gameToNames;
 	}
 
 }
