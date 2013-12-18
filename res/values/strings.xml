@@ -108,7 +108,7 @@
 	<string name="alert_action_gameover_yes">Yes, done</string> 
 	<string name="alert_action_gameover_no">No, not yet</string> 
            
-    <string name="label_team_type">Type:</string>
+	<string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
     <string name="label_team_playerdisplay">Player Display:</string>
@@ -117,8 +117,10 @@
     <string name="label_team_mixed">Mixed (co-ed)</string>
     <string name="label_player_position">Position:</string>
     <string name="label_player_gender">Gender:</string>
-    <string name="label_game_first_point_oline">Our team start</string>
-    <string name="label_game_game_to">Game to</string>
+    <string name="label_game_tournament">Tournament:</string>
+	<string name="label_game_opponent">Opponent:</string>    
+    <string name="label_game_first_point_oline">We start on:</string>
+    <string name="label_game_game_to">Game point:</string>
     <string name="label_line_field">Field</string>
     <string name="label_line_bench">Bench</string>
 	<string name="label_line_substitution_out">OUT</string>
@@ -135,8 +137,8 @@
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
-    <string name="placeholder_opponent_name">Opponent Name</string>
-    <string name="placeholder_tournament_name">Tournament Name</string>
+    <string name="placeholder_opponent_name">Opponent</string>
+    <string name="placeholder_tournament_name">Tournament</string>
     
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
