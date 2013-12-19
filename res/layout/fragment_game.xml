@@ -148,23 +148,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center_horizontal">
 
             <Button
                 android:id="@+id/button_save"
                 style="@style/buttonGameAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:onClick="saveClicked"
                 android:text="@string/button_save" />
+            
+            <Space 
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/button_cancel"
                 style="@style/buttonGameAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"                
                 android:onClick="cancelClicked"
                 android:text="@string/button_cancel" />
         </LinearLayout>
