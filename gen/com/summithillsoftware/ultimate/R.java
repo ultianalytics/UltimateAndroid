@@ -1117,22 +1117,23 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f090011;
         public static final int activity_vertical_margin=0x7f090012;
-        public static final int game_action_button_height=0x7f090017;
-        public static final int game_action_button_margin=0x7f090018;
+        public static final int form_text_size=0x7f090014;
+        public static final int game_action_button_height=0x7f090018;
+        public static final int game_action_button_margin=0x7f090019;
         /** 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     
          */
-        public static final int game_action_button_text_size=0x7f090015;
-        public static final int game_action_button_undo_button_size=0x7f09001c;
-        public static final int game_action_initiator_instructions_text_size=0x7f09001b;
-        public static final int game_action_initiator_text_size=0x7f090016;
-        public static final int game_action_portrait_recents_seperator_space=0x7f09001a;
-        public static final int game_action_pull_buttons_height=0x7f09001d;
-        public static final int game_action_recent_event_text_size=0x7f090019;
+        public static final int game_action_button_text_size=0x7f090016;
+        public static final int game_action_button_undo_button_size=0x7f09001d;
+        public static final int game_action_initiator_instructions_text_size=0x7f09001c;
+        public static final int game_action_initiator_text_size=0x7f090017;
+        public static final int game_action_portrait_recents_seperator_space=0x7f09001b;
+        public static final int game_action_pull_buttons_height=0x7f09001e;
+        public static final int game_action_recent_event_text_size=0x7f09001a;
         public static final int line_toolbar_button_margin=0x7f090013;
-        public static final int standard_button_text_size=0x7f090014;
+        public static final int standard_button_text_size=0x7f090015;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1776,6 +1777,8 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0c0084;
+        public static final int FormData=0x7f0c0086;
+        public static final int FormLabel=0x7f0c0085;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0c0063;
@@ -1963,13 +1966,13 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0c000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0c0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
-        public static final int buttonGameAction=0x7f0c008a;
-        public static final int buttonGameActionInitiatorPlayer=0x7f0c008b;
-        public static final int buttonLineAction=0x7f0c0086;
-        public static final int buttonLinePlayer=0x7f0c0085;
-        public static final int buttonUndo=0x7f0c0087;
-        public static final int redButton=0x7f0c0089;
-        public static final int standardButton=0x7f0c0088;
+        public static final int buttonGameAction=0x7f0c008c;
+        public static final int buttonGameActionInitiatorPlayer=0x7f0c008d;
+        public static final int buttonLineAction=0x7f0c0088;
+        public static final int buttonLinePlayer=0x7f0c0087;
+        public static final int buttonUndo=0x7f0c0089;
+        public static final int redButton=0x7f0c008b;
+        public static final int standardButton=0x7f0c008a;
     }
     public static final class styleable {
         /**  ============================================ 

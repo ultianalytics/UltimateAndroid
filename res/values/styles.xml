@@ -16,6 +16,18 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="FormLabel" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textSize">@dimen/form_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#BFBFBF</item>
+    </style>
+    
+    <style name="FormData" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textSize">@dimen/form_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
     <style name="buttonLinePlayer" parent="@android:style/Widget.Button">
         <item name="android:textSize">15sp</item>

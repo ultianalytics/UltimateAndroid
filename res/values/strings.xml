@@ -137,8 +137,8 @@
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
-    <string name="placeholder_opponent_name">Opponent</string>
-    <string name="placeholder_tournament_name">Tournament</string>
+    <string name="placeholder_opponent_name">Opponent Name</string>
+    <string name="placeholder_tournament_name">Tournament Name</string>
     
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>

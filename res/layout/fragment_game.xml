@@ -17,6 +17,7 @@
                 android:id="@+id/label_game_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
                 android:clickable="true"
                 android:onClick="dateClicked"
                 android:text="@string/fake_date"
@@ -26,6 +27,7 @@
                 android:id="@+id/label_game_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
                 android:layout_alignParentRight="true"
                 android:clickable="true"
                 android:onClick="scoreClicked"
@@ -49,12 +51,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6sp"
                     android:text="@string/label_game_opponent"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="@style/FormLabel" />
 
                 <EditText
                     android:id="@+id/text_game_opponent_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/form_text_size"
                     android:hint="@string/placeholder_opponent_name"
                     android:inputType="textCapWords|textNoSuggestions" />
             </TableRow>
@@ -68,12 +71,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6sp"
                     android:text="@string/label_game_tournament"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="@style/FormLabel" />
 
                 <EditText
                     android:id="@+id/text_game_tourament_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+					android:textSize="@dimen/form_text_size"                    
                     android:hint="@string/placeholder_tournament_name"
                     android:inputType="textCapWords|textNoSuggestions" />
             </TableRow>
@@ -90,11 +94,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6sp"
                     android:text="@string/label_game_game_to"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="@style/FormLabel" />
 
                 <Spinner
                     android:id="@+id/spinner_game_to"
                     android:layout_width="50dp"
+                    android:textSize="@dimen/form_text_size"
                     android:layout_height="wrap_content" />
             </TableRow>
 
@@ -110,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6sp"
                     android:text="@string/label_game_first_point_oline"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="@style/FormLabel" />
 
                 <RadioGroup
                     android:id="@+id/radiogroup_game_first_point_oline"
@@ -121,6 +126,7 @@
                         android:id="@+id/radio_game_start_offense"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/form_text_size"
                         android:checked="false"
                         android:text="@string/radio_game_start_offense" />
 
@@ -128,6 +134,7 @@
                         android:id="@+id/radio_game_start_defense"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/form_text_size"
                         android:checked="false"
                         android:text="@string/radio_game_start_defense" />
                 </RadioGroup>
