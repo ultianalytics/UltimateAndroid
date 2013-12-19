@@ -20,13 +20,13 @@
     <style name="FormLabel" parent="@android:style/TextAppearance.Medium">
 		<item name="android:textSize">@dimen/form_text_size</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#BFBFBF</item>
+        <item name="android:textColor">@color/ultimate_form_label</item>
     </style>
     
     <style name="FormData" parent="@android:style/TextAppearance.Medium">
 		<item name="android:textSize">@dimen/form_text_size</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/ultimate_form_data</item>
     </style>
 
     <style name="buttonLinePlayer" parent="@android:style/Widget.Button">
