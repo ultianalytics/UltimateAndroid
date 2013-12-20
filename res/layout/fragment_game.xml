@@ -152,7 +152,6 @@
 
             <Button
                 android:id="@+id/button_save"
-                style="@style/buttonGameAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="saveClicked"
@@ -164,7 +163,6 @@
 
             <Button
                 android:id="@+id/button_cancel"
-                style="@style/buttonGameAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="cancelClicked"
