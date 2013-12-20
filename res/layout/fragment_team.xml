@@ -93,23 +93,22 @@
                 </RadioGroup>
             </TableRow>
 
+
+            
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" >
 
-                <TextView
+                <Button
                     android:id="@+id/view_team_players_button"
+                    style="@style/FormCellButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp"
-                    android:clickable="true"
                     android:onClick="playersClicked"
-                    android:text="@string/label_team_players"
-                    android:textAppearance="@style/FormLabel" />
+                    android:text="@string/label_team_players"/>
             </TableRow>
+            
 
         </TableLayout>
 
