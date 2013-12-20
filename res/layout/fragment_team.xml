@@ -52,6 +52,7 @@
                     android:id="@+id/mixedTeamCheckbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/label_team_code"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
