@@ -1,162 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <EditText
-        android:id="@+id/text_player_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:ems="10"
-        android:hint="@string/placeholder_player_name"
-        android:inputType="textCapWords|textNoSuggestions" >
-    </EditText>
+        android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin" >
-
-        <TableRow
-            android:id="@+id/tableRow3"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:shrinkColumns="1"
+            android:stretchColumns="1" >
 
-            <TextView
-                android:id="@+id/textView1"
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_player_name"
+                    android:textAppearance="@style/FormLabel" />
+
+                <EditText
+                    android:id="@+id/text_player_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/placeholder_player_name"
+                    android:inputType="textCapWords|textNoSuggestions"
+                    android:textSize="@dimen/form_text_size" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_player_number"
+                    android:textAppearance="@style/FormLabel" />
+
+                <EditText
+                    android:id="@+id/text_player_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/placeholder_player_number"
+                    android:inputType="numberSigned"
+                    android:textSize="@dimen/form_text_size" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:text="@string/label_team_player_number"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_marginTop="20dp" >
 
-            <EditText
-                android:id="@+id/text_player_number"
-                android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_player_position"
+                    android:textAppearance="@style/FormLabel" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_player_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radio_player_position_any"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/radio_player_position_any"
+                        android:textColor="@color/radio_button_text_color"
+                        android:textSize="@dimen/form_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/radio_player_position_cutter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/radio_player_position_cutter"
+                        android:textColor="@color/radio_button_text_color"
+                        android:textSize="@dimen/form_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/radio_player_position_handler"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/radio_player_position_handler"
+                        android:textColor="@color/radio_button_text_color"
+                        android:textSize="@dimen/form_text_size" />
+                </RadioGroup>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/placeholder_player_number"
-                android:inputType="numberSigned" />
-        </TableRow>
+                android:layout_marginTop="20dp" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_player_gender"
+                    android:textAppearance="@style/FormLabel" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_player_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radio_player_gender_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/radio_player_gender_male"
+                        android:textColor="@color/radio_button_text_color"
+                        android:textSize="@dimen/form_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/radio_player_gender_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/radio_player_gender_female"
+                        android:textColor="@color/radio_button_text_color"
+                        android:textSize="@dimen/form_text_size" />
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp" >
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/label_player_position"
+            <Button
+                android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:maxLength="50"
-                android:text="@string/label_player_position"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
+                android:onClick="saveClicked"
+                android:text="@string/button_save" />
 
-        <RadioGroup
-            android:id="@+id/radiogroup_player_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/radio_player_position_any"
+            <Button
+                android:id="@+id/button_save_and_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/radio_player_position_any"
-                android:textSize="12sp" />
+                android:onClick="saveAndAddClicked"
+                android:text="@string/button_save_and_add" />
 
-            <RadioButton
-                android:id="@+id/radio_player_position_cutter"
+            <Button
+                android:id="@+id/button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:checked="false"
-                android:text="@string/radio_player_position_cutter"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/radio_player_position_handler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:checked="false"
-                android:text="@string/radio_player_position_handler"
-                android:textSize="12sp" />
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radiogroup_player_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/label_player_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_player_gender"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <RadioButton
-                android:id="@+id/radio_player_gender_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:checked="true"
-                android:text="@string/radio_player_gender_male"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/radio_player_gender_female"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:checked="false"
-                android:text="@string/radio_player_gender_female"
-                android:textSize="12sp" />
-        </RadioGroup>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp" >
-        </TableRow>
-    </TableLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin" >
-
-        <Button
-            android:id="@+id/button_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="saveClicked"
-            android:text="@string/button_save" />
-
-        <Button
-            android:id="@+id/button_save_and_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="saveAndAddClicked"
-            android:text="@string/button_save_and_add" />
-
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="cancelClicked"
-            android:text="@string/button_cancel" />
+                android:onClick="cancelClicked"
+                android:text="@string/button_cancel" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
