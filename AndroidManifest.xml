@@ -8,8 +8,8 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="19" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="com.summithillsoftware.ultimate.UltimateApplication"
@@ -77,11 +77,19 @@
         </activity>
         <activity
             android:name="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity"
-            android:label="@string/title_activity_game_action"             
+            android:label="@string/title_activity_game_action"
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
+        </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.events.EventsActivity"
+            android:label="@string/title_activity_events"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" />
         </activity>
     </application>
 
