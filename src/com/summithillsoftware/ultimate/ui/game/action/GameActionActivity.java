@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game.action;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
@@ -17,6 +18,7 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.GestureDetectorLinearLayout;
 import com.summithillsoftware.ultimate.ui.OnVerticalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
@@ -62,21 +64,20 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void connectWidgets() {
-//		swipeUpGestureOverlay = (GestureOverlayView)findViewById(R.id.swipeUpGestureOverlay);
 		fieldFragment = (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
 		recentsFragment = (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
 	}
 	
 	private void registerListeners() {
+		// swipe-up detector to show events
 		GestureDetector swipeUpDetector = new GestureDetector(this, new OnVerticalSwipeGestureListener() {
 			@Override
 			public void onVerticalSwipe(boolean isTopToBottom) {
 				if (!isTopToBottom) {
-					System.out.println("swiped up");
+					showEventsActivity();
 				}
 			}
 		});
-
 		((GestureDetectorLinearLayout)getRootContentView()).setGestureDetector(swipeUpDetector);
 		
 	}
@@ -118,6 +119,11 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	    SpecialEventDialogFragment spcEvtDialog = new SpecialEventDialogFragment();
 	    spcEvtDialog.setOriginalEvent(event);
 	    spcEvtDialog.show(fragmentManager, "dialog");
+	}
+	
+	private void showEventsActivity() {
+		Intent intent = new Intent(this, EventsActivity.class);
+		startActivity(intent);
 	}
 	
 	public void newPull(DefenseEvent pullEvent) { // call back from dialog

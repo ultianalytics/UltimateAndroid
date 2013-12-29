@@ -54,7 +54,12 @@ public class Point implements Serializable {
 		} else {
 			return null;
 		}
-		
+	}
+	
+	public List<Event>getEventsInMostRecentOrder() {
+		List<Event> eventsList = new ArrayList<Event>(events);
+		Collections.reverse(eventsList);
+		return eventsList;
 	}
 	
 	public Event getLastPlayEvent() {
@@ -141,6 +146,7 @@ public class Point implements Serializable {
 	
 	public Set<Player> getPlayers() {
 		HashSet<Player> players = new HashSet<Player>();
+		players.addAll(line);
 		for (Event event : events) {
 			players.addAll(event.getPlayers());
 		}

@@ -17,7 +17,8 @@
     <string name="common_tied">tied</string>
     <string name="common_hangtime_seconds">%1$s sec</string>
     <string name="point_description_current">Current</string>
-    <string name="point_description_score">%1$d-%2$d</string>
+    <string name="point_description_current_point">Current\nPoint</string>
+	<string name="line_player_partial">%1$s (partial)</string>
     <string name="event_description_our_team">Our team</string>
     <string name="event_description_pass">%1$s pass</string>
     <string name="event_description_pass_to">Pass to %1$s</string>
@@ -60,6 +61,8 @@
     <string name="title_activity_game">Game</string>
     <string name="title_activity_game_new">New Game</string>
     <string name="title_activity_game_action">Action</string>
+    <string name="title_activity_events">Game Events</string>
+        
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
@@ -188,6 +191,5 @@
     <string name="radio_line_substitution_type_other">Other</string>
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
-    <string name="title_activity_events">EventsActivity</string>
 
 </resources>

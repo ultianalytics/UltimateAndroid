@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
 public class EventsActivity extends UltimateActivity {
@@ -14,6 +15,7 @@ public class EventsActivity extends UltimateActivity {
 		setContentView(R.layout.activity_events);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		updateTitle();
 	}
 
 	@Override
@@ -23,4 +25,11 @@ public class EventsActivity extends UltimateActivity {
 		return true;
 	}
 
+	private void updateTitle() {
+		String title = getString(R.string.title_activity_events);
+		setTitle(title + " (" + getString(R.string.common_versus_short) + " " + game().getOpponentName() + " )");
+	}
+	private Game game() {
+		return Game.current();
+	}
 }

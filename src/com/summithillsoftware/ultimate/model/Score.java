@@ -2,6 +2,10 @@ package com.summithillsoftware.ultimate.model;
 
 import java.io.Serializable;
 
+import android.content.Context;
+
+import com.summithillsoftware.ultimate.R;
+
 public class Score implements Serializable{
 	private static final long serialVersionUID = -3488195922300140115L;
 	private int ours;
@@ -69,5 +73,18 @@ public class Score implements Serializable{
 		return new Score(ours, theirs);
 	}
 
+	public String format(Context context, boolean twoLines) {
+		String scoreFormatted = getOurs() + "-" + getTheirs() + " ";
+		String lineSeparator = twoLines ? "\n" : "";
+		if (isOurLead()) {
+			scoreFormatted += lineSeparator + "(" + context.getString(R.string.common_us) + ")";
+		} else if (isTheirLead()) {
+			scoreFormatted += lineSeparator + "(" + context.getString(R.string.common_them) + ")";
+		} else {
+			scoreFormatted += lineSeparator + "(" + context.getString(R.string.common_tied) + ")";
+		} 
+		return scoreFormatted;
+	}
+	
 
 }

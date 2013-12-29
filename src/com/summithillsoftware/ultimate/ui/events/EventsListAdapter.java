@@ -1,8 +1,13 @@
 package com.summithillsoftware.ultimate.ui.events;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,39 +15,51 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.Event;
+import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
-import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.model.PlayerSubstitution;
+import com.summithillsoftware.ultimate.model.Point;
 
 public class EventsListAdapter extends BaseAdapter {
-	private List<Player> sortedPlayers;
+	private static final Integer EVENT_ROW = 0;
+	private static final Integer POINT_ROW = 1;	
+	private List<Object> pointsAndEvents;
 	private Context context;
 
 	public EventsListAdapter(Context context) {
 		super();
 		this.context = context;
-		resetPlayers();
+		resetPointsAndEvents();
 	}
 	
-	public void resetPlayers() {
-		sortedPlayers = null;
+	public void resetPointsAndEvents() {
+		pointsAndEvents = null;
 		notifyDataSetChanged();
 	}
 	
-	private List<Player>getSortedPlayers() {
-		if (sortedPlayers == null) {
-			sortedPlayers = Team.current().getPlayersSorted();
+	private List<Object>getSortedPointsAndEvents() {
+		if (pointsAndEvents == null) {
+			pointsAndEvents = new ArrayList<Object>();
+			for (Point point : game().getPointInMostRecentOrder()) {
+				pointsAndEvents.add(point);
+				for (Event event : point.getEventsInMostRecentOrder()) {
+					pointsAndEvents.add(event);
+				}
+			}
 		}
-		return sortedPlayers;
+		return pointsAndEvents;
 	}
 
 	@Override
 	public int getCount() {
-		return getSortedPlayers().size();
+		return getSortedPointsAndEvents().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return getSortedPlayers().get(position);
+		return getSortedPointsAndEvents().get(position);
 	}
 
 	@Override
@@ -53,21 +70,58 @@ public class EventsListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int index, View reusableRowView, ViewGroup parent) {
 		View rowView = reusableRowView;
-		if (reusableRowView == null) {
+		Object eventOrPoint = getSortedPointsAndEvents().get(index);
+		boolean isEvent = eventOrPoint instanceof Event;
+		if (reusableRowView == null || reusableRowView.getTag().equals(EVENT_ROW) != isEvent) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout_players, null);
+			rowView = inflater.inflate(isEvent ? R.layout.rowlayout_events_event : R.layout.rowlayout_events_point, null);
+			rowView.setTag(isEvent ? EVENT_ROW : POINT_ROW);
 		}
 	
-		TextView playerNameTextView = (TextView)rowView.findViewById(R.id.text_players_description);
-		
-		Player player = getSortedPlayers().get(index);
-		playerNameTextView.setText(player.getName());
-		if (player.getNumber() != null && player.getNumber().trim().length() > 0) {
-			TextView playerNumberTextView = (TextView)rowView.findViewById(R.id.text_players_number);
-			playerNumberTextView.setText(" (" + player.getNumber() + ")");
+		if (isEvent) {
+			TextView eventDescriptionTextView = (TextView)rowView.findViewById(R.id.text_event_description);
+			eventDescriptionTextView.setText(((Event)eventOrPoint).toString());
+		} else {
+			Point point = (Point)eventOrPoint;
+			
+			TextView scoreDescriptionTextView = (TextView)rowView.findViewById(R.id.text_score_description);
+			scoreDescriptionTextView.setText(scoreDescription(point, index));
+			TextView lineDescriptionTextView = (TextView)rowView.findViewById(R.id.text_line_description);
+			lineDescriptionTextView.setText(lineDescription(point));
 		}
-		
+	
 		return rowView;
 	}
 	
+	private Game game() {
+		return Game.current();
+	}
+	
+	private String scoreDescription(Point point, int index) {
+		if (index == 0 && !(point.isFinished())) {
+			return UltimateApplication.current().getString(R.string.point_description_current_point);
+		} else {
+			return point.getSummary().getScore().format(context, true);
+		}
+	}
+	
+	private String lineDescription(Point point) {
+		Set<String> names = new HashSet<String>();
+		for (Player player : point.getPlayers()) {
+			names.add(player.getName());
+		}
+		for (PlayerSubstitution substitution : point.getSubstitutions()) {
+			if (names.contains(substitution.getFromPlayer().getName())) {
+				names.remove(substitution.getFromPlayer().getName());
+				names.add(UltimateApplication.current().getString(R.string.line_player_partial, substitution.getFromPlayer().getName()));
+			}
+			if (names.contains(substitution.getToPlayer().getName())) {
+				names.remove(substitution.getToPlayer().getName());
+				names.add(UltimateApplication.current().getString(R.string.line_player_partial, substitution.getToPlayer().getName()));
+			}			
+		}
+		List<String> sortedList = new ArrayList<String>(names);
+		Collections.sort(sortedList);
+		return TextUtils.join(", ", sortedList);
+	}
 }

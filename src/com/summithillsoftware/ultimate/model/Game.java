@@ -399,11 +399,11 @@ public class Game implements Serializable {
 		return points.isEmpty() ? null : points.get(points.size() - 1);
 	}
 	
-	private String getPointNameForScore(Score score, boolean isMostRecent) {
+	public String getPointNameForScore(Score score, boolean isMostRecent) {
 		if (isMostRecent && !(lastPoint().isFinished())) {
 			return getString(R.string.point_description_current);
 		} else {
-			return getString(R.string.point_description_score, score.getOurs(), score.getTheirs());
+			return score.format(UltimateApplication.current(), false);
 		}
 	}
 	
@@ -413,16 +413,9 @@ public class Game implements Serializable {
 		return getPointNameForScore(score, index == 0);
 	}
 	
-	public List<String> getPointNamesInMostRecentOrder() {
+	public List<Point> getPointInMostRecentOrder() {
 		updatePointSummaries();
-		List<String> names = new ArrayList<String>();
-		boolean isMostRecent = true;
-		for (Point point : pointsInMostRecentOrder()) {
-			String pointName = getPointNameForScore(point.getSummary().getScore(), isMostRecent);
-			names.add(pointName);
-			isMostRecent = false;
-		}
-		return names;
+		return pointsInMostRecentOrder();
 	}
 	
 	public int getHalftimePoint() {

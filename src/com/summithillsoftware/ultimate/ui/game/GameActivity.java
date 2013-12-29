@@ -27,6 +27,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
+import com.summithillsoftware.ultimate.model.Score;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
@@ -234,15 +235,8 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	public static String formatScore(Game game, Context context) {
-		String scoreFormatted = game.getScore().getOurs() + "-" + game.getScore().getTheirs() + " ";
-		if (game.getScore().isOurLead()) {
-			scoreFormatted += "(" + context.getString(R.string.common_us) + ")";
-		} else if (game.getScore().isTheirLead()) {
-			scoreFormatted += "(" + context.getString(R.string.common_them) + ")";
-		} else {
-			scoreFormatted += "(" + context.getString(R.string.common_tied) + ")";
-		} 
-		return scoreFormatted;
+		Score score = game.getScore();
+		return score.format(context, false);
 	}
 	
 	public static int getScoreColor(Game game) {
