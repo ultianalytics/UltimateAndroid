@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 public abstract class OnHorizontalSwipeGestureListener extends DefaultOnGestureListener {
 	
 	private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     
 	@Override
@@ -17,8 +16,6 @@ public abstract class OnHorizontalSwipeGestureListener extends DefaultOnGestureL
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         try {
-            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                return false;
             // swiping right to left
             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 onHorizontalSwipe(true);
