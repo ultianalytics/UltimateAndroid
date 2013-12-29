@@ -9,13 +9,11 @@ public abstract class OnVerticalSwipeGestureListener extends DefaultOnGestureLis
 	@Override
 	public boolean onDown(MotionEvent e) {
 		// return true so that we become a condidate for onFling
-		System.out.println("onDown");
 		return true;  
 	}
 	
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    	System.out.println("onFling");
         try {
             // swiping top to bottom
             if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {

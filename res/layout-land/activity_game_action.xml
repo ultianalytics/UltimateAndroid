@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.summithillsoftware.ultimate.ui.GestureDetectorLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,4 +24,4 @@
             android:layout_weight="45"
             android:layout_height="wrap_content" />
 
-</LinearLayout>
+</com.summithillsoftware.ultimate.ui.GestureDetectorLinearLayout>

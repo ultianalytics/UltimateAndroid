@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.game.action;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +14,8 @@ import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.ui.GestureDetectorLinearLayout;
+import com.summithillsoftware.ultimate.ui.OnVerticalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
@@ -20,13 +23,17 @@ import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
+	private GameActionFieldFragment fieldFragment;
+	private GameActionRecentEventsFragment recentsFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_action);
-		getFieldFragment().setGameActionEventListener(this);
-		getRecentEventsFragment().setGameActionEventListener(this);
+		connectWidgets();
+		registerListeners();
+		fieldFragment.setGameActionEventListener(this);
+		recentsFragment.setGameActionEventListener(this);
 		setupActionBar();  // Show the Up button in the action bar.		
 	}
 
@@ -54,13 +61,33 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private void connectWidgets() {
+//		swipeUpGestureOverlay = (GestureOverlayView)findViewById(R.id.swipeUpGestureOverlay);
+		fieldFragment = (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
+		recentsFragment = (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
+	}
+	
+	private void registerListeners() {
+		GestureDetector swipeUpDetector = new GestureDetector(this, new OnVerticalSwipeGestureListener() {
+			@Override
+			public void onVerticalSwipe(boolean isTopToBottom) {
+				if (!isTopToBottom) {
+					System.out.println("swiped up");
+				}
+			}
+		});
+
+		((GestureDetectorLinearLayout)getRootContentView()).setGestureDetector(swipeUpDetector);
+		
+	}
+	
 	private void populateView() {
 		updateTitle();
-		if (getFieldFragment() != null) {
-			getFieldFragment().refresh();
+		if (fieldFragment != null) {
+			fieldFragment.refresh();
 		}
-		if (getRecentEventsFragment() != null) {
-			getRecentEventsFragment().refresh();
+		if (recentsFragment != null) {
+			recentsFragment.refresh();
 		}
 	}
 	
@@ -99,14 +126,6 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 			populateView();
 			game().save();
 		}
-	}
-	
-	private GameActionFieldFragment getFieldFragment() {
-		return (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
-	}
-	
-	private GameActionRecentEventsFragment getRecentEventsFragment() {
-		return (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
 	}
 
 	@Override
