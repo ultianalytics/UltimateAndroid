@@ -17,6 +17,7 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -54,6 +55,7 @@ import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {
@@ -550,7 +552,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 				Game.current().addSubstitution(substitution);
 			}
 		} else {
-			System.out.println("Error...sub in/out don't match");
+			Log.e(ULTIMATE, "Error...sub in/out don't match");
 		}
 	}
 	
