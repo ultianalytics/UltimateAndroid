@@ -15,6 +15,17 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040003;
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
+        public static final int fade_in=0x7f040006;
+        public static final int fade_out=0x7f040007;
+        public static final int push_left_in=0x7f040008;
+        public static final int push_left_out=0x7f040009;
+        public static final int push_up_in=0x7f04000a;
+        public static final int push_up_out=0x7f04000b;
+        public static final int slide_left=0x7f04000c;
+        public static final int slide_right=0x7f04000d;
+        public static final int slide_top_to_bottom=0x7f04000e;
+        public static final int zoom_enter=0x7f04000f;
+        public static final int zoom_exit=0x7f040010;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 

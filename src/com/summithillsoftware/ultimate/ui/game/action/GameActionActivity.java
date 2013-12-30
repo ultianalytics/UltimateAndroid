@@ -126,6 +126,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	private void showEventsActivity() {
 		Intent intent = new Intent(this, EventsActivity.class);
 		startActivity(intent);
+		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}
 	
 	public void newPull(DefenseEvent pullEvent) { // call back from dialog
