@@ -145,6 +145,7 @@
     <string name="button_save_and_add">Save, Add New</string>
     <string name="button_done">DONE</string>
     <string name="button_start">Start Game</string>
+    <string name="button_game_events">Events</string>    
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>

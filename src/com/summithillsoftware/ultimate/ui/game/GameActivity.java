@@ -29,6 +29,7 @@ import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 
 public class GameActivity extends UltimateActivity {
@@ -36,7 +37,15 @@ public class GameActivity extends UltimateActivity {
 	private List<Integer> gameToScores;
 	private List<String> gameToNames;
 	
-//	private Menu menu;
+	// widgets
+	private TextView text_game_opponent_name;
+	private TextView  text_game_tourament_name;
+	private Button  button_save;
+	private Button  button_events;
+	private TextView label_game_date;
+	private TextView label_game_score;
+	private RadioGroup radiogroup_game_first_point_oline;
+	private Spinner spinner_game_to;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,7 @@ public class GameActivity extends UltimateActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		connectWidgets();
 		populateView();
 	}
 	
@@ -95,6 +105,10 @@ public class GameActivity extends UltimateActivity {
 			}
 		} 
 	}
+	
+	public void eventsClicked(View v) {
+		goToEventsActivity();
+	}
 
 	public void cancelClicked(View v) {
 		finish();
@@ -112,17 +126,28 @@ public class GameActivity extends UltimateActivity {
 		goToActionActivity();
 	}
 	
+	private void connectWidgets() {
+		text_game_opponent_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent_name);
+		text_game_tourament_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tourament_name);
+		button_save = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_save);
+		button_events = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_events);		
+		label_game_date = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_date);
+		label_game_score = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
+		radiogroup_game_first_point_oline = (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
+		spinner_game_to = (Spinner)findViewById(R.id.gameFragment).findViewById(R.id.spinner_game_to);
+	}
+	
 	private void populateView() {
 		if (isNewGame()) {
 			setTitle(getString(R.string.title_activity_game_new));
-			getSaveButton().setText(R.string.button_start);
-			getTournamentNameTextView().setText(Preferences.current().getTournamentName());
+			button_save.setText(R.string.button_start);
+			text_game_tourament_name.setText(Preferences.current().getTournamentName());
 			populateGamePointView(Preferences.current().getGamePoint());
-			getFirstPointOlineRadioGroup().check(R.id.radio_game_start_offense);
+			radiogroup_game_first_point_oline.check(R.id.radio_game_start_offense);
 		} else {
 			Game game = Game.current();
-			getTournamentNameTextView().setText(game.getTournamentName());
-			getOpponentNameTextView().setText(game.getOpponentName());		
+			text_game_tourament_name.setText(game.getTournamentName());
+			text_game_opponent_name.setText(game.getOpponentName());		
 			if (game.getStartDateTime() != null) {
 				String startDateTime = DateFormat.getTimeInstance().format(game.getStartDateTime());
 				if (DateUtil.isToday(game.getStartDateTime())) {
@@ -130,23 +155,23 @@ public class GameActivity extends UltimateActivity {
 				} else {
 					startDateTime = SimpleDateFormat.getDateInstance().format(game.getStartDateTime()) + " " + startDateTime;
 				}
-				getDateView().setText(startDateTime);
+				label_game_date.setText(startDateTime);
 			}
 			String scoreFormatted = formatScore(game, this);
-			getScoreView().setText(scoreFormatted);
-			getScoreView().setTextColor(getScoreColor(game));
-			getFirstPointOlineRadioGroup().check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
+			label_game_score.setText(scoreFormatted);
+			label_game_score.setTextColor(getScoreColor(game));
+			radiogroup_game_first_point_oline.check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
 			populateGamePointView(Game.current().getGamePoint());
-			getOpponentNameTextView().requestFocus();
+			text_game_opponent_name.requestFocus();
 		}
 	
-		getDateView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
-		getScoreView().setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
-
+		label_game_date.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+		button_events.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 	}
 	
 	private void populateGamePointView(int gamePoint) {
-		Spinner spinner = getGameToSpinner();
+		Spinner spinner = spinner_game_to;
 		
         List<String> optionsList = getGameToNames();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, optionsList);
@@ -160,8 +185,8 @@ public class GameActivity extends UltimateActivity {
 		Game game = isNewGame() ? Game.createGame() : Game.current();
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
-		game.setFirstPointOline((getFirstPointOlineRadioGroup().getCheckedRadioButtonId() == R.id.radio_game_start_offense));
-		int gameToIndex = getGameToSpinner().getSelectedItemPosition();
+		game.setFirstPointOline((radiogroup_game_first_point_oline.getCheckedRadioButtonId() == R.id.radio_game_start_offense));
+		int gameToIndex = spinner_game_to.getSelectedItemPosition();
 		int gameToPoint = getGameToScores().get(gameToIndex);
 		game.setGamePoint(gameToPoint);
 		game.save();
@@ -194,44 +219,21 @@ public class GameActivity extends UltimateActivity {
 		return getIntent().getBooleanExtra(NEW_GAME, false);
 	}
 	
-	private TextView getOpponentNameTextView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent_name);
-	}
-	
 	private String getOpponentName() {
-		return getOpponentNameTextView().getText().toString().trim();
-	}
-	
-	private TextView getTournamentNameTextView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tourament_name);
+		return text_game_opponent_name.getText().toString().trim();
 	}
 
 	private String getTournamentName() {
-		return getTournamentNameTextView().getText().toString().trim();
-	}
-	
-	private Button getSaveButton() {
-		return (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_save);
-	}
-	
-	private TextView getDateView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_date);
-	}
-	
-	private TextView getScoreView() {
-		return (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
-	}
-	
-	private RadioGroup getFirstPointOlineRadioGroup() {
-		return (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
-	}
-	
-	private Spinner getGameToSpinner() {
-		return (Spinner)findViewById(R.id.gameFragment).findViewById(R.id.spinner_game_to);
+		return text_game_tourament_name.getText().toString().trim();
 	}
 	
 	private void goToActionActivity() {
 		startActivity(new Intent(GameActivity.this, GameActionActivity.class));
+	}
+	
+	private void goToEventsActivity() {
+		Intent intent = new Intent(this, EventsActivity.class);
+		startActivity(intent);
 	}
 	
 	public static String formatScore(Game game, Context context) {
