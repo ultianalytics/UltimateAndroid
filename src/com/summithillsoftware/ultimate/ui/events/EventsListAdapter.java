@@ -22,6 +22,7 @@ import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.Point;
+import com.summithillsoftware.ultimate.model.Score;
 
 public class EventsListAdapter extends BaseAdapter {
 	private static final Integer EVENT_ROW = 0;
@@ -77,6 +78,7 @@ public class EventsListAdapter extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			rowView = inflater.inflate(isEvent ? R.layout.rowlayout_events_event : R.layout.rowlayout_events_point, null);
 			rowView.setTag(isEvent ? EVENT_ROW : POINT_ROW);
+			rowView.setEnabled(isEvent);
 		}
 	
 		if (isEvent) {
@@ -91,8 +93,11 @@ public class EventsListAdapter extends BaseAdapter {
 			
 			TextView scoreDescriptionTextView = (TextView)rowView.findViewById(R.id.text_score_description);
 			scoreDescriptionTextView.setText(scoreDescription(point, index));
+			Score score = point.getSummary().getScore();
+			int scoreColor = context.getResources().getColor(score.isTie() ? R.color.Black : (score.isOurLead() ? R.color.Green : R.color.Red));
+			scoreDescriptionTextView.setTextColor(scoreColor);
 			TextView lineDescriptionTextView = (TextView)rowView.findViewById(R.id.text_line_description);
-			lineDescriptionTextView.setText(lineDescription(point));
+			lineDescriptionTextView.setText(pointDescription(point));
 		}
 	
 		return rowView;
@@ -108,6 +113,20 @@ public class EventsListAdapter extends BaseAdapter {
 		} else {
 			return point.getSummary().getScore().format(context, true);
 		}
+	}
+	
+	private String pointDescription(Point point) {
+		if (point.getLine().isEmpty()) {
+			return "";
+		} else {
+	        if (game().isTimeBasedGame() && point.isOnlyPeriodEnd()) {
+	        	return "";
+	        } else {
+	        	String lineType = UltimateApplication.current().getString(point.getSummary().isOline() ? 
+	        			R.string.common_o_line : R.string.common_d_line);
+	            return lineType + ": " + lineDescription(point);
+	        }
+	    }
 	}
 	
 	private String lineDescription(Point point) {

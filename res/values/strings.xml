@@ -16,6 +16,9 @@
     <string name="common_them">them</string>
     <string name="common_tied">tied</string>
     <string name="common_hangtime_seconds">%1$s sec</string>
+    <string name="common_o_line">O-Line</string>
+    <string name="common_d_line">D-Line</string>
+            
     <string name="point_description_current">Current</string>
     <string name="point_description_current_point">Current\nPoint</string>
 	<string name="line_player_partial">%1$s (partial)</string>

@@ -131,6 +131,10 @@ public class Point implements Serializable {
 		return events.size() > 0 && getLastEvent().isPeriodEnd();
 	}
 	
+	public boolean isOnlyPeriodEnd() {
+		return events.size() == 1 && getLastEvent().isPeriodEnd();
+	}
+	
 	public CessationEvent getPeriodEnd() {
 		return isPeriodEnd() ? (CessationEvent)getLastEvent() : null;
 	}
