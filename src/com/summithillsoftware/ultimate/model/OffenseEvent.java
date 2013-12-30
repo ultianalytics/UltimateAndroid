@@ -214,9 +214,9 @@ public class OffenseEvent extends Event {
 	public int image() {
 		switch (getAction()) {
 		case Goal:
-			return R.drawable.goal;
+			return R.drawable.goal_green;
 		case Callahan:
-			return R.drawable.callahan;
+			return R.drawable.callahan_red;
 		case Catch:
 			return R.drawable.pass;
 		case Throwaway:

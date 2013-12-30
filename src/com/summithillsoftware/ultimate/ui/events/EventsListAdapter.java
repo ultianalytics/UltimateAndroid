@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -88,6 +89,8 @@ public class EventsListAdapter extends BaseAdapter {
 			eventDescriptionTextView.setText(event.toString());
 			ImageView imageView = (ImageView)rowView.findViewById(R.id.image_event);
 			imageView.setImageResource(event.image());
+			Space indentSpace = (Space)rowView.findViewById(R.id.space_defense_indent);		
+			indentSpace.setVisibility(event.isOffense() ? View.GONE : View.VISIBLE);
 		} else {
 			Point point = (Point)eventOrPoint;
 			

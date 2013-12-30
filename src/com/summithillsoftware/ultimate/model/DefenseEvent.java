@@ -195,9 +195,9 @@ public class DefenseEvent extends Event {
 	public int image() {
 		switch (getAction()) {
 		case Goal:
-			return R.drawable.goal;
+			return R.drawable.goal_red;
 		case Callahan:
-			return R.drawable.callahan;
+			return R.drawable.callahan_green;
 		case Pull:
 			return R.drawable.pull;
 		case PullOb:

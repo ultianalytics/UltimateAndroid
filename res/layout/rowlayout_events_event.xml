@@ -6,6 +6,12 @@
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables" >
 
+    <Space
+        android:id="@+id/space_defense_indent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_width="60dp"/>
+        
     <ImageView
         android:id="@+id/image_event"
         android:layout_width="50dp"
