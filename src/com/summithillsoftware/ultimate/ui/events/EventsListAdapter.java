@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -79,8 +80,12 @@ public class EventsListAdapter extends BaseAdapter {
 		}
 	
 		if (isEvent) {
+			Event event = (Event)eventOrPoint;
+			
 			TextView eventDescriptionTextView = (TextView)rowView.findViewById(R.id.text_event_description);
-			eventDescriptionTextView.setText(((Event)eventOrPoint).toString());
+			eventDescriptionTextView.setText(event.toString());
+			ImageView imageView = (ImageView)rowView.findViewById(R.id.image_event);
+			imageView.setImageResource(event.image());
 		} else {
 			Point point = (Point)eventOrPoint;
 			
