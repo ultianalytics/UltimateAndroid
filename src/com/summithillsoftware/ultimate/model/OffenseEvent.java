@@ -211,6 +211,27 @@ public class OffenseEvent extends Event {
 		return receiver;
 	}
 
+	public int image() {
+		switch (getAction()) {
+		case Goal:
+			return R.drawable.goal;
+		case Callahan:
+			return R.drawable.callahan;
+		case Catch:
+			return R.drawable.pass;
+		case Throwaway:
+			return R.drawable.throwaway;
+		case Drop:
+			return R.drawable.drop;
+		case Stall:
+			return R.drawable.stall;
+		case MiscPenalty:
+			return R.drawable.penalty;			
+		default:
+			return super.image();
+		}
+	}
+	
 	public void useSharedPlayers() {
 		passer = Player.replaceWithSharedPlayer(passer);
 		receiver = Player.replaceWithSharedPlayer(receiver);

@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public abstract class Event implements Serializable {
@@ -232,6 +233,10 @@ public abstract class Event implements Serializable {
 	
 	public String getString(int resId, Object...formatArgs) {
 		return UltimateApplication.current().getString(resId, formatArgs);
+	}
+	
+	public int image() {
+		return R.drawable.unknown_event;
 	}
 	
 	public abstract void useSharedPlayers();

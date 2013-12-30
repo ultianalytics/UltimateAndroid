@@ -192,6 +192,25 @@ public class DefenseEvent extends Event {
     	}
 	}
 	
+	public int image() {
+		switch (getAction()) {
+		case Goal:
+			return R.drawable.goal;
+		case Callahan:
+			return R.drawable.callahan;
+		case Pull:
+			return R.drawable.pull;
+		case PullOb:
+			return R.drawable.pull_ob;
+		case De:
+			return R.drawable.de;
+		case Throwaway:
+			return R.drawable.throwaway;
+		default:
+			return super.image();
+		}
+	}
+	
 	public void useSharedPlayers() {
 		defender = Player.replaceWithSharedPlayer(defender);
 	}
