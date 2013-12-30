@@ -2,11 +2,14 @@ package com.summithillsoftware.ultimate.ui.game.action;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.gesture.Gesture;
+import android.gesture.GestureOverlayView;
+import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
@@ -15,9 +18,8 @@ import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
-import com.summithillsoftware.ultimate.ui.GestureDetectorLinearLayout;
-import com.summithillsoftware.ultimate.ui.OnVerticalSwipeGestureListener;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
@@ -27,6 +29,7 @@ import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFr
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
 	private GameActionFieldFragment fieldFragment;
 	private GameActionRecentEventsFragment recentsFragment;
+	private GestureOverlayView swipeGestureOverlay;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +69,22 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	private void connectWidgets() {
 		fieldFragment = (GameActionFieldFragment)getSupportFragmentManager().findFragmentById(R.id.fieldFragment);
 		recentsFragment = (GameActionRecentEventsFragment)getSupportFragmentManager().findFragmentById(R.id.recentsFragment);
+		swipeGestureOverlay = (GestureOverlayView)findViewById(R.id.swipeGestureOverlay);
 	}
 	
 	private void registerListeners() {
 		// swipe-up detector to show events
-		GestureDetector swipeUpDetector = new GestureDetector(this, new OnVerticalSwipeGestureListener() {
+		swipeGestureOverlay.addOnGesturePerformedListener(new OnGesturePerformedListener() {
 			@Override
-			public void onVerticalSwipe(boolean isTopToBottom) {
-				if (!isTopToBottom) {
+			public void onGesturePerformed(GestureOverlayView overlayView, Gesture gesture) {
+				if (UltimateGestureHelper.current().isSwipeUp(gesture)) {
 					showEventsActivity();
 				}
 			}
 		});
-		((GestureDetectorLinearLayout)getRootContentView()).setGestureDetector(swipeUpDetector);
-		
+
 	}
-	
+
 	private void populateView() {
 		updateTitle();
 		if (fieldFragment != null) {
