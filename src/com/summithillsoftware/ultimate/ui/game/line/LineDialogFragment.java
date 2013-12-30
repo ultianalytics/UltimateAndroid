@@ -629,7 +629,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private boolean doesPointHaveSubstitutions() {
-		return Game.current().doesCurrentPointHaveSubstitutions();
+		return Game.current().doesCurrentPointHaveSubstitutions() && !Game.current().isCurrentPointFinished();
 	}
 
 }

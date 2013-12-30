@@ -828,7 +828,7 @@ public class Game implements Serializable {
 	// most recent first 
 	public List<PlayerSubstitution> substitutionsForCurrentPoint() {
 		Point point = getCurrentPoint();
-		if (doesCurrentPointHaveSubstitutions() && !point.isFinished()) {
+		if (doesCurrentPointHaveSubstitutions()) {
 			List<PlayerSubstitution> subs = new ArrayList<PlayerSubstitution>(point.getSubstitutions());
 			Collections.reverse(subs);
 			return subs;
@@ -840,6 +840,11 @@ public class Game implements Serializable {
 	public boolean doesCurrentPointHaveSubstitutions() {
 		Point point = getCurrentPoint();
 		return point == null ? false : !point.getSubstitutions().isEmpty();
+	}
+	
+	public boolean isCurrentPointFinished() {
+		Point point = getCurrentPoint();
+		return point != null && point.isFinished();
 	}
 	
 	private void adjustLineForSubstitution(PlayerSubstitution sub) {
