@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
@@ -18,6 +19,8 @@ import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 public class EventDialogFragment extends UltimateDialogFragment {
 	
 	// widgets
+	private ImageButton doneButton; 
+	private ImageButton cancelButton; 
 
 	
 
@@ -52,7 +55,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void connectWidgets(View view) {
-//		inboundMeasureHangTimeButton = (Button)view.findViewById(R.id.inboundMeasureHangTimeButton);
+		doneButton = (ImageButton)view.findViewById(R.id.doneButton);
+		cancelButton = (ImageButton)view.findViewById(R.id.cancelButton);
 	}
 	
     private void populateView() {
@@ -60,22 +64,23 @@ public class EventDialogFragment extends UltimateDialogFragment {
     }
  
 	private void registerWidgetListeners() {
-//		inboundMeasureHangTimeButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//            	DefenseEvent pullEvent = new DefenseEvent(Action.Pull, getPlayer());
-//            	long hangTimeMs = System.currentTimeMillis() - getArguments().getLong(PULL_BEGIN_TIME_ARG);
-//            	pullEvent.setPullHangtimeMilliseconds((int)hangTimeMs);
-//            	showHangtimeView(pullEvent);
-//            	notifyPullComplete(pullEvent);
-//            }
-//        });
-
+		doneButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	updateEvent();
+        		notifyEventChange();
+            	dismissDialog();
+            }
+        });
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	dismissDialog();
+            }
+        });		
 	}
 	
-
-	private void notifyAndDismiss() {
-		notifyEventChange();
-    	dismissDialog();
+	private void updateEvent() {
+		// TODO...update the event
+		Game.current().save();
 	}
 	
 	private void notifyEventChange() {
@@ -92,7 +97,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void dismissDialog() {
-		// make sure no crash if rotate while waiting for timer to pop
+		// make sure no crash
 		try {
 			dismiss();
 		} catch (Exception e) {
