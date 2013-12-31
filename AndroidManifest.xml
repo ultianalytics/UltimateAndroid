@@ -84,7 +84,7 @@
                 android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
         </activity>
         <activity
-            android:name="com.summithillsoftware.ultimate.ui.events.EventsActivity"
+            android:name="com.summithillsoftware.ultimate.ui.game.events.EventsActivity"
             android:label="@string/title_activity_events"
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
             <meta-data

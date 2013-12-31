@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.events;
+package com.summithillsoftware.ultimate.ui.game.events;
 
 import java.util.ArrayList;
 import java.util.Collections;
