@@ -39,6 +39,12 @@ public class OffenseEvent extends Event {
 		this.receiver = receiver;
 	}
 	
+	public OffenseEvent(OffenseEvent event) {
+		super(event);
+		passer = event.passer;
+		receiver = event.receiver;
+	}
+	
 	public boolean isOurGoal() {
 		return getAction() == Goal;
 	}

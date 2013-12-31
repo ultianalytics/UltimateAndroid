@@ -17,6 +17,7 @@ import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 import static com.summithillsoftware.ultimate.model.Action.Timeout;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,16 @@ public abstract class Event implements Serializable {
 	public Event(Action action) {
 		this();
 		this.action = action;
+	}
+	
+	public Event(Event event) {
+		super();
+		action = event.action;
+		timestamp = event.timestamp;
+		if (event.details != null) {
+			details = new HashMap<String, Object>(event.details); 
+		}
+		isHalftimeCause = event.isHalftimeCause;
 	}
 
 	public Action getAction() {
@@ -237,6 +248,16 @@ public abstract class Event implements Serializable {
 	
 	public int image() {
 		return R.drawable.unknown_event;
+	}
+	
+	public Event copy() {
+		Class<? extends Event> clz = this.getClass(); 
+		try {
+			Constructor<?> cons = clz.getConstructor(clz);
+			return (Event)cons.newInstance(this);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public abstract void useSharedPlayers();

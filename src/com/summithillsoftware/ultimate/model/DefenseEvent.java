@@ -33,6 +33,11 @@ public class DefenseEvent extends Event {
 		this.defender = defender;
 	}
 	
+	public DefenseEvent(DefenseEvent event) {
+		super(event);
+		defender = event.defender;
+	}
+	
 	public boolean isOurGoal() {
 		return getAction() == Callahan;
 	}

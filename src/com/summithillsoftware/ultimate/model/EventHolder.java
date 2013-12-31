@@ -6,12 +6,13 @@ import android.util.Log;
 
 public class EventHolder {
 	private Event event;
+	private Event replacementEvent;
 	private Point point;
 	private boolean isFirstPoint;
 	
 	public EventHolder(Event event) {
 		super();
-		this.event = event;
+		setEvent(event);
 	}
 	
 	public boolean validate() {
@@ -31,6 +32,7 @@ public class EventHolder {
 	}
 	public void setEvent(Event event) {
 		this.event = event;
+		this.replacementEvent = event.copy();
 	}
 	public Point getPoint() {
 		return point;
@@ -43,6 +45,14 @@ public class EventHolder {
 	}
 	public void setFirstPoint(boolean isFirstPoint) {
 		this.isFirstPoint = isFirstPoint;
+	}
+
+	public Event getReplacementEvent() {
+		return replacementEvent;
+	}
+
+	public void setReplacementEvent(Event replacementEvent) {
+		this.replacementEvent = replacementEvent;
 	}
 
 
