@@ -30,8 +30,8 @@ public class EventPlayerSelectionListView extends ListView {
 	private void refreshVisibleRows() {
 		int start = getFirstVisiblePosition();
 		for(int i=start, j=getLastVisiblePosition(); i<=j; i++) {
-			View view = getChildAt(i-start);
-			getAdapter().getView(i, view, this);
+			View existingRowView = getChildAt(i-start);  // optimization...don't need to inflate another row
+			getAdapter().getView(i, existingRowView, this);
 		}
 	}
 
