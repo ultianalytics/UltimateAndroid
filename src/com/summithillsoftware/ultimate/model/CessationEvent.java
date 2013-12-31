@@ -148,6 +148,14 @@ public class CessationEvent extends Event {
 		}
 	}
 	
+	public int image() {
+		switch (getAction()) {
+		case GameOver:
+			return R.drawable.game_over;
+		default:
+			return R.drawable.period_end;
+		}
+	}
 	public void useSharedPlayers() {
 		// no-op
 	}
