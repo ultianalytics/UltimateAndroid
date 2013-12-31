@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Event;
+import com.summithillsoftware.ultimate.model.EventHolder;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerSubstitution;
@@ -104,6 +105,25 @@ public class EventsListAdapter extends BaseAdapter {
 		}
 	
 		return rowView;
+	}
+	
+	public EventHolder getSelectedEvent(int position) {
+		Object eventOrPoint = getItem(position);
+		if (eventOrPoint instanceof Event) {
+			EventHolder holder = new EventHolder((Event)eventOrPoint);
+			for (int i = position - 1; i >= 0; i--) {
+				eventOrPoint = getItem(i);
+				if (eventOrPoint instanceof Point) {
+					holder.setPoint((Point)eventOrPoint);
+					holder.setFirstPoint(i == 0);
+					break;
+				}
+			}
+			if (holder.validate()) {
+				return holder;
+			}
+		}
+		return null;
 	}
 	
 	private Game game() {

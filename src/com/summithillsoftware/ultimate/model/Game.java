@@ -56,6 +56,7 @@ public class Game implements Serializable {
 	
 	private transient TimeoutDetails timeoutDetails; // local and server transient
 	private transient boolean arePointSummariesValid; // local and server transient
+	private transient EventHolder selectedEvent; // local and server transient
 	
 	public Game() {
 		super();
@@ -781,6 +782,14 @@ public class Game implements Serializable {
 		points.add(point);
 		clearPointSummaries();
 	}
+	
+	public EventHolder getSelectedEvent() {
+		return selectedEvent;
+	}
+
+	public void setSelectedEvent(EventHolder selectedEvent) {
+		this.selectedEvent = selectedEvent;
+	}
 
 	public boolean isTimeBasedGame() {
 		return getGamePoint() == TIME_BASED_GAME_POINT;
@@ -904,6 +913,8 @@ public class Game implements Serializable {
 	        return totalAvailableFirstHalf - timeoutDetails.getTakenFirstHalf();
 	    }
 	}
+
+
 
 	
 }
