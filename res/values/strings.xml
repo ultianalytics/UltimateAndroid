@@ -18,6 +18,7 @@
     <string name="common_hangtime_seconds">%1$s sec</string>
     <string name="common_o_line">O-Line</string>
     <string name="common_d_line">D-Line</string>
+    <string name="common_unknown_player">UNKNOWN</string>
             
     <string name="point_description_current">Current</string>
     <string name="point_description_current_point">Current\nPoint</string>
@@ -127,6 +128,8 @@
     <string name="label_line_bench">Bench</string>
     <string name="label_line_substitution_out">OUT</string>
     <string name="label_line_substitution_in">IN</string>
+    <string name="label_event_to">to</string>
+    
     <string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>
     <string name="label_game_action_pull_instructions_begin">Disc pulled&#8230;</string>
     <string name="label_game_action_pull_instructions_end">&#8230;tap a button when:</string>

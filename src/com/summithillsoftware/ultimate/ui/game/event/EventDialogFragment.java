@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 
@@ -21,8 +26,10 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	// widgets
 	private ImageButton doneButton; 
 	private ImageButton cancelButton; 
+	private EventPlayerSelectionListView playerOneListView; 
+	private EventPlayerSelectionListView playerTwoListView;  
+	private TextView fromToTextView;
 
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
             Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.fragment_event, container, false);
 		connectWidgets(view);
+		initializeListView(playerOneListView);
+		initializeListView(playerTwoListView);		
 		return view;
     }
   
@@ -57,11 +66,19 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private void connectWidgets(View view) {
 		doneButton = (ImageButton)view.findViewById(R.id.doneButton);
 		cancelButton = (ImageButton)view.findViewById(R.id.cancelButton);
+		playerOneListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerOneListView);
+		playerTwoListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerTwoListView);
+		fromToTextView = (TextView)view.findViewById(R.id.fromToTextView);
 	}
 	
     private void populateView() {
    	
     }
+    
+	private void initializeListView(ListView listView) {
+		EventPlayerSelectionListAdapter adaptor = new EventPlayerSelectionListAdapter(this.getActivity());
+		listView.setAdapter(adaptor);
+	}
  
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +93,28 @@ public class EventDialogFragment extends UltimateDialogFragment {
             	dismissDialog();
             }
         });		
+		playerOneListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				handlePlayerOneSelection(parent, view, position, id);
+			}
+		});	
+		playerTwoListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				handlePlayerTwoSelection(parent, view, position, id);
+			}
+		});				
+	}
+	
+	private void handlePlayerOneSelection(AdapterView<?> parent, View view, int position, long id) {
+		Player selectedPlayer = playerOneListView.getSelectedPlayer(position);
+		playerOneListView.setSelectedPlayer(selectedPlayer);
+	}
+	
+	private void handlePlayerTwoSelection(AdapterView<?> parent, View view, int position, long id) {
+		Player selectedPlayer = playerTwoListView.getSelectedPlayer(position);
+		playerTwoListView.setSelectedPlayer(selectedPlayer);
 	}
 	
 	private void updateEvent() {

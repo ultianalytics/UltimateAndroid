@@ -47,9 +47,11 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 			if (isShowingAllPlayers) {
 				players.addAll(Team.current().getPlayers());
 			}
+			players.remove(Player.anonymous());
 			sortedPlayers = new ArrayList<Player>(players);
 			
 			Collections.sort(sortedPlayers, Team.current().isDisplayingPlayerNumber() ? Player.PlayerNumberComparator : Player.PlayerNameComparator);
+			sortedPlayers.add(0, Player.anonymous());
 		}
 		return sortedPlayers;
 	}
@@ -81,7 +83,11 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 		}
 	
 		TextView playerDescriptionTextView = (TextView)rowView.findViewById(R.id.playerDescriptionTextView);
-		playerDescriptionTextView.setText(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+		if (player.isAnonymous()) {
+			playerDescriptionTextView.setText(context.getString(R.string.common_unknown_player));
+		} else {
+			playerDescriptionTextView.setText(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+		}
 		int textColor = context.getResources().getColor(isSelectedPlayer ? R.color.White : R.color.DarkGray);
 		playerDescriptionTextView.setTextColor(textColor);
 
