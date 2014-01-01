@@ -106,18 +106,20 @@
     </RadioGroup>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+            android:layout_width="@dimen/event_dialog_width"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerOneListView"
-            android:layout_width="@dimen/event_player_list_width"
+            android:layout_width="0dp"
+            android:layout_weight="10"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/fromToTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:layout_marginLeft="6dp"
@@ -128,7 +130,8 @@
 
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerTwoListView"
-            android:layout_width="@dimen/event_player_list_width"
+            android:layout_width="0dp"
+            android:layout_weight="10"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
