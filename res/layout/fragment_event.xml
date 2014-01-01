@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:padding="6dp" >
 
@@ -58,6 +59,9 @@
         android:id="@+id/eventTypeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:text="@string/undefined"
         android:textColor="@color/White"
         android:textSize="@dimen/event_player_list_font_size" />
@@ -66,6 +70,9 @@
         android:id="@+id/radioGroupEventAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical" >
 
         <RadioButton
@@ -73,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/radio_player_position_any"
+            android:text="@string/undefined"
             android:textColor="@color/radio_button_text_color"
             android:textSize="@dimen/event_player_list_font_size" />
 
@@ -82,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="@string/radio_player_position_cutter"
+            android:text="@string/undefined"
             android:textColor="@color/radio_button_text_color"
             android:textSize="@dimen/event_player_list_font_size" />
 
@@ -91,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="@string/radio_player_position_handler"
+            android:text="@string/undefined"
             android:textColor="@color/radio_button_text_color"
             android:textSize="@dimen/event_player_list_font_size" />
 
@@ -100,30 +107,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="@string/radio_player_position_handler"
+            android:text="@string/undefined"
             android:textColor="@color/radio_button_text_color"
             android:textSize="@dimen/event_player_list_font_size" />
     </RadioGroup>
 
     <LinearLayout
-            android:layout_width="@dimen/event_dialog_width"
+        android:id="@+id/hangtimeView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_event_hangtime"
+            android:textColor="@color/ultimate_form_label"
+            android:textSize="@dimen/event_player_list_font_size" />
+
+        <EditText
+            android:id="@+id/hangtimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="@string/placeholder_hangtime"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/event_dialog_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerOneListView"
             android:layout_width="0dp"
-            android:layout_weight="10"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
 
         <TextView
             android:id="@+id/fromToTextView"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
+            android:layout_weight="1"
             android:text="@string/label_event_to"
             android:textColor="@color/White"
             android:textSize="@dimen/event_player_list_font_size" />
@@ -131,8 +163,8 @@
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerTwoListView"
             android:layout_width="0dp"
-            android:layout_weight="10"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
     </LinearLayout>
 
 </LinearLayout>

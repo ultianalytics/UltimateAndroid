@@ -129,7 +129,6 @@
     <string name="label_line_substitution_out">OUT</string>
     <string name="label_line_substitution_in">IN</string>
     <string name="label_event_to">to</string>
-    
     <string name="label_game_action_pick_initial_player">Select the first passer (player that picked up the disc)</string>
     <string name="label_game_action_pull_instructions_begin">Disc pulled&#8230;</string>
     <string name="label_game_action_pull_instructions_end">&#8230;tap a button when:</string>
@@ -138,11 +137,13 @@
     <string name="label_game_specialevent_only_one">Only choice for this button is&#8230;</string>
     <string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>
     <string name="label_game_specialevent_d">D is actually&#8230;</string>
+	<string name="label_event_hangtime">Hangtime:</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
     <string name="placeholder_opponent_name">Opponent Name</string>
     <string name="placeholder_tournament_name">Tournament Name</string>
+    <string name="placeholder_hangtime">seconds</string>    
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_save_and_add">Save, Add New</string>

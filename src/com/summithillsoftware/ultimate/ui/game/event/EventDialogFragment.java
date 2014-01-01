@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -37,6 +38,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private RadioButton radioButtonEventAction2;
 	private RadioButton radioButtonEventAction3;
 	private RadioButton radioButtonEventAction4;
+	private View hangtimeView;
+	private EditText hangtimeTextView;
 
 
 	@Override
@@ -83,6 +86,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction2);
 		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction3);
 		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
+		hangtimeView = (View)view.findViewById(R.id.hangtimeView);
+		hangtimeTextView = (EditText)view.findViewById(R.id.hangtimeTextView);
 	}
 	
     private void populateView() {
