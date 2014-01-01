@@ -176,6 +176,7 @@
     <string name="button_pull_caught">Caught/Landed</string>
     <string name="button_pull_caught_no_time">Caught/Landed - no hang time</string>
     <string name="button_pull_out_of_bounds">Out of Bounds</string>
+    <string name="button_event_players_show_all">Show Full Team</string>
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>

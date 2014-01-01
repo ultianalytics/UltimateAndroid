@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -40,6 +41,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private RadioButton radioButtonEventAction4;
 	private View hangtimeView;
 	private EditText hangtimeTextView;
+	private Button showFullTeamButton;
 
 
 	@Override
@@ -88,6 +90,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
 		hangtimeView = (View)view.findViewById(R.id.hangtimeView);
 		hangtimeTextView = (EditText)view.findViewById(R.id.hangtimeTextView);
+		showFullTeamButton = (Button)view.findViewById(R.id.showFullTeamButton);
 	}
 	
     private void populateView() {
@@ -124,6 +127,12 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				handlePlayerTwoSelection(parent, view, position, id);
 			}
 		});				
+		showFullTeamButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	showFullTeamButton.setVisibility(View.GONE);
+            	showFullTeam();
+            }
+        });		
 	}
 	
 	private void handlePlayerOneSelection(AdapterView<?> parent, View view, int position, long id) {
@@ -134,6 +143,10 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private void handlePlayerTwoSelection(AdapterView<?> parent, View view, int position, long id) {
 		Player selectedPlayer = playerTwoListView.getSelectedPlayer(position);
 		playerTwoListView.setSelectedPlayer(selectedPlayer);
+	}
+	
+	private void showFullTeam() {
+		// TODO...refresh the players list views with all players
 	}
 	
 	private void updateEvent() {

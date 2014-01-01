@@ -70,9 +70,9 @@
         android:id="@+id/radioGroupEventAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
         <RadioButton
@@ -116,9 +116,9 @@
         android:id="@+id/hangtimeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" >
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -166,5 +166,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="10" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/showFullTeamButton"
+        style="@style/standardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/button_event_players_show_all" />
 
 </LinearLayout>
