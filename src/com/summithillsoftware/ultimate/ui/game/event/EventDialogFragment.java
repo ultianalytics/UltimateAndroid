@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
@@ -28,7 +30,13 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private ImageButton cancelButton; 
 	private EventPlayerSelectionListView playerOneListView; 
 	private EventPlayerSelectionListView playerTwoListView;  
+	private TextView eventTypeTextView;
 	private TextView fromToTextView;
+	private RadioGroup radioGroupEventAction;
+	private RadioButton radioButtonEventAction1;
+	private RadioButton radioButtonEventAction2;
+	private RadioButton radioButtonEventAction3;
+	private RadioButton radioButtonEventAction4;
 
 
 	@Override
@@ -69,6 +77,12 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		playerOneListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerOneListView);
 		playerTwoListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerTwoListView);
 		fromToTextView = (TextView)view.findViewById(R.id.fromToTextView);
+		eventTypeTextView = (TextView)view.findViewById(R.id.eventTypeTextView);
+		radioGroupEventAction = (RadioGroup)view.findViewById(R.id.radioGroupEventAction);
+		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction1);
+		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction2);
+		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction3);
+		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
 	}
 	
     private void populateView() {

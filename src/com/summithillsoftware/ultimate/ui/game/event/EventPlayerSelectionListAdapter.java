@@ -51,7 +51,11 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 			sortedPlayers = new ArrayList<Player>(players);
 			
 			Collections.sort(sortedPlayers, Team.current().isDisplayingPlayerNumber() ? Player.PlayerNumberComparator : Player.PlayerNameComparator);
-			sortedPlayers.add(0, Player.anonymous());
+			if (isShowingAllPlayers) {
+				sortedPlayers.add(0, Player.anonymous());  // put anon first if long list
+			} else {
+				sortedPlayers.add(Player.anonymous());
+			}
 		}
 		return sortedPlayers;
 	}

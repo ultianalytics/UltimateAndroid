@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
-        android:textSize="18sp"
+        android:textSize="@dimen/event_player_list_font_size"
         android:text="@string/undefined" />
 
 </LinearLayout>
