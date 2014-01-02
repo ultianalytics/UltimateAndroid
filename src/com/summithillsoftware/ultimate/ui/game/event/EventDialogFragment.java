@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -146,7 +147,13 @@ public class EventDialogFragment extends UltimateDialogFragment {
             public void onClick(View v) {
             	dismissDialog();
             }
-        });		
+        });
+		radioGroupEventAction.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup radioGroup, int paramInt) {
+				handleEventTypeChange(radioGroup);
+			}
+		});
 		playerOneListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -165,6 +172,26 @@ public class EventDialogFragment extends UltimateDialogFragment {
             	showFullTeam();
             }
         });		
+	}
+	
+	private void handleEventTypeChange(RadioGroup radioGroup) {
+		switch (radioGroup.getCheckedRadioButtonId()) {
+		case R.id.radioButtonEventAction1:
+			replacementEvent().setAction((Action)radioButtonEventAction1.getTag());
+			break;
+		case R.id.radioButtonEventAction2:
+			replacementEvent().setAction((Action)radioButtonEventAction2.getTag());
+			break;
+		case R.id.radioButtonEventAction3:
+			replacementEvent().setAction((Action)radioButtonEventAction3.getTag());
+			break;
+		case R.id.radioButtonEventAction4:
+			replacementEvent().setAction((Action)radioButtonEventAction4.getTag());
+			break;
+		default:
+			break;
+		}
+		configureForEventType(replacementEvent());
 	}
 	
 	private void handlePlayerOneSelection(AdapterView<?> parent, View view, int position, long id) {
@@ -276,6 +303,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				eventTypeTextView.setText(R.string.label_event_category_pull);
 				configurePlayerListsVisibility(true, false);
 				configureEventTypeRadioGroupForPull(Action.PullOb);
+				showPullHangtimeEntryField(false);
 				break;
 			case Goal:
 				eventTypeTextView.setText(R.string.label_event_category_their_goal);
@@ -289,6 +317,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 			case Throwaway:
 				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
 				configureEventTypeRadioGroupForDefenseTurnover(Action.Throwaway);
+				configurePlayerListsVisibility(false, false);
 				break;			
 			case Callahan:
 				eventTypeTextView.setText(R.string.label_event_category_callahan);
