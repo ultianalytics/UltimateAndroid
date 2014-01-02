@@ -32,6 +32,7 @@ import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 public class EventDialogFragment extends UltimateDialogFragment {
 	
 	// widgets
+	private TextView eventTypeNotEditableTextView;
 	private ImageButton doneButton; 
 	private ImageButton cancelButton; 
 	private EventPlayerSelectionListView playerOneListView; 
@@ -46,6 +47,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private View hangtimeView;
 	private EditText hangtimeTextView;
 	private Button showFullTeamButton;
+	
 
 
 	@Override
@@ -82,6 +84,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void connectWidgets(View view) {
+		eventTypeNotEditableTextView = (TextView)view.findViewById(R.id.eventTypeNotEditableTextView);
 		doneButton = (ImageButton)view.findViewById(R.id.doneButton);
 		cancelButton = (ImageButton)view.findViewById(R.id.cancelButton);
 		playerOneListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerOneListView);
@@ -99,8 +102,10 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
     private void clearView() {
+    	eventTypeNotEditableTextView.setVisibility(View.GONE);
     	playerOneListView.setVisibility(View.GONE);
     	playerTwoListView.setVisibility(View.GONE);
+    	fromToTextView.setVisibility(View.GONE);
 		radioGroupEventAction.setVisibility(View.GONE);
 		radioButtonEventAction1.setVisibility(View.GONE);
 		radioButtonEventAction2.setVisibility(View.GONE);
@@ -274,6 +279,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				break;
 			case Goal:
 				eventTypeTextView.setText(R.string.label_event_category_their_goal);
+				showEventTypeNotEditable();
 				break;		
 			case De:
 				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
@@ -282,7 +288,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				break;		
 			case Throwaway:
 				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
-				configurePlayerListsVisibility(true, false);
 				configureEventTypeRadioGroupForDefenseTurnover(Action.Throwaway);
 				break;			
 			case Callahan:
@@ -293,6 +298,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				break;
 			}
 		} else if (event.isCessationEvent()) {
+			showEventTypeNotEditable();
 			switch (event.getAction()) {
 			case EndOfFirstQuarter:
 				eventTypeTextView.setText(R.string.label_event_category_end_1st_qtr);
@@ -349,7 +355,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		button.setVisibility(View.VISIBLE);
 		button.setText(textId);
 		button.setTag(action);
-		button.setSelected(action == selectedAction);
+		button.setChecked(action == selectedAction);
 	}
 	
 	private void showPullHangtimeEntryField(boolean show) {
@@ -357,6 +363,10 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		if (show && replacementEvent().isDefense()) {
 			hangtimeTextView.setText(((DefenseEvent)replacementEvent()).getFormattedPullHangtimeSeconds());
 		}
+	}
+	
+	private void showEventTypeNotEditable() {
+		eventTypeNotEditableTextView.setVisibility(View.VISIBLE);
 	}
 		
 }

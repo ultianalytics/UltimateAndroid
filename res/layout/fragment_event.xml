@@ -65,6 +65,18 @@
         android:text="@string/undefined"
         android:textColor="@color/White"
         android:textSize="@dimen/event_player_list_font_size" />
+    
+    <TextView
+        android:id="@+id/eventTypeNotEditableTextView"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:text="@string/label_event_no_edits_allowed"
+        android:textColor="@color/ultimate_form_label"
+        android:textStyle="italic"
+        android:textSize="@dimen/event_player_list_font_size" />    
 
     <RadioGroup
         android:id="@+id/radioGroupEventAction"

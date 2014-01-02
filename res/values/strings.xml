@@ -144,7 +144,7 @@
 	<string name="label_event_category_our_turnover">Our Turnover:</string>
 	<string name="label_event_category_callahaned">Callahan\'d</string>
 	<string name="label_event_category_pull">Pull:</string>
-	<string name="label_event_category_their_goal">Their GoaL</string>
+	<string name="label_event_category_their_goal">Their Goal</string>
 	<string name="label_event_category_their_turnover">Their Turnover:</string>
 	<string name="label_event_category_callahan">Callahan</string>
 	<string name="label_event_category_end_1st_qtr">End Of 1st Quarter</string>
@@ -162,6 +162,8 @@
 	<string name="label_event_type_misc_penalty">Misc. Penalty</string>
 	<string name="label_event_type_pull">In Bounds Pull</string>
 	<string name="label_event_type_pullob">Out of Bounds Pull</string>
+	
+	<string name="label_event_no_edits_allowed">No edits available for this event type</string>
 	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
