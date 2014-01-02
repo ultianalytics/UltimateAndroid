@@ -138,6 +138,31 @@
     <string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>
     <string name="label_game_specialevent_d">D is actually&#8230;</string>
 	<string name="label_event_hangtime">Hangtime:</string>
+	
+	<string name="label_event_category_catch">Catch</string>
+	<string name="label_event_category_our_goal">Our Goal</string>
+	<string name="label_event_category_our_turnover">Our Turnover:</string>
+	<string name="label_event_category_callahaned">Callahan\'d</string>
+	<string name="label_event_category_pull">Pull:</string>
+	<string name="label_event_category_their_goal">Their GoaL</string>
+	<string name="label_event_category_their_turnover">Their Turnover:</string>
+	<string name="label_event_category_callahan">Callahan</string>
+	<string name="label_event_category_end_1st_qtr">End Of 1st Quarter</string>
+	<string name="label_event_category_haltime">Halftime</string>
+	<string name="label_event_category_end_3rd_qtr">End Of 3rd Quarter</string>
+	<string name="label_event_category_end_4th_qtr">End Of 4th Quarter</string>
+	<string name="label_event_category_end_overtime">End Of An Overtime</string>
+	<string name="label_event_category_gameover">Game Over</string>
+	<string name="label_event_category_timeout">Timeout</string>
+	
+	<string name="label_event_type_drop">Drop</string>
+	<string name="label_event_type_throwaway">Throwaway</string>
+	<string name="label_event_type_d">D</string>	
+	<string name="label_event_type_stall">Stall</string>
+	<string name="label_event_type_misc_penalty">Misc. Penalty</string>
+	<string name="label_event_type_pull">In Bounds Pull</string>
+	<string name="label_event_type_pullob">Out of Bounds Pull</string>
+	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>

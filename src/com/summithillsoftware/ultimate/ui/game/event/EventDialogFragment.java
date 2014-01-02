@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
@@ -59,6 +60,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		connectWidgets(view);
 		initializeListView(playerOneListView);
 		initializeListView(playerTwoListView);		
+		clearView();
+        registerWidgetListeners();
 		return view;
     }
   
@@ -76,7 +79,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	public void onStart() {
 		super.onStart();
 		populateView();
-        registerWidgetListeners();
 	}
 	
 	private void connectWidgets(View view) {
@@ -88,15 +90,28 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		eventTypeTextView = (TextView)view.findViewById(R.id.eventTypeTextView);
 		radioGroupEventAction = (RadioGroup)view.findViewById(R.id.radioGroupEventAction);
 		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction1);
-		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction2);
-		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction3);
-		radioButtonEventAction1 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
+		radioButtonEventAction2 = (RadioButton)view.findViewById(R.id.radioButtonEventAction2);
+		radioButtonEventAction3 = (RadioButton)view.findViewById(R.id.radioButtonEventAction3);
+		radioButtonEventAction4 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
 		hangtimeView = (View)view.findViewById(R.id.hangtimeView);
 		hangtimeTextView = (EditText)view.findViewById(R.id.hangtimeTextView);
 		showFullTeamButton = (Button)view.findViewById(R.id.showFullTeamButton);
 	}
 	
+    private void clearView() {
+    	playerOneListView.setVisibility(View.GONE);
+    	playerTwoListView.setVisibility(View.GONE);
+		radioGroupEventAction.setVisibility(View.GONE);
+		radioButtonEventAction1.setVisibility(View.GONE);
+		radioButtonEventAction2.setVisibility(View.GONE);
+		radioButtonEventAction3.setVisibility(View.GONE);
+		radioButtonEventAction4.setVisibility(View.GONE);   
+		hangtimeView.setVisibility(View.GONE);
+		showFullTeamButton.setVisibility(View.GONE);
+    }
+	
     private void populateView() {
+    	configureForEventType(replacementEvent());
     	updatePlayerSelections();
     }
     
@@ -206,4 +221,142 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		return game().getSelectedEvent().getReplacementEvent();
 	}
 	
+	private void configureForEventType(Event event) {
+		if (event.isOffense()) {
+			switch (event.getAction()) {
+			case Catch:
+				eventTypeTextView.setText(R.string.label_event_category_catch);
+				configurePlayerListsVisibility(true, true);
+				break;
+			case Goal:
+				eventTypeTextView.setText(R.string.label_event_category_our_goal);
+				configurePlayerListsVisibility(true, true);
+				break;				
+			case Throwaway:
+				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForOffenseTurnover(Action.Throwaway);
+				break;	
+			case Drop:
+				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
+				configurePlayerListsVisibility(true, true);
+				configureEventTypeRadioGroupForOffenseTurnover(Action.Drop);
+				break;	
+			case Stall:
+				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForOffenseTurnover(Action.Stall);
+				break;	
+			case MiscPenalty:
+				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForOffenseTurnover(Action.MiscPenalty);
+				break;		
+			case Callahan:
+				eventTypeTextView.setText(R.string.label_event_category_callahaned);
+				configurePlayerListsVisibility(true, false);
+				break;				
+			default:
+				break;
+			}
+		} else if (event.isDefense()) {
+			switch (event.getAction()) {
+			case Pull:
+				eventTypeTextView.setText(R.string.label_event_category_pull);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForPull(Action.Pull);
+				showPullHangtimeEntryField(true);
+				break;
+			case PullOb:
+				eventTypeTextView.setText(R.string.label_event_category_pull);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForPull(Action.PullOb);
+				break;
+			case Goal:
+				eventTypeTextView.setText(R.string.label_event_category_their_goal);
+				break;		
+			case De:
+				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForDefenseTurnover(Action.De);
+				break;		
+			case Throwaway:
+				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
+				configurePlayerListsVisibility(true, false);
+				configureEventTypeRadioGroupForDefenseTurnover(Action.Throwaway);
+				break;			
+			case Callahan:
+				eventTypeTextView.setText(R.string.label_event_category_callahan);
+				configurePlayerListsVisibility(true, false);
+				break;					
+			default:
+				break;
+			}
+		} else if (event.isCessationEvent()) {
+			switch (event.getAction()) {
+			case EndOfFirstQuarter:
+				eventTypeTextView.setText(R.string.label_event_category_end_1st_qtr);
+				break;
+			case Halftime:
+				eventTypeTextView.setText(R.string.label_event_category_haltime);
+				break;
+			case EndOfThirdQuarter:
+				eventTypeTextView.setText(R.string.label_event_category_end_3rd_qtr);
+				break;
+			case EndOfFourthQuarter:
+				eventTypeTextView.setText(R.string.label_event_category_end_4th_qtr);
+				break;
+			case EndOfOvertime:
+				eventTypeTextView.setText(R.string.label_event_category_end_overtime);
+				break;
+			case GameOver:
+				eventTypeTextView.setText(R.string.label_event_category_gameover);
+				break;				
+			default:
+				break;
+			}
+		}
+	}
+	
+	private void configurePlayerListsVisibility(boolean showPlayerOneList, boolean showPlayerTwoList) {
+		playerOneListView.setVisibility(showPlayerOneList ? View.VISIBLE : View.GONE);
+		fromToTextView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
+		playerTwoListView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
+		showFullTeamButton.setVisibility(showPlayerOneList || showPlayerTwoList ?  View.VISIBLE : View.GONE);
+	}
+	
+	private void configureEventTypeRadioGroupForOffenseTurnover(Action selectedAction) {
+		radioGroupEventAction.setVisibility(View.VISIBLE);
+		showEventTypeRadioButton(radioButtonEventAction1, Action.Drop, R.string.label_event_type_drop, selectedAction);
+		showEventTypeRadioButton(radioButtonEventAction2, Action.Throwaway, R.string.label_event_type_throwaway, selectedAction);
+		showEventTypeRadioButton(radioButtonEventAction3, Action.MiscPenalty, R.string.label_event_type_misc_penalty, selectedAction);
+		showEventTypeRadioButton(radioButtonEventAction4, Action.Stall, R.string.label_event_type_stall, selectedAction);
+	}
+	
+	private void configureEventTypeRadioGroupForPull(Action selectedAction) {
+		radioGroupEventAction.setVisibility(View.VISIBLE);		
+		showEventTypeRadioButton(radioButtonEventAction1, Action.Pull, R.string.label_event_type_pull, selectedAction);
+		showEventTypeRadioButton(radioButtonEventAction2, Action.PullOb, R.string.label_event_type_pullob, selectedAction);
+	}
+	
+	private void configureEventTypeRadioGroupForDefenseTurnover(Action selectedAction) {
+		radioGroupEventAction.setVisibility(View.VISIBLE);		
+		showEventTypeRadioButton(radioButtonEventAction1, Action.De, R.string.label_event_type_d, selectedAction);
+		showEventTypeRadioButton(radioButtonEventAction2, Action.Throwaway, R.string.label_event_type_throwaway, selectedAction);
+	}	
+
+	private void showEventTypeRadioButton(RadioButton button, Action action, int textId, Action selectedAction) {
+		button.setVisibility(View.VISIBLE);
+		button.setText(textId);
+		button.setTag(action);
+		button.setSelected(action == selectedAction);
+	}
+	
+	private void showPullHangtimeEntryField(boolean show) {
+		hangtimeView.setVisibility(show ? View.VISIBLE : View.GONE);
+		if (show && replacementEvent().isDefense()) {
+			hangtimeTextView.setText(((DefenseEvent)replacementEvent()).getFormattedPullHangtimeSeconds());
+		}
+	}
+		
 }
