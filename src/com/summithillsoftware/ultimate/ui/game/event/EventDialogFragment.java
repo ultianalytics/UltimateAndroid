@@ -20,7 +20,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
+import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
@@ -94,7 +97,16 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
     private void populateView() {
-   	
+    	updatePlayerSelections();
+    }
+    
+    private void updatePlayerSelections() {
+		if (replacementEvent().isOffense()) {
+			playerOneListView.setSelectedPlayer(((OffenseEvent)replacementEvent()).getPasser());
+			playerTwoListView.setSelectedPlayer(((OffenseEvent)replacementEvent()).getReceiver());
+		} else if (replacementEvent().isDefense()) {
+			playerOneListView.setSelectedPlayer(((DefenseEvent)replacementEvent()).getDefender());
+		}
     }
     
 	private void initializeListView(ListView listView) {
@@ -137,16 +149,26 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	
 	private void handlePlayerOneSelection(AdapterView<?> parent, View view, int position, long id) {
 		Player selectedPlayer = playerOneListView.getSelectedPlayer(position);
+		if (replacementEvent().isOffense()) {
+			((OffenseEvent)replacementEvent()).setPasser(selectedPlayer);
+		} else if (replacementEvent().isDefense()) {
+			((DefenseEvent)replacementEvent()).setDefender(selectedPlayer);
+		}
 		playerOneListView.setSelectedPlayer(selectedPlayer);
 	}
 	
 	private void handlePlayerTwoSelection(AdapterView<?> parent, View view, int position, long id) {
 		Player selectedPlayer = playerTwoListView.getSelectedPlayer(position);
+		if (replacementEvent().isOffense()) {
+			((OffenseEvent)replacementEvent()).setReceiver(selectedPlayer);
+		} 	
 		playerTwoListView.setSelectedPlayer(selectedPlayer);
 	}
 	
 	private void showFullTeam() {
-		// TODO...refresh the players list views with all players
+		playerOneListView.setShowingAllPlayers(true);
+		playerTwoListView.setShowingAllPlayers(true);
+		updatePlayerSelections();
 	}
 	
 	private void updateEvent() {
@@ -178,6 +200,10 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	
 	private Game game() {
 		return Game.current();
+	}
+	
+	private Event replacementEvent() {
+		return game().getSelectedEvent().getReplacementEvent();
 	}
 	
 }

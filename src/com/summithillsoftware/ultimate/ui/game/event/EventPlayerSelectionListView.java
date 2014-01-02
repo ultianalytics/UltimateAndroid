@@ -31,6 +31,10 @@ public class EventPlayerSelectionListView extends ListView {
 		return (Player)getAdapter().getItem(position);
 	}
 	
+	public void setShowingAllPlayers(boolean isShowingAllPlayers) {
+		((EventPlayerSelectionListAdapter)getAdapter()).setShowingAllPlayers(isShowingAllPlayers);
+	}
+	
 	private void refreshVisibleRows() {
 		int start = getFirstVisiblePosition();
 		for(int i=start, j=getLastVisiblePosition(); i<=j; i++) {
