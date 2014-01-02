@@ -27,6 +27,7 @@ import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 
@@ -138,9 +139,11 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	updateEvent();
-        		notifyEventChange();
-            	dismissDialog();
+            	if (validateUpdates()) {
+	            	updateEvent();
+	        		notifyEventChange();
+	            	dismissDialog();
+            	}
             }
         });
 		cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -218,8 +221,27 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		updatePlayerSelections();
 	}
 	
+	private boolean validateUpdates() {
+		if (replacementEvent().isPullIb()) {
+			if (hangtimeMillisecondsFromTextView() > 60000) {
+				alertInvalidHangtime();
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	private void updateEvent() {
-		// TODO...update the event
+		originalEvent().setAction(replacementEvent().getAction());
+		if (originalEvent().isOffense()) {
+			((OffenseEvent)originalEvent()).setPasser(((OffenseEvent)replacementEvent()).getPasser());
+			((OffenseEvent)originalEvent()).setReceiver(((OffenseEvent)replacementEvent()).getReceiver());
+		} else if (originalEvent().isDefense()) {
+			((DefenseEvent)originalEvent()).setDefender(((DefenseEvent)replacementEvent()).getDefender());
+			if (replacementEvent().isPullIb()) {
+				((DefenseEvent)originalEvent()).setPullHangtimeMilliseconds(hangtimeMillisecondsFromTextView());
+			}
+		}
 		Game.current().save();
 	}
 	
@@ -243,14 +265,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		} catch (Exception e) {
 			Log.w(ULTIMATE, "Error dismissing dialog", e);
 		}
-	}
-	
-	private Game game() {
-		return Game.current();
-	}
-	
-	private Event replacementEvent() {
-		return game().getSelectedEvent().getReplacementEvent();
 	}
 	
 	private void configureForEventType(Event event) {
@@ -398,4 +412,30 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		eventTypeNotEditableTextView.setVisibility(View.VISIBLE);
 	}
 		
+	private int hangtimeMillisecondsFromTextView() {
+		    float hangtime = Float.parseFloat(hangtimeTextView.getText().toString());
+		    int hangtimeMs = (int)(hangtime * 1000f);
+		    if (hangtimeMs < 0) {
+		        hangtimeMs = 0;
+		    }
+		    return hangtimeMs;
+	}
+	
+	private Game game() {
+		return Game.current();
+	}
+	
+	private Event originalEvent() {
+		return game().getSelectedEvent().getEvent();
+	}
+	
+	private Event replacementEvent() {
+		return game().getSelectedEvent().getReplacementEvent();
+	}
+	
+	private void alertInvalidHangtime() {
+		((UltimateActivity)getActivity()).displayErrorMessage(
+				getString(R.string.alert_event_invalid_hangtime_title),
+				getString(R.string.alert_event_invalid_hangtime_message));
+	}
 }

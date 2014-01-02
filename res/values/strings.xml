@@ -70,12 +70,14 @@
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
+    
     <string name="action_settings">Settings</string>
     <string name="action_delete">Delete</string>
     <string name="action_teams">Teams</string>
     <string name="action_games">Games</string>
     <string name="action_action">Action</string>
     <string name="action_line">Line</string>
+    
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
     <string name="alert_team_confirm_delete_message">Do you really want to delete team \"%1$s\"?</string>
     <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
@@ -108,6 +110,9 @@
     <string name="alert_action_gameover_message">This game appears to be over.  Please confirm.</string>
     <string name="alert_action_gameover_yes">Yes, done</string>
     <string name="alert_action_gameover_no">No, not yet</string>
+    <string name="alert_event_invalid_hangtime_title">Invalid Hangtime</string>
+    <string name="alert_event_invalid_hangtime_message">The hangtime entered does not appear valid</string>    
+    
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -138,7 +143,6 @@
     <string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>
     <string name="label_game_specialevent_d">D is actually&#8230;</string>
 	<string name="label_event_hangtime">Hangtime:</string>
-	
 	<string name="label_event_category_catch">Catch</string>
 	<string name="label_event_category_our_goal">Our Goal</string>
 	<string name="label_event_category_our_turnover">Our Turnover:</string>
@@ -154,7 +158,6 @@
 	<string name="label_event_category_end_overtime">End Of An Overtime</string>
 	<string name="label_event_category_gameover">Game Over</string>
 	<string name="label_event_category_timeout">Timeout</string>
-	
 	<string name="label_event_type_drop">Drop</string>
 	<string name="label_event_type_throwaway">Throwaway</string>
 	<string name="label_event_type_d">D</string>	
@@ -162,7 +165,6 @@
 	<string name="label_event_type_misc_penalty">Misc. Penalty</string>
 	<string name="label_event_type_pull">In Bounds Pull</string>
 	<string name="label_event_type_pullob">Out of Bounds Pull</string>
-	
 	<string name="label_event_no_edits_allowed">No edits available for this event type</string>
 	
     <string name="placeholder_team_name">Team Name</string>

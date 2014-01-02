@@ -88,7 +88,7 @@ public class UltimateActivity extends ActionBarActivity {
 			return true;
 	}
 	
-	protected void displayErrorMessage(String title, String message) {
+	public void displayErrorMessage(String title, String message) {
 		AlertDialog errorDialog = new AlertDialog.Builder(this).create();
  		errorDialog.setTitle(title);
  		errorDialog.setMessage(message);
@@ -102,7 +102,7 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.show();
 	}
 	
-	protected void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler) {
+	public void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler) {
 		displayConfirmDialog(title, message, yesButtonText, noButtonText, yesHandler, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
@@ -111,7 +111,7 @@ public class UltimateActivity extends ActionBarActivity {
  		});
 	}
 	
-	protected void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler, DialogInterface.OnClickListener noHandler) {
+	public void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler, DialogInterface.OnClickListener noHandler) {
 		AlertDialog errorDialog = new AlertDialog.Builder(this).create();
  		errorDialog.setTitle(title);
  		errorDialog.setMessage(message);
