@@ -204,7 +204,14 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		} else if (replacementEvent().isDefense()) {
 			((DefenseEvent)replacementEvent()).setDefender(selectedPlayer);
 		}
-		playerOneListView.setSelectedPlayer(selectedPlayer);
+		playerOneListView.setSelectedPlayer(selectedPlayer);		
+		// don't allow same person to be selected in both lists (with the exception of anonymous)
+		if (!selectedPlayer.isAnonymous() && playerTwoListView.getVisibility() == View.VISIBLE && replacementEvent().isOffense()) {
+			if (((OffenseEvent)replacementEvent()).getReceiver().equals(selectedPlayer)) {
+				((OffenseEvent)replacementEvent()).setReceiver(Player.anonymous());
+				playerTwoListView.setSelectedPlayer(((OffenseEvent)replacementEvent()).getReceiver());
+			} 
+		}
 	}
 	
 	private void handlePlayerTwoSelection(AdapterView<?> parent, View view, int position, long id) {
@@ -213,6 +220,13 @@ public class EventDialogFragment extends UltimateDialogFragment {
 			((OffenseEvent)replacementEvent()).setReceiver(selectedPlayer);
 		} 	
 		playerTwoListView.setSelectedPlayer(selectedPlayer);
+		// don't allow same person to be selected in both lists (with the exception of anonymous)
+		if (!selectedPlayer.isAnonymous() && replacementEvent().isOffense()) {
+			if (((OffenseEvent)replacementEvent()).getPasser().equals(selectedPlayer)) {
+				((OffenseEvent)replacementEvent()).setPasser(Player.anonymous());
+				playerOneListView.setSelectedPlayer(((OffenseEvent)replacementEvent()).getPasser());
+			} 
+		}
 	}
 	
 	private void showFullTeam() {
