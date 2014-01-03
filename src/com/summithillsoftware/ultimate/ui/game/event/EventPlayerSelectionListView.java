@@ -3,6 +3,8 @@ package com.summithillsoftware.ultimate.ui.game.event;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.HeaderViewListAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.summithillsoftware.ultimate.model.Player;
@@ -23,7 +25,7 @@ public class EventPlayerSelectionListView extends ListView {
 	}
 	
 	public void setSelectedPlayer(Player player) {
-		((EventPlayerSelectionListAdapter)getAdapter()).setSelectedPlayer(player);
+		getPlayerSelectionListAdaptor().setSelectedPlayer(player);
 		refreshVisibleRows();
 	}
 	
@@ -31,16 +33,27 @@ public class EventPlayerSelectionListView extends ListView {
 		return (Player)getAdapter().getItem(position);
 	}
 	
-	public void setShowingAllPlayers(boolean isShowingAllPlayers) {
-		((EventPlayerSelectionListAdapter)getAdapter()).setShowingAllPlayers(isShowingAllPlayers);
+	public void showAllPlayers() {
+		getPlayerSelectionListAdaptor().setShowingAllPlayers(true);
 	}
 	
 	private void refreshVisibleRows() {
 		int start = getFirstVisiblePosition();
 		for(int i=start, j=getLastVisiblePosition(); i<=j; i++) {
-			View existingRowView = getChildAt(i-start);  // optimization...don't need to inflate another row
-			getAdapter().getView(i, existingRowView, this);
+			View existingRowView = getChildAt(i-start);  // optimization...avoid inflating another row
+			getPlayerSelectionListAdaptor().getView(i, existingRowView, this);
 		}
 	}
+	
+	private EventPlayerSelectionListAdapter getPlayerSelectionListAdaptor() {
+		ListAdapter adapter = getAdapter();
+		if (adapter instanceof HeaderViewListAdapter) {
+			return (EventPlayerSelectionListAdapter) ((HeaderViewListAdapter)getAdapter()).getWrappedAdapter();
+		} else {
+			return (EventPlayerSelectionListAdapter)getAdapter();
+		}
+	}
+
+
 
 }

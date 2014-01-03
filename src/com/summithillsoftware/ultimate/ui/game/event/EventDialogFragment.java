@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -48,9 +47,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private RadioButton radioButtonEventAction4;
 	private View hangtimeView;
 	private EditText hangtimeTextView;
-	private Button showFullTeamButton;
-	
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +96,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		radioButtonEventAction4 = (RadioButton)view.findViewById(R.id.radioButtonEventAction4);
 		hangtimeView = (View)view.findViewById(R.id.hangtimeView);
 		hangtimeTextView = (EditText)view.findViewById(R.id.hangtimeTextView);
-		showFullTeamButton = (Button)view.findViewById(R.id.showFullTeamButton);
 	}
 	
     private void clearView() {
@@ -114,7 +109,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		radioButtonEventAction3.setVisibility(View.GONE);
 		radioButtonEventAction4.setVisibility(View.GONE);   
 		hangtimeView.setVisibility(View.GONE);
-		showFullTeamButton.setVisibility(View.GONE);
     }
 	
     private void populateView() {
@@ -160,21 +154,27 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		playerOneListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				handlePlayerOneSelection(parent, view, position, id);
+				if (playerOneListView.getSelectedPlayer(position) == null) { // "show all" button selected
+	            	playerOneListView.showAllPlayers();
+	            	updatePlayerSelections();
+				} else {
+					handlePlayerOneSelection(parent, view, position, id);
+				}
 			}
 		});	
 		playerTwoListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				handlePlayerTwoSelection(parent, view, position, id);
+				if (playerTwoListView.getSelectedPlayer(position) == null) { // "show all" button selected
+					playerTwoListView.showAllPlayers();
+	            	updatePlayerSelections();
+				} else {
+					handlePlayerTwoSelection(parent, view, position, id);
+				}
+				
 			}
 		});				
-		showFullTeamButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	showFullTeamButton.setVisibility(View.GONE);
-            	showFullTeam();
-            }
-        });		
+	
 	}
 	
 	private void handleEventTypeChange(RadioGroup radioGroup) {
@@ -227,12 +227,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				playerOneListView.setSelectedPlayer(((OffenseEvent)replacementEvent()).getPasser());
 			} 
 		}
-	}
-	
-	private void showFullTeam() {
-		playerOneListView.setShowingAllPlayers(true);
-		playerTwoListView.setShowingAllPlayers(true);
-		updatePlayerSelections();
 	}
 	
 	private boolean validateUpdates() {
@@ -385,7 +379,6 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		playerOneListView.setVisibility(showPlayerOneList ? View.VISIBLE : View.GONE);
 		fromToTextView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
 		playerTwoListView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
-		showFullTeamButton.setVisibility(showPlayerOneList || showPlayerTwoList ?  View.VISIBLE : View.GONE);
 	}
 	
 	private void configureEventTypeRadioGroupForOffenseTurnover(Action selectedAction) {

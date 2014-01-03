@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <Button
+    
+    <TextView
         android:id="@+id/showFullTeamButton"
-        style="@style/standardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:text="@string/button_event_players_show_all" />
+        android:layout_margin="14dp"
+        android:maxLines="1"
+        android:textSize="@dimen/event_player_list_font_size"
+        android:textStyle="italic"
+        android:text="@string/button_event_players_show_all" />    
 
 </LinearLayout>

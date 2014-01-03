@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Point;
@@ -44,6 +45,7 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 	private List<Player>getSortedPlayers() {
 		if (sortedPlayers == null) {
 			Set<Player> players = new HashSet<Player>(point().getPlayers());
+			players.addAll(Game.current().getSelectedEvent().getReplacementEvent().getPlayers());
 			if (isShowingAllPlayers) {
 				players.addAll(Team.current().getPlayers());
 			}
@@ -62,12 +64,20 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return getSortedPlayers().size();
+		int count = getSortedPlayers().size();
+		if (!isShowingAllPlayers) { // need extra for the "show all" button 
+			count++;
+		}
+		return count;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return getSortedPlayers().get(position);
+		if (position >= getSortedPlayers().size()) {
+			return null;
+		} else {
+			return getSortedPlayers().get(position);
+		}
 	}
 
 	@Override
@@ -78,25 +88,33 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int index, View reusableRowView, ViewGroup parent) {
 		View rowView = reusableRowView;
-		Player player = getSortedPlayers().get(index);
-		boolean isSelectedPlayer = player.equals(selectedPlayer);
-		
-		if (reusableRowView == null) {
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout_event_player, null);
-		}
-	
-		TextView playerDescriptionTextView = (TextView)rowView.findViewById(R.id.playerDescriptionTextView);
-		if (player.isAnonymous()) {
-			playerDescriptionTextView.setText(context.getString(R.string.common_unknown_player));
+		if (index >= getSortedPlayers().size()) {  // "show all button"
+			if (rowView == null || rowView.findViewById(R.id.showFullTeamButton) !=  null) {
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				rowView = inflater.inflate(R.layout.rowlayout_footer_event_player, null);
+			}
+			rowView.setVisibility(isShowingAllPlayers ? View.GONE : View.VISIBLE);	
 		} else {
-			playerDescriptionTextView.setText(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+			Player player = getSortedPlayers().get(index);
+			boolean isSelectedPlayer = player.equals(selectedPlayer);
+			
+			if (rowView == null || rowView.findViewById(R.id.playerDescriptionTextView) == null) {
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				rowView = inflater.inflate(R.layout.rowlayout_event_player, null);
+			}
+		
+			TextView playerDescriptionTextView = (TextView)rowView.findViewById(R.id.playerDescriptionTextView);
+			if (player.isAnonymous()) {
+				playerDescriptionTextView.setText(context.getString(R.string.common_unknown_player));
+			} else {
+				playerDescriptionTextView.setText(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
+			}
+			int textColor = context.getResources().getColor(isSelectedPlayer ? R.color.White : R.color.DarkGray);
+			playerDescriptionTextView.setTextColor(textColor);
+	
+			ImageView selectedImageView = (ImageView)rowView.findViewById(R.id.playerSelectedImageView);
+			selectedImageView.setVisibility(isSelectedPlayer ? View.VISIBLE : View.INVISIBLE);
 		}
-		int textColor = context.getResources().getColor(isSelectedPlayer ? R.color.White : R.color.DarkGray);
-		playerDescriptionTextView.setTextColor(textColor);
-
-		ImageView selectedImageView = (ImageView)rowView.findViewById(R.id.playerSelectedImageView);
-		selectedImageView.setVisibility(isSelectedPlayer ? View.VISIBLE : View.INVISIBLE);
 		
 		return rowView;
 	}
