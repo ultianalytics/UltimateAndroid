@@ -60,10 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:layout_marginLeft="4dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:text="@string/undefined"
         android:textColor="@color/White"
+        android:textStyle="bold"
         android:textSize="@dimen/event_player_list_font_size" />
     
     <TextView
@@ -149,34 +151,30 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="@dimen/event_dialog_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerOneListView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="10" />
+            android:layout_width="@dimen/event_player_list_width"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/fromToTextView"
-            android:layout_width="0dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="@string/label_event_to"
             android:textColor="@color/White"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerTwoListView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="10" />
+            android:layout_width="@dimen/event_player_list_width"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 

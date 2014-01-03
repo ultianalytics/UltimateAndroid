@@ -1133,8 +1133,9 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f090011;
         public static final int activity_vertical_margin=0x7f090012;
-        public static final int event_dialog_width=0x7f09001f;
+        public static final int event_player_check_icon_dimension=0x7f090021;
         public static final int event_player_list_font_size=0x7f090020;
+        public static final int event_player_list_width=0x7f09001f;
         public static final int form_text_size=0x7f090014;
         public static final int game_action_button_height=0x7f090018;
         public static final int game_action_button_margin=0x7f090019;
