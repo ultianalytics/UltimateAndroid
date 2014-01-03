@@ -12,6 +12,7 @@
     <dimen name="game_action_portrait_recents_seperator_space">50sp</dimen>
 	<dimen name="event_player_list_width">200dp</dimen>
 	<dimen name="event_player_list_font_size">18sp</dimen>
+	<dimen name="event_player_list_show_all_font_size">16sp</dimen>
 	<dimen name="event_player_check_icon_dimension">30dp</dimen>
 
 </resources>

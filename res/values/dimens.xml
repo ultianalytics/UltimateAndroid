@@ -17,7 +17,8 @@
 	<dimen name="game_action_button_undo_button_size">14sp</dimen>
 	<dimen name="game_action_pull_buttons_height">38dp</dimen>
 	<dimen name="event_player_list_width">120dp</dimen>
-	<dimen name="event_player_list_font_size">14sp</dimen>
+	<dimen name="event_player_list_font_size">16sp</dimen>
+	<dimen name="event_player_list_show_all_font_size">14sp</dimen>	
 	<dimen name="event_player_list_width">120dp</dimen>
 	<dimen name="event_player_check_icon_dimension">20dp</dimen>	
 

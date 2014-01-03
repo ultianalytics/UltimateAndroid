@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
         android:maxLines="1"
-        android:textSize="@dimen/event_player_list_font_size"
+        android:textSize="@dimen/event_player_list_show_all_font_size"
         android:textStyle="italic"
         android:text="@string/button_event_players_show_all" />    
 

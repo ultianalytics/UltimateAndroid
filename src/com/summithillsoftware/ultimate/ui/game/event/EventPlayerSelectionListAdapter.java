@@ -90,7 +90,7 @@ public class EventPlayerSelectionListAdapter extends BaseAdapter {
 		if (index >= getSortedPlayers().size()) {  // "show all button"
 			if (rowView == null || rowView.findViewById(R.id.showFullTeamButton) ==  null) {
 				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				rowView = inflater.inflate(R.layout.rowlayout_footer_event_player, null);
+				rowView = inflater.inflate(R.layout.rowlayout_event_player_show_all, null);
 			}
 			rowView.setVisibility(isShowingAllPlayers ? View.GONE : View.VISIBLE);	
 		} else {
