@@ -216,6 +216,17 @@ public class DefenseEvent extends Event {
 		}
 	}
 	
+	public int imageMonochrome() {
+		switch (getAction()) {
+		case Goal:
+			return R.drawable.goal;
+		case Callahan:
+			return R.drawable.callahan;
+		default:
+			return image();
+		}
+	}
+	
 	public void useSharedPlayers() {
 		defender = Player.replaceWithSharedPlayer(defender);
 	}

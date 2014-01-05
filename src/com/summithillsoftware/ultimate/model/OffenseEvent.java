@@ -238,6 +238,17 @@ public class OffenseEvent extends Event {
 		}
 	}
 	
+	public int imageMonochrome() {
+		switch (getAction()) {
+		case Goal:
+			return R.drawable.goal;
+		case Callahan:
+			return R.drawable.callahan;
+		default:
+			return image();
+		}
+	}
+	
 	public void useSharedPlayers() {
 		passer = Player.replaceWithSharedPlayer(passer);
 		receiver = Player.replaceWithSharedPlayer(receiver);

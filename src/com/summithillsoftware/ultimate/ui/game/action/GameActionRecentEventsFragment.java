@@ -126,9 +126,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		event1Button.setEventDescription(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).toString() : "");
 		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).toString() : "");
 		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).toString() : "");
-		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).image() : blankEventImage());
-		event2Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(1).image() : blankEventImage());
-		event3Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(2).image() : blankEventImage());
+		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).imageMonochrome() : blankEventImage());
+		event2Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(1).imageMonochrome() : blankEventImage());
+		event3Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(2).imageMonochrome() : blankEventImage());
 		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);
 	}
 	

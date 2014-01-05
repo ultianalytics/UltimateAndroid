@@ -250,6 +250,10 @@ public abstract class Event implements Serializable {
 		return R.drawable.unknown_event;
 	}
 	
+	public int imageMonochrome() {
+		return image();
+	}
+	
 	public Event copy() {
 		Class<? extends Event> clz = this.getClass(); 
 		try {
