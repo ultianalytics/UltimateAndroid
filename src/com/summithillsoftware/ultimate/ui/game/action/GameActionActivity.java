@@ -28,6 +28,7 @@ import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
+import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener, Refreshable {
 	private GameActionFieldFragment fieldFragment;
@@ -139,6 +140,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	    eventDialog.show(fragmentManager, "dialog");
 	}
 	
+	private void showTimeoutsDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    TimeoutsDialogFragment timeoutsDialog = new TimeoutsDialogFragment();
+	    timeoutsDialog.show(fragmentManager, "dialog");
+	}
+	
 	public void newPull(DefenseEvent pullEvent) { // call back from dialog
 		if (pullEvent != null) {
 			game().addEvent(pullEvent);
@@ -192,7 +199,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	@Override
 	public void timeoutInfoRequested() {
-		// TODO Auto-generated method stub
+		showTimeoutsDialog();
 	}
 	
 	private void showHalftimeWarning() {

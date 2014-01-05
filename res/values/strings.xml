@@ -3,6 +3,7 @@
 
     <string name="app_name">Ultimate</string>
     <string name="undefined">UNDEFINED</string>
+    <string name="zero">0</string>    
     <string name="blank"></string>
     <string name="hello_world">Hello world!</string>
     <string name="image_description">ImageDescription</string>
@@ -166,6 +167,13 @@
 	<string name="label_event_type_pull">In Bounds Pull</string>
 	<string name="label_event_type_pullob">Out of Bounds Pull</string>
 	<string name="label_event_no_edits_allowed">No edits available for this event type</string>
+	<string name="label_timeouts_quota">Game Quota</string>
+	<string name="label_timeouts_per_half">Per Half:</string>
+	<string name="label_timeouts_floaters">Floaters:</string>
+	<string name="label_timeouts_taken">Taken</string>	
+	<string name="label_timeouts_first_half">1st Half:</string>
+	<string name="label_timeouts_second_half">2nd Half:</string>
+	<string name="label_timeouts_available">Available now:</string>
 	
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
@@ -206,6 +214,9 @@
     <string name="button_pull_caught_no_time">Caught/Landed - no hang time</string>
     <string name="button_pull_out_of_bounds">Out of Bounds</string>
     <string name="button_event_players_show_all">Show Full Team</string>
+    <string name="button_timeouts_take_timeout">Timeout</string>
+    <string name="button_timeouts_undo">Undo Last Timeout</string>
+    
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>
