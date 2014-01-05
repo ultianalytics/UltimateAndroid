@@ -161,7 +161,7 @@ public class DefenseEvent extends Event {
 
 	
 	protected void ensureValid() {
-		if (defender == null) {
+		if (defender == null || getAction() == Throwaway || getAction() == Goal) {
 			defender = Player.anonymous();
 		}
 
