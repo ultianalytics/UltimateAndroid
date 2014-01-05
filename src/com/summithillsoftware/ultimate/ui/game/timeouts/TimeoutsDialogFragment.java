@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.TimeoutDetails;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
@@ -110,6 +111,8 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				((Refreshable)getActivity()).refresh();
+				game().save();
 				dismiss();
 			}
 		});
@@ -238,7 +241,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private void promptForFirstHalfUndoConfirm() {
 		((UltimateActivity)getActivity()).displayConfirmDialog(
 				getString(R.string.alert_timeout_undo_title),
-				getString(R.string.alert_timeout_which_half_undo_message),
+				getString(R.string.alert_timeout_undo_confirm_message),
 				getString(R.string.button_ok),
 				getString(R.string.button_cancel),
 				new DialogInterface.OnClickListener() {
