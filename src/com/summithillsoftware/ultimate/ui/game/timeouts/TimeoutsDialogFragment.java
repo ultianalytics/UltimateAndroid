@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.TimeoutDetails;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
 public class TimeoutsDialogFragment extends UltimateDialogFragment {
@@ -26,8 +28,12 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private Spinner timeoutsPerHalfQuotaSpinner;
 	private Spinner timeoutFloatersQuotaSpinner;
 	private TextView timeoutsTakenFirstHalfTextView;
+	private TextView timeoutsTakenSecondHalfLabel;
 	private TextView timeoutsTakenSecondHalfTextView;
 	private TextView timeoutsAvailableTextView;
+	private Button takeTimeoutButton;
+	private Button undoTimeoutButton;
+	private View actionView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,9 +71,13 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		doneButton = (ImageButton) view.findViewById(R.id.doneButton);
 		timeoutsPerHalfQuotaSpinner = (Spinner) view.findViewById(R.id.timeoutsPerHalfQuotaSpinner);
 		timeoutFloatersQuotaSpinner = (Spinner) view.findViewById(R.id.timeoutFloatersQuotaSpinner);	
-		timeoutsTakenFirstHalfTextView = (TextView) view.findViewById(R.id.timeoutsTakenFirstHalfTextView);		
+		timeoutsTakenFirstHalfTextView = (TextView) view.findViewById(R.id.timeoutsTakenFirstHalfTextView);	
+		timeoutsTakenSecondHalfLabel = (TextView) view.findViewById(R.id.timeoutsTakenSecondHalfLabel);	
 		timeoutsTakenSecondHalfTextView = (TextView) view.findViewById(R.id.timeoutsTakenSecondHalfTextView);	
 		timeoutsAvailableTextView = (TextView) view.findViewById(R.id.timeoutsAvailableTextView);	
+		takeTimeoutButton = (Button) view.findViewById(R.id.takeTimeoutButton);
+		undoTimeoutButton = (Button) view.findViewById(R.id.undoTimeoutButton);		
+		actionView = (View) view.findViewById(R.id.actionView);			
 
 	}
 
@@ -77,6 +87,16 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		timeoutsTakenFirstHalfTextView.setText(Integer.toString(timeoutDetails().getTakenFirstHalf()));
 		timeoutsTakenSecondHalfTextView.setText(Integer.toString(timeoutDetails().getTakenSecondHalf()));		
 		timeoutsAvailableTextView.setText(Integer.toString(game().availableTimeouts()));
+		
+	    boolean hasGameStarted = game().hasEvents();
+	    boolean is2ndHalf = game().isAfterHalftime();
+	    
+	    // hide stuff that is not applicable
+	    actionView.setVisibility(hasGameStarted ? View.VISIBLE : View.GONE);
+	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 && hasGameStarted ? View.VISIBLE : View.GONE);
+	    undoTimeoutButton.setVisibility(timeoutDetails().getTakenFirstHalf() > 0 ||  timeoutDetails().getTakenSecondHalf() > 0  ? View.VISIBLE : View.GONE);
+	    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
+	    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
 	}
 	
 	private void populateQuotaSpinner(Spinner spinner, int selection) {
@@ -93,6 +113,32 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				dismiss();
 			}
 		});
+		takeTimeoutButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+			    if (game().isHalftime()) {
+			        promptForApplyDuringHalf();
+			    } else if (game().isAfterHalftimeStarted()) {
+			    	timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() + 1);
+			    	populateView();
+			    } else {
+			    	timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() + 1);
+			    	populateView();
+			    }
+			}
+		});		
+		undoTimeoutButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+			    if (game().isAfterHalftime()) {
+			    	if (timeoutDetails().getTakenFirstHalf() > 0 && timeoutDetails().getTakenSecondHalf() > 0) {
+			    		promptForWhichHalfForUndo();
+			    	} else {
+			    		promptForFirstHalfUndoConfirm();
+			    	}
+			    } else {
+			    	promptForFirstHalfUndoConfirm();
+			    }
+			}
+		});			
 		timeoutsPerHalfQuotaSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -131,6 +177,85 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		});
 	}
 	
+	private void promptForApplyDuringHalf() {
+		((UltimateActivity)getActivity()).displayThreeButtonDialog(
+				getString(R.string.alert_timeout_which_half_title),
+				getString(R.string.alert_timeout_which_half_message),
+				getString(R.string.button_timeouts_which_half_first),
+				getString(R.string.button_timeouts_which_half_second),
+				getString(R.string.button_cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() + 1);
+						populateView();
+					}
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() + 1);
+						populateView();
+					}					
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// no-op
+					}
+				});
+	}
+	
+	private void promptForWhichHalfForUndo() {
+		((UltimateActivity)getActivity()).displayThreeButtonDialog(
+				getString(R.string.alert_timeout_undo_title),
+				getString(R.string.alert_timeout_which_half_undo_message),
+				getString(R.string.button_timeouts_which_half_first),
+				getString(R.string.button_timeouts_which_half_second),
+				getString(R.string.button_cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() - 1);
+						populateView();
+					}
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() - 1);
+						populateView();
+					}					
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// no-op
+					}
+				});
+	}
+	
+	private void promptForFirstHalfUndoConfirm() {
+		((UltimateActivity)getActivity()).displayConfirmDialog(
+				getString(R.string.alert_timeout_undo_title),
+				getString(R.string.alert_timeout_which_half_undo_message),
+				getString(R.string.button_ok),
+				getString(R.string.button_cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() - 1);
+						populateView();
+					}
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// no-op
+					}
+				});
+	}
+    
 	private TimeoutDetails timeoutDetails() {
 		return game().getTimeoutDetails();
 	}

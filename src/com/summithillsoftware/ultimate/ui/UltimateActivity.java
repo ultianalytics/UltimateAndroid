@@ -120,6 +120,17 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.setButton(BUTTON_NEGATIVE, noButtonText, noHandler);
  		errorDialog.show();
 	}
+	
+	public void displayThreeButtonDialog(String title, String message, String button1Text, String button2Text, String cancelButtonText, DialogInterface.OnClickListener button1Handler, DialogInterface.OnClickListener button2Handler, DialogInterface.OnClickListener cancelHandler) {
+		AlertDialog errorDialog = new AlertDialog.Builder(this).create();
+ 		errorDialog.setTitle(title);
+ 		errorDialog.setMessage(message);
+ 		errorDialog.setCancelable(false);
+ 		errorDialog.setButton(BUTTON_POSITIVE, button1Text, button1Handler);
+ 		errorDialog.setButton(BUTTON_POSITIVE, button2Text, button2Handler);
+ 		errorDialog.setButton(BUTTON_NEGATIVE, cancelButtonText, cancelHandler);
+ 		errorDialog.show();
+	}
 
 	public Size getScreenSize() {
 		Display display = getWindowManager().getDefaultDisplay();

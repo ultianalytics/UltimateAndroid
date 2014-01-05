@@ -112,7 +112,12 @@
     <string name="alert_action_gameover_yes">Yes, done</string>
     <string name="alert_action_gameover_no">No, not yet</string>
     <string name="alert_event_invalid_hangtime_title">Invalid Hangtime</string>
-    <string name="alert_event_invalid_hangtime_message">The hangtime entered does not appear valid</string>    
+    <string name="alert_event_invalid_hangtime_message">The hangtime entered does not appear valid</string>   
+    <string name="alert_timeout_which_half_title">Timeout During Halftime</string>
+    <string name="alert_timeout_which_half_message">We are at halftime. To which half should timeout be applied?</string>
+    <string name="alert_timeout_undo_title">Timeout Undo</string>
+    <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout?</string>    
+    <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>   
     
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
@@ -183,6 +188,7 @@
     <string name="placeholder_hangtime">seconds</string>    
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
+    <string name="button_ok">OK</string>
     <string name="button_save_and_add">Save, Add New</string>
     <string name="button_done">DONE</string>
     <string name="button_start">Start Game</string>
@@ -216,6 +222,8 @@
     <string name="button_event_players_show_all">Show Full Team</string>
     <string name="button_timeouts_take_timeout">Timeout</string>
     <string name="button_timeouts_undo">Undo Last Timeout</string>
+    <string name="button_timeouts_which_half_first">1st Half</string>
+    <string name="button_timeouts_which_half_second">2nd Half</string>
     
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>

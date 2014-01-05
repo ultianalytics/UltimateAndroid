@@ -556,7 +556,8 @@ public class Game implements Serializable {
 	
 	}
 	
-	private boolean isAfterHalftime() {
+	public boolean isAfterHalftime() {
+		updatePointSummaries();
 		if (isTimeBasedGame()) {
 			return getPeriodsComplete() >= 2;
 		} else {
