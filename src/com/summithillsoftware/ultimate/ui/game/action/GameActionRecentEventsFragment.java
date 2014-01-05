@@ -11,8 +11,8 @@ import android.widget.Button;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
-import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.PointEvent;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class GameActionRecentEventsFragment extends UltimateFragment {
@@ -79,6 +79,34 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 				}
 			}
 		});	
+		event1Button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleEventEditPressed(1);
+			}
+		});		
+		event2Button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleEventEditPressed(2);
+			}
+		});	
+		event3Button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleEventEditPressed(3);
+			}
+		});			
+	}
+	
+	private void handleEventEditPressed(int inverseOrderPostion) { // position starts at 1
+		List<PointEvent> lastFewEvents = Game.current().getLastEvents(inverseOrderPostion);
+		if (lastFewEvents.size() == inverseOrderPostion) {
+			PointEvent eventToEdit = lastFewEvents.get(inverseOrderPostion - 1);
+			if (gameActionEventListener != null) {
+				gameActionEventListener.onEventEditRequest(eventToEdit);
+			}
+		}
 	}
 	
 	private void handleCessationButtonPressed() {
@@ -122,13 +150,13 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	}
 
 	private void populateRecentEvents() {
-		List<Event> lastFewEvents = Game.current().getLastEvents(3);
-		event1Button.setEventDescription(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).toString() : "");
-		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).toString() : "");
-		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).toString() : "");
-		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).imageMonochrome() : blankEventImage());
-		event2Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(1).imageMonochrome() : blankEventImage());
-		event3Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(2).imageMonochrome() : blankEventImage());
+		List<PointEvent> lastFewEvents = Game.current().getLastEvents(3);
+		event1Button.setEventDescription(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).getEvent().toString() : "");
+		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).getEvent().toString() : "");
+		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).getEvent().toString() : "");
+		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).getEvent().imageMonochrome() : blankEventImage());
+		event2Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(1).getEvent().imageMonochrome() : blankEventImage());
+		event3Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(2).getEvent().imageMonochrome() : blankEventImage());
 		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);
 	}
 	

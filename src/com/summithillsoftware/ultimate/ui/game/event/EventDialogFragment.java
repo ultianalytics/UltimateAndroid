@@ -26,9 +26,9 @@ import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
-import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 
 public class EventDialogFragment extends UltimateDialogFragment {
 	
@@ -254,7 +254,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void notifyEventChange() {
-    	((EventsActivity)getActivity()).eventUpdated(game().getSelectedEvent());
+    	((Refreshable)getActivity()).refresh();
 	}
 	
 	private void registerDialogCancelListener(Dialog dialog) {

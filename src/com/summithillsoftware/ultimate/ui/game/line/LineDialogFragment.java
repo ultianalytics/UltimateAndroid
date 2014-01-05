@@ -147,7 +147,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		GameActionActivity activity = (GameActionActivity)getActivity();
 		super.onDismiss(dialog);
 		if (activity != null) {
-			activity.lineDialogDismissed();
+			activity.refresh();
 		}
 	}
 	

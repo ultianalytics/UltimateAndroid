@@ -39,10 +39,8 @@ public class RecentEventButton extends LinearLayout {
 		((Button) findViewById(R.id.button)).setText(description);
 	}
 	
-	public void setButtonOnClick(OnClickListener clickListener) {
+	public void setOnClickListener(OnClickListener clickListener) {
 		((Button) findViewById(R.id.button)).setOnClickListener(clickListener);
 	}
-
-
 
 }

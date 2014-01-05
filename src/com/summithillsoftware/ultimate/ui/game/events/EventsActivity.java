@@ -11,10 +11,11 @@ import android.widget.ListView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.EventHolder;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.event.EventDialogFragment;
 
-public class EventsActivity extends UltimateActivity {
+public class EventsActivity extends UltimateActivity implements Refreshable {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class EventsActivity extends UltimateActivity {
 	    eventDialog.show(fragmentManager, "dialog");
 	}
 	
-	public void eventUpdated(EventHolder event) {
+	public void refresh() {
 		((EventsListAdapter)getEventsListView().getAdapter()).resetPointsAndEvents();
 	}
 	

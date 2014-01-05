@@ -15,6 +15,11 @@ public class EventHolder {
 		setEvent(event);
 	}
 	
+	public EventHolder(PointEvent pointEvent) {
+		this(pointEvent.getEvent());
+		setPoint(pointEvent.getPoint());
+	}
+	
 	public boolean validate() {
 		if (event == null) {
 			Log.e(Constants.ULTIMATE, "Invalid event holder...no event");

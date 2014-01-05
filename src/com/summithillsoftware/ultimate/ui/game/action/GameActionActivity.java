@@ -15,17 +15,21 @@ import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.CessationEvent;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
+import com.summithillsoftware.ultimate.model.EventHolder;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.model.PointEvent;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
+import com.summithillsoftware.ultimate.ui.game.event.EventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 
-public class GameActionActivity extends UltimateActivity implements GameActionEventListener {
+public class GameActionActivity extends UltimateActivity implements GameActionEventListener, Refreshable {
 	private GameActionFieldFragment fieldFragment;
 	private GameActionRecentEventsFragment recentsFragment;
 	private GestureOverlayView swipeGestureOverlay;
@@ -129,6 +133,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}
 	
+	private void showEventDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    EventDialogFragment eventDialog = new EventDialogFragment();
+	    eventDialog.show(fragmentManager, "dialog");
+	}
+	
 	public void newPull(DefenseEvent pullEvent) { // call back from dialog
 		if (pullEvent != null) {
 			game().addEvent(pullEvent);
@@ -174,6 +184,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		// no-op ...don't care about this 
 	}
 
+	@Override
+	public void onEventEditRequest(PointEvent pointEvent) {
+		game().setSelectedEvent(new EventHolder(pointEvent));
+		showEventDialog();
+	}
+	
 	@Override
 	public void timeoutInfoRequested() {
 		// TODO Auto-generated method stub
@@ -240,6 +256,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	private CessationEvent createNextPeriodEndEvent() {
 	    Action nextPeriodEnd = game().nextPeriodEnd();
 	    return CessationEvent.createWithAction(nextPeriodEnd);
+	}
+	
+	public void refresh() {
+		populateView();
 	}
 
 	private Game game() {

@@ -19,6 +19,7 @@ import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
+import com.summithillsoftware.ultimate.model.PointEvent;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class GameActionFieldFragment extends UltimateFragment implements GameActionEventListener {
@@ -245,6 +246,10 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		notifyNewEvent(event, false);
 	}
 
+	@Override
+	public void onEventEditRequest(PointEvent event) {
+		// no-op...field fragment doesn't care
+	}
 	
 	@Override
 	public void potentialNewEvent(Event event) {

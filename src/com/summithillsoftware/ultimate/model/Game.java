@@ -357,15 +357,15 @@ public class Game implements Serializable {
 		return pointsInMostRecentOrder;
 	}
 	
-	public List<Event>getLastEvents(int numberToRetrieve) {
+	public List<PointEvent>getLastEvents(int numberToRetrieve) {
 		Iterator<Point> reversePointIterator = pointsInMostRecentOrder().iterator();
 		
-		List<Event> answerList = new ArrayList<Event>();
+		List<PointEvent> answerList = new ArrayList<PointEvent>();
 		while (reversePointIterator.hasNext() && answerList.size() < numberToRetrieve) {
 			Point point = reversePointIterator.next();
-			List<Event> pointEvents = point.getLastEvents(numberToRetrieve - answerList.size());
-			for (Event event : pointEvents) {
-				answerList.add(event);
+			List<Event> events = point.getLastEvents(numberToRetrieve - answerList.size());
+			for (Event event : events) {
+				answerList.add(new PointEvent(point, event));
 			}
 		}
 		return answerList;
