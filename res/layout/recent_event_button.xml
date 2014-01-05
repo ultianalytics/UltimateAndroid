@@ -6,11 +6,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:gravity="center"        
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
         android:contentDescription="@string/image_description"
-        android:src="@drawable/penalty" />
+        android:src="@drawable/unknown_event" />
 
     <Button
         android:id="@+id/button"
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left|center_vertical"
-        android:paddingLeft="40dp"
+        android:paddingLeft="50dp"
         android:text="@string/undefined" />
 
 </RelativeLayout>
