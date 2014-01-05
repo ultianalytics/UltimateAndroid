@@ -116,7 +116,7 @@
     <string name="alert_timeout_which_half_title">Timeout During Halftime</string>
     <string name="alert_timeout_which_half_message">We are at halftime. To which half should timeout be applied?</string>
     <string name="alert_timeout_undo_title">Timeout Undo</string>
-    <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout?</string>    
+    <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout</string>    
     <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>   
     
     <string name="label_team_type">Type:</string>

@@ -145,20 +145,20 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		timeoutsPerHalfQuotaSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	if (timeoutsPerHalfQuotaSpinner.getSelectedItemPosition() != position) { // avoids circular problem (changing value fires the event)
+		    	if (timeoutDetails().getQuotaPerHalf() != position) { // avoids circular problem (changing value fires the event)
 			        timeoutDetails().setQuotaPerHalf(position);
 			        populateView();
 		    	}
 		    }
 		    @Override
-		    public void onNothingSelected(AdapterView<?> parentView) {
+		    public void onNothingSelected(AdapterView<?> parentView) { // avoids circular problem (changing value fires the event)
 		        // no-op
 		    }
 		});
 		timeoutFloatersQuotaSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	if (timeoutFloatersQuotaSpinner.getSelectedItemPosition() != position) { // avoids circular problem (changing value fires the event)
+		    	if (timeoutDetails().getQuotaFloaters() != position) { // avoids circular problem (changing value fires the event)
 			        timeoutDetails().setQuotaFloaters(position);
 			        populateView();
 		    	}
