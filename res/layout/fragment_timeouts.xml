@@ -40,6 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
         android:text="@string/label_timeouts_quota"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -47,8 +48,8 @@
         android:id="@+id/timeoutQuotas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp" 
-        android:layout_marginRight="12dp">
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="12dp" >
 
         <TableRow
             android:id="@+id/timeoutPerHalfQuotaRow"
@@ -56,10 +57,10 @@
             android:layout_height="wrap_content" >
 
             <TextView
+                style="@style/FormLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_timeouts_per_half"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="@string/label_timeouts_per_half" />
 
             <Spinner
                 android:id="@+id/timeoutsPerHalfQuotaSpinner"
@@ -73,10 +74,10 @@
             android:layout_height="wrap_content" >
 
             <TextView
+                style="@style/FormLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_timeouts_floaters"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="@string/label_timeouts_floaters" />
 
             <Spinner
                 android:id="@+id/timeoutFloatersQuotaSpinner"
@@ -88,20 +89,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+		android:layout_marginLeft="12dp"
         android:text="@string/label_timeouts_taken"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="12dp"
         android:orientation="horizontal" >
 
         <TextView
+            style="@style/FormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_timeouts_first_half"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="@string/label_timeouts_first_half" />
 
         <TextView
             android:id="@+id/timeoutsTakenFirstHalfTextView"
@@ -112,11 +115,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            style="@style/FormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/label_timeouts_second_half"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginLeft="14dp"
+            android:text="@string/label_timeouts_second_half" />
 
         <TextView
             android:id="@+id/timeoutsTakenSecondHalfTextView"
@@ -137,8 +140,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <TextView
@@ -151,7 +154,7 @@
             android:id="@+id/timeoutsAvailableTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/zero"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
@@ -159,20 +162,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="14dp"
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/takeTimeoutButton"
+            style="@style/standardButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_timeouts_take_timeout" />
+            android:text="@string/button_timeouts_take_timeout"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/undoTimeoutButton"
+            style="@style/buttonUndo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/button_timeouts_undo" />
     </LinearLayout>
 
