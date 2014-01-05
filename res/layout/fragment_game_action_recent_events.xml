@@ -17,21 +17,24 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/specialActionButtons"
         android:layout_toRightOf="@id/undoLastEventButton"
-		android:layout_toLeftOf="@+id/specialActionButtons"        
         android:orientation="vertical" >
 
-        <include
-            android:id="@+id/event1TextView"
-            layout="@layout/include_game_action_recent_event" />
+        <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+            android:id="@+id/event1Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/event2TextView"
-            layout="@layout/include_game_action_recent_event" />
+        <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+            android:id="@+id/event2Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/event3TextView"
-            layout="@layout/include_game_action_recent_event" />
+        <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+            android:id="@+id/event3Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout

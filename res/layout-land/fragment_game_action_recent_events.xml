@@ -28,10 +28,6 @@
             android:text="@string/button_action_timeouts" />
     </RelativeLayout>
 
-<!--     <include
-        android:layout_height="wrap_content"
-        layout="@layout/include_game_action_recent_events_list" /> -->
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent" >
@@ -53,19 +49,21 @@
             android:layout_toRightOf="@id/undoLastEventButton"
             android:orientation="vertical" >
 
-            <include
-                android:id="@+id/event1TextView"
-                layout="@layout/include_game_action_recent_event" />
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event1Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            <include
-                android:id="@+id/event2TextView"
-                layout="@layout/include_game_action_recent_event" />
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event2Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            <include
-                android:id="@+id/event3TextView"
-                layout="@layout/include_game_action_recent_event" />
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event3Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        
     </RelativeLayout>
 
 </LinearLayout>

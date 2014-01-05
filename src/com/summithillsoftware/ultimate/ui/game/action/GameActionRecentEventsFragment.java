@@ -5,10 +5,9 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
@@ -23,9 +22,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	private Button undoLastEventButton;
 	private Button timeoutButton;
 	private Button cessationButton;
-	private TextView event1TextView;
-	private TextView event2TextView;
-	private TextView event3TextView;
+	private RecentEventButton event1Button;
+	private RecentEventButton event2Button;
+	private RecentEventButton event3Button;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,9 +49,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		undoLastEventButton = (Button)view.findViewById(R.id.undoLastEventButton);
 		timeoutButton = (Button)view.findViewById(R.id.timeoutButton);
 		cessationButton = (Button)view.findViewById(R.id.cessationButton);
-		event1TextView = (TextView)view.findViewById(R.id.event1TextView);
-		event2TextView = (TextView)view.findViewById(R.id.event2TextView);
-		event3TextView = (TextView)view.findViewById(R.id.event3TextView);
+		event1Button = (RecentEventButton)view.findViewById(R.id.event1Button);
+		event2Button = (RecentEventButton)view.findViewById(R.id.event2Button);
+		event3Button = (RecentEventButton)view.findViewById(R.id.event3Button);
 	}
 	
 	private void registerWidgetListeners() {
@@ -124,9 +123,12 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 
 	private void populateRecentEvents() {
 		List<Event> lastFewEvents = Game.current().getLastEvents(3);
-		event1TextView.setText(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).toString() : "");
-		event2TextView.setText(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).toString() : "");
-		event3TextView.setText(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).toString() : "");
+		event1Button.setEventDescription(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).toString() : "");
+		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).toString() : "");
+		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).toString() : "");
+		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).image() : blankEventImage());
+		event2Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(1).image() : blankEventImage());
+		event3Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(2).image() : blankEventImage());
 		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);
 	}
 	
@@ -141,6 +143,10 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	public void setGameActionEventListener(
 			GameActionEventListener gameActionEventListener) {
 		this.gameActionEventListener = gameActionEventListener;
+	}
+	
+	private int blankEventImage() {
+		return R.drawable.unknown_event;
 	}
 	
 }
