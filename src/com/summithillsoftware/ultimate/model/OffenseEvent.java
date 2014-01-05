@@ -201,7 +201,7 @@ public class OffenseEvent extends Event {
 		if (passer == null) {
 			passer = Player.anonymous();
 		}
-		if (receiver == null) {
+		if (receiver == null || getAction() == Throwaway || getAction() == Stall || getAction() == MiscPenalty || getAction() == Callahan) {
 			receiver = Player.anonymous();
 		}		
 		if (!OFFENSE_ACTIONS.contains(getAction())) {
