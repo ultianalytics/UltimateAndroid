@@ -83,14 +83,18 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	}
 
 	private void populateView() {
+	    boolean hasGameStarted = game().hasEvents();
+	    boolean is2ndHalf = game().isAfterHalftime();
+	    
+	    // populate fields
 		populateQuotaSpinner(timeoutsPerHalfQuotaSpinner, timeoutDetails().getQuotaPerHalf());
 		populateQuotaSpinner(timeoutFloatersQuotaSpinner, timeoutDetails().getQuotaFloaters());
 		timeoutsTakenFirstHalfTextView.setText(Integer.toString(timeoutDetails().getTakenFirstHalf()));
 		timeoutsTakenSecondHalfTextView.setText(Integer.toString(timeoutDetails().getTakenSecondHalf()));		
 		timeoutsAvailableTextView.setText(Integer.toString(game().availableTimeouts()));
 		
-	    boolean hasGameStarted = game().hasEvents();
-	    boolean is2ndHalf = game().isAfterHalftime();
+		// decorate
+		timeoutsAvailableTextView.setTextColor(getResources().getColor(game().availableTimeouts() == 0 ? R.color.Red : R.color.White));
 	    
 	    // hide stuff that is not applicable
 	    actionView.setVisibility(hasGameStarted ? View.VISIBLE : View.GONE);
