@@ -151,7 +151,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		    	}
 		    }
 		    @Override
-		    public void onNothingSelected(AdapterView<?> parentView) { // avoids circular problem (changing value fires the event)
+		    public void onNothingSelected(AdapterView<?> parentView) { 
 		        // no-op
 		    }
 		});
