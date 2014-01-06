@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.TimeoutDetails;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
@@ -105,7 +106,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void populateQuotaSpinner(Spinner spinner, int selection) {
-        Integer[] optionsList = new Integer[]{0,1,2,3,4,5};
+        Integer[] optionsList = new Integer[]{0,1,2,3,4};
         ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(this.getActivity(), android.R.layout.simple_spinner_item, optionsList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -115,8 +116,8 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				commitChanges();				
 				((Refreshable)getActivity()).refresh();
-				game().save();
 				dismiss();
 			}
 		});
@@ -172,6 +173,13 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		        // no-op
 		    }
 		});		
+	}
+	
+	private void commitChanges() {
+		game().save();
+		Preferences.current().setTimeoutsPerHalf(timeoutDetails().getQuotaPerHalf());
+		Preferences.current().setTimeoutFloatersPerGame(timeoutDetails().getQuotaFloaters());
+		Preferences.current().save();
 	}
 
 	private void registerDialogCancelListener(Dialog dialog) {
