@@ -24,6 +24,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 
 public class TimeoutsDialogFragment extends UltimateDialogFragment {
+	private static final String IS_ACTION_MODE = "actionMode";
 
 	// widgets
 	private ImageButton doneButton;
@@ -84,7 +85,6 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	}
 
 	private void populateView() {
-	    boolean hasGameStarted = game().hasBeenSaved();
 	    boolean is2ndHalf = game().isAfterHalftime();
 	    
 	    // populate fields
@@ -98,8 +98,8 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		timeoutsAvailableTextView.setTextColor(getResources().getColor(game().availableTimeouts() == 0 ? R.color.Red : R.color.White));
 	    
 	    // hide stuff that is not applicable
-	    actionView.setVisibility(hasGameStarted ? View.VISIBLE : View.GONE);
-	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 && hasGameStarted ? View.VISIBLE : View.GONE);
+	    actionView.setVisibility(isActionMode() ? View.VISIBLE : View.GONE);
+	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 ? View.VISIBLE : View.GONE);
 	    undoTimeoutButton.setVisibility(timeoutDetails().getTakenFirstHalf() > 0 ||  timeoutDetails().getTakenSecondHalf() > 0  ? View.VISIBLE : View.GONE);
 	    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
 	    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
@@ -116,12 +116,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				updatePreferences();			
-				if (game().hasBeenSaved()) {
-					((Refreshable)getActivity()).refresh();
-					game().save();
-				}
-				dismiss();
+				doneButtonPressed();
 			}
 		});
 		takeTimeoutButton.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +187,17 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				// later
 			}
 		});
+	}
+	
+	private void doneButtonPressed() {
+		updatePreferences();			
+		if (getActivity() instanceof Refreshable) {
+			((Refreshable)getActivity()).refresh();
+		}
+		if (game().hasBeenSaved()) {
+			game().save();
+		}
+		dismiss();		
 	}
 	
 	private void promptForApplyDuringHalf() {
@@ -279,6 +285,20 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	
 	private Game game() {
 		return Game.current();
+	}
+
+	public boolean isActionMode() {
+		Bundle fragmentStateBundle = getArguments();
+		return fragmentStateBundle == null ? true : fragmentStateBundle.getBoolean(IS_ACTION_MODE, true);
+	}
+
+	public void setActionMode(boolean isActionMode) {
+		Bundle fragmentStateBundle = getArguments();
+		if (fragmentStateBundle == null) {
+			fragmentStateBundle = new Bundle();
+			setArguments(fragmentStateBundle);
+		}
+		fragmentStateBundle.putBoolean(IS_ACTION_MODE, isActionMode);
 	}
 
 

@@ -243,6 +243,7 @@ public class GameActivity extends UltimateActivity {
 	private void showTimeoutsDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    TimeoutsDialogFragment timeoutsDialog = new TimeoutsDialogFragment();
+	    timeoutsDialog.setActionMode(false);
 	    timeoutsDialog.show(fragmentManager, "dialog");
 	}
 	
