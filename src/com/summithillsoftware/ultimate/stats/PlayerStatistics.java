@@ -18,6 +18,8 @@ public class PlayerStatistics {
 		}
 	};
 	
+	
+	
 	private static List<PlayerStat> descendingSortedStats(List<PlayerStat> stats) {
 		Collections.sort(stats, playerStatComparator);
 		return stats;
@@ -47,11 +49,5 @@ public class PlayerStatistics {
 			}
 		}
 	}
-	
-	public static Comparator<PlayerStat> PlayerStatComparator = new Comparator<PlayerStat>() {
-		public int compare(PlayerStat playerStat1, PlayerStat playerStat2) {
-			return player2.getSortValue().compareTo(player1.getSortValue());
-		}
-	};
 
 }
