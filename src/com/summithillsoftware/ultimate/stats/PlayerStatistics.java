@@ -84,6 +84,146 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
+	public List<PlayerStat> assistsPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isOffense() && eventDetails.getEvent().isGoal()) {
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> dropsPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.getEvent().isDrop()) {
+					DefenseEvent event = eventDetails.getDefenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+
+	public List<PlayerStat> throwawaysPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isOffense() && (eventDetails.getEvent().isThrowaway() || eventDetails.getEvent().isCallahan())) {
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> stallsPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isOffense() && eventDetails.getEvent().getAction() == Action.Stall) {
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> miscPenaltiesPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isOffense() && eventDetails.getEvent().getAction() == Action.MiscPenalty) {
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> pullsPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.getEvent().isPull()) {
+					DefenseEvent event = eventDetails.getDefenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> pullsObPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.getEvent().isPullOb()) {
+					DefenseEvent event = eventDetails.getDefenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> dsPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isDefense() && (eventDetails.getEvent().isD() || eventDetails.getEvent().isCallahan())) {
+					DefenseEvent event = eventDetails.getDefenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+
+	public List<PlayerStat> callahansPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isDefense() && eventDetails.getEvent().isCallahan()) {
+					DefenseEvent event = eventDetails.getDefenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
+	public List<PlayerStat> callahanedPerPlayer(final Game game, final boolean includeTournament) {
+		StatsAccumulator statsAccumulator = new StatsAccumulator() {
+			@Override
+			public void updateStats(StatsEventDetails eventDetails) {
+				if (eventDetails.isOffense() && eventDetails.getEvent().isCallahan()) {
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					playerStat.incrIntValue();
+				} 
+			}
+		};
+		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
+	}
+	
 	public List<PlayerStat> plusMinusCountPerPlayer(Game game, boolean includeTournament) {
 	    /*
 	     +/- counters/stats for individual players over the course of a game and a
