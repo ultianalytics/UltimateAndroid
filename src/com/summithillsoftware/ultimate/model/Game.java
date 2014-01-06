@@ -42,7 +42,7 @@ public class Game implements Serializable {
 	private String tournamentName;
 	private int gamePoint;
 	private boolean isFirstPointOline;
-	private String timeoutJson;
+	private TimeoutDetails timeoutDetails;
 	private List<Point> points;
 	private Wind wind;
 	
@@ -54,7 +54,6 @@ public class Game implements Serializable {
 	private Event firstEventTweeted;  // server transient
 	private CessationEvent lastPeriodEnd; // server transient
 	
-	private transient TimeoutDetails timeoutDetails; // local and server transient
 	private transient boolean arePointSummariesValid; // local and server transient
 	private transient EventHolder selectedEvent; // local and server transient
 	
@@ -881,37 +880,25 @@ public class Game implements Serializable {
 	
 	public void setTimeoutDetails(TimeoutDetails timeoutDetails) {
 		this.timeoutDetails = timeoutDetails;
-		if (timeoutDetails != null) {
-			// TODO...write out timeoutJson
-		} else {
-			timeoutJson = null;
-		}
 	}
 	
 	public TimeoutDetails getTimeoutDetails() {
 		if (timeoutDetails == null) {
-			if (timeoutJson != null) {
-				// TODO...read-in JSON and set timeoutDetails var
-			} else {
-				timeoutDetails = new TimeoutDetails();
-				timeoutDetails.setQuotaPerHalf(Preferences.current().getTimeoutsPerHalf());
-				timeoutDetails.setQuotaFloaters(Preferences.current().getTimeoutFloatersPerGame());
-			}
+			timeoutDetails = new TimeoutDetails();
+			timeoutDetails.setQuotaPerHalf(Preferences.current().getTimeoutsPerHalf());
+			timeoutDetails.setQuotaFloaters(Preferences.current().getTimeoutFloatersPerGame());
 		}
 		return timeoutDetails;
 	}
 
 	public int availableTimeouts() {
-		if (timeoutDetails == null) {
-			return 0;
-		}
-		int totalAvailableFirstHalf = timeoutDetails.getQuotaPerHalf() + timeoutDetails.getQuotaFloaters();
+		int totalAvailableFirstHalf = getTimeoutDetails().getQuotaPerHalf() + getTimeoutDetails().getQuotaFloaters();
 	    if (isAfterHalftime()) {
-	        int floatersAvailableAfterFirstHalf = Math.min(totalAvailableFirstHalf - timeoutDetails.getTakenFirstHalf(), timeoutDetails.getQuotaFloaters());
-	        int totalAvailableSecondHalf = timeoutDetails.getQuotaPerHalf() + floatersAvailableAfterFirstHalf;
-	        return totalAvailableSecondHalf - timeoutDetails.getTakenSecondHalf();
+	        int floatersAvailableAfterFirstHalf = Math.min(totalAvailableFirstHalf - getTimeoutDetails().getTakenFirstHalf(), getTimeoutDetails().getQuotaFloaters());
+	        int totalAvailableSecondHalf = getTimeoutDetails().getQuotaPerHalf() + floatersAvailableAfterFirstHalf;
+	        return totalAvailableSecondHalf - getTimeoutDetails().getTakenSecondHalf();
 	    } else {
-	        return totalAvailableFirstHalf - timeoutDetails.getTakenFirstHalf();
+	        return totalAvailableFirstHalf - getTimeoutDetails().getTakenFirstHalf();
 	    }
 	}
 

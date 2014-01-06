@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
+import static android.content.DialogInterface.BUTTON_NEUTRAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +128,7 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.setMessage(message);
  		errorDialog.setCancelable(false);
  		errorDialog.setButton(BUTTON_POSITIVE, button1Text, button1Handler);
- 		errorDialog.setButton(BUTTON_POSITIVE, button2Text, button2Handler);
+ 		errorDialog.setButton(BUTTON_NEUTRAL, button2Text, button2Handler);
  		errorDialog.setButton(BUTTON_NEGATIVE, cancelButtonText, cancelHandler);
  		errorDialog.show();
 	}
