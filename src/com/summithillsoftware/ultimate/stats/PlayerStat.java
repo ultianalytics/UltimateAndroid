@@ -11,15 +11,14 @@ public class PlayerStat {
 	public PlayerStat(Player player, float floatValue) {
 		super();
 		this.player = player;
-		this.floatValue = floatValue;
-		this.type = StatNumericType.Float;
+		setFloatValue(floatValue);
 	}
 	
 	public PlayerStat(Player player, int intValue) {
 		super();
 		this.player = player;
 		this.intValue = intValue;
-		this.type = StatNumericType.Integer;
+		setIntValue(intValue);
 	}
 	
 	public Player getPlayer() {
@@ -33,15 +32,29 @@ public class PlayerStat {
 	}
 	public void setFloatValue(float floatValue) {
 		this.floatValue = floatValue;
+		this.type = StatNumericType.FLOAT;
 	}
 	public int getIntValue() {
 		return intValue;
 	}
 	public void setIntValue(int intValue) {
 		this.intValue = intValue;
+		this.type = StatNumericType.INTEGER;
 	}
+	public void incrIntValue() {
+		setIntValue(intValue+1);
+	}
+	public void decrIntValue() {
+		setIntValue(intValue-1);
+	}
+	public void incrFloatValue() {
+		setFloatValue(floatValue+1);
+	}
+	public void decrFloatValue() {
+		setFloatValue(floatValue-1);
+	}	
 	public float sortValue() {
-		return type == StatNumericType.Integer ? (float)intValue : floatValue;
+		return type == StatNumericType.INTEGER ? (float)intValue : floatValue;
 	}
 	public StatNumericType getType() {
 		return type;

@@ -74,6 +74,11 @@ public class OffenseEvent extends Event {
 	}
 	
 	@Override
+	public boolean isCatch() {
+		return getAction() == Catch;
+	}
+	
+	@Override
 	public boolean isTurnover() {
 	    return getAction() == Drop || getAction() == Throwaway || getAction() == Stall || getAction() == MiscPenalty || getAction() == Callahan;
 	}

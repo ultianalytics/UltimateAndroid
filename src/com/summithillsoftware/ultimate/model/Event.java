@@ -119,6 +119,10 @@ public abstract class Event implements Serializable {
 	public boolean isD() {
 		return false;
 	}
+	
+	public boolean isCatch() {
+		return false;
+	}
 
 	public boolean isDrop() {
 		return false;

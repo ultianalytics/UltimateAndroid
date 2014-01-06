@@ -3,8 +3,10 @@ package com.summithillsoftware.ultimate.stats;
 import java.util.List;
 import java.util.Map;
 
+import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.OffenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Point;
 
@@ -32,6 +34,18 @@ public class StatsEventDetails {
 	public Event getEvent() {
 		return event;
 	}
+	public OffenseEvent getOffenseEvent() {
+		return (OffenseEvent)event;
+	}
+	public DefenseEvent getDefenseEvent() {
+		return (DefenseEvent)event;
+	}
+	public boolean isOffense() {
+		return event.isOffense();
+	}
+	public boolean isDefense() {
+		return event.isDefense();
+	}	
 	public void setEvent(Event event) {
 		this.event = event;
 	}
@@ -44,6 +58,9 @@ public class StatsEventDetails {
 	public boolean isOlinePoint() {
 		return isOlinePoint;
 	}
+	public boolean isDlinePoint() {
+		return !isOlinePoint;
+	}	
 	public void setOlinePoint(boolean isOlinePoint) {
 		this.isOlinePoint = isOlinePoint;
 	}
