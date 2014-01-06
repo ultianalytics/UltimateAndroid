@@ -97,7 +97,7 @@ public class Game implements Serializable {
 	public static void setCurrentGame(Game game) {
 		synchronized (FILE_NAME_PREFIX) {
 			Current = game;
-			if (game.hasBeenSaved()) {
+			if (game == null || game.hasBeenSaved()) {
 				Preferences.current().setCurrentGameFileName(game == null ? null : game.getGameId());
 				Preferences.current().save();
 			}

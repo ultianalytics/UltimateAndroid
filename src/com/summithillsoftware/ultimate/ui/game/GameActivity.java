@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.summithillsoftware.ultimate.model.Score;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
+import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 
 public class GameActivity extends UltimateActivity {
 	private List<Integer> gameToScores;
@@ -106,6 +108,10 @@ public class GameActivity extends UltimateActivity {
 	
 	public void eventsClicked(View v) {
 		goToEventsActivity();
+	}
+	
+	public void timeoutsClicked(View v) {
+		showTimeoutsDialog();
 	}
 
 	public void cancelClicked(View v) {
@@ -232,6 +238,12 @@ public class GameActivity extends UltimateActivity {
 	private void goToEventsActivity() {
 		Intent intent = new Intent(this, EventsActivity.class);
 		startActivity(intent);
+	}
+	
+	private void showTimeoutsDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    TimeoutsDialogFragment timeoutsDialog = new TimeoutsDialogFragment();
+	    timeoutsDialog.show(fragmentManager, "dialog");
 	}
 	
 	public static String formatScore(Game game, Context context) {

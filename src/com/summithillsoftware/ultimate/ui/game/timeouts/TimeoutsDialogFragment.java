@@ -84,7 +84,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	}
 
 	private void populateView() {
-	    boolean hasGameStarted = game().hasEvents();
+	    boolean hasGameStarted = game().hasBeenSaved();
 	    boolean is2ndHalf = game().isAfterHalftime();
 	    
 	    // populate fields
@@ -116,8 +116,11 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private void registerWidgetListeners() {
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				commitChanges();				
-				((Refreshable)getActivity()).refresh();
+				updatePreferences();			
+				if (game().hasBeenSaved()) {
+					((Refreshable)getActivity()).refresh();
+					game().save();
+				}
 				dismiss();
 			}
 		});
@@ -175,8 +178,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		});		
 	}
 	
-	private void commitChanges() {
-		game().save();
+	private void updatePreferences() {
 		Preferences.current().setTimeoutsPerHalf(timeoutDetails().getQuotaPerHalf());
 		Preferences.current().setTimeoutFloatersPerGame(timeoutDetails().getQuotaFloaters());
 		Preferences.current().save();

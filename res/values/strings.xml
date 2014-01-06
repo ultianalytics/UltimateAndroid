@@ -185,7 +185,8 @@
     <string name="placeholder_player_number">Player Number</string>
     <string name="placeholder_opponent_name">Opponent Name</string>
     <string name="placeholder_tournament_name">Tournament Name</string>
-    <string name="placeholder_hangtime">seconds</string>    
+    <string name="placeholder_hangtime">seconds</string> 
+       
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
@@ -193,6 +194,7 @@
     <string name="button_done">DONE</string>
     <string name="button_start">Start Game</string>
     <string name="button_game_events">Events</string>    
+    <string name="button_game_timeouts">Timeouts</string>       
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>
