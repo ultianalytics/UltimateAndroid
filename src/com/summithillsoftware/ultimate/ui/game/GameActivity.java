@@ -33,7 +33,6 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 
 public class GameActivity extends UltimateActivity {
-	public static final String NEW_GAME = "NewGame";
 	private List<Integer> gameToScores;
 	private List<String> gameToNames;
 	
@@ -100,7 +99,6 @@ public class GameActivity extends UltimateActivity {
 		if (isGameValid()) {
 			populateAndSaveGame();
 			if (isNew) {
-				getIntent().removeExtra(NEW_GAME);
 				goToActionActivity();
 			}
 		} 
@@ -182,7 +180,7 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void populateAndSaveGame() {
-		Game game = isNewGame() ? Game.createGame() : Game.current();
+		Game game = Game.current();
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
 		game.setFirstPointOline((radiogroup_game_first_point_oline.getCheckedRadioButtonId() == R.id.radio_game_start_offense));
@@ -216,7 +214,7 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private boolean isNewGame() {
-		return getIntent().getBooleanExtra(NEW_GAME, false);
+		return !Game.current().hasBeenSaved();
 	}
 	
 	private String getOpponentName() {

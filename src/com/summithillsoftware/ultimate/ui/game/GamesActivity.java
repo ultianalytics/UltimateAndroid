@@ -87,7 +87,7 @@ public class GamesActivity extends UltimateActivity {
 	private void goToGameActivity(boolean isNew) {
 		Intent intent = new Intent(GamesActivity.this, GameActivity.class);
 		if (isNew) {
-			intent.putExtra(GameActivity.NEW_GAME, true);
+			Game.setCurrentGame(Game.createGame());
 		}
 		startActivity(intent);
 	}
