@@ -36,6 +36,8 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	private TextView timeoutsAvailableTextView;
 	private Button takeTimeoutButton;
 	private Button undoTimeoutButton;
+	private TextView timeoutsTakenLabel;
+	private View timeoutsTakenView;	
 	private View actionView;
 
 	@Override
@@ -80,7 +82,9 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 		timeoutsAvailableTextView = (TextView) view.findViewById(R.id.timeoutsAvailableTextView);	
 		takeTimeoutButton = (Button) view.findViewById(R.id.takeTimeoutButton);
 		undoTimeoutButton = (Button) view.findViewById(R.id.undoTimeoutButton);		
-		actionView = (View) view.findViewById(R.id.actionView);			
+		actionView = (View) view.findViewById(R.id.actionView);
+		timeoutsTakenLabel = (TextView) view.findViewById(R.id.timeoutsTakenLabel);
+		timeoutsTakenView = (View) view.findViewById(R.id.timeoutsTakenView);
 
 	}
 
@@ -101,6 +105,8 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	    actionView.setVisibility(isActionMode() ? View.VISIBLE : View.GONE);
 	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 ? View.VISIBLE : View.GONE);
 	    undoTimeoutButton.setVisibility(timeoutDetails().getTakenFirstHalf() > 0 ||  timeoutDetails().getTakenSecondHalf() > 0  ? View.VISIBLE : View.GONE);
+	    timeoutsTakenLabel.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
+	    timeoutsTakenView.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
 	    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
 	    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
 	}
