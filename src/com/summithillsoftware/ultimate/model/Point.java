@@ -167,6 +167,9 @@ public class Point implements Serializable {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
+	public List<Event> getEvents() {
+		return events;
+	}
 	public List<Player> getLine() {
 		return line;
 	}

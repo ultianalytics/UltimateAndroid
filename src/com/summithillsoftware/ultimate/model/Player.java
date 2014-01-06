@@ -74,6 +74,9 @@ public class Player implements Serializable {
 	public String getName() {
 		return name;
 	}
+	public String getId() {
+		return name;
+	}
 	public void setName(String name) {
 		if (!this.name.equals(ANON_NAME) && !name.equals(ANON_NAME)) {  // don't allow changing name of anonymous player and don't allow a new player with this name
 			this.name = name;
