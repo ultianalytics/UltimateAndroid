@@ -25,6 +25,45 @@ public class PlayerStatistics {
 		}
 	};
 	
+	// Answers a "factor" (float between 0 and 1) for each player which reflects a player's played points vs. the rest of the team.
+	public static Map<String, Float> pointsPlayedFactorPerPlayer(Game game) {
+		Map<String, PlayerStat> pointsPerPlayer = pointsPerPlayer(game, true, true);
+		Map<String, Float> pointFactorPerPlayer = new HashMap<String, Float>();
+		
+		// find highest points played
+		float playersMaxPoint = 0;
+		for (PlayerStat pointsPlayedStat : pointsPerPlayer.values()) {
+			playersMaxPoint = Math.max(playersMaxPoint, pointsPlayedStat.getFloatValue());
+		}
+		
+		// for each player, calculate his factor
+		for (Player player : game.getPlayers()) {
+			PlayerStat playerStat = getStatForPlayer(player, pointsPerPlayer, StatNumericType.FLOAT);
+			float pointsPlayed = playerStat.getFloatValue();
+			float factor = playersMaxPoint == 0 ? 0 : pointsPlayed / (float)playersMaxPoint;
+			pointFactorPerPlayer.put(player.getId(), factor);
+		}
+		
+		return pointFactorPerPlayer;
+	}
+	
+	// Answer a dictionary (key=player id, value=PlayerStat) of all of the players' number of points in the game
+	public static Map<String, PlayerStat> pointsPerPlayer(Game game, boolean includeO, boolean includeD) {
+		Map<String, PlayerStat> pointsPerPlayer = new HashMap<String, PlayerStat>();
+		for (Point point : game.getPoints()) {
+			boolean isOLine = game.isPointOline(point);
+			if ((isOLine && includeO) || (!isOLine && includeD)) {
+				for (Player player : point.playersInEntirePoint()) {
+					updatePointsPerPlayer(player, pointsPerPlayer, 1.0f);
+				}
+				for (Player player : point.playersInPartOfPoint()) {
+					updatePointsPerPlayer(player, pointsPerPlayer, .5f);
+				}	
+			}
+		}
+		return pointsPerPlayer;
+	}
+	
 	/****   Stats Accumulator Methods *****/
 	
 	
@@ -312,12 +351,6 @@ public class PlayerStatistics {
 		return stats;
 	}
 	
-	private static Map<String, PlayerStat> accumulateStatsPerPlayer(Game game, StatsAccumulator accumulator) {
-		Map<String, PlayerStat> statsPerPlayer = new HashMap<String, PlayerStat>();
-		accumulateStatsPerPlayer(game, statsPerPlayer, accumulator);
-		return statsPerPlayer;
-	}
-	
 	private static void accumulateStatsPerPlayer(Game game, Map<String, PlayerStat> statsPerPlayer, StatsAccumulator accumulator) {
 		// Accumulate stats in a statsPerPlayer.  The accumulator is called for each event.
 		StatsEventDetails eventDetails = new StatsEventDetails();
@@ -336,5 +369,15 @@ public class PlayerStatistics {
 			}
 		}
 	}
+	
+	private static void updatePointsPerPlayer(Player player, Map<String, PlayerStat> pointsPerPlayer, float increment) {
+		PlayerStat playerStat = pointsPerPlayer.get(player.getId());
+		if (playerStat == null) {
+			playerStat = new PlayerStat(player, increment);
+			pointsPerPlayer.put(player.getId(), playerStat);
+		} else {
+			playerStat.setFloatValue(playerStat.getFloatValue() + increment);
+		}
+	} 
 
 }
