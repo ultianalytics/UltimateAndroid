@@ -133,7 +133,7 @@ public class Game implements Serializable {
 		}
 	}
 	
-	private static Game read(String gameId) {
+	public static Game read(String gameId) {
 		return read(Team.current().getTeamId(), gameId, true);
 	}
 
@@ -165,7 +165,7 @@ public class Game implements Serializable {
 		return game;
 	}
 	
-	private static List<String> getAllGameFileNames(String teamId) {
+	public static List<String> getAllGameFileNames(String teamId) {
 		List<String> fileNames = new ArrayList<String>();
 		File teamDir = getTeamDir(teamId);
 		if (teamDir != null && teamDir.exists()  && teamDir.isDirectory()) {
