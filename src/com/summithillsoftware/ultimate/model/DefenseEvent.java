@@ -118,7 +118,7 @@ public class DefenseEvent extends Event {
 	            	return getString(R.string.event_description_pull,(teamName == null ? ourTeam : teamName), hangtimeString);
 	            } else {
 	            	// Pull from {player} ({seconds} sec)	
-	            	return getString(R.string.event_description_pull_from,defender.getName(), hangtimeString);	            	
+	            	return getString(R.string.event_description_pull_from,getDefender().getName(), hangtimeString);	            	
 	            }
 	        }
 	        case PullOb: {
@@ -127,7 +127,7 @@ public class DefenseEvent extends Event {
 	            	return getString(R.string.event_description_pull_ob,(teamName == null ? ourTeam : teamName));
 	            } else {
 	            	// OB Pull from {player}
-	            	return getString(R.string.event_description_pull_ob_from,defender.getName());	
+	            	return getString(R.string.event_description_pull_ob_from,getDefender().getName());	
 	            }
 	        }
 	        case Goal: {
@@ -140,11 +140,11 @@ public class DefenseEvent extends Event {
 	        }
 	        case De: {
 	        	// {team|our} D || D by {player} 	        	
-	        	return defender == null ? getString(R.string.event_description_d, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_d_by,defender.getName());
+	        	return defender == null ? getString(R.string.event_description_d, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_d_by,getDefender().getName());
 	        }
 	        case Callahan: {
 	        	// {team|our} Callahan || Callahan by {player} 	        	
-	        	return defender == null ? getString(R.string.event_description_callahan, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_callahan_by,defender.getName());	        	
+	        	return defender == null ? getString(R.string.event_description_callahan, (teamName == null ? ourTeam : teamName)) : getString(R.string.event_description_callahan_by,getDefender().getName());	        	
 	        }
 	        default:
 	            return "";
@@ -152,13 +152,15 @@ public class DefenseEvent extends Event {
 	}
 
 	public Player getDefender() {
+		if (defender == null) {
+			defender = Player.anonymous();
+		}
 		return defender;
 	}
 
 	public void setDefender(Player defender) {
-		this.defender = defender;
+		this.defender = defender == null ? Player.anonymous() : defender;
 	}
-
 	
 	protected void ensureValid() {
 		if (defender == null || getAction() == Throwaway || getAction() == Goal) {
@@ -171,7 +173,7 @@ public class DefenseEvent extends Event {
 	}
 	
 	public Player getPlayerOne() {
-		return defender;
+		return getDefender();
 	}
 	
 	public Player getPlayerTwo() {

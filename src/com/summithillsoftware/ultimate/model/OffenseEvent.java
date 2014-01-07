@@ -122,13 +122,13 @@ public class OffenseEvent extends Event {
 	            	return getString(R.string.event_description_pass,(teamName == null ? ourTeam : teamName));
 	            } else if (isReceiverAnonymous()) {
 	            	// {passer} pass
-	            	return getString(R.string.event_description_pass,passer.getName());
+	            	return getString(R.string.event_description_pass,getPasser().getName());
 	            } else if (isPasserAnonymous()) {
 	            	// Pass to {passer}
-	            	return getString(R.string.event_description_pass_to, receiver.getName());
+	            	return getString(R.string.event_description_pass_to, getReceiver().getName());
 	            } else {
 	            	// {passer} to {receiver}
-	            	return getString(R.string.event_description_pass_from_to, passer.getName(), receiver.getName());
+	            	return getString(R.string.event_description_pass_from_to, getPasser().getName(), getReceiver().getName());
 	            }
 	        }
 	        case Drop: {
@@ -137,34 +137,34 @@ public class OffenseEvent extends Event {
 	            	return getString(R.string.event_description_drop,(teamName == null ? ourTeam : teamName));
 	            } else if (isReceiverAnonymous()) {
 	            	// {{passer} pass dropped
-	            	return getString(R.string.event_description_drop_from,passer.getName());
+	            	return getString(R.string.event_description_drop_from,getPasser().getName());
 	            } else if (isPasserAnonymous()) {
 	            	// {{receiver} dropped pass            	
-	            	return getString(R.string.event_description_drop_to, receiver.getName());
+	            	return getString(R.string.event_description_drop_to, getReceiver().getName());
 	            } else {
 	            	// {{receiver} dropped from {passer}
-	            	return getString(R.string.event_description_drop_from_to, receiver.getName(), passer.getName());    
+	            	return getString(R.string.event_description_drop_from_to, getReceiver().getName(), getPasser().getName());    
 	            }
 	        }
 	        case Throwaway:{
 	        	return isAnonymous() ? 
 	        			getString(R.string.event_description_throwaway,(teamName == null ? ourTeam : teamName)) : 
-	        			getString(R.string.event_description_throwaway,passer.getName());
+	        			getString(R.string.event_description_throwaway,getPasser().getName());
 	        }
 	        case Stall:{
 	        	return isAnonymous() ? 
 	        			getString(R.string.event_description_stalled,(teamName == null ? ourTeam : teamName)) : 
-	        			getString(R.string.event_description_stalled,passer.getName());
+	        			getString(R.string.event_description_stalled,getPasser().getName());
 	        }
 	        case MiscPenalty:{
 	        	return isAnonymous() ? 
 	        			getString(R.string.event_description_penalized,(teamName == null ? ourTeam : teamName)) : 
-	        			getString(R.string.event_description_penalized,passer.getName());
+	        			getString(R.string.event_description_penalized,getPasser().getName());
 	        }
 	        case Callahan:{
 	        	return isAnonymous() ? 
 	        			getString(R.string.event_description_callahaned,(teamName == null ? ourTeam : teamName)) : 
-	        			getString(R.string.event_description_callahaned,passer.getName());
+	        			getString(R.string.event_description_callahaned,getPasser().getName());
 	        }
 	        case Goal: {
 	            if (isAnonymous()) {
@@ -172,13 +172,13 @@ public class OffenseEvent extends Event {
 	            	return getString(R.string.event_description_o_goal,(teamName == null ? ourTeam : teamName));
 	            } else if (isReceiverAnonymous()) {
 	            	// {passer} pass for goal
-	            	return getString(R.string.event_description_o_goal_from,passer.getName());	            	
+	            	return getString(R.string.event_description_o_goal_from,getPasser().getName());	            	
 	            } else if (isPasserAnonymous()) {
 	            	// {receiver} goal
-	            	return getString(R.string.event_description_o_goal, receiver.getName());
+	            	return getString(R.string.event_description_o_goal, getReceiver().getName());
 	            } else {
-	            	// {team} goal ({passer} to {receiver})
-	            	return getString(R.string.event_description_o_goal_from_to, (teamName == null ? ourTeam : teamName), passer.getName(), receiver.getName());
+	            	// {team} goal ({getPasser()} to {receiver})
+	            	return getString(R.string.event_description_o_goal_from_to, (teamName == null ? ourTeam : teamName), getPasser().getName(), getReceiver().getName());
 	            }
 	        }
 	        default:
@@ -187,6 +187,9 @@ public class OffenseEvent extends Event {
 	}
 
 	public Player getPasser() {
+		if (passer == null) {
+			passer = Player.anonymous();
+		}
 		return passer;
 	}
 
@@ -195,6 +198,9 @@ public class OffenseEvent extends Event {
 	}
 
 	public Player getReceiver() {
+		if (receiver == null) {
+			receiver = Player.anonymous();
+		}
 		return receiver;
 	}
 
@@ -215,11 +221,11 @@ public class OffenseEvent extends Event {
 	}
 	
 	public Player getPlayerOne() {
-		return passer;
+		return getPasser();
 	}
 
 	public Player getPlayerTwo() {
-		return receiver;
+		return getReceiver();
 	}
 
 	public int image() {

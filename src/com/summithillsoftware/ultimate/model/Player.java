@@ -26,7 +26,7 @@ public class Player implements Serializable {
 	
 	public static Player replaceWithSharedPlayer(Player player) {
 		if (player == null) {
-			return null;
+			return anonymous();
 		}
 		if (player.isAnonymous()) {
 			return anonymous();
