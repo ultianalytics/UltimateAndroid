@@ -176,6 +176,7 @@
     <string name="label_timeouts_first_half">1st Half:</string>
     <string name="label_timeouts_second_half">2nd Half:</string>
     <string name="label_timeouts_available">Available now:</string>
+    <string name="label_stats_include">Include:</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -243,6 +244,9 @@
     <string name="radio_line_change_type_correction">Correction</string>
     <string name="radio_line_substitution_type_injury">Injury</string>
     <string name="radio_line_substitution_type_other">Other</string>
+    <string name="radio_stats_include_game">Game</string>
+    <string name="radio_stats_include_tournament">Tournament</string>
+    
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
 

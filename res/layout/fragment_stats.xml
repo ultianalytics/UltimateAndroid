@@ -7,12 +7,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="left|center_vertical"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginRight="6sp"
+            android:text="@string/label_stats_include"
+            android:textAppearance="@style/FormLabel" />
 
         <RadioGroup
             android:id="@+id/radioGroupGamesIncluded"
@@ -25,20 +29,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="RadioButton" />
+                android:text="@string/radio_stats_include_game"
+                android:textColor="@color/radio_button_text_color"
+                android:textSize="@dimen/form_text_size" />
 
             <RadioButton
                 android:id="@+id/radioGroupGamesIncludedTournament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="@string/radio_stats_include_tournament"
+                android:textColor="@color/radio_button_text_color"
+                android:textSize="@dimen/form_text_size" />
         </RadioGroup>
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal" >
 
         <ListView
