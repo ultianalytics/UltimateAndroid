@@ -3,7 +3,7 @@
 
     <string name="app_name">Ultimate</string>
     <string name="undefined">UNDEFINED</string>
-    <string name="zero">0</string>    
+    <string name="zero">0</string>
     <string name="blank"></string>
     <string name="hello_world">Hello world!</string>
     <string name="image_description">ImageDescription</string>
@@ -20,10 +20,9 @@
     <string name="common_o_line">O-Line</string>
     <string name="common_d_line">D-Line</string>
     <string name="common_unknown_player">UNKNOWN</string>
-            
     <string name="point_description_current">Current</string>
     <string name="point_description_current_point">Current\nPoint</string>
-	<string name="line_player_partial">%1$s (partial)</string>
+    <string name="line_player_partial">%1$s (partial)</string>
     <string name="event_description_our_team">Our team</string>
     <string name="event_description_pass">%1$s pass</string>
     <string name="event_description_pass_to">Pass to %1$s</string>
@@ -67,18 +66,17 @@
     <string name="title_activity_game_new">New Game</string>
     <string name="title_activity_game_action">Action</string>
     <string name="title_activity_events">Game Events</string>
+    <string name="title_activity_stats">Player Statistics</string>
         
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
-    
     <string name="action_settings">Settings</string>
     <string name="action_delete">Delete</string>
     <string name="action_teams">Teams</string>
     <string name="action_games">Games</string>
     <string name="action_action">Action</string>
     <string name="action_line">Line</string>
-    
     <string name="alert_team_confirm_delete_title">Confirm Team Delete</string>
     <string name="alert_team_confirm_delete_message">Do you really want to delete team \"%1$s\"?</string>
     <string name="alert_team_delete_not_allowed_title">Delete Not Allowed</string>
@@ -112,13 +110,12 @@
     <string name="alert_action_gameover_yes">Yes, done</string>
     <string name="alert_action_gameover_no">No, not yet</string>
     <string name="alert_event_invalid_hangtime_title">Invalid Hangtime</string>
-    <string name="alert_event_invalid_hangtime_message">The hangtime entered does not appear valid</string>   
+    <string name="alert_event_invalid_hangtime_message">The hangtime entered does not appear valid</string>
     <string name="alert_timeout_which_half_title">Timeout During Halftime</string>
     <string name="alert_timeout_which_half_message">We are at halftime. To which half should timeout be applied?</string>
     <string name="alert_timeout_undo_title">Timeout Undo</string>
-    <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout</string>    
-    <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>   
-    
+    <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout</string>
+    <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -148,53 +145,52 @@
     <string name="label_game_specialevent_only_one">Only choice for this button is&#8230;</string>
     <string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>
     <string name="label_game_specialevent_d">D is actually&#8230;</string>
-	<string name="label_event_hangtime">Hangtime:</string>
-	<string name="label_event_category_catch">Catch</string>
-	<string name="label_event_category_our_goal">Our Goal</string>
-	<string name="label_event_category_our_turnover">Our Turnover:</string>
-	<string name="label_event_category_callahaned">Callahan\'d</string>
-	<string name="label_event_category_pull">Pull:</string>
-	<string name="label_event_category_their_goal">Their Goal</string>
-	<string name="label_event_category_their_turnover">Their Turnover:</string>
-	<string name="label_event_category_callahan">Callahan</string>
-	<string name="label_event_category_end_1st_qtr">End Of 1st Quarter</string>
-	<string name="label_event_category_haltime">Halftime</string>
-	<string name="label_event_category_end_3rd_qtr">End Of 3rd Quarter</string>
-	<string name="label_event_category_end_4th_qtr">End Of 4th Quarter</string>
-	<string name="label_event_category_end_overtime">End Of An Overtime</string>
-	<string name="label_event_category_gameover">Game Over</string>
-	<string name="label_event_category_timeout">Timeout</string>
-	<string name="label_event_type_drop">Drop</string>
-	<string name="label_event_type_throwaway">Throwaway</string>
-	<string name="label_event_type_d">D</string>	
-	<string name="label_event_type_stall">Stall</string>
-	<string name="label_event_type_misc_penalty">Misc. Penalty</string>
-	<string name="label_event_type_pull">In Bounds Pull</string>
-	<string name="label_event_type_pullob">Out of Bounds Pull</string>
-	<string name="label_event_no_edits_allowed">No edits available for this event type</string>
-	<string name="label_timeouts_quota">Game Quota</string>
-	<string name="label_timeouts_per_half">Per Half:</string>
-	<string name="label_timeouts_floaters">Floaters:</string>
-	<string name="label_timeouts_taken">Taken</string>	
-	<string name="label_timeouts_first_half">1st Half:</string>
-	<string name="label_timeouts_second_half">2nd Half:</string>
-	<string name="label_timeouts_available">Available now:</string>
-	
+    <string name="label_event_hangtime">Hangtime:</string>
+    <string name="label_event_category_catch">Catch</string>
+    <string name="label_event_category_our_goal">Our Goal</string>
+    <string name="label_event_category_our_turnover">Our Turnover:</string>
+    <string name="label_event_category_callahaned">Callahan\'d</string>
+    <string name="label_event_category_pull">Pull:</string>
+    <string name="label_event_category_their_goal">Their Goal</string>
+    <string name="label_event_category_their_turnover">Their Turnover:</string>
+    <string name="label_event_category_callahan">Callahan</string>
+    <string name="label_event_category_end_1st_qtr">End Of 1st Quarter</string>
+    <string name="label_event_category_haltime">Halftime</string>
+    <string name="label_event_category_end_3rd_qtr">End Of 3rd Quarter</string>
+    <string name="label_event_category_end_4th_qtr">End Of 4th Quarter</string>
+    <string name="label_event_category_end_overtime">End Of An Overtime</string>
+    <string name="label_event_category_gameover">Game Over</string>
+    <string name="label_event_category_timeout">Timeout</string>
+    <string name="label_event_type_drop">Drop</string>
+    <string name="label_event_type_throwaway">Throwaway</string>
+    <string name="label_event_type_d">D</string>
+    <string name="label_event_type_stall">Stall</string>
+    <string name="label_event_type_misc_penalty">Misc. Penalty</string>
+    <string name="label_event_type_pull">In Bounds Pull</string>
+    <string name="label_event_type_pullob">Out of Bounds Pull</string>
+    <string name="label_event_no_edits_allowed">No edits available for this event type</string>
+    <string name="label_timeouts_quota">Game Quota</string>
+    <string name="label_timeouts_per_half">Per Half:</string>
+    <string name="label_timeouts_floaters">Floaters:</string>
+    <string name="label_timeouts_taken">Taken</string>
+    <string name="label_timeouts_first_half">1st Half:</string>
+    <string name="label_timeouts_second_half">2nd Half:</string>
+    <string name="label_timeouts_available">Available now:</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
     <string name="placeholder_opponent_name">Opponent Name</string>
     <string name="placeholder_tournament_name">Tournament Name</string>
-    <string name="placeholder_hangtime">seconds</string> 
-       
+    <string name="placeholder_hangtime">seconds</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
     <string name="button_save_and_add">Save, Add New</string>
     <string name="button_done">DONE</string>
     <string name="button_start">Start Game</string>
-    <string name="button_game_events">Events</string>    
-    <string name="button_game_timeouts">Timeouts</string>       
+    <string name="button_game_events">Events</string>
+    <string name="button_game_timeouts">Timeouts</string>
+    <string name="button_game_statistics">Statistics</string>    
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>
@@ -226,7 +222,6 @@
     <string name="button_timeouts_undo">Undo Last Timeout</string>
     <string name="button_timeouts_which_half_first">1st Half</string>
     <string name="button_timeouts_which_half_second">2nd Half</string>
-    
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>

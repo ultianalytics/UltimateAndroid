@@ -91,6 +91,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" />
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.stats.StatsActivity"
+            android:label="@string/title_activity_stats" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
+        </activity>
     </application>
 
 </manifest>

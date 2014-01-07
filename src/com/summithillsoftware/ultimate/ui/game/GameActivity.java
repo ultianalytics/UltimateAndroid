@@ -33,6 +33,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
+import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
 
 public class GameActivity extends UltimateActivity {
 	private List<Integer> gameToScores;
@@ -128,6 +129,10 @@ public class GameActivity extends UltimateActivity {
 	
 	public void scoreClicked(View v) {
 		goToActionActivity();
+	}
+	
+	public void statisticsClicked(View v) {
+		goToStatsActivity();
 	}
 	
 	private void connectWidgets() {
@@ -240,6 +245,11 @@ public class GameActivity extends UltimateActivity {
 		startActivity(intent);
 	}
 	
+	private void goToStatsActivity() {
+		Intent intent = new Intent(this, StatsActivity.class);
+		startActivity(intent);
+	}
+
 	private void showTimeoutsDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    TimeoutsDialogFragment timeoutsDialog = new TimeoutsDialogFragment();
