@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.summithillsoftware.ultimate.R;
@@ -15,10 +16,11 @@ import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
 import com.summithillsoftware.ultimate.stats.PlayerStatistics;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
 
 public class StatsActivity extends UltimateActivity {
-	private Button selectedStatButton;
-	private List<PlayerStat> playerStats;
+//	private Button selectedStatButton;
+//	private List<PlayerStat> playerStats;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,21 @@ public class StatsActivity extends UltimateActivity {
 	}
 	
 	private void handleStatTypeSelection(View button, List<PlayerStat> playerStats) {
-		
+		setStatTypeSelection(button.getId(), playerStats);
+	}
+	
+	private void setStatTypeSelection(int buttonViewId, List<PlayerStat> playerStats) {
+		setStatButtonSelected(buttonViewId);
+	}
+	
+	private void setStatButtonSelected(int buttonId) {
+		ViewGroup buttonsContainer = (ViewGroup)findViewById(R.id.statsFragment).findViewById(R.id.statTypeButtons);
+		List<View> buttons = ViewHelper.allChildViews(buttonsContainer);
+		for (View button : buttons) {
+			if (button instanceof Button) {
+				button.setEnabled(button.getId() == buttonId ? false : true);
+			}
+		}
 	}
 	
 	private Button getButton(int viewId) {
@@ -125,3 +141,4 @@ public class StatsActivity extends UltimateActivity {
 	}
 
 }
+ 
