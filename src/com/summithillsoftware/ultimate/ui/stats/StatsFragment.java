@@ -14,14 +14,8 @@ public class StatsFragment extends UltimateFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_stats, container);
-		initializeStatsTypeListView((ListView)view.findViewById(R.id.listview_statistic_types));
 		initializePlayerStatsListView((ListView)view.findViewById(R.id.listview_player_stats));		
 		return view;
-	}
-
-	private void initializeStatsTypeListView(ListView listView) {
-		PlayerStatisticListAdapter adaptor = new PlayerStatisticListAdapter(this.getActivity());
-		listView.setAdapter(adaptor);
 	}
 	
 	private void initializePlayerStatsListView(ListView listView) {

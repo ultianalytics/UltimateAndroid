@@ -10,7 +10,7 @@
 
   <fragment 
     android:name="com.summithillsoftware.ultimate.ui.stats.StatsFragment"
-    android:id="@+id/playersFragment"
+    android:id="@+id/statsFragment"
     android:layout_height="match_parent" 
     android:layout_width="match_parent"  />
 

@@ -52,12 +52,99 @@
         android:baselineAligned="false"
         android:orientation="horizontal" >
 
-        <ListView
-            android:id="@+id/listview_statistic_types"
+        <ScrollView
+            android:id="@+id/scrollView1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
-        </ListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/button_stattype_plus_minus"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_plus_minus" />
+
+                <Button
+                    android:id="@+id/button_stattype_points_played"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_points_played" />
+
+                <Button
+                    android:id="@+id/button_stattype_opoints_played"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_opoints_played" />
+
+                <Button
+                    android:id="@+id/button_stattype_dpoints_played"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_dpoints_played" />
+
+                <Button
+                    android:id="@+id/button_stattype_goals"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_goals" />
+
+                <Button
+                    android:id="@+id/button_stattype_assists"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_assists" />
+
+                <Button
+                    android:id="@+id/button_stattype_callahans"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_callahans" />
+
+                <Button
+                    android:id="@+id/button_stattype_throws"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_throws" />
+
+                <Button
+                    android:id="@+id/button_stattype_drops"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_drops" />
+
+                <Button
+                    android:id="@+id/button_stattype_throwaways"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_throwaways" />
+
+                <Button
+                    android:id="@+id/button_stattype_stalled"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_stalled" />
+
+                <Button
+                    android:id="@+id/button_stattype_penalties"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_penalties" />
+
+                <Button
+                    android:id="@+id/button_stattype_callahaned"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_callahaned" />
+
+                <Button
+                    android:id="@+id/button_stattype_ds"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_ds" />
+
+                <Button
+                    android:id="@+id/button_stattype_pulls"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_pulls" />
+
+                <Button
+                    android:id="@+id/button_stattype_pullobs"
+                    style="@style/buttonStatType"
+                    android:text="@string/button_stattype_pullobs" />
+            </LinearLayout>
+
+        </ScrollView>
 
         <ListView
             android:id="@+id/listview_player_stats"
