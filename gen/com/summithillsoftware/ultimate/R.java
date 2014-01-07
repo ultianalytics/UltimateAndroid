@@ -1626,10 +1626,9 @@ containing a value of this type.
         public static final int rowlayout_games=0x7f030039;
         public static final int rowlayout_players=0x7f03003a;
         public static final int rowlayout_statistics_player=0x7f03003b;
-        public static final int rowlayout_statistics_type=0x7f03003c;
-        public static final int rowlayout_substitutions=0x7f03003d;
-        public static final int rowlayout_teams=0x7f03003e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03003f;
+        public static final int rowlayout_substitutions=0x7f03003c;
+        public static final int rowlayout_teams=0x7f03003d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03003e;
     }
     public static final class menu {
         public static final int events=0x7f0d0000;

@@ -67,7 +67,7 @@ public class PlayerStatistics {
 	/****   Stats Accumulator Methods *****/
 	
 	
-	public List<PlayerStat> plusMinusCountPerPlayer(final Game game, final boolean includeO, final boolean includeD, final boolean includeTournament) {
+	public static List<PlayerStat> pointsPerPlayer(final Game game, final boolean includeO, final boolean includeD, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -89,7 +89,7 @@ public class PlayerStatistics {
 	
 	}
 
-	public List<PlayerStat> throwsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> throwsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -105,7 +105,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> goalsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> goalsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -123,7 +123,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> assistsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> assistsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -137,7 +137,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> dropsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> dropsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -151,7 +151,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 
-	public List<PlayerStat> throwawaysPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> throwawaysPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -165,7 +165,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> stallsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> stallsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -179,7 +179,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> miscPenaltiesPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> miscPenaltiesPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -193,7 +193,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> pullsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> pullsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -207,7 +207,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> pullsObPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> pullsObPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -221,7 +221,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> dsPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> dsPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -235,7 +235,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 
-	public List<PlayerStat> callahansPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> callahansPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -249,7 +249,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> callahanedPerPlayer(final Game game, final boolean includeTournament) {
+	public static List<PlayerStat> callahanedPerPlayer(final Game game, final boolean includeTournament) {
 		StatsAccumulator statsAccumulator = new StatsAccumulator() {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
@@ -263,7 +263,7 @@ public class PlayerStatistics {
 		return accumulateStatsPerPlayer(game, includeTournament, statsAccumulator, StatNumericType.INTEGER);
 	}
 	
-	public List<PlayerStat> plusMinusCountPerPlayer(Game game, boolean includeTournament) {
+	public static List<PlayerStat> plusMinusCountPerPlayer(Game game, boolean includeTournament) {
 	    /*
 	     +/- counters/stats for individual players over the course of a game and a
 	     tournament (assists and goals count as +1, drops and throwaways count as -1).
