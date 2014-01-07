@@ -40,6 +40,7 @@
                 android:id="@+id/radioGroupGamesIncludedTournament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="@string/radio_stats_include_tournament"
                 android:textColor="@color/radio_button_text_color"
                 android:textSize="@dimen/form_text_size" />

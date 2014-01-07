@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.stats;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.summithillsoftware.ultimate.stats.PlayerStatistics;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
 public class StatsActivity extends UltimateActivity {
+	private Button selectedStatButton;
+	private List<PlayerStat> playerStats;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,121 +45,28 @@ public class StatsActivity extends UltimateActivity {
 	}
 	
 	private void registerListeners() {
-		getButton(R.id.button_stattype_plus_minus).setOnClickListener(new OnClickListener() {
+		OnClickListener statTypeButtonListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.plusMinusCountPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
+				handleStatTypeSelection(v, statsForType((v.getId())));
 			}
-		});
-		getButton(R.id.button_stattype_points_played).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.pointsPerPlayer(game(), true, true, isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_opoints_played).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.pointsPerPlayer(game(), true, false, isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_dpoints_played).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.pointsPerPlayer(game(), false, true, isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_goals).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.goalsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_assists).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.assistsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-
-		getButton(R.id.button_stattype_callahans).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.callahansPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_throws).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.throwsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_drops).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.dropsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});	
-		getButton(R.id.button_stattype_throwaways).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.throwawaysPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-
-		getButton(R.id.button_stattype_stalled).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.stallsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_penalties).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.miscPenaltiesPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});
-		getButton(R.id.button_stattype_callahaned).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.callahanedPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});	
-		getButton(R.id.button_stattype_ds).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.dsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});	
-		getButton(R.id.button_stattype_pulls).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.pullsPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});	
-		getButton(R.id.button_stattype_pullobs).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				List<PlayerStat> playerStats = PlayerStatistics.pullsObPerPlayer(game(), isTournamentIncluded());
-				handleStatTypeSelection(v, playerStats);
-			}
-		});			
-		
+		};
+		getButton(R.id.button_stattype_plus_minus).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_points_played).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_opoints_played).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_dpoints_played).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_goals).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_assists).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_callahans).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_throws).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_drops).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_throwaways).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_stalled).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_penalties).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_callahaned).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_ds).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_pulls).setOnClickListener(statTypeButtonListener);
+		getButton(R.id.button_stattype_pullobs).setOnClickListener(statTypeButtonListener);
 	}
 	
 	private void handleStatTypeSelection(View button, List<PlayerStat> playerStats) {
@@ -169,6 +79,44 @@ public class StatsActivity extends UltimateActivity {
 	
 	private Game game() {
 		return Game.current();
+	}
+	
+	private List<PlayerStat> statsForType(int buttonViewId) {
+		if (buttonViewId == R.id.button_stattype_plus_minus) {
+			return PlayerStatistics.plusMinusCountPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_points_played) {
+			return PlayerStatistics.pointsPerPlayer(game(), true, true, isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_opoints_played) {
+			return PlayerStatistics.pointsPerPlayer(game(), true, false, isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_dpoints_played) {
+			return PlayerStatistics.pointsPerPlayer(game(), false, true, isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_goals) {
+			return PlayerStatistics.goalsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_assists) {
+			return PlayerStatistics.assistsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_callahans) {
+			return PlayerStatistics.callahansPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_throws) {
+			return PlayerStatistics.throwsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_drops) {
+			return PlayerStatistics.dropsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_throwaways) {
+			return PlayerStatistics.throwawaysPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_stalled) {
+			return PlayerStatistics.stallsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_penalties) {
+			return PlayerStatistics.miscPenaltiesPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_callahaned) {
+			return PlayerStatistics.callahanedPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_ds) {
+			return PlayerStatistics.dsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_pulls) {
+			return PlayerStatistics.pullsPerPlayer(game(), isTournamentIncluded());
+		} else if (buttonViewId == R.id.button_stattype_pullobs) {
+			return PlayerStatistics.pullsObPerPlayer(game(), isTournamentIncluded());
+		} else {
+			return Collections.emptyList();
+		}
 	}
 	
 	private boolean isTournamentIncluded() {
