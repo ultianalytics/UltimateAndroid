@@ -1,5 +1,8 @@
 package com.summithillsoftware.ultimate.stats;
 
+import java.util.Locale;
+
+import android.annotation.SuppressLint;
 import com.summithillsoftware.ultimate.model.Player;
 
 public class PlayerStat {
@@ -63,8 +66,9 @@ public class PlayerStat {
 		this.type = type;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	public String statAsString() {
-		return isFloat() ? Float.toString(getFloatValue()) : Integer.toString(getIntValue());
+		return isFloat() ? String.format(Locale.getDefault(), "%.1f", getFloatValue()) : Integer.toString(getIntValue());
 	}
 	
 	public boolean isFloat() {
