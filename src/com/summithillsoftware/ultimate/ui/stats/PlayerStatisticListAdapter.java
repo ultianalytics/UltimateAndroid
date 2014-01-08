@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.stats;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -10,11 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.Player;
-import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.stats.PlayerStat;
 
 public class PlayerStatisticListAdapter extends BaseAdapter {
-	private List<Player> sortedPlayers;
+	private List<PlayerStat> playerStats;
 	private Context context;
 
 	public PlayerStatisticListAdapter(Context context) {
@@ -24,25 +24,25 @@ public class PlayerStatisticListAdapter extends BaseAdapter {
 	}
 	
 	public void resetPlayers() {
-		sortedPlayers = null;
+		playerStats = null;
 		notifyDataSetChanged();
 	}
 	
-	private List<Player>getSortedPlayers() {
-		if (sortedPlayers == null) {
-			sortedPlayers = Team.current().getPlayersSorted();
+	private List<PlayerStat>getSortedPlayerStats() {
+		if (playerStats == null) {
+			playerStats = Collections.emptyList();
 		}
-		return sortedPlayers;
+		return playerStats;
 	}
 
 	@Override
 	public int getCount() {
-		return getSortedPlayers().size();
+		return getSortedPlayerStats().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return getSortedPlayers().get(position);
+		return getSortedPlayerStats().get(position);
 	}
 
 	@Override
@@ -58,16 +58,19 @@ public class PlayerStatisticListAdapter extends BaseAdapter {
 			rowView = inflater.inflate(R.layout.rowlayout_players, null);
 		}
 	
-		TextView playerNameTextView = (TextView)rowView.findViewById(R.id.text_players_description);
+		TextView playerNameTextView = (TextView)rowView.findViewById(R.id.text_player_description);
+		TextView statTextView = (TextView)rowView.findViewById(R.id.text_player_stat);
 		
-		Player player = getSortedPlayers().get(index);
-		playerNameTextView.setText(player.getName());
-		if (player.getNumber() != null && player.getNumber().trim().length() > 0) {
-			TextView playerNumberTextView = (TextView)rowView.findViewById(R.id.text_players_number);
-			playerNumberTextView.setText(" (" + player.getNumber() + ")");
-		}
+		PlayerStat playerStat = getSortedPlayerStats().get(index);
+		playerNameTextView.setText(playerStat.getPlayer().getName());
+		statTextView.setText(playerStat.statAsString());
 		
 		return rowView;
+	}
+
+	public void setPlayerStats(List<PlayerStat> playerStats) {
+		this.playerStats = playerStats;
+		notifyDataSetChanged();
 	}
 	
 }

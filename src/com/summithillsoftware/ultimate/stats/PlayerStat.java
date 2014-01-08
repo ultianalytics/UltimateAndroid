@@ -62,5 +62,13 @@ public class PlayerStat {
 	public void setType(StatNumericType type) {
 		this.type = type;
 	}
+	
+	public String statAsString() {
+		return isFloat() ? Float.toString(getFloatValue()) : Integer.toString(getIntValue());
+	}
+	
+	public boolean isFloat() {
+		return type == StatNumericType.FLOAT; 
+	}
 
 }
