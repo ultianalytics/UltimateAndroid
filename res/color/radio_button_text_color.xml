@@ -5,5 +5,4 @@
         android:color="@color/ultimate_radio_button_selected"/>
     <item
         android:color="@color/ultimate_radio_button_unselected"/>
- 
 </selector>

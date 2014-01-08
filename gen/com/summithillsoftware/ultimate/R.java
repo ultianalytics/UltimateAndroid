@@ -963,6 +963,7 @@ containing a value of this type.
         public static final int list_name=0x7f080003;
         public static final int list_name_current=0x7f080004;
         public static final int radio_button_text_color=0x7f0800dc;
+        public static final int statistics_button_text_color=0x7f0800dd;
         /**  Black Transparent 
          */
         public static final int transparent_black_hex_1=0x7f080097;
