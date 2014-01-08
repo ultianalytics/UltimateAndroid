@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
@@ -19,8 +22,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 
 public class StatsActivity extends UltimateActivity {
-//	private Button selectedStatButton;
-//	private List<PlayerStat> playerStats;
+	private int selectedStatId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,24 @@ public class StatsActivity extends UltimateActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		setStatButtonSelected(R.id.button_stattype_plus_minus);
+	}
+	
 	private void registerListeners() {
+		getIncludeRadioGroup().setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				setStatButtonSelected(getSelectedStatId());
+			}
+		});
+		
 		OnClickListener statTypeButtonListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleStatTypeSelection(v, statsForType((v.getId())));
+				handleStatTypeSelection(v);
 			}
 		};
 		getButton(R.id.button_stattype_plus_minus).setOnClickListener(statTypeButtonListener);
@@ -69,17 +84,16 @@ public class StatsActivity extends UltimateActivity {
 		getButton(R.id.button_stattype_ds).setOnClickListener(statTypeButtonListener);
 		getButton(R.id.button_stattype_pulls).setOnClickListener(statTypeButtonListener);
 		getButton(R.id.button_stattype_pullobs).setOnClickListener(statTypeButtonListener);
+
 	}
 	
-	private void handleStatTypeSelection(View button, List<PlayerStat> playerStats) {
-		setStatTypeSelection(button.getId(), playerStats);
-	}
-	
-	private void setStatTypeSelection(int buttonViewId, List<PlayerStat> playerStats) {
-		setStatButtonSelected(buttonViewId);
+	private void handleStatTypeSelection(View button) {
+		setStatButtonSelected(button.getId());
+		updatePlayerStats();
 	}
 	
 	private void setStatButtonSelected(int buttonId) {
+		selectedStatId = buttonId;
 		ViewGroup buttonsContainer = (ViewGroup)findViewById(R.id.statsFragment).findViewById(R.id.statTypeButtons);
 		List<View> buttons = ViewHelper.allChildViews(buttonsContainer);
 		for (View button : buttons) {
@@ -136,9 +150,29 @@ public class StatsActivity extends UltimateActivity {
 	}
 	
 	private boolean isTournamentIncluded() {
-		// TODO...read the state of the radio buttons
-		return false;
+		return getIncludeRadioGroup().getCheckedRadioButtonId() == R.id.radioGroupGamesIncludedTournament;
 	}
+	
+	private int getSelectedStatId() {
+		if (selectedStatId == 0) {
+			selectedStatId = R.id.button_stattype_plus_minus;
+		}
+		return selectedStatId;
+	}
+	
+	private void updatePlayerStats() {
+		ListView listView = (ListView)findViewById(R.id.statsFragment).findViewById(R.id.listview_player_stats);
+		PlayerStatisticListAdapter playerStatsAdapter = (PlayerStatisticListAdapter)listView.getAdapter();
+		playerStatsAdapter.setPlayerStats(statsForType(getSelectedStatId()));
+	}
+	
+	private RadioGroup getIncludeRadioGroup() {
+		return (RadioGroup)findViewById(R.id.statsFragment).findViewById(R.id.radioGroupGamesIncluded);
+	}
+
+
+
+
 
 }
  
