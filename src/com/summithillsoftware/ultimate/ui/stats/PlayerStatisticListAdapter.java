@@ -55,7 +55,7 @@ public class PlayerStatisticListAdapter extends BaseAdapter {
 		View rowView = reusableRowView;
 		if (reusableRowView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout_players, null);
+			rowView = inflater.inflate(R.layout.rowlayout_statistics_player, null);
 		}
 	
 		TextView playerNameTextView = (TextView)rowView.findViewById(R.id.text_player_description);

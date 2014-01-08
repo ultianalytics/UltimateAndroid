@@ -330,7 +330,7 @@ public class PlayerStatistics {
 		// build a list of PlayerStat for every player
 		List<PlayerStat> playerStats = new ArrayList<PlayerStat>();
 		for (Player player : players) {
-			getStatForPlayer(player, statPerPlayer, type);
+			playerStats.add(getStatForPlayer(player, statPerPlayer, type));
 		}
 
 		// sort them
