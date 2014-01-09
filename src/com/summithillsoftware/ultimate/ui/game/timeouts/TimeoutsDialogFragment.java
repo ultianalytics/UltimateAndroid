@@ -104,11 +104,21 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	    // hide stuff that is not applicable
 	    actionView.setVisibility(isActionMode() ? View.VISIBLE : View.GONE);
 	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 ? View.VISIBLE : View.GONE);
-	    undoTimeoutButton.setVisibility(timeoutDetails().getTakenFirstHalf() > 0 ||  timeoutDetails().getTakenSecondHalf() > 0  ? View.VISIBLE : View.GONE);
+	    undoTimeoutButton.setVisibility(shouldShowUndoButton() ? View.VISIBLE : View.GONE);
 	    timeoutsTakenLabel.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
 	    timeoutsTakenView.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
 	    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
 	    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
+	}
+	
+	private boolean shouldShowUndoButton() {
+		if (game().isHalftime()) {
+			return timeoutDetails().getTakenFirstHalf() > 0 || timeoutDetails().getTakenSecondHalf() > 0;
+		} else if (game().isAfterHalftime()) {
+			return timeoutDetails().getTakenSecondHalf() > 0;
+		} else {
+			return timeoutDetails().getTakenFirstHalf() > 0;
+		}
 	}
 	
 	private void populateQuotaSpinner(Spinner spinner, int selection) {
@@ -130,24 +140,24 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 			    if (game().isHalftime()) {
 			        promptForApplyDuringHalf();
 			    } else if (game().isAfterHalftimeStarted()) {
-			    	timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() + 1);
+			    	timeoutDetails().incrTakenSecondHalf();
 			    	populateView();
 			    } else {
-			    	timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() + 1);
+			    	timeoutDetails().incrTakenFirstHalf();
 			    	populateView();
 			    }
 			}
 		});		
 		undoTimeoutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-			    if (game().isAfterHalftime()) {
+			    if (game().isHalftime()) {
 			    	if (timeoutDetails().getTakenFirstHalf() > 0 && timeoutDetails().getTakenSecondHalf() > 0) {
 			    		promptForWhichHalfForUndo();
 			    	} else {
-			    		promptForFirstHalfUndoConfirm();
+			    		promptForUndoConfirm();
 			    	}
 			    } else {
-			    	promptForFirstHalfUndoConfirm();
+			    	promptForUndoConfirm();
 			    }
 			}
 		});			
@@ -216,14 +226,14 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() + 1);
+						timeoutDetails().incrTakenFirstHalf();
 						populateView();
 					}
 				},
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() + 1);
+						timeoutDetails().incrTakenSecondHalf();
 						populateView();
 					}					
 				},
@@ -245,14 +255,14 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() - 1);
+						timeoutDetails().decrTakenFirstHalf();
 						populateView();
 					}
 				},
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						timeoutDetails().setTakenSecondHalf(timeoutDetails().getTakenSecondHalf() - 1);
+						timeoutDetails().decrTakenSecondHalf();
 						populateView();
 					}					
 				},
@@ -264,7 +274,7 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				});
 	}
 	
-	private void promptForFirstHalfUndoConfirm() {
+	private void promptForUndoConfirm() {
 		((UltimateActivity)getActivity()).displayConfirmDialog(
 				getString(R.string.alert_timeout_undo_title),
 				getString(R.string.alert_timeout_undo_confirm_message),
@@ -273,7 +283,11 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						timeoutDetails().setTakenFirstHalf(timeoutDetails().getTakenFirstHalf() - 1);
+						if (game().isAfterHalftime()) {
+							timeoutDetails().decrTakenSecondHalf();
+						} else {
+							timeoutDetails().decrTakenFirstHalf();
+						}
 						populateView();
 					}
 				},

@@ -14,25 +14,37 @@ public class TimeoutDetails implements Serializable {
 		return quotaPerHalf;
 	}
 	public void setQuotaPerHalf(int quotaPerHalf) {
-		this.quotaPerHalf = quotaPerHalf;
+		this.quotaPerHalf = Math.max(0, quotaPerHalf);
 	}
 	public int getQuotaFloaters() {
 		return quotaFloaters;
 	}
 	public void setQuotaFloaters(int quotaFloaters) {
-		this.quotaFloaters = quotaFloaters;
+		this.quotaFloaters = Math.max(0, quotaFloaters);
 	}
 	public int getTakenFirstHalf() {
 		return takenFirstHalf;
 	}
 	public void setTakenFirstHalf(int takenFirstHalf) {
-		this.takenFirstHalf = takenFirstHalf;
+		this.takenFirstHalf = Math.max(0, takenFirstHalf);
+	}
+	public void incrTakenFirstHalf() {
+		setTakenFirstHalf(getTakenFirstHalf() + 1);
+	}
+	public void decrTakenFirstHalf() {
+		setTakenFirstHalf(getTakenFirstHalf() - 1);
 	}
 	public int getTakenSecondHalf() {
 		return takenSecondHalf;
 	}
 	public void setTakenSecondHalf(int takenSecondHalf) {
-		this.takenSecondHalf = takenSecondHalf;
+		this.takenSecondHalf = Math.max(0, takenSecondHalf);
+	}
+	public void incrTakenSecondHalf() {
+		setTakenSecondHalf(getTakenSecondHalf() + 1);
+	}
+	public void decrTakenSecondHalf() {
+		setTakenSecondHalf(getTakenSecondHalf() - 1);
 	}
 
 }
