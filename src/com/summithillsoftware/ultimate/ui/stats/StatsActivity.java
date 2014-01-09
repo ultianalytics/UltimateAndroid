@@ -1,6 +1,5 @@
 package com.summithillsoftware.ultimate.ui.stats;
 
-import java.util.Collections;
 import java.util.List;
 
 import android.os.Bundle;
@@ -15,9 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
-import com.summithillsoftware.ultimate.stats.PlayerStatistics;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 
@@ -106,55 +103,19 @@ public class StatsActivity extends UltimateActivity {
 	}
 	
 	private void updatePlayerStats() {
+		StatsCalculationAsyncTask asyncTask = new StatsCalculationAsyncTask(getSelectedStatId(), isTournamentIncluded(), this);
+		asyncTask.execute();
+	}
+	
+	public void updatePlayerStats(List<PlayerStat> playerStats) {
 		ListView listView = (ListView)findViewById(R.id.statsFragment).findViewById(R.id.listview_player_stats);
 		PlayerStatisticListAdapter playerStatsAdapter = (PlayerStatisticListAdapter)listView.getAdapter();
-		playerStatsAdapter.setPlayerStats(statsForType(getSelectedStatId()));
+		playerStatsAdapter.setPlayerStats(playerStats);
 	}
+	
 	
 	private Button getButton(int viewId) {
 		return (Button)findViewById(R.id.statsFragment).findViewById(viewId);
-	}
-	
-	private Game game() {
-		return Game.current();
-	}
-	
-	private List<PlayerStat> statsForType(int buttonViewId) {
-		List<PlayerStat> stats = Collections.emptyList();
-		if (buttonViewId == R.id.button_stattype_plus_minus) {
-			stats = PlayerStatistics.plusMinusCountPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_points_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), true, true, isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_opoints_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), true, false, isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_dpoints_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), false, true, isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_goals) {
-			stats = PlayerStatistics.goalsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_assists) {
-			stats = PlayerStatistics.assistsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_callahans) {
-			stats = PlayerStatistics.callahansPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_throws) {
-			stats = PlayerStatistics.throwsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_drops) {
-			stats = PlayerStatistics.dropsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_throwaways) {
-			stats = PlayerStatistics.throwawaysPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_stalled) {
-			stats = PlayerStatistics.stallsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_penalties) {
-			stats = PlayerStatistics.miscPenaltiesPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_callahaned) {
-			stats = PlayerStatistics.callahanedPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_ds) {
-			stats = PlayerStatistics.dsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_pulls) {
-			stats = PlayerStatistics.pullsPerPlayer(game(), isTournamentIncluded());
-		} else if (buttonViewId == R.id.button_stattype_pullobs) {
-			stats = PlayerStatistics.pullsObPerPlayer(game(), isTournamentIncluded());
-		} 
-		return stats;
 	}
 	
 	private boolean isTournamentIncluded() {
