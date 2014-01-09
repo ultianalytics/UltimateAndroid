@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -103,6 +104,9 @@ public class StatsActivity extends UltimateActivity {
 	}
 	
 	private void updatePlayerStats() {
+		if (isTournamentIncluded()) {
+			showBusyIndicator(true);
+		}
 		StatsCalculationAsyncTask asyncTask = new StatsCalculationAsyncTask(getSelectedStatId(), isTournamentIncluded(), this);
 		asyncTask.execute();
 	}
@@ -111,6 +115,7 @@ public class StatsActivity extends UltimateActivity {
 		ListView listView = (ListView)findViewById(R.id.statsFragment).findViewById(R.id.listview_player_stats);
 		PlayerStatisticListAdapter playerStatsAdapter = (PlayerStatisticListAdapter)listView.getAdapter();
 		playerStatsAdapter.setPlayerStats(playerStats);
+		showBusyIndicator(false);
 	}
 	
 	
@@ -126,6 +131,10 @@ public class StatsActivity extends UltimateActivity {
 		return (RadioGroup)findViewById(R.id.statsFragment).findViewById(R.id.radioGroupGamesIncluded);
 	}
 
+	private void showBusyIndicator(boolean show) {
+		ProgressBar progressBar = (ProgressBar)findViewById(R.id.statsFragment).findViewById(R.id.progressBar);
+		progressBar.setVisibility(show ? View.VISIBLE: View.GONE);
+	}
 
 
 
