@@ -60,6 +60,9 @@ public class StatsCalculationAsyncTask extends AsyncTask<Void, Void, List<Player
 		} else if (statsTypeId == R.id.button_stattype_pullobs) {
 			stats = PlayerStatistics.pullsObPerPlayer(game(), isTournamentIncluded);
 		} 
+		if (isTournamentIncluded) { // pause long enough for animation on UI finish
+			try { Thread.sleep(500); } catch (InterruptedException e) { /* no-op */ }
+		}
 		return stats;
 	}
 
