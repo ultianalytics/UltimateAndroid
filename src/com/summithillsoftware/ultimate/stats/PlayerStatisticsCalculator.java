@@ -18,7 +18,7 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Point;
 import com.summithillsoftware.ultimate.model.Team;
 
-public class PlayerStatistics {
+public class PlayerStatisticsCalculator {
 	private static Comparator<PlayerStat> playerStatComparator = new Comparator<PlayerStat>() {
 		public int compare(final PlayerStat playerStat1, final PlayerStat playerStat2) {
 			return Float.compare(playerStat2.sortValue(), playerStat1.sortValue());
@@ -129,7 +129,7 @@ public class PlayerStatistics {
 			public void updateStats(StatsEventDetails eventDetails) {
 				if (eventDetails.isOffense() && eventDetails.getEvent().isGoal()) {
 					OffenseEvent event = eventDetails.getOffenseEvent();
-					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					PlayerStat playerStat = getStatForPlayer(event.getPasser(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
 					playerStat.incrIntValue();
 				} 
 			}

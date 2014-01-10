@@ -4,11 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
-import com.summithillsoftware.ultimate.stats.PlayerStatistics;
+import com.summithillsoftware.ultimate.stats.PlayerStatisticsCalculator;
 
 public class StatsCalculationAsyncTask extends AsyncTask<Void, Void, List<PlayerStat>> {
 	private int statsTypeId;
@@ -27,41 +29,46 @@ public class StatsCalculationAsyncTask extends AsyncTask<Void, Void, List<Player
 	protected List<PlayerStat> doInBackground(Void... paramArrayOfParams) {
 		List<PlayerStat> stats = Collections.emptyList();
 
-		if (statsTypeId == R.id.button_stattype_plus_minus) {
-			stats = PlayerStatistics.plusMinusCountPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_points_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), true, true, isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_opoints_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), true, false, isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_dpoints_played) {
-			stats = PlayerStatistics.pointsPerPlayer(game(), false, true, isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_goals) {
-			stats = PlayerStatistics.goalsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_assists) {
-			stats = PlayerStatistics.assistsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_callahans) {
-			stats = PlayerStatistics.callahansPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_throws) {
-			stats = PlayerStatistics.throwsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_drops) {
-			stats = PlayerStatistics.dropsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_throwaways) {
-			stats = PlayerStatistics.throwawaysPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_stalled) {
-			stats = PlayerStatistics.stallsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_penalties) {
-			stats = PlayerStatistics.miscPenaltiesPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_callahaned) {
-			stats = PlayerStatistics.callahanedPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_ds) {
-			stats = PlayerStatistics.dsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_pulls) {
-			stats = PlayerStatistics.pullsPerPlayer(game(), isTournamentIncluded);
-		} else if (statsTypeId == R.id.button_stattype_pullobs) {
-			stats = PlayerStatistics.pullsObPerPlayer(game(), isTournamentIncluded);
-		} 
-		if (isTournamentIncluded) { // pause long enough for animation on UI finish
-			try { Thread.sleep(500); } catch (InterruptedException e) { /* no-op */ }
+		try {
+			if (statsTypeId == R.id.button_stattype_plus_minus) {
+				stats = PlayerStatisticsCalculator.plusMinusCountPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_points_played) {
+				stats = PlayerStatisticsCalculator.pointsPerPlayer(game(), true, true, isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_opoints_played) {
+				stats = PlayerStatisticsCalculator.pointsPerPlayer(game(), true, false, isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_dpoints_played) {
+				stats = PlayerStatisticsCalculator.pointsPerPlayer(game(), false, true, isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_goals) {
+				stats = PlayerStatisticsCalculator.goalsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_assists) {
+				stats = PlayerStatisticsCalculator.assistsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_callahans) {
+				stats = PlayerStatisticsCalculator.callahansPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_throws) {
+				stats = PlayerStatisticsCalculator.throwsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_drops) {
+				stats = PlayerStatisticsCalculator.dropsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_throwaways) {
+				stats = PlayerStatisticsCalculator.throwawaysPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_stalled) {
+				stats = PlayerStatisticsCalculator.stallsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_penalties) {
+				stats = PlayerStatisticsCalculator.miscPenaltiesPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_callahaned) {
+				stats = PlayerStatisticsCalculator.callahanedPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_ds) {
+				stats = PlayerStatisticsCalculator.dsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_pulls) {
+				stats = PlayerStatisticsCalculator.pullsPerPlayer(game(), isTournamentIncluded);
+			} else if (statsTypeId == R.id.button_stattype_pullobs) {
+				stats = PlayerStatisticsCalculator.pullsObPerPlayer(game(), isTournamentIncluded);
+			} 
+			if (isTournamentIncluded) { // pause long enough for animation on UI finish
+				try { Thread.sleep(500); } catch (InterruptedException e) { /* no-op */ }
+			}
+		} catch (Exception e) {
+			Log.e(Constants.ULTIMATE, "Unable to generated stats for statsTypeId=" + statsTypeId, e);
+			stats = Collections.emptyList();
 		}
 		return stats;
 	}
