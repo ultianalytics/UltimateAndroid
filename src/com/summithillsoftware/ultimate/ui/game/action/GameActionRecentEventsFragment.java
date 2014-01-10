@@ -75,7 +75,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 			@Override
 			public void onClick(View v) {
 				if (gameActionEventListener != null) {
-					handleCessationButtonPressed();
+					gameActionEventListener.cessationRequested();
 				}
 			}
 		});	
@@ -107,10 +107,6 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 				gameActionEventListener.onEventEditRequest(eventToEdit);
 			}
 		}
-	}
-	
-	private void handleCessationButtonPressed() {
-		
 	}
 	
 	private void populateView() {

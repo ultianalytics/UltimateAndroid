@@ -17,5 +17,7 @@ public interface GameActionEventListener {
 	public void initialOffensePlayerSelected(Player player);
 	
 	public void timeoutInfoRequested();
+	
+	public void cessationRequested();
 
 }

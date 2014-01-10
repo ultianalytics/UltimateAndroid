@@ -106,7 +106,8 @@
     <string name="alert_action_halftime_message_defend">Our team will DEFEND on the next point</string>
     <string name="alert_action_wind_speed_reminder">REMINDER: check wind speed</string>
     <string name="alert_action_gameover_title">Game Over?</string>
-    <string name="alert_action_gameover_message">This game appears to be over.  Please confirm.</string>
+    <string name="alert_action_gameover_probable_message">This game appears to be over.  Please confirm.</string>
+    <string name="alert_action_gameover_message">Please confirm that the game is over</string>
     <string name="alert_action_gameover_yes">Yes, done</string>
     <string name="alert_action_gameover_no">No, not yet</string>
     <string name="alert_event_invalid_hangtime_title">Invalid Hangtime</string>

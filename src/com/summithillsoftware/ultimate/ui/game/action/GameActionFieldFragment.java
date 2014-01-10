@@ -271,6 +271,11 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	public void timeoutInfoRequested() {
 		// no-op...don't handle timeout info in this fragment
 	}
+	
+	@Override
+	public void cessationRequested() {
+		// no-op...don't handle cessations in this fragment
+	}
 
 	private void populatePlayerOne(Event event) {
 		GameActionPlayerFragment selectedFragment = getSelectedPlayerFragment();

@@ -166,7 +166,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    	if (event.isGoal() && game().isNextEventImmediatelyAfterHalftime() && !game().isTimeBasedGame()) {
 		    		showHalftimeWarning();
 		    	} else if (event.isGoal() && game().doesGameAppearDone()) {
-		    		confirmGameOver();
+		    		confirmGameOver(false);
 		    	} else if (event.causesLineChange()) {
 		    		showLineDialog();
 		    	}
@@ -200,6 +200,22 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	@Override
 	public void timeoutInfoRequested() {
 		showTimeoutsDialog();
+	}
+	
+	@Override
+	public void cessationRequested() {
+		if (game().isTimeBasedGame()) {
+			Action nextPeriodEnd = game().nextPeriodEnd();
+	        if (nextPeriodEnd == Action.EndOfFourthQuarter || nextPeriodEnd == Action.EndOfOvertime) {
+	            promptForOvertimeReceiveOrDefend();
+	        } else if (nextPeriodEnd != Action.GameOver) {
+	        	addEvent(createNextPeriodEndEvent());
+	        } else {
+	        	confirmGameOver(true);
+	        }
+	    } else {
+	    	confirmGameOver(true);
+	    }
 	}
 	
 	private void addEvent(Event event) {
@@ -245,6 +261,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				            CessationEvent.createEndOfFourthQuarterWithOlineStartNextPeriod(true):
 				        	CessationEvent.createEndOfOvertimeWithOlineStartNextPeriod(true);
 				        addEvent(periodEndEvent);
+						game().save();
 					}
 		 		},
 		 		new DialogInterface.OnClickListener() {
@@ -255,6 +272,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				            CessationEvent.createEndOfFourthQuarterWithOlineStartNextPeriod(false):
 				        	CessationEvent.createEndOfOvertimeWithOlineStartNextPeriod(false);
 				        addEvent(periodEndEvent);
+						game().save();
 					}
 		 		},
 		 		new DialogInterface.OnClickListener() {
@@ -265,7 +283,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		 		});		
 	}
 	
-	private void confirmGameOver() {
+	private void confirmGameOver(final boolean userClickedGameOver) {
 		final Game game = game();
 		String message = game.isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
 		if (game.getWind().isSpecified()) {
@@ -273,7 +291,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		}
 		displayConfirmDialog(
 				getString(R.string.alert_action_gameover_title), 
-				getString(R.string.alert_action_gameover_message), 
+				getString(userClickedGameOver ? R.string.alert_action_gameover_message : R.string.alert_action_gameover_probable_message), 
 				getString(R.string.alert_action_gameover_yes), 
 				getString(R.string.alert_action_gameover_no), 
 				new DialogInterface.OnClickListener() {
@@ -293,7 +311,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 					@Override
 					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 						// no, game is not over yet
-						showLineDialog();
+						if (!userClickedGameOver) {
+							showLineDialog();	
+						}
 					}
 		 		});
 	}
