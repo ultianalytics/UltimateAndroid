@@ -116,6 +116,9 @@
     <string name="alert_timeout_undo_title">Timeout Undo</string>
     <string name="alert_timeout_undo_confirm_message">Please confirm undo of the last timeout</string>
     <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>
+    <string name="alert_overtime_recieve_or_defend_title">Overtime: who will receive?</string>
+    <string name="alert_overtime_recieve_or_defend_message">You are about to begin an overtime period.\n\nWill our team receive or pull?</string>
+    
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -239,6 +242,8 @@
 	<string name="button_stattype_ds">Ds</string>	
 	<string name="button_stattype_pulls">Pulls</string>
 	<string name="button_stattype_pullobs">Pulls OB</string>
+	<string name="button_overtime_receive">Receive</string>
+	<string name="button_overtime_defend">Pull</string>
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>

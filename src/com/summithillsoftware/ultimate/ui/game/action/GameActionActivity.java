@@ -202,6 +202,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		showTimeoutsDialog();
 	}
 	
+	private void addEvent(Event event) {
+		newEvent(event);
+	}
+	
 	private void showHalftimeWarning() {
 		// TODO tweet halftime
 		//	    if ([[Tweeter getCurrent] isTweetingEvents]) {
@@ -224,6 +228,41 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 					}
 		 		});
 
+	}
+	
+	private void promptForOvertimeReceiveOrDefend() {
+		displayThreeButtonDialog(
+				getString(R.string.alert_overtime_recieve_or_defend_title), 
+				getString(R.string.alert_overtime_recieve_or_defend_message), 
+				getString(R.string.button_overtime_receive), 
+				getString(R.string.button_overtime_defend), 
+				getString(android.R.string.cancel), 
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+						Action nextPeriodEnd = game().nextPeriodEnd();
+				        CessationEvent periodEndEvent = (nextPeriodEnd == Action.EndOfFourthQuarter) ?
+				            CessationEvent.createEndOfFourthQuarterWithOlineStartNextPeriod(true):
+				        	CessationEvent.createEndOfOvertimeWithOlineStartNextPeriod(true);
+				        addEvent(periodEndEvent);
+					}
+		 		},
+		 		new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+						Action nextPeriodEnd = game().nextPeriodEnd();
+				        CessationEvent periodEndEvent = (nextPeriodEnd == Action.EndOfFourthQuarter) ?
+				            CessationEvent.createEndOfFourthQuarterWithOlineStartNextPeriod(false):
+				        	CessationEvent.createEndOfOvertimeWithOlineStartNextPeriod(false);
+				        addEvent(periodEndEvent);
+					}
+		 		},
+		 		new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+						// no-op
+					}
+		 		});		
 	}
 	
 	private void confirmGameOver() {
@@ -258,7 +297,6 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 					}
 		 		});
 	}
-	
 	
 	private CessationEvent createNextPeriodEndEvent() {
 	    Action nextPeriodEnd = game().nextPeriodEnd();
