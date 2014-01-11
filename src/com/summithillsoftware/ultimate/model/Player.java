@@ -9,9 +9,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 
 public class Player implements Externalizable {
+	private static final String JSON_NAME = "name";
+	private static final String JSON_POSITION = "position";
+	private static final String JSON_NUMBER = "number";
+	private static final String JSON_IS_MALE = "male";
+	private static final String JSON_LEAGUEVINE_PLAYER = "leaguevinePlayer";
 	private static Player ANONYMOUS_PLAYER = null;
 	private static final String ANON_NAME = "Anonymous";
 	
@@ -194,5 +202,38 @@ public class Player implements Externalizable {
 		output.writeBoolean(isMale);
 		output.writeObject(leaguevineJson);		
 		output.writeObject(position);
+	}
+	
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(JSON_NAME, name);
+		jsonObject.put(JSON_NUMBER, number);
+		jsonObject.put(JSON_POSITION, position);
+		jsonObject.put(JSON_IS_MALE, isMale);
+		jsonObject.put(JSON_LEAGUEVINE_PLAYER, leaguevineJson);
+		return jsonObject;
+	}
+	
+	public static Player fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			Player player = new Player();
+			player.setName(jsonObject.getString(JSON_NAME));
+			if (jsonObject.has(JSON_NUMBER)) {
+				player.setNumber(jsonObject.getString(JSON_NUMBER));
+			}
+			if (jsonObject.has(JSON_POSITION)) {
+				player.setPosition(PlayerPosition.valueOf(jsonObject.getString(JSON_POSITION)));
+			}
+			if (jsonObject.has(JSON_IS_MALE)) {
+				player.setMale(jsonObject.getBoolean(JSON_IS_MALE));
+			}
+			if (jsonObject.has(JSON_LEAGUEVINE_PLAYER)) {
+				player.setNumber(jsonObject.getString(JSON_NUMBER));
+			}			
+
+			return player;
+		}
 	}
 }

@@ -16,11 +16,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.util.Log;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Team implements Externalizable {
+	private static final String JSON_TEAM_ID = "teamId";
+	private static final String JSON_CLOUD_ID = "cloudId";
+	private static final String JSON_NAME = "name";
+	private static final String JSON_PLAYERS = "players";
+	private static final String JSON_IS_MIXED = "mixed";
+	private static final String JSON_IS_DISPLAYING_PLAYER_NUMBER = "displayPlayerNumber";
+	private static final String JSON_IS_LEAGUEVINE_PLAYERS = "playersAreLeaguevine";
+	private static final String JSON_LEAGUEVINE_JSON = "leaguevineJson";
 	
 	private static final String DEFAULT_TEAM_NAME = "My Team";
 	private static final String FILE_NAME_PREFIX = "team-";
@@ -105,7 +117,8 @@ public class Team implements Externalizable {
 		ArrayList<TeamDescription> descriptions = new ArrayList<TeamDescription>();
 		for (String teamFileName : getAllTeamFileNames()) {
 			Team team = read(teamFileName);
-			TeamDescription description = new TeamDescription(teamFileName, team.getName(), team.getCloudId());
+			TeamDescription description = new TeamDescription(teamFileName,
+					team.getName(), team.getCloudId());
 			descriptions.add(description);
 		}
 		return descriptions;
@@ -377,4 +390,60 @@ public class Team implements Externalizable {
 		output.writeObject(leaguevineJson);
 	}
 
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(JSON_TEAM_ID, teamId);
+		jsonObject.put(JSON_CLOUD_ID, cloudId);
+		jsonObject.put(JSON_NAME, name);
+		if (players != null && !players.isEmpty()) {
+			JSONArray jsonPlayers = new JSONArray();
+			for (Player player : players) {
+				jsonPlayers.put(player.toJsonObject());
+			}
+			jsonObject.put(JSON_PLAYERS, jsonPlayers);
+		}
+		jsonObject.put(JSON_IS_MIXED, isMixed);
+		jsonObject.put(JSON_IS_DISPLAYING_PLAYER_NUMBER, isDisplayingPlayerNumber);
+		jsonObject.put(JSON_IS_LEAGUEVINE_PLAYERS, isPlayersAreLeaguevine);
+		jsonObject.put(JSON_LEAGUEVINE_JSON, leaguevineJson);
+		return jsonObject;
+	}
+	
+	public static Team fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			Team team = new Team();
+			if (jsonObject.has(JSON_TEAM_ID)) {
+				team.setTeamId(jsonObject.getString(JSON_TEAM_ID));
+			}
+			if (jsonObject.has(JSON_CLOUD_ID)) {
+				team.setCloudId(jsonObject.getString(JSON_CLOUD_ID));
+			}
+			if (jsonObject.has(JSON_NAME)) {
+				team.setName(jsonObject.getString(JSON_NAME));
+			}
+			if (jsonObject.has(JSON_PLAYERS)) {
+				JSONArray jsonArray = jsonObject.getJSONArray(JSON_PLAYERS);
+				for (int i = 0; i < jsonArray.length(); i++) {
+					Player player = Player.fromJsonObject((JSONObject)jsonArray.get(i));
+					team.players.add(player);
+				}
+			}
+			if (jsonObject.has(JSON_IS_MIXED)) {
+				team.setMixed(jsonObject.getBoolean(JSON_IS_MIXED));
+			}
+			if (jsonObject.has(JSON_IS_DISPLAYING_PLAYER_NUMBER)) {
+				team.setDisplayingPlayerNumber(jsonObject.getBoolean(JSON_IS_DISPLAYING_PLAYER_NUMBER));
+			}
+			if (jsonObject.has(JSON_IS_LEAGUEVINE_PLAYERS)) {
+				team.setPlayersAreLeaguevine(jsonObject.getBoolean(JSON_IS_LEAGUEVINE_PLAYERS));
+			}
+			if (jsonObject.has(JSON_LEAGUEVINE_JSON)) {
+				team.setLeaguevineJson(jsonObject.getString(JSON_LEAGUEVINE_JSON));
+			}
+
+			return team;
+		}
+	}
 }
