@@ -8,19 +8,28 @@ import static com.summithillsoftware.ultimate.model.Action.EndOfThirdQuarter;
 import static com.summithillsoftware.ultimate.model.Action.GameOver;
 import static com.summithillsoftware.ultimate.model.Action.Halftime;
 
+import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 
@@ -28,8 +37,17 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 
-public class Game implements Serializable {
-	private static final long serialVersionUID = -5725999403548435161L;
+public class Game implements Externalizable {
+	private static final String JSON_GAME_ID = "gameId";
+	private static final String JSON_OPPONENT_NAME = "opponentName";
+	private static final String JSON_TOURNAMENT_NAME = "tournamentName";
+	private static final String JSON_GAME_POINT = "gamePoint";
+	private static final String JSON_IS_FIRST_POINT_OLINE = "firstPointOline";
+	private static final String JSON_START_DATE_TIME = "timestamp";	
+	private static final String JSON_TIMEMOUT_DETAILS_JSON = "timeoutDetailsJson";
+	private static final String JSON_POINTS_JSON = "pointsJson";
+	private static final String JSON_WIND = "wind";	
+	private static final String JSON_START_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
 	
 	public static final int TIME_BASED_GAME_POINT = 1000;
 	private static final String GAMES_DIRECTORY_NAME_PREFIX = "games-";	
@@ -50,7 +68,6 @@ public class Game implements Serializable {
 	private List<Player> lastDLine;	// server transient
 	private List<Player> lastOLine;	// server transient
 	private int periodsComplete; // server transient
-	@SuppressWarnings("unused")
 	private Event firstEventTweeted;  // server transient
 	private CessationEvent lastPeriodEnd; // server transient
 	
@@ -903,8 +920,101 @@ public class Game implements Serializable {
 	        return totalAvailableFirstHalf - getTimeoutDetails().getTakenFirstHalf();
 	    }
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		gameId = (String)input.readObject();
+		startDateTime = (Date)input.readObject();
+		opponentName = (String)input.readObject();
+		tournamentName = (String)input.readObject();
+		gamePoint = input.readInt();
+		isFirstPointOline = input.readBoolean();
+		timeoutDetails = (TimeoutDetails)input.readObject();
+		points = (List<Point>)input.readObject();
+		wind = (Wind)input.readObject();
+		// server transients
+		currentLine = (List<Player>)input.readObject();
+		lastDLine = (List<Player>)input.readObject();
+		lastOLine = (List<Player>)input.readObject();
+		periodsComplete = input.readInt();
+		firstEventTweeted = (Event)input.readObject();	
+		lastPeriodEnd = (CessationEvent)lastPeriodEnd;
+	}
 
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(gameId);
+		output.writeObject(startDateTime);
+		output.writeObject(opponentName);
+		output.writeObject(tournamentName);
+		output.writeInt(gamePoint);
+		output.writeBoolean(isFirstPointOline);
+		output.writeObject(timeoutDetails);
+		output.writeObject(points);
+		output.writeObject(wind);
+		// server transients
+		output.writeObject(currentLine);
+		output.writeObject(lastDLine);
+		output.writeObject(lastOLine);
+		output.writeInt(periodsComplete);
+		output.writeObject(firstEventTweeted);
+		output.writeObject(lastPeriodEnd);
+	}
 
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(JSON_GAME_ID, gameId);
+		jsonObject.put(JSON_OPPONENT_NAME, opponentName);
+		jsonObject.put(JSON_TOURNAMENT_NAME, tournamentName);
+		jsonObject.put(JSON_GAME_POINT, gamePoint);
+		jsonObject.put(JSON_IS_FIRST_POINT_OLINE, isFirstPointOline);
+		if (startDateTime != null) {
+			SimpleDateFormat formatter = new SimpleDateFormat(JSON_START_DATE_TIME_FORMAT, Locale.US);
+			jsonObject.put(JSON_START_DATE_TIME, formatter.format(startDateTime));
+		}
+		// TODO...points points json
+		// TODO...points timeout details json
+		// TODO...wind
+		return jsonObject;
+	}
+	
+	public static Game fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			Game game = new Game();
+			if (jsonObject.has(JSON_GAME_ID)) {
+				game.gameId = (jsonObject.getString(JSON_GAME_ID));
+			}
+			if (jsonObject.has(JSON_OPPONENT_NAME)) {
+				game.setOpponentName(jsonObject.getString(JSON_OPPONENT_NAME));
+			}
+			if (jsonObject.has(JSON_TOURNAMENT_NAME)) {
+				game.setTournamentName(jsonObject.getString(JSON_TOURNAMENT_NAME));
+			}
+			if (jsonObject.has(JSON_GAME_POINT)) {
+				game.setGamePoint(jsonObject.getInt(JSON_GAME_POINT));
+			}
+			if (jsonObject.has(JSON_IS_FIRST_POINT_OLINE)) {
+				game.setFirstPointOline(jsonObject.getBoolean(JSON_IS_FIRST_POINT_OLINE));
+			}
+			if (jsonObject.has(JSON_START_DATE_TIME)) {
+				SimpleDateFormat parser = new SimpleDateFormat(JSON_START_DATE_TIME_FORMAT, Locale.US);
+				try {
+					game.setStartDateTime(parser.parse(jsonObject.getString(JSON_START_DATE_TIME)));
+				} catch (ParseException e) {
+					throw new JSONException(e.toString());
+				}
+			}
+			// TODO...points points json
+			// TODO...points timeout details json
+			// TODO...wind
+
+			return game;
+		}
+	}
 
 	
 }

@@ -191,7 +191,7 @@ public class Player implements Externalizable {
 		name = (String)input.readObject();
 		number = (String)input.readObject();
 		isMale = input.readBoolean();
-		name = (String)input.readObject();
+		leaguevineJson = (String)input.readObject();
 		position = (PlayerPosition)input.readObject();
 	}
 
@@ -230,7 +230,7 @@ public class Player implements Externalizable {
 				player.setMale(jsonObject.getBoolean(JSON_IS_MALE));
 			}
 			if (jsonObject.has(JSON_LEAGUEVINE_PLAYER)) {
-				player.setNumber(jsonObject.getString(JSON_NUMBER));
+				player.setLeaguevineJson(jsonObject.getString(JSON_LEAGUEVINE_PLAYER));
 			}			
 
 			return player;
