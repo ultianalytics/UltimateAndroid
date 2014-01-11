@@ -1,6 +1,9 @@
 package com.summithillsoftware.ultimate.model;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,8 +11,7 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 
-public class Player implements Serializable {
-	private static final long serialVersionUID = 7079444636975701164L;
+public class Player implements Externalizable {
 	private static Player ANONYMOUS_PLAYER = null;
 	private static final String ANON_NAME = "Anonymous";
 	
@@ -68,7 +70,7 @@ public class Player implements Serializable {
 	}
 	
 	public boolean isAnonymous() {
-		return this.name.equals(ANON_NAME);
+		return ANON_NAME.equals(name);
 	}
 	
 	public String getName() {
@@ -175,4 +177,22 @@ public class Player implements Serializable {
 			}
 		}
 	};
+
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		name = (String)input.readObject();
+		number = (String)input.readObject();
+		isMale = input.readBoolean();
+		name = (String)input.readObject();
+		position = (PlayerPosition)input.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(name);
+		output.writeObject(number);
+		output.writeBoolean(isMale);
+		output.writeObject(leaguevineJson);		
+		output.writeObject(position);
+	}
 }

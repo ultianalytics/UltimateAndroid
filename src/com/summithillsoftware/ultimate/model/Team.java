@@ -2,12 +2,15 @@ package com.summithillsoftware.ultimate.model;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
+import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,8 +20,7 @@ import android.util.Log;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 
-public class Team implements Serializable {
-	private static final long serialVersionUID = -6976411750470902715L;
+public class Team implements Externalizable {
 	
 	private static final String DEFAULT_TEAM_NAME = "My Team";
 	private static final String FILE_NAME_PREFIX = "team-";
@@ -348,6 +350,31 @@ public class Team implements Serializable {
 			}
 		}
 	    return line;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		teamId = (String)input.readObject();
+		name = (String)input.readObject();
+		cloudId = (String)input.readObject();
+		isMixed = input.readBoolean();
+		isDisplayingPlayerNumber = input.readBoolean();		
+		players = (List<Player>)input.readObject();
+		isPlayersAreLeaguevine = input.readBoolean();	
+		leaguevineJson = (String)input.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(teamId);
+		output.writeObject(name);
+		output.writeObject(cloudId);
+		output.writeBoolean(isMixed);
+		output.writeBoolean(isDisplayingPlayerNumber);
+		output.writeObject(players);
+		output.writeBoolean(isPlayersAreLeaguevine);
+		output.writeObject(leaguevineJson);
 	}
 
 }
