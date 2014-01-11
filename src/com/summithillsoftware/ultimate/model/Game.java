@@ -974,7 +974,11 @@ public class Game implements Externalizable {
 			SimpleDateFormat formatter = new SimpleDateFormat(JSON_START_DATE_TIME_FORMAT, Locale.US);
 			jsonObject.put(JSON_START_DATE_TIME, formatter.format(startDateTime));
 		}
-		// TODO...points points json
+		// the timeouts object is embedded json 
+		if (timeoutDetails != null) {
+			JSONObject timeoutsAsJson = timeoutDetails.toJsonObject();
+			jsonObject.put(JSON_TIMEMOUT_DETAILS_JSON, timeoutsAsJson.toString());
+		}
 		// TODO...points timeout details json
 		// TODO...wind
 		return jsonObject;
@@ -1008,8 +1012,12 @@ public class Game implements Externalizable {
 					throw new JSONException(e.toString());
 				}
 			}
+			// the timeouts object is embedded json 
+			if (jsonObject.has(JSON_TIMEMOUT_DETAILS_JSON)) {
+				JSONObject timeoutsAsJson = new JSONObject(jsonObject.getString(JSON_TIMEMOUT_DETAILS_JSON));
+				game.setTimeoutDetails(TimeoutDetails.fromJsonObject(timeoutsAsJson));
+			}
 			// TODO...points points json
-			// TODO...points timeout details json
 			// TODO...wind
 
 			return game;

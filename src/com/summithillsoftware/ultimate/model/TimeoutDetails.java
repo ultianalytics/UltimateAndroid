@@ -1,10 +1,19 @@
 package com.summithillsoftware.ultimate.model;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
-public class TimeoutDetails implements Serializable {
-	private static final long serialVersionUID = -7697584298903571097L;
-	
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class TimeoutDetails implements Externalizable {
+	private static final String JSON_QUOTA_PER_HALF = "quotaPerHalf";
+	private static final String JSON_QUOTA_FLOATERS = "quotaFloaters";
+	private static final String JSON_TAKEN_FIRST_HALF = "takenFirstHalf";
+	private static final String JSON_TAKEN_SECOND_HALF = "takenSecondHalf";
+
 	private int quotaPerHalf;
 	private int quotaFloaters;
 	private int takenFirstHalf;
@@ -47,4 +56,50 @@ public class TimeoutDetails implements Serializable {
 		setTakenSecondHalf(getTakenSecondHalf() - 1);
 	}
 
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		quotaPerHalf = input.readInt();
+		quotaFloaters = input.readInt();
+		takenFirstHalf = input.readInt();
+		takenSecondHalf = input.readInt();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeInt(quotaPerHalf);
+		output.writeInt(quotaFloaters);
+		output.writeInt(takenFirstHalf);
+		output.writeInt(takenSecondHalf);
+	}
+
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(JSON_QUOTA_PER_HALF, quotaPerHalf);
+		jsonObject.put(JSON_QUOTA_FLOATERS, quotaFloaters);
+		jsonObject.put(JSON_TAKEN_FIRST_HALF, takenFirstHalf);
+		jsonObject.put(JSON_TAKEN_SECOND_HALF, takenSecondHalf);
+		return jsonObject;
+	}
+	
+	public static TimeoutDetails fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			TimeoutDetails timeoutDetails = new TimeoutDetails();
+			if (jsonObject.has(JSON_QUOTA_PER_HALF)) {
+				timeoutDetails.quotaPerHalf = (jsonObject.getInt(JSON_QUOTA_PER_HALF));
+			}
+			if (jsonObject.has(JSON_QUOTA_FLOATERS)) {
+				timeoutDetails.quotaFloaters = (jsonObject.getInt(JSON_QUOTA_FLOATERS));
+			}
+			if (jsonObject.has(JSON_TAKEN_FIRST_HALF)) {
+				timeoutDetails.takenFirstHalf = (jsonObject.getInt(JSON_TAKEN_FIRST_HALF));
+			}
+			if (jsonObject.has(JSON_TAKEN_SECOND_HALF)) {
+				timeoutDetails.takenSecondHalf = (jsonObject.getInt(JSON_TAKEN_SECOND_HALF));
+			}
+
+			return timeoutDetails;
+		}
+	}
 }
