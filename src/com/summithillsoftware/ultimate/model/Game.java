@@ -979,8 +979,10 @@ public class Game implements Externalizable {
 			JSONObject timeoutsAsJson = timeoutDetails.toJsonObject();
 			jsonObject.put(JSON_TIMEMOUT_DETAILS_JSON, timeoutsAsJson.toString());
 		}
+		if (wind != null) {
+			jsonObject.put(JSON_WIND, wind.toJsonObject());
+		}
 		// TODO...points timeout details json
-		// TODO...wind
 		return jsonObject;
 	}
 	
@@ -1017,8 +1019,12 @@ public class Game implements Externalizable {
 				JSONObject timeoutsAsJson = new JSONObject(jsonObject.getString(JSON_TIMEMOUT_DETAILS_JSON));
 				game.setTimeoutDetails(TimeoutDetails.fromJsonObject(timeoutsAsJson));
 			}
+			if (jsonObject.has(JSON_WIND)) {
+				Wind wind = Wind.fromJsonObject(jsonObject.getJSONObject(JSON_WIND));
+				game.setWind(wind);
+			}
+			
 			// TODO...points points json
-			// TODO...wind
 
 			return game;
 		}
