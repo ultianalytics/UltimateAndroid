@@ -1,14 +1,26 @@
 package com.summithillsoftware.ultimate.model;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Point implements Serializable {
-	private static final long serialVersionUID = 8897190640184011607L;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Point implements Externalizable {
+	private static final String JSON_SUMMARY = "summary";
+	private static final String JSON_EVENTS = "events";
+	private static final String JSON_LINE = "line";
+	private static final String JSON_SUBSTITUTIONS = "substitutions";
+	private static final String JSON_START_SECONDS = "startSeconds";
+	private static final String JSON_END_SECONDS = "endSeconds";
 	
 	private List<Event> events;
 	private List<Player> line;
@@ -199,6 +211,93 @@ public class Point implements Serializable {
 	}
 	public void setSummary(PointSummary summary) {
 		this.summary = summary;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		events = (List<Event>)input.readObject();
+		line = (List<Player>)input.readObject();
+		substitutions = (List<PlayerSubstitution>)input.readObject();
+		timeStartedSeconds = input.readInt();
+		timeEndedSeconds = input.readInt();
+	}
+
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(events);
+		output.writeObject(line);
+		output.writeObject(substitutions);
+		output.writeInt(timeStartedSeconds);
+		output.writeInt(timeEndedSeconds);
+	}
+	
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(JSON_START_SECONDS, timeStartedSeconds);
+		jsonObject.put(JSON_END_SECONDS, timeEndedSeconds);	
+		if (events != null && !events.isEmpty()) {
+			JSONArray jsonArray = new JSONArray();
+			for (Event event : events) {
+				jsonArray.put(event.toJsonObject());
+			}
+			jsonObject.put(JSON_EVENTS, jsonArray);
+		}
+		if (line != null && !line.isEmpty()) {
+			JSONArray jsonArray = new JSONArray();
+			for (Player player : line) {
+				jsonArray.put(player.getName());
+			}
+			jsonObject.put(JSON_LINE, jsonArray);
+		}
+		if (substitutions != null && !substitutions.isEmpty()) {
+			JSONArray jsonArray = new JSONArray();
+			for (PlayerSubstitution sub : substitutions) {
+				jsonArray.put(sub.toJsonObject());
+			}
+			jsonObject.put(JSON_SUBSTITUTIONS, jsonArray);
+		}		
+		
+		if (summary != null) {
+			jsonObject.put(JSON_SUMMARY, summary.toJsonObject());
+		}
+
+		return jsonObject;
+	}
+	
+	public static Point fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			Point point = new Point();
+			if (jsonObject.has(JSON_START_SECONDS)) {
+				point.timeStartedSeconds = jsonObject.getInt(JSON_START_SECONDS);
+			}
+			if (jsonObject.has(JSON_END_SECONDS)) {
+				point.timeEndedSeconds = jsonObject.getInt(JSON_END_SECONDS);
+			}			
+			if (jsonObject.has(JSON_EVENTS)) {
+				JSONArray eventsAsJson = jsonObject.getJSONArray(JSON_EVENTS);
+				for (int i = 0; i < eventsAsJson.length(); i++) {
+					JSONObject eventAsJson = eventsAsJson.getJSONObject(i);
+					point.addEvent(Event.fromJsonObject(eventAsJson));
+				}
+			}
+			if (jsonObject.has(JSON_LINE)) {
+				JSONArray eventsAsJson = jsonObject.getJSONArray(JSON_LINE);
+				for (int i = 0; i < eventsAsJson.length(); i++) {
+					JSONObject playerAsJson = eventsAsJson.getJSONObject(i);
+					point.getLine().add(Player.fromJsonObject(playerAsJson));
+				}
+			}
+			if (jsonObject.has(JSON_SUBSTITUTIONS)) {
+				JSONArray eventsAsJson = jsonObject.getJSONArray(JSON_SUBSTITUTIONS);
+				for (int i = 0; i < eventsAsJson.length(); i++) {
+					JSONObject subAsJson = eventsAsJson.getJSONObject(i);
+					point.getSubstitutions().add(PlayerSubstitution.fromJsonObject(subAsJson));
+				}
+			}
+
+			return point;
+		}
 	}
 
 	@Override

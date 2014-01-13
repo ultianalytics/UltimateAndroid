@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -165,8 +166,12 @@ public class Game implements Externalizable {
 				fileInputStream = new FileInputStream(existingFile);
 				objectInputStream = new ObjectInputStream(fileInputStream);
 				game = (Game) objectInputStream.readObject();
+				if (mergePlayersWithCurrentTeam) {
+					game.mergePlayersWithCurrentTeam();
+				}
 			} catch (Exception e) {
 				Log.e(ULTIMATE, "Error restoring game from file", e);
+				throw new RuntimeException("Could not restore game", e);
 			} finally {
 				try {
 					objectInputStream.close();
@@ -175,9 +180,6 @@ public class Game implements Externalizable {
 					Log.e(ULTIMATE, "Unable to close files when restoring game file", e2);
 				}
 			}
-		}
-		if (mergePlayersWithCurrentTeam) {
-			game.mergePlayersWithCurrentTeam();
 		}
 		return game;
 	}
@@ -982,7 +984,13 @@ public class Game implements Externalizable {
 		if (wind != null) {
 			jsonObject.put(JSON_WIND, wind.toJsonObject());
 		}
-		// TODO...points timeout details json
+		if (points != null) {
+			JSONArray jsonArray = new JSONArray();
+			for (Point point : points) {
+				jsonArray.put(point.toJsonObject());
+			}
+			jsonObject.put(JSON_POINTS_JSON, jsonArray.toString());
+		}
 		return jsonObject;
 	}
 	
@@ -1024,7 +1032,14 @@ public class Game implements Externalizable {
 				game.setWind(wind);
 			}
 			
-			// TODO...points points json
+			if (jsonObject.has(JSON_POINTS_JSON)) {
+				String pointsJson = jsonObject.getString(JSON_POINTS_JSON);
+				JSONArray jsonArray = new JSONArray(pointsJson);
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject pointAsJson = jsonArray.getJSONObject(i);
+					game.getPoints().add(Point.fromJsonObject(pointAsJson));
+				}
+			}
 
 			return game;
 		}

@@ -1,13 +1,15 @@
 package com.summithillsoftware.ultimate.model;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import android.content.Context;
 
 import com.summithillsoftware.ultimate.R;
 
-public class Score implements Serializable{
-	private static final long serialVersionUID = -3488195922300140115L;
+public class Score implements Externalizable {
 	private int ours;
 	private int theirs;
 	
@@ -86,5 +88,14 @@ public class Score implements Serializable{
 		return scoreFormatted;
 	}
 	
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		ours = input.readInt();
+		theirs = input.readInt();
+	}
+
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeInt(ours);
+		output.writeInt(theirs);
+	}
 
 }

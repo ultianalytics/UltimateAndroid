@@ -8,15 +8,22 @@ import static com.summithillsoftware.ultimate.model.Action.MiscPenalty;
 import static com.summithillsoftware.ultimate.model.Action.Stall;
 import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.summithillsoftware.ultimate.R;
 
 public class OffenseEvent extends Event {
-	private static final long serialVersionUID = 4170266503673315946L;
-	
+	private static final String JSON_PASSER = "passer";
+	private static final String JSON_RECEIVER = "receiver";
+
 	public static final EnumSet<Action> OFFENSE_ACTIONS = EnumSet.of(
 			Catch,
 			Drop,
@@ -28,6 +35,9 @@ public class OffenseEvent extends Event {
 	
 	private Player passer;
 	private Player receiver;
+	
+	public OffenseEvent() {
+	}
 	
 	public OffenseEvent(Action action, Player passer) {
 		this(action, passer, null);
@@ -264,4 +274,87 @@ public class OffenseEvent extends Event {
 		passer = Player.replaceWithSharedPlayer(passer);
 		receiver = Player.replaceWithSharedPlayer(receiver);
 	}
+	
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		super.readExternal(input);
+		passer = (Player)input.readObject();
+		receiver = (Player)input.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		super.writeExternal(output);
+		output.writeObject(passer);
+		output.writeObject(receiver);
+	}
+	
+	public static OffenseEvent eventfromJsonObject(JSONObject jsonObject) throws JSONException {
+		String actionAsString = jsonObject.getString(JSON_ACTION);
+		Action action = Catch;
+		if (actionAsString.equals("Catch")) {
+			action = Catch;
+		} else if (actionAsString.equals("Drop")) {
+			action = Drop;			
+		} else if (actionAsString.equals("Goal")) {
+			action = Goal;
+		} else if (actionAsString.equals("Throwaway")) {
+			action = Throwaway;
+		} else if (actionAsString.equals("Stall")) {
+			action = Stall;
+		} else if (actionAsString.equals("MiscPenalty")) {
+			action = MiscPenalty;
+		} else if (actionAsString.equals("Callahan")) {
+			action = Callahan;
+		} 
+		Player passer = null;
+		if (jsonObject.has(JSON_PASSER)) {
+			passer = Team.current().getPlayerNamed(jsonObject.getString(JSON_PASSER));
+		}
+		Player receiver = null;
+		if (jsonObject.has(JSON_RECEIVER)) {
+			receiver = Team.current().getPlayerNamed(jsonObject.getString(JSON_RECEIVER));
+		}
+		OffenseEvent event = new OffenseEvent(action, passer, receiver);
+		populateGeneralPropertiesFromJsonObject(event, jsonObject);
+		return event;
+	}
+	
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = super.toJsonObject();
+		String actionAsString = null;
+		switch (getAction()) {
+		case Catch:
+			actionAsString = "Catch";
+			break;
+		case Drop:
+			actionAsString = "Drop";
+			break;
+		case Goal:
+			actionAsString = "Goal";
+			break;
+		case Throwaway:
+			actionAsString = "Throwaway";
+			break;		
+		case Stall:
+			actionAsString = "Stall";
+			break;	
+		case MiscPenalty:
+			actionAsString = "MiscPenalty";
+			break;				
+		case Callahan:
+			actionAsString = "Callahan";
+			break;				
+		default:
+			actionAsString = "Catch";
+			break;
+		}
+		jsonObject.put(JSON_ACTION, actionAsString);
+		jsonObject.put(JSON_PASSER, passer.getName());
+		jsonObject.put(JSON_RECEIVER, receiver.getName());
+		
+		return jsonObject;
+	}
+	
+
 }

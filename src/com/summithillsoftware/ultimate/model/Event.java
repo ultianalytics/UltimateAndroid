@@ -16,18 +16,35 @@ import static com.summithillsoftware.ultimate.model.Action.Stall;
 import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 import static com.summithillsoftware.ultimate.model.Action.Timeout;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
+import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
-public abstract class Event implements Serializable {
-	private static final long serialVersionUID = 5756168445956393971L;
+public abstract class Event implements Externalizable {
+	private static final String JSON_EVENT_TYPE = "type";
+	private static final String JSON_EVENT_TYPE_CESSATION = "Cessation";
+	private static final String JSON_EVENT_TYPE_OFFENSE = "Offense";
+	private static final String JSON_EVENT_TYPE_DEFENSE = "Defense";
+	private static final String JSON_EVENT_TIMESTAMP = "timestamp";
+	private static final String JSON_IS_HALFTIME_CAUSE = "halftimeCause";
+	protected static final String JSON_ACTION = "action";
+	protected static final String JSON_DETAILS = "details";
+	
 	public static final EnumSet<Action> CESSATION_ACTIONS = EnumSet.of(
 			EndOfFirstQuarter,
 			Halftime,
@@ -269,4 +286,69 @@ public abstract class Event implements Serializable {
 	}
 	
 	public abstract void useSharedPlayers();
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		action = (Action)input.readObject();
+		details = (Map<String, Object>)input.readObject();
+		timestamp = input.readLong();
+		isHalftimeCause = input.readBoolean();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(action);
+		output.writeObject(details);
+		output.writeLong(timestamp);
+		output.writeBoolean(isHalftimeCause);
+	}
+
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		if (isHalftimeCause) {
+			jsonObject.put(JSON_IS_HALFTIME_CAUSE, isHalftimeCause);
+		}
+		jsonObject.put(JSON_EVENT_TIMESTAMP, timestamp);
+		String typeAsString = null;
+		if (isOffense()) {
+			typeAsString = JSON_EVENT_TYPE_OFFENSE;
+		} else if (isDefense()) {
+			typeAsString = JSON_EVENT_TYPE_DEFENSE;
+		} else {
+			typeAsString = JSON_EVENT_TYPE_CESSATION;
+		}
+		jsonObject.put(JSON_EVENT_TYPE, typeAsString);
+
+		return jsonObject;
+	}
+	
+	public static Event fromJsonObject(JSONObject jsonObject) throws JSONException {
+		if (jsonObject == null) {
+			return null;
+		} else {
+			String type = jsonObject.getString(JSON_EVENT_TYPE);
+			if (type.equals(JSON_EVENT_TYPE_OFFENSE)) {
+				return OffenseEvent.eventfromJsonObject(jsonObject);
+			} else if (type.equals(JSON_EVENT_TYPE_DEFENSE)) {
+				return DefenseEvent.eventfromJsonObject(jsonObject);
+			} else if (type.equals(JSON_EVENT_TYPE_CESSATION)) {
+				return CessationEvent.eventfromJsonObject(jsonObject);
+			} else {
+				Log.e(Constants.ULTIMATE, "No valid event type in json");
+				return null;
+			}
+		}
+	}
+	
+	protected static void populateGeneralPropertiesFromJsonObject(Event event, JSONObject jsonObject) throws JSONException {
+		if (jsonObject.has(JSON_EVENT_TIMESTAMP)) {
+			event.timestamp = jsonObject.getLong(JSON_EVENT_TIMESTAMP);
+		}
+		if (jsonObject.has(JSON_IS_HALFTIME_CAUSE)) {
+			event.isHalftimeCause = jsonObject.getBoolean(JSON_IS_HALFTIME_CAUSE);
+		}
+	}
+
+
 }

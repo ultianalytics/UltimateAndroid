@@ -11,6 +11,9 @@ import static com.summithillsoftware.ultimate.model.Action.Timeout;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.summithillsoftware.ultimate.R;
 
 public class CessationEvent extends Event {
@@ -37,6 +40,9 @@ public class CessationEvent extends Event {
 		CessationEvent evt = CessationEvent.createWithAction(EndOfFourthQuarter);
 		evt.setDetailBooleanValue(NEXT_PERIOD_START_ONLINE_DETAIL,startOline);
 		return evt;
+	}
+	
+	public CessationEvent() {
 	}
 	
 	public boolean isCessationEvent() {
@@ -159,6 +165,64 @@ public class CessationEvent extends Event {
 	public void useSharedPlayers() {
 		// no-op
 	}
+	
+	public static CessationEvent eventfromJsonObject(JSONObject jsonObject) throws JSONException {
+		String actionAsString = jsonObject.getString(JSON_ACTION);
+		Action action = GameOver;
+		if (actionAsString.equals("EndOfFirstQuarter")) {
+			action = EndOfFirstQuarter;
+		} else if (actionAsString.equals("Halftime")) {
+				action = Halftime;			
+		} else if (actionAsString.equals("EndOfThirdQuarter")) {
+			action = EndOfThirdQuarter;			
+		} else if (actionAsString.equals("EndOfFourthQuarter")) {
+			action = EndOfFourthQuarter;
+		} else if (actionAsString.equals("EndOfOvertime")) {
+			action = EndOfOvertime;
+		} else if (actionAsString.equals("Timeout")) {
+			action = Timeout;
+		} else if (actionAsString.equals("GameOver")) {
+			action = GameOver;
+		} 
+		CessationEvent event = CessationEvent.createWithAction(action);
+		populateGeneralPropertiesFromJsonObject(event, jsonObject);
+		return event;
+	}
+	
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = super.toJsonObject();
+		String actionAsString = null;
+		switch (getAction()) {
+		case EndOfFirstQuarter:
+			actionAsString = "EndOfFirstQuarter";
+			break;
+		case Halftime:
+			actionAsString = "Halftime";
+			break;
+		case EndOfThirdQuarter:
+			actionAsString = "EndOfThirdQuarter";
+			break;
+		case EndOfFourthQuarter:
+			actionAsString = "EndOfFourthQuarter";
+			break;
+		case EndOfOvertime:
+			actionAsString = "EndOfOvertime";
+			break;
+		case Timeout:
+			actionAsString = "Timeout";
+			break;	
+		case GameOver:
+			actionAsString = "GameOver";
+			break;				
+		default:
+			actionAsString = "GameOver";
+			break;
+		}
+		jsonObject.put(JSON_ACTION, actionAsString);
+		
+		return jsonObject;
+	}
+
 }
 
 

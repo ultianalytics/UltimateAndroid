@@ -2,19 +2,21 @@ package com.summithillsoftware.ultimate.model;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
+import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import android.util.Log;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 
-public class Preferences implements Serializable {
-	private static final long serialVersionUID = 5150758800160380679L;
+public class Preferences implements Externalizable {
 	
 	public static final int MINIMUM_GAME_POINT = 9;
 	public static final int MAXIMUM_GAME_POINT = 17;
@@ -133,4 +135,23 @@ public class Preferences implements Serializable {
 		return new File(UltimateApplication.current().getFilesDir(), PREFERENCES_FILE_NAME);
 	}
 
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		currentTeamFileName = (String)input.readObject();
+		currentGameFileName = (String)input.readObject();
+		tournamentName = (String)input.readObject();
+		gamePoint = input.readInt();
+		timeoutsPerHalf = input.readInt();
+		timeoutFloatersPerGame = input.readInt();
+
+	}
+
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(currentTeamFileName);
+		output.writeObject(currentGameFileName);
+		output.writeObject(tournamentName);
+		output.writeInt(gamePoint);
+		output.writeInt(timeoutsPerHalf);
+		output.writeInt(timeoutFloatersPerGame);
+	}
 }
+

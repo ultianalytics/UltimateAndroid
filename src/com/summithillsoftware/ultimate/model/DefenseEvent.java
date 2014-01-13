@@ -7,15 +7,22 @@ import static com.summithillsoftware.ultimate.model.Action.Pull;
 import static com.summithillsoftware.ultimate.model.Action.PullOb;
 import static com.summithillsoftware.ultimate.model.Action.Throwaway;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.summithillsoftware.ultimate.R;
 
 public class DefenseEvent extends Event {
-	private static final long serialVersionUID = 4170266503673315946L;
+	private static final String JSON_DEFENDER = "defender";
+	private static final String JSON_HANGTIME = "hangtime";
 	private static final String HANGTIME_DETAIL_PROPERTY_NAME = "hangtime";
 	
 	public static final EnumSet<Action> DEFENSE_ACTIONS = EnumSet.of(
@@ -27,6 +34,9 @@ public class DefenseEvent extends Event {
 			Callahan);
 	
 	private Player defender;
+	
+	public DefenseEvent() {
+	}
 	
 	public DefenseEvent(Action action, Player defender) {
 		super(action);
@@ -232,4 +242,79 @@ public class DefenseEvent extends Event {
 	public void useSharedPlayers() {
 		defender = Player.replaceWithSharedPlayer(defender);
 	}
+	
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		super.readExternal(input);
+		defender = (Player)input.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		super.writeExternal(output);
+		output.writeObject(defender);
+	}
+	
+	public static DefenseEvent eventfromJsonObject(JSONObject jsonObject) throws JSONException {
+		String actionAsString = jsonObject.getString(JSON_ACTION);
+		Action action = Pull;
+		if (actionAsString.equals("Pull")) {
+			action = Pull;
+		} else if (actionAsString.equals("PullOb")) {
+				action = PullOb;			
+		} else if (actionAsString.equals("D")) {
+			action = De;			
+		} else if (actionAsString.equals("Goal")) {
+			action = Goal;
+		} else if (actionAsString.equals("Throwaway")) {
+			action = Throwaway;
+		} else if (actionAsString.equals("Callahan")) {
+			action = Callahan;
+		} 
+		Player defender = null;
+		if (jsonObject.has(JSON_DEFENDER)) {
+			defender = Team.current().getPlayerNamed(jsonObject.getString(JSON_DEFENDER));
+		}
+		DefenseEvent event = new DefenseEvent(action, defender);
+		if (event.isPull() && jsonObject.has(JSON_HANGTIME)) {
+			event.setDetailIntValue(HANGTIME_DETAIL_PROPERTY_NAME, jsonObject.getInt(JSON_HANGTIME));
+		}
+		populateGeneralPropertiesFromJsonObject(event, jsonObject);
+		return event;
+	}
+	
+	public JSONObject toJsonObject() throws JSONException {
+		JSONObject jsonObject = super.toJsonObject();
+		String actionAsString = null;
+		switch (getAction()) {
+		case Pull:
+			actionAsString = "Pull";
+			break;
+		case PullOb:
+			actionAsString = "PullOb";
+			break;
+		case De:
+			actionAsString = "D";
+			break;
+		case Goal:
+			actionAsString = "Goal";
+			break;
+		case Throwaway:
+			actionAsString = "Throwaway";
+			break;		
+		case Callahan:
+			actionAsString = "Callahan";
+			break;				
+		default:
+			actionAsString = "Pull";
+			break;
+		}
+		jsonObject.put(JSON_ACTION, actionAsString);
+		jsonObject.put(JSON_DEFENDER, defender.getName());
+		if (isPull() && getPullHangtimeMilliseconds() != 0) {
+			jsonObject.put(JSON_DEFENDER, getPullHangtimeMilliseconds());
+		}
+		return jsonObject;
+	}
+
 }
