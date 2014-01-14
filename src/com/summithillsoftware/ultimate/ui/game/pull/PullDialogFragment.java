@@ -50,7 +50,7 @@ public class PullDialogFragment extends UltimateDialogFragment {
 		if (playerName == null) {
 			return null;
 		} else {
-			return Team.current().getPlayerNamed(playerName);
+			return Team.getPlayerNamed(playerName);
 		}
 	}
 	

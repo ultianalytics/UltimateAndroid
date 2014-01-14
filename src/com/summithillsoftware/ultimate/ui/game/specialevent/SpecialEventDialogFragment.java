@@ -69,7 +69,7 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 		if (playerName == null) {
 			return null;
 		} else {
-			return Team.current().getPlayerNamed(playerName);
+			return Team.getPlayerNamed(playerName);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class SpecialEventDialogFragment extends UltimateDialogFragment {
 		if (playerName == null) {
 			return null;
 		} else {
-			return Team.current().getPlayerNamed(playerName);
+			return Team.getPlayerNamed(playerName);
 		}
 	}
 

@@ -74,24 +74,7 @@ public class PlayerSubstitution implements Externalizable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (timestamp ^ (timestamp >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PlayerSubstitution other = (PlayerSubstitution) obj;
-		if (timestamp != other.timestamp)
-			return false;
-		return true;
+		return timestamp;
 	}
 	
 	public static Comparator<PlayerSubstitution> TimestampAndNameComparator = new Comparator<PlayerSubstitution>() {
@@ -123,10 +106,10 @@ public class PlayerSubstitution implements Externalizable {
 	public JSONObject toJsonObject() throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		if (fromPlayer != null) {
-			jsonObject.put(JSON_FROM_PLAYER, fromPlayer.toJsonObject());	
+			jsonObject.put(JSON_FROM_PLAYER, fromPlayer.getName());	
 		}
 		if (toPlayer != null) {
-			jsonObject.put(JSON_TO_PLAYER, toPlayer.toJsonObject());	
+			jsonObject.put(JSON_TO_PLAYER, toPlayer.getName());	
 		}
 		if (reason != null) {
 			jsonObject.put(JSON_SUB_REASON, reason == SubstitutionReason.SubstitutionReasonInjury ? JSON_SUB_REASON_INJURY : JSON_SUB_REASON_OTHER);	
@@ -141,10 +124,12 @@ public class PlayerSubstitution implements Externalizable {
 		} else {
 			PlayerSubstitution sub = new PlayerSubstitution();
 			if (jsonObject.has(JSON_FROM_PLAYER)) {
-				sub.fromPlayer = Player.fromJsonObject(jsonObject.getJSONObject(JSON_FROM_PLAYER));
+				String playerName = jsonObject.getString(JSON_FROM_PLAYER);
+				sub.fromPlayer = Team.getPlayerNamed(playerName);
 			}
 			if (jsonObject.has(JSON_TO_PLAYER)) {
-				sub.fromPlayer = Player.fromJsonObject(jsonObject.getJSONObject(JSON_TO_PLAYER));
+				String playerName = jsonObject.getString(JSON_TO_PLAYER);
+				sub.toPlayer = Team.getPlayerNamed(playerName);				
 			}			
 			if (jsonObject.has(JSON_SUB_REASON)) {
 				sub.reason = jsonObject.getString(JSON_SUB_REASON).equals(JSON_SUB_REASON_INJURY) ? 
@@ -156,6 +141,32 @@ public class PlayerSubstitution implements Externalizable {
 
 			return sub;
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlayerSubstitution other = (PlayerSubstitution) obj;
+		if (fromPlayer == null) {
+			if (other.fromPlayer != null)
+				return false;
+		} else if (!fromPlayer.equals(other.fromPlayer))
+			return false;
+		if (reason != other.reason)
+			return false;
+		if (timestamp != other.timestamp)
+			return false;
+		if (toPlayer == null) {
+			if (other.toPlayer != null)
+				return false;
+		} else if (!toPlayer.equals(other.toPlayer))
+			return false;
+		return true;
 	}
 
 

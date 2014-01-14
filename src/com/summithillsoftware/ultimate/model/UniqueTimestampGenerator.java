@@ -24,7 +24,7 @@ public class UniqueTimestampGenerator {
 	}
 	
 	private int nowSeconds() {
-		int now = (int)System.currentTimeMillis() / 1000;
+		int now = (int)(System.currentTimeMillis() / 1000.0f);
 		return now;
 	}
 

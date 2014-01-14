@@ -310,7 +310,7 @@ public class Team implements Externalizable {
 		});
 		return playersSorted;
 	}
-	public Player getPlayerNamed(String playerName) {
+	public Player getPlayer(String playerName) {
 		for (Player player : getPlayers()) {
 			if (playerName.equalsIgnoreCase(player.getName())) {
 				return player;
@@ -318,6 +318,28 @@ public class Team implements Externalizable {
 		}
 		return null;
 	}
+	public static Player getPlayerNamed(String playerName) {
+		if (playerName == null) {
+			return Player.anonymous();
+		}
+		Player player = Team.current().getPlayer(playerName);
+		if (player == null) {
+			player = new Player(playerName);
+			Team.current().addPlayer(player);
+		}
+		return player;
+	}
+	
+	
+//    if (playerName == nil) {
+//        return nil;
+//    }
+//    Player* player = [[Team getCurrentTeam] getPlayer:playerName];
+//    if (!player) {
+//        player = [[Player alloc] initName:playerName];
+//        [[Team getCurrentTeam] addPlayer:player];
+//    }
+//    return player;
 	
 	public boolean addPlayer(Player player) {
 		Boolean replaced = removePlayer(player);

@@ -47,7 +47,7 @@ public class Point implements Externalizable {
 	        timeStartedSeconds = now;
 		}
 		event.setTimestamp(now);
-		timeEndedSeconds = UniqueTimestampGenerator.current().uniqueTimeIntervalSinceReferenceDateSeconds();;
+		timeEndedSeconds = UniqueTimestampGenerator.current().uniqueTimeIntervalSinceReferenceDateSeconds();
 		events.add(event);
 	}
 	
@@ -278,14 +278,14 @@ public class Point implements Externalizable {
 				JSONArray eventsAsJson = jsonObject.getJSONArray(JSON_EVENTS);
 				for (int i = 0; i < eventsAsJson.length(); i++) {
 					JSONObject eventAsJson = eventsAsJson.getJSONObject(i);
-					point.addEvent(Event.fromJsonObject(eventAsJson));
+					point.events.add(Event.fromJsonObject(eventAsJson));
 				}
 			}
 			if (jsonObject.has(JSON_LINE)) {
 				JSONArray eventsAsJson = jsonObject.getJSONArray(JSON_LINE);
 				for (int i = 0; i < eventsAsJson.length(); i++) {
-					JSONObject playerAsJson = eventsAsJson.getJSONObject(i);
-					point.getLine().add(Player.fromJsonObject(playerAsJson));
+					String playerName = eventsAsJson.getString(i);
+					point.getLine().add(Team.getPlayerNamed(playerName));
 				}
 			}
 			if (jsonObject.has(JSON_SUBSTITUTIONS)) {

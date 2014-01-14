@@ -309,11 +309,11 @@ public class OffenseEvent extends Event {
 		} 
 		Player passer = null;
 		if (jsonObject.has(JSON_PASSER)) {
-			passer = Team.current().getPlayerNamed(jsonObject.getString(JSON_PASSER));
+			passer = Team.getPlayerNamed(jsonObject.getString(JSON_PASSER));
 		}
 		Player receiver = null;
 		if (jsonObject.has(JSON_RECEIVER)) {
-			receiver = Team.current().getPlayerNamed(jsonObject.getString(JSON_RECEIVER));
+			receiver = Team.getPlayerNamed(jsonObject.getString(JSON_RECEIVER));
 		}
 		OffenseEvent event = new OffenseEvent(action, passer, receiver);
 		populateGeneralPropertiesFromJsonObject(event, jsonObject);

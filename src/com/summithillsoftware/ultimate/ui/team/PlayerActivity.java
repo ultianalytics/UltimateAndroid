@@ -170,7 +170,7 @@ public class PlayerActivity extends UltimateActivity {
 	private Player getPlayer() {
 		if (!isNewPlayer()) {
 			String playerName = getIntent().getStringExtra(PLAYER_NAME);
-			return Team.current().getPlayerNamed(playerName);
+			return Team.getPlayerNamed(playerName);
 		} else {
 			return new Player();
 		}

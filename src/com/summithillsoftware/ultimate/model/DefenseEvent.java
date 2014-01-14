@@ -273,7 +273,7 @@ public class DefenseEvent extends Event {
 		} 
 		Player defender = null;
 		if (jsonObject.has(JSON_DEFENDER)) {
-			defender = Team.current().getPlayerNamed(jsonObject.getString(JSON_DEFENDER));
+			defender = Team.getPlayerNamed(jsonObject.getString(JSON_DEFENDER));
 		}
 		DefenseEvent event = new DefenseEvent(action, defender);
 		if (event.isPull() && jsonObject.has(JSON_HANGTIME)) {
@@ -312,7 +312,7 @@ public class DefenseEvent extends Event {
 		jsonObject.put(JSON_ACTION, actionAsString);
 		jsonObject.put(JSON_DEFENDER, defender.getName());
 		if (isPull() && getPullHangtimeMilliseconds() != 0) {
-			jsonObject.put(JSON_DEFENDER, getPullHangtimeMilliseconds());
+			jsonObject.put(JSON_HANGTIME, getPullHangtimeMilliseconds());
 		}
 		return jsonObject;
 	}
