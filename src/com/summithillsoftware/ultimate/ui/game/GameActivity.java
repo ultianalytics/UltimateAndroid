@@ -44,6 +44,7 @@ public class GameActivity extends UltimateActivity {
 	private TextView  text_game_tourament_name;
 	private Button  button_save;
 	private Button  button_events;
+	private Button  button_statistics;
 	private TextView label_game_date;
 	private TextView label_game_score;
 	private RadioGroup radiogroup_game_first_point_oline;
@@ -139,7 +140,8 @@ public class GameActivity extends UltimateActivity {
 		text_game_opponent_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent_name);
 		text_game_tourament_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tourament_name);
 		button_save = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_save);
-		button_events = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_events);		
+		button_events = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_events);	
+		button_statistics = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_statistics);	
 		label_game_date = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_date);
 		label_game_score = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
 		radiogroup_game_first_point_oline = (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
@@ -177,6 +179,7 @@ public class GameActivity extends UltimateActivity {
 		label_game_date.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_events.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+		button_statistics.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 	}
 	
 	private void populateGamePointView(int gamePoint) {
