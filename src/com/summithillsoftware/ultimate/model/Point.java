@@ -105,6 +105,10 @@ public class Point implements Externalizable {
 		return events.size() > 0 && getLastEvent().isFinalEventOfPoint();
 	}
 	
+	public boolean isFinishedWithGoal() {
+		return isFinished() && getLastEvent().isGoal();
+	}
+	
 	public boolean isOurPoint() {
 		return getLastPlayEvent().isOurGoal();
 	}

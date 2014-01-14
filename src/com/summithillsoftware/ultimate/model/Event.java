@@ -96,12 +96,10 @@ public abstract class Event implements Externalizable {
 	}
 
 	public long getTimestamp() {
-		System.out.println("getTimestamp=" + timestamp);
 		return timestamp;
 	}
 
 	public void setTimestamp(long timestamp) {
-		System.out.println("setTimestamp=" + timestamp);
 		this.timestamp = timestamp;
 	}
 
@@ -312,7 +310,6 @@ public abstract class Event implements Externalizable {
 			jsonObject.put(JSON_IS_HALFTIME_CAUSE, isHalftimeCause);
 		}
 		jsonObject.put(JSON_EVENT_TIMESTAMP, timestamp);
-System.out.println("toJson...timestamp = " + timestamp);
 		String typeAsString = null;
 		if (isOffense()) {
 			typeAsString = JSON_EVENT_TYPE_OFFENSE;
@@ -347,7 +344,6 @@ System.out.println("toJson...timestamp = " + timestamp);
 	protected static void populateGeneralPropertiesFromJsonObject(Event event, JSONObject jsonObject) throws JSONException {
 		if (jsonObject.has(JSON_EVENT_TIMESTAMP)) {
 			event.timestamp = jsonObject.getLong(JSON_EVENT_TIMESTAMP);
-			System.out.println("fromJson...timestamp = " + event.timestamp);
 		}
 		if (jsonObject.has(JSON_IS_HALFTIME_CAUSE)) {
 			event.isHalftimeCause = jsonObject.getBoolean(JSON_IS_HALFTIME_CAUSE);

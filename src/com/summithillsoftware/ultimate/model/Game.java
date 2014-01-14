@@ -707,7 +707,7 @@ public class Game implements Externalizable {
 				if (point.isPeriodEnd()) {
 					lastPeriodEnd = point.getPeriodEnd();
 				}
-				if (summary.isFinished()) {
+				if (point.isFinishedWithGoal()) {
 					if (point.isOurPoint()) {
 						score.incOurs();
 					} else {
