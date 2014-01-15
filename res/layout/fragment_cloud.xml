@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewFlipper"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inAnimation="@android:anim/slide_in_left"
+    android:outAnimation="@android:anim/slide_out_right" >
+
+    <LinearLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/redButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/game_action_pull_buttons_height"
+            android:layout_margin="10dp"
+            android:text="@string/button_cancel" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/signonView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
+        
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/undefined"
+            android:textSize="20sp" 
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selectionView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
+        
+        <TextView
+            android:id="@+id/temp2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/undefined"
+            android:textSize="20sp" 
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</ViewFlipper>

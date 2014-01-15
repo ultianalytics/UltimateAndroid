@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.team;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.ListView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.cloud.CloudDialogFragment;
+import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 
 public class TeamsActivity extends UltimateActivity {
 
@@ -41,6 +45,9 @@ public class TeamsActivity extends UltimateActivity {
 			Intent intent = new Intent(this, TeamActivity.class);
 			intent.putExtra(TeamActivity.NEW_TEAM, true);
 			startActivity(intent);
+		}
+		if (item.getItemId() == R.id.action_download) {
+			showTeamDownloadDialog();
 		}
 		return true;
 	}
@@ -74,5 +81,14 @@ public class TeamsActivity extends UltimateActivity {
 	
 	private void goToTeamActivity() {
 		startActivity(new Intent(this, TeamActivity.class));
+	}
+	
+	private void showTeamDownloadDialog() {
+		TeamDownloadWorkflow workflow = new TeamDownloadWorkflow();
+		UltimateApplication.current().setActiveWorkflow(workflow);
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    CloudDialogFragment downloadDialog = new CloudDialogFragment();
+	    downloadDialog.setWorkflowId(workflow.getWorkflowId());
+	    downloadDialog.show(fragmentManager, "dialog");
 	}
 }

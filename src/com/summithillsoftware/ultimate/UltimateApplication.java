@@ -4,10 +4,12 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
 	private boolean isAppStartInProgress;
+	private Workflow activeWorkflow;
 	
 	public static UltimateApplication current() {
 		if (Current == null) {  // this is for unit testing (should have been populated by onCreate)
@@ -42,6 +44,14 @@ public class UltimateApplication extends Application {
 	
 	public boolean isLandscape() {
 		return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+	}
+
+	public Workflow getActiveWorkflow() {
+		return activeWorkflow;
+	}
+
+	public void setActiveWorkflow(Workflow activeWorkflow) {
+		this.activeWorkflow = activeWorkflow;
 	}
 
    

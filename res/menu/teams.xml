@@ -7,5 +7,13 @@
         android:title="@string/menuitem_team_add" 
         android:icon="@drawable/plus_white"
         />
+    
+    <item
+        android:id="@+id/action_download"
+        android:orderInCategory="110"
+        ultimate:showAsAction="always|withText"
+        android:title="@string/menuitem_team_download" 
+        android:icon="@drawable/ic_action_download"
+        />    
 
 </menu>
