@@ -122,7 +122,7 @@ public class CloudDialogFragment extends UltimateDialogFragment {
 	
 	private TeamDownloadWorkflow getTeamDownloadWorkflow() {
 		Workflow workflow = getWorkflow();
-		if (workflow instanceof TeamDownloadWorkflow) {
+		if (!(workflow instanceof TeamDownloadWorkflow)) {
 			Log.e(ULTIMATE, "Workflow invalid...wrong type");
 			dismiss();
 		}

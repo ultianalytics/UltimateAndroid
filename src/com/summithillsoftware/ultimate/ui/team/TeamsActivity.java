@@ -86,6 +86,7 @@ public class TeamsActivity extends UltimateActivity {
 	private void showTeamDownloadDialog() {
 		TeamDownloadWorkflow workflow = new TeamDownloadWorkflow();
 		UltimateApplication.current().setActiveWorkflow(workflow);
+		
 	    FragmentManager fragmentManager = getSupportFragmentManager();
 	    CloudDialogFragment downloadDialog = new CloudDialogFragment();
 	    downloadDialog.setWorkflowId(workflow.getWorkflowId());
