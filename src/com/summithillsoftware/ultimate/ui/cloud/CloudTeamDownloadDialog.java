@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
@@ -15,12 +16,30 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 		case CredentialsRejected:
 			requestSignon();
 			break;	
+		case TeamListRetrievalStarted:
+			setProgressText(R.string.label_cloud_downloading_teams);
+			showLoadingView();
+			break;	
+		case TeamListRetrievalComplete:
+			requestTeamSelection();
+			break;				
+		case TeamRetrievalStarted:
+			setProgressText(R.string.label_cloud_downloading_team);
+			showLoadingView();
+			break;		
+		case TeamRetrievalComplete:
+			dismiss();
+			break;				
 		case Error:
 			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());
-			break;			
+			break;					
 		default:
 			break;
 		}
+	}
+	
+	private void requestTeamSelection() {
+		// TODO finish
 	}
 
 }

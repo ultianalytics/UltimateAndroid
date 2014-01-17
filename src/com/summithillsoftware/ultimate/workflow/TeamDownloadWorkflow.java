@@ -9,14 +9,28 @@ import com.summithillsoftware.ultimate.model.Team;
 
 public class TeamDownloadWorkflow extends CloudWorkflow {
 	private List<Team> teamsAvailable;
-	private CloudResponseStatus lastErrorStatus;
+	private CloudWorkflowStatus lastRetrievalStartedStatus;
+	private String teamCloudId;
+	private Team downloadedTeam;
 
 	public void resume() {
 		synchronized (this) {
 			switch (getStatus()) {
 			case NotStarted:
+				// uncomment to clear cookies (thus forcing signon)
+				// CloudClient.current().clearCookies();
 				retrieveTeamsList();
 				break;
+			case AuthenticationEnded:
+				if (lastRetrievalStartedStatus == CloudWorkflowStatus.TeamListRetrievalStarted) {
+					retrieveTeamsList();
+				} else {
+					retrieveTeam();
+				}
+				break;		
+			case TeamListRetrievalComplete:
+				retrieveTeam();
+				break;				
 			default:
 				break;
 			}
@@ -27,6 +41,7 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		teamsAvailable = null;
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.TeamListRetrievalStarted);
+		lastRetrievalStartedStatus = CloudWorkflowStatus.TeamListRetrievalStarted;
 		CloudClient.current().submitRetrieveTeams(new CloudResponseHandler() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -38,12 +53,18 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
 					setStatus(CloudWorkflowStatus.Error);
-					lastErrorStatus = status;
+					setLastErrorStatus(status);
 				}
 				notifyChange();
 			}
 		});
 		notifyChange();
+	}
+	
+	private void retrieveTeam() {
+		if (teamCloudId != null) {
+			// TODO implement
+		}
 	}
 
 	public List<Team> getTeamsAvailable() {
@@ -54,12 +75,10 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		this.teamsAvailable = teamsAvailable;
 	}
 
-	public CloudResponseStatus getLastErrorStatus() {
-		return lastErrorStatus;
+	public Team getDownloadedTeam() {
+		return downloadedTeam;
 	}
 
-	public void setLastErrorStatus(CloudResponseStatus lastErrorStatus) {
-		this.lastErrorStatus = lastErrorStatus;
-	}
+
 
 }

@@ -1,6 +1,10 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -18,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
@@ -25,12 +30,15 @@ import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
+import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.OnWorkflowChangedListener;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public abstract class CloudDialog extends UltimateDialogFragment implements OnWorkflowChangedListener {
 	private static final String WORKFLOW_ID_ARG = "workflowId";
-	private static final String ACCESS_CHECK_URL = CloudClient.HOST + "/access-test.jsp";
+	private static final String ACCESS_CHECK_PATH = "access-test.jsp";
+	private static final String ACCESS_CHECK_URL = CloudClient.HOST + "/" + ACCESS_CHECK_PATH;
+	private static final String SIGNON_PAGE_JS_OBJECT_NAME = "UltimateAndroid";
 	
 	// widgets
 	private ViewFlipper viewFlipper;
@@ -183,8 +191,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				});
 	}
 	
-	protected abstract void workflowChanged(final Workflow workflow);
-	
 	protected void setProgressText(int resid) {
 		statusTextView.setText(getString(resid));
 	}
@@ -210,19 +216,51 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		webView.loadUrl(accessTestUrl);
 	}
 	
-	private void webViewPageLoadFinished(String url) {
+	private void webViewPageLoadFinished(String urlAsString) {
 		showSignonView();
+		if (isAccessTestPageURL(urlAsString)) {
+			handleUserSignedOn();
+		}
+	}
+	
+	private void handleUserSignedOn() {
+		captureEmailFromSignonPage();
+		getWorkflow().setStatus(CloudWorkflowStatus.AuthenticationEnded);
+		getWorkflow().resume();
+	}
+	
+	private void captureEmailFromSignonPage() {
+		webView.loadUrl("javascript:" + SIGNON_PAGE_JS_OBJECT_NAME + ".setUserEmail(document.getElementById('email').value)");
+	}
+	
+	private boolean isAccessTestPageURL(String urlAsString)  {
+		try {
+			String pagePath = new URL(urlAsString).getPath();
+			if (!pagePath.startsWith("/")) {
+				pagePath = "/" + pagePath;
+			}
+			if (pagePath.equalsIgnoreCase("/" + ACCESS_CHECK_PATH)) {
+				return true;
+			}
+		} catch (MalformedURLException e) {
+			Log.e(Constants.ULTIMATE, "Could not read URL during signon", e);
+			return false;
+		}
+		return false;
 	}
 	
 	@SuppressLint("SetJavaScriptEnabled")
 	private void configureWebView() {
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
+		webView.addJavascriptInterface(new SignonJavascriptInterface(), SIGNON_PAGE_JS_OBJECT_NAME);
 		webView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished (WebView view, String url) {
 				CloudDialog.this.webViewPageLoadFinished(url);
 			}
 		});
 	}
+	
+	protected abstract void workflowChanged(final Workflow workflow);
 
 }

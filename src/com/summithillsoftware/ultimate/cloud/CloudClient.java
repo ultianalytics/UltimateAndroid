@@ -11,6 +11,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -44,6 +46,12 @@ public class CloudClient {
 	
 	public static CloudClient current() {
 		return Current;
+	}
+	
+	public void clearCookies() {
+		CookieSyncManager.createInstance(UltimateApplication.current()); 
+	    CookieManager cookieManager = CookieManager.getInstance();
+	    cookieManager.removeAllCookie();	
 	}
 	
 	public void submitRetrieveTeams(final CloudResponseHandler responseHandler) {
