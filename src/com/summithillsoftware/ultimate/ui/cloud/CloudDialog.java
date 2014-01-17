@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,11 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
@@ -24,13 +30,17 @@ import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public abstract class CloudDialog extends UltimateDialogFragment implements OnWorkflowChangedListener {
 	private static final String WORKFLOW_ID_ARG = "workflowId";
+	private static final String ACCESS_CHECK_URL = CloudClient.HOST + "/access-test.jsp";
 	
 	// widgets
 	private ViewFlipper viewFlipper;
 	protected View loadingView;
 	protected View signonView;
 	protected View selectionView;
+	protected WebView webView;
 	private Button cancelButton;
+	private Button webViewCancelButton;
+	private TextView statusTextView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,10 +83,13 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	
 	private void connectWidgets(View view) {
 		cancelButton = (Button) view.findViewById(R.id.cancelButton);
+		webViewCancelButton = (Button) view.findViewById(R.id.webViewCancelButton);
 		viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
 		loadingView = (View) view.findViewById(R.id.loadingView);
 		selectionView = (View) view.findViewById(R.id.selectionView);
 		signonView = (View) view.findViewById(R.id.signonView);
+		webView = (WebView) view.findViewById(R.id.webView); 
+		statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 	}
 
 	private void populateView() {
@@ -85,6 +98,11 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 
 	private void registerWidgetListeners() {
 		cancelButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				dismissDialog();
+			}
+		});
+		webViewCancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				dismissDialog();
 			}
@@ -166,6 +184,10 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	protected abstract void workflowChanged(final Workflow workflow);
+	
+	protected void setProgressText(int resid) {
+		statusTextView.setText(getString(resid));
+	}
 
 	@Override
 	public void onWorkflowChanged(final Workflow workflow) {
@@ -180,6 +202,27 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 			activity.runOnUiThread(runnable);
 		}
 	}
-
+	
+	protected void requestSignon() {
+		setProgressText(R.string.label_cloud_waiting_for_signon);
+		configureWebView();
+		String accessTestUrl = ACCESS_CHECK_URL + "?redirect=true&cache-buster=" + System.currentTimeMillis();
+		webView.loadUrl(accessTestUrl);
+	}
+	
+	private void webViewPageLoadFinished(String url) {
+		showSignonView();
+	}
+	
+	@SuppressLint("SetJavaScriptEnabled")
+	private void configureWebView() {
+		WebSettings webSettings = webView.getSettings();
+		webSettings.setJavaScriptEnabled(true);
+		webView.setWebViewClient(new WebViewClient() {
+			public void onPageFinished (WebView view, String url) {
+				CloudDialog.this.webViewPageLoadFinished(url);
+			}
+		});
+	}
 
 }

@@ -13,8 +13,7 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 			teamDownloadWorkflow.resume();
 			break;
 		case CredentialsRejected:
-			// TODO...open signon view instead of displaying error
-			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());
+			requestSignon();
 			break;	
 		case Error:
 			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());

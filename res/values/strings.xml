@@ -191,6 +191,14 @@
     <string name="label_timeouts_second_half">2nd Half:</string>
     <string name="label_timeouts_available">Available now:</string>
     <string name="label_stats_include">Include:</string>
+    <string name="label_cloud_talking_to_server">Talking to server&#8230;</string>
+    <string name="label_cloud_waiting_for_signon">Waiting for signon&#8230;</string>
+    <string name="label_cloud_downloading_teams">Downloading teams&#8230;</string>
+    <string name="label_cloud_downloading_team">Downloading team&#8230;</string>
+    <string name="label_cloud_downloading_games">Downloading games&#8230;</string>
+    <string name="label_cloud_downloading_game">Downloading game&#8230;</string>    
+    <string name="label_cloud_uploading_team">Uploading team&#8230;</string> 
+    <string name="label_cloud_uploading_game">Uploading game&#8230;</string> 
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>

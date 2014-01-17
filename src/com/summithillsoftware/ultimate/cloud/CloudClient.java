@@ -26,7 +26,7 @@ import com.summithillsoftware.ultimate.model.Team;
 
 
 public class CloudClient {
-	private static final String HOST = "http://www.ultimate-numbers.com";
+	public static final String HOST = "http://www.ultimate-numbers.com";
 //	private static final String HOST = "http://local.appspot.com:8888";
 //	private static final String HOST = "http://local.appspot.com:8890"; // tcp monitor
 	
