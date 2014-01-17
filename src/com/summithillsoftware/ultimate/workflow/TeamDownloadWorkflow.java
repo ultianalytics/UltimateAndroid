@@ -24,6 +24,7 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 	}
 
 	private void retrieveTeamsList() {
+		teamsAvailable = null;
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.TeamListRetrievalStarted);
 		CloudClient.current().submitRetrieveTeams(new CloudResponseHandler() {
@@ -33,6 +34,8 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 				if (status == CloudResponseStatus.Ok) {
 					teamsAvailable = (List<Team>)responseObect;
 					setStatus(CloudWorkflowStatus.TeamListRetrievalComplete);
+				} else if (status == CloudResponseStatus.Unauthorized) {
+					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
 					setStatus(CloudWorkflowStatus.Error);
 					lastErrorStatus = status;
