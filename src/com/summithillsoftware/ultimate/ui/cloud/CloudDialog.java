@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
 import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -60,9 +61,16 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		populateView();
 		registerWidgetListeners();
 		getWorkflow().setChangeListener(this);
-		workflowChanged(getWorkflow());
+
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		workflowChanged(getWorkflow());
+	}
+	
+	
 	private void connectWidgets(View view) {
 		cancelButton = (Button) view.findViewById(R.id.cancelButton);
 		viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
@@ -158,5 +166,20 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	protected abstract void workflowChanged(final Workflow workflow);
-	
+
+	@Override
+	public void onWorkflowChanged(final Workflow workflow) {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				workflowChanged(workflow);
+			}
+		};
+		Activity activity = getActivity();
+		if (activity != null) {
+			activity.runOnUiThread(runnable);
+		}
+	}
+
+
 }
