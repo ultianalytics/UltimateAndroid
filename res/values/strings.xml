@@ -121,6 +121,15 @@
     <string name="alert_overtime_recieve_or_defend_title">Overtime: who will receive?</string>
     <string name="alert_overtime_recieve_or_defend_message">You are about to begin an overtime period.\n\nWill our team receive or pull?</string>
     
+    <string name="alert_cloud_error_title">Communication Error</string>
+    <string name="alert_cloud_error_message">Sorry&#8230;an error was received when trying to talk to the server (possibly network related).</string>
+    
+    <string name="alert_cloud_not_connected_error_title">No Internet Connectivity</string>
+    <string name="alert_cloud_not_connected_error_message">Sorry&#8230;we can\'t connect to the internet.  Please try again when you have connectivity.</string>
+    
+    <string name="alert_cloud_timeout_error_title">Timeout</string>
+    <string name="alert_cloud_timeout_error_message">Sorry&#8230;our attempt to talk to the server timed out. Please try again when you have better connectivity.</string>
+    
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>

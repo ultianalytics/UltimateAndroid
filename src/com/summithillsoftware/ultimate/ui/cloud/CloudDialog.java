@@ -14,18 +14,21 @@ import android.widget.ViewFlipper;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
-import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
+import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
+import com.summithillsoftware.ultimate.workflow.OnWorkflowChangedListener;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
-public class CloudDialogFragment extends UltimateDialogFragment {
+public abstract class CloudDialog extends UltimateDialogFragment implements OnWorkflowChangedListener {
 	private static final String WORKFLOW_ID_ARG = "workflowId";
 	
 	// widgets
 	private ViewFlipper viewFlipper;
-	private View loadingView;
-	private View signonView;
-	private View selectionView;
+	protected View loadingView;
+	protected View signonView;
+	protected View selectionView;
 	private Button cancelButton;
 
 	@Override
@@ -56,7 +59,8 @@ public class CloudDialogFragment extends UltimateDialogFragment {
 		super.onStart();
 		populateView();
 		registerWidgetListeners();
-		resumeWorkflow();
+		getWorkflow().setChangeListener(this);
+		onWorkflowChanged(getWorkflow());
 	}
 
 	private void connectWidgets(View view) {
@@ -89,25 +93,26 @@ public class CloudDialogFragment extends UltimateDialogFragment {
 		});
 	}
 	
-	public void setWorkflowId(String workflowId) {
+	public void setWorkflow(CloudWorkflow workflow) {
+		UltimateApplication.current().setActiveWorkflow(workflow);
 		Bundle args = new Bundle();
-		args.putString(WORKFLOW_ID_ARG, workflowId);
+		args.putString(WORKFLOW_ID_ARG, workflow.getWorkflowId());
         setArguments(args);
 	}
-	
-	public String getWorkflowId() {
+
+	private String getWorkflowId() {
 		return getArguments().getString(WORKFLOW_ID_ARG);
 	}
 	
-	private void showLoadingView() {
+	protected void showLoadingView() {
 		viewFlipper.setDisplayedChild(0);
 	}
 	
-	private void showSignonView() {
+	protected void showSignonView() {
 		viewFlipper.setDisplayedChild(1);
 	}
 	
-	private void showSelectionView() {
+	protected void showSelectionView() {
 		viewFlipper.setDisplayedChild(2);
 	}
 
@@ -120,34 +125,35 @@ public class CloudDialogFragment extends UltimateDialogFragment {
 		}
 	}
 	
-	private TeamDownloadWorkflow getTeamDownloadWorkflow() {
-		Workflow workflow = getWorkflow();
-		if (!(workflow instanceof TeamDownloadWorkflow)) {
-			Log.e(ULTIMATE, "Workflow invalid...wrong type");
-			dismiss();
-		}
-		return (TeamDownloadWorkflow)workflow;
-	}
-	
-	private Workflow getWorkflow() {
+	protected CloudWorkflow getWorkflow() {
 		Workflow workflow = UltimateApplication.current().getActiveWorkflow();
-		// verify the workflow didn't change
+		// verify the work flow didn't change
 		if (getWorkflowId() != null && !workflow.getWorkflowId().equals(getWorkflowId())) {
 			Log.e(ULTIMATE, "Workflow invalid...chnaged since view opened");
 			dismiss();
 		}
-		return UltimateApplication.current().getActiveWorkflow();
-	}
-	
-	private void resumeWorkflow() {
-		switch (getTeamDownloadWorkflow().getStatus()) {
-		case NotStarted:
-			showLoadingView();
-			break;
-		default:
-			dismiss();
-			break;
-		}
+		return (CloudWorkflow)UltimateApplication.current().getActiveWorkflow();
 	}
 
+	protected void displayCloudError(CloudResponseStatus status) {
+		String title = null;
+		String message = null;
+		if (status == CloudResponseStatus.NotConnectedToInternet) {
+			title = getString(R.string.alert_cloud_not_connected_error_title);
+			message = getString(R.string.alert_cloud_not_connected_error_message);
+		} else if (status == CloudResponseStatus.Timeout) {
+			title = getString(R.string.alert_cloud_timeout_error_title);
+			message = getString(R.string.alert_cloud_timeout_error_message);
+		} else  {
+			title = getString(R.string.alert_cloud_error_title);
+			message = getString(R.string.alert_cloud_error_message);
+		}
+		((UltimateActivity)getActivity()).displayErrorMessage(title, message, 
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+						dismiss();
+					}
+				});
+	}
 }

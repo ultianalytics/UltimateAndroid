@@ -90,16 +90,20 @@ public class UltimateActivity extends ActionBarActivity {
 	}
 	
 	public void displayErrorMessage(String title, String message) {
+		displayErrorMessage(title, message, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+				//no-op
+			}
+ 		});
+	}
+	
+	public void displayErrorMessage(String title, String message, DialogInterface.OnClickListener acknowledgementListener) {
 		AlertDialog errorDialog = new AlertDialog.Builder(this).create();
  		errorDialog.setTitle(title);
  		errorDialog.setMessage(message);
  		errorDialog.setCancelable(false);
- 		errorDialog.setButton(BUTTON_POSITIVE, getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-			}
- 		});
-
+ 		errorDialog.setButton(BUTTON_POSITIVE, getString(android.R.string.ok), acknowledgementListener);
  		errorDialog.show();
 	}
 	

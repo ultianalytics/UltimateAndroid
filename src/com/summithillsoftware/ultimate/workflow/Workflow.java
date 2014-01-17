@@ -1,7 +1,8 @@
 package com.summithillsoftware.ultimate.workflow;
 
-public class Workflow {
+public abstract class Workflow {
 	private String workflowId;
+	private OnWorkflowChangedListener changeListener;
 
 	public Workflow() {
 		super();
@@ -11,6 +12,22 @@ public class Workflow {
 	public String getWorkflowId() {
 		return workflowId;
 	}
+
+	public OnWorkflowChangedListener getChangeListener() {
+		return changeListener;
+	}
+
+	public void setChangeListener(OnWorkflowChangedListener changeListener) {
+		this.changeListener = changeListener;
+	}
+	
+	protected void notifyChange() {
+		if (changeListener != null) {
+			changeListener.onWorkflowChanged(this);
+		}
+	}
+	
+	public abstract void resume();
 	
 	
 	

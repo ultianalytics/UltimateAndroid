@@ -12,14 +12,13 @@ import android.widget.ListView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
-import com.summithillsoftware.ultimate.ui.cloud.CloudDialogFragment;
+import com.summithillsoftware.ultimate.ui.cloud.CloudTeamDownloadDialog;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 
-public class TeamsActivity extends UltimateActivity {
+public class TeamsActivity extends UltimateActivity  {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +83,11 @@ public class TeamsActivity extends UltimateActivity {
 	}
 	
 	private void showTeamDownloadDialog() {
-		TeamDownloadWorkflow workflow = new TeamDownloadWorkflow();
-		UltimateApplication.current().setActiveWorkflow(workflow);
-		
 	    FragmentManager fragmentManager = getSupportFragmentManager();
-	    CloudDialogFragment downloadDialog = new CloudDialogFragment();
-	    downloadDialog.setWorkflowId(workflow.getWorkflowId());
+	    CloudTeamDownloadDialog downloadDialog = new CloudTeamDownloadDialog();
+		TeamDownloadWorkflow workflow = new TeamDownloadWorkflow();
+	    downloadDialog.setWorkflow(workflow);
 	    downloadDialog.show(fragmentManager, "dialog");
 	}
+
 }

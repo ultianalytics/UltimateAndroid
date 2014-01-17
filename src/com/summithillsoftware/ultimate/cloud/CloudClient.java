@@ -97,6 +97,8 @@ public class CloudClient {
 			return CloudResponseStatus.MarshallingError;
 		} else if (error instanceof TimeoutError) {
 			return CloudResponseStatus.Timeout;
+		} else if (error.networkResponse != null && error.networkResponse.statusCode == 401) {
+			return CloudResponseStatus.Unauthorized;
 		}
 		return CloudResponseStatus.Unknown;
 	}
