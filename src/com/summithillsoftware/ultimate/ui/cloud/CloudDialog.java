@@ -60,7 +60,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		populateView();
 		registerWidgetListeners();
 		getWorkflow().setChangeListener(this);
-		onWorkflowChanged(getWorkflow());
+		workflowChanged(getWorkflow());
 	}
 
 	private void connectWidgets(View view) {
@@ -156,4 +156,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 					}
 				});
 	}
+	
+	protected abstract void workflowChanged(final Workflow workflow);
+	
 }
