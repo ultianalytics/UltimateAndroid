@@ -38,7 +38,9 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 			break;				
 		case Error:
 			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());
-			break;					
+			break;				
+		case Cancel:
+			dismissDialog();			
 		default:
 			break;
 		}

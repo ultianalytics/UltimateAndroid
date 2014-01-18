@@ -39,6 +39,9 @@ public class CloudGameDownloadDialog extends CloudDialog {
 		case Error:
 			gameDownloadWorkflow.setStatus(CloudWorkflowStatus.Cancel);
 			displayCloudError(gameDownloadWorkflow.getLastErrorStatus());
+			break;	
+		case Cancel:
+			dismissDialog();
 			break;					
 		default:
 			break;

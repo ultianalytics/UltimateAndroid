@@ -186,8 +186,8 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		Workflow workflow = UltimateApplication.current().getActiveWorkflow();
 		// verify the work flow didn't change
 		if (getWorkflowId() != null && !workflow.getWorkflowId().equals(getWorkflowId())) {
-			Log.e(ULTIMATE, "Workflow invalid...chnaged since view opened");
-			dismissDialog();
+			Log.e(ULTIMATE, "Workflow invalid...changed since view opened");
+			dismiss();
 		}
 		return (CloudWorkflow)UltimateApplication.current().getActiveWorkflow();
 	}
