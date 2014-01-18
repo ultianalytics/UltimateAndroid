@@ -8,7 +8,6 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.GameDownloadWorkflow;
-import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public class CloudGameDownloadDialog extends CloudDialog {
@@ -54,8 +53,8 @@ public class CloudGameDownloadDialog extends CloudDialog {
 	}
 	
 	private void handleGameSelection(GameDescription game) {
-		TeamDownloadWorkflow workflow = (TeamDownloadWorkflow)getWorkflow();
-		workflow.setTeamCloudId(game.getGameId());
+		GameDownloadWorkflow workflow = (GameDownloadWorkflow)getWorkflow();
+		workflow.setGameCloudId(game.getGameId());
 		workflow.setStatus(CloudWorkflowStatus.GameChosen);
 		workflow.resume();
 	}

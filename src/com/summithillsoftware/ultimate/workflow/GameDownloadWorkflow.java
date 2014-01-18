@@ -42,13 +42,13 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 		gamesAvailable = null;
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.TeamListRetrievalStarted);
-		CloudClient.current().submitRetrieveTeams(new CloudResponseHandler() {
+		CloudClient.current().submitRetrieveGameDescriptions(Team.current().getCloudId(), new CloudResponseHandler() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onResponse(CloudResponseStatus status, Object responseObect) {
 				if (status == CloudResponseStatus.Ok) {
 					gamesAvailable = (List<GameDescription>)responseObect;
-					setStatus(CloudWorkflowStatus.TeamListRetrievalComplete);
+					setStatus(CloudWorkflowStatus.GameListRetrievalComplete);
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
@@ -65,13 +65,13 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 		if (gameCloudId != null) {
 			setLastErrorStatus(CloudResponseStatus.Ok);
 			setStatus(CloudWorkflowStatus.TeamRetrievalStarted);
-			CloudClient.current().submitRetrieveGame(Team.current(). getCloudId(), gameCloudId, new CloudResponseHandler() {
+			CloudClient.current().submitRetrieveGame(Team.current().getCloudId(), gameCloudId, new CloudResponseHandler() {
 				@Override
 				public void onResponse(CloudResponseStatus status, Object responseObect) {
 					if (status == CloudResponseStatus.Ok) {
 						Game downloadedGame = (Game)responseObect;
 						saveGame(downloadedGame);
-						setStatus(CloudWorkflowStatus.TeamRetrievalComplete);
+						setStatus(CloudWorkflowStatus.GameRetrievalComplete);
 					} else if (status == CloudResponseStatus.Unauthorized) {
 						setStatus(CloudWorkflowStatus.CredentialsRejected);
 					} else {
@@ -86,8 +86,15 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 	}
 
 	private void saveGame(Game downloadedGame) {
-		// refresh team object if current
-		// TODO...finish this
+		// refresh game object if current
+		boolean isCurrentGame = Game.isCurrentGame(downloadedGame.getGameId());
+		if (isCurrentGame) {
+			Game.setCurrentGame(null);
+		}
+		downloadedGame.save();
+		if (isCurrentGame) {
+			Game.setCurrentGame(downloadedGame);
+		}
 	}
 
 	public List<GameDescription> getGamesAvailable() {
