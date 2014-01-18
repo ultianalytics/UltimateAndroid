@@ -16,8 +16,8 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		synchronized (this) {
 			switch (getStatus()) {
 			case NotStarted:
-				// uncomment to clear cookies (thus forcing signon)
-				// CloudClient.current().clearCookies();
+				// uncomment to force signon
+				// CloudClient.current().clearExistingAuthentication();
 				retrieveTeamsList();
 				break;
 			case AuthenticationEnded:

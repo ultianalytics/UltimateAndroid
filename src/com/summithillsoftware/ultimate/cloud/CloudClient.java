@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Team;
 
 
@@ -47,9 +48,12 @@ public class CloudClient {
 		return Current;
 	}
 	
-	public void clearCookies() {
+	public void clearExistingAuthentication() {
+		Preferences.current().setCloudAuthenticationCookie(null);
+		Preferences.current().setCloudEMail(null);
 	    CookieManager cookieManager = CookieManager.getInstance();
 	    cookieManager.removeAllCookie();	
+	    cookieManager.removeSessionCookie();
 	}
 	
 	public void submitRetrieveTeams(final CloudResponseHandler responseHandler) {

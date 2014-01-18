@@ -56,6 +56,8 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	private Button cancelButton;
 	private Button webViewCancelButton;
 	private TextView statusTextView;
+	
+	private boolean hasUserBeenAskedToSignon;
 
 	
 	@Override
@@ -226,18 +228,13 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	protected void requestSignon() {
+		hasUserBeenAskedToSignon = false;
+		CloudClient.current().clearExistingAuthentication();
 		setProgressText(R.string.label_cloud_waiting_for_signon);
 		configureWebView();
 		String accessTestUrl = ACCESS_CHECK_URL + "?redirect=true&cache-buster=" + System.currentTimeMillis();
 		CookieManager.getInstance().removeSessionCookie();
 		webView.loadUrl(accessTestUrl);
-	}
-	
-	private void webViewPageLoadFinished(String urlAsString) {
-		showSignonView();
-		if (isAccessTestPageURL(urlAsString)) {
-			handleUserSignedOn();
-		}
 	}
 	
 	private void handleUserSignedOn() {
@@ -248,10 +245,14 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	private void captureAuthenticationCookie() {
+		CookieSyncManager.getInstance().sync();
 		CookieManager cookieManager = CookieManager.getInstance();
-        String cookie = cookieManager.getCookie(webView.getUrl()); 
-        Preferences.current().setCloudAuthenticationCookie(cookie);
-        Preferences.current().save();
+        String cookie = cookieManager.getCookie(CloudClient.SCHEME_HOST); 
+        //Log.i(Constants.ULTIMATE, "cookie = " + cookie);
+        if (cookie != null) {
+        	Preferences.current().setCloudAuthenticationCookie(cookie);
+        	Preferences.current().save();
+        }
 	}
 	
 	private void captureEmailFromSignonPage() {
@@ -274,6 +275,25 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		return false;
 	}
 	
+	private boolean isUltimateURL(String urlAsString)  {
+		try {
+			String host = new URL(urlAsString).getHost();
+			return host.contains(CloudClient.HOST);
+		} catch (MalformedURLException e) {
+			Log.e(Constants.ULTIMATE, "Could not read URL during signon", e);
+			return false;
+		}
+	}
+	
+	private void webViewPageLoadFinished(String urlAsString) {
+		if (!isUltimateURL(urlAsString)) {
+			hasUserBeenAskedToSignon = true;
+			showSignonView();
+		} else if (hasUserBeenAskedToSignon && isAccessTestPageURL(urlAsString)) {
+			handleUserSignedOn();
+		}
+	}
+	
 	@SuppressLint("SetJavaScriptEnabled")
 	private void configureWebView() {
 		WebSettings webSettings = webView.getSettings();
@@ -281,10 +301,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		webView.addJavascriptInterface(new SignonJavascriptInterface(), SIGNON_PAGE_JS_OBJECT_NAME);
 		webView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished (WebView view, String url) {
-				CookieSyncManager.getInstance().sync();
-				CookieManager cookieManager = CookieManager.getInstance();
-                String cookie = cookieManager.getCookie(url);
-                Log.i(Constants.ULTIMATE, "cookie = " + cookie);
 				CloudDialog.this.webViewPageLoadFinished(url);
 			}
 		});
