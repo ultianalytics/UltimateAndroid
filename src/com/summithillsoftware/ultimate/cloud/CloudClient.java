@@ -15,14 +15,16 @@ import android.webkit.CookieManager;
 
 import com.android.volley.ParseError;
 import com.android.volley.Request;
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Team;
 
@@ -84,6 +86,33 @@ public class CloudClient {
 		addRequestToQueue(request, responseHandler);
 	}
 	
+	public void submitRetrieveGameDescriptions(final String teamCloudId, final CloudResponseHandler responseHandler) {
+		UltimateJsonArrayRequest request = new UltimateJsonArrayRequest(getUrl("/rest/mobile/team/" + teamCloudId + "/games"), new Response.Listener<JSONArray>() {
+			@Override
+			public void onResponse(final JSONArray jsonArray) {
+				List<GameDescription> games = new  ArrayList<GameDescription>();
+				try {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject gameDescriptionJson = jsonArray.getJSONObject(i);
+						GameDescription gameDescription = GameDescription.fromJsonObject(gameDescriptionJson);
+						games.add(gameDescription);
+					}
+					responseHandler.onResponse(CloudResponseStatus.Ok, games);
+				} catch (JSONException e) {
+					Log.e(Constants.ULTIMATE, "Unable to convert JSON game descriptions to GameDescription objects", e);
+					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+				}
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				handleError(responseHandler, error);
+			}
+		});
+		
+		addRequestToQueue(request, responseHandler);
+	}
+	
 	public void submitRetrieveTeam(final String cloudId, final CloudResponseHandler responseHandler) {
 		UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.GET, getUrl("/rest/mobile/team/" + cloudId + "?players=true"), null, new Response.Listener<JSONObject>() {
 			@Override
@@ -93,6 +122,28 @@ public class CloudClient {
 					responseHandler.onResponse(CloudResponseStatus.Ok, team);
 				} catch (JSONException e) {
 					Log.e(Constants.ULTIMATE, "Unable to convert JSON team to Team object", e);
+					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+				}
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				handleError(responseHandler, error);
+			}
+		});
+		
+		addRequestToQueue(request, responseHandler);
+	}
+	
+	public void submitRetrieveGame(final String teamCloudId, final String gameId, final CloudResponseHandler responseHandler) {
+		UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.GET, getUrl("/rest/mobile/team/" + teamCloudId + "/game/" + gameId), null, new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(final JSONObject responseObject) {
+				try {
+					Game game = Game.fromJsonObject(responseObject);
+					responseHandler.onResponse(CloudResponseStatus.Ok, game);
+				} catch (JSONException e) {
+					Log.e(Constants.ULTIMATE, "Unable to convert JSON game to Game object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}

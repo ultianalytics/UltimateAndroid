@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.game;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,9 +16,12 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.cloud.CloudGameDownloadDialog;
+import com.summithillsoftware.ultimate.workflow.GameDownloadWorkflow;
 
-public class GamesActivity extends UltimateActivity {
+public class GamesActivity extends UltimateActivity implements Refreshable {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class GamesActivity extends UltimateActivity {
 			goToGameActivity(true);
 			return true;
 		}
+		if (item.getItemId() == R.id.action_download) {
+			showGameDownloadDialog();
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
@@ -60,6 +67,10 @@ public class GamesActivity extends UltimateActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		populateView();
+	}
+	
+	private void populateView() {
 		getGamesListViewAdapter().resetGames();
 	}
 	
@@ -90,6 +101,19 @@ public class GamesActivity extends UltimateActivity {
 			Game.setCurrentGame(Game.createGame());
 		}
 		startActivity(intent);
+	}
+
+	private void showGameDownloadDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    CloudGameDownloadDialog downloadDialog = new CloudGameDownloadDialog();
+		GameDownloadWorkflow workflow = new GameDownloadWorkflow();
+	    downloadDialog.setWorkflow(workflow);
+	    downloadDialog.show(fragmentManager, "dialog");
+	}
+	
+	@Override
+	public void refresh() {
+		populateView();
 	}
 
 
