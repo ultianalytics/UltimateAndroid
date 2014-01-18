@@ -11,5 +11,6 @@ public enum CloudWorkflowStatus {
 	TeamChosen,
 	DownloadStarted,
 	DownloadComplete,
-	Error
+	Error,
+	Cancel
 }

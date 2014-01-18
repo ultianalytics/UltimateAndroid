@@ -172,6 +172,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	protected void dismissDialog() {
 		// make sure no crash if rotate while waiting for timer to pop
 		try {
+			getWorkflow().setStatus(CloudWorkflowStatus.Cancel);
 			if (getActivity() instanceof Refreshable) {
 				((Refreshable)getActivity()).refresh();
 			}

@@ -120,14 +120,11 @@
     <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>
     <string name="alert_overtime_recieve_or_defend_title">Overtime: who will receive?</string>
     <string name="alert_overtime_recieve_or_defend_message">You are about to begin an overtime period.\n\nWill our team receive or pull?</string>
-    
     <string name="alert_cloud_error_title">Communication Error</string>
     <string name="alert_cloud_error_message">Sorry&#8230;an error was received when trying to talk to the server (possibly network related).</string>
-    
     <string name="alert_cloud_not_connected_error_title">No Internet Connectivity</string>
     <string name="alert_cloud_not_connected_error_message">Sorry&#8230;we can\'t connect to the internet.  Please try again when you have connectivity.</string>
-    
-    <string name="alert_cloud_timeout_error_title">Timeout</string>
+     <string name="alert_cloud_timeout_error_title">Timeout</string>
     <string name="alert_cloud_timeout_error_message">Sorry&#8230;our attempt to talk to the server timed out. Please try again when you have better connectivity.</string>
     
     <string name="label_team_type">Type:</string>
@@ -200,7 +197,7 @@
     <string name="label_cloud_uploading_team">Uploading team&#8230;</string> 
     <string name="label_cloud_uploading_game">Uploading game&#8230;</string>
     <string name="label_cloud_download_team_selection_instructions">Tap the team you would like to download</string>
-	<string name="label_cloud_download_game_selection_instructions">Tap the game you would like to download</string>     
+	<string name="label_cloud_download_game_selection_instructions">Tap the game you would like to download</string> 
     
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
