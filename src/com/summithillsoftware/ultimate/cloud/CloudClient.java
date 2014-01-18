@@ -12,7 +12,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -20,7 +19,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.UltimateApplication;
@@ -28,9 +26,10 @@ import com.summithillsoftware.ultimate.model.Team;
 
 
 public class CloudClient {
-	public static final String HOST = "http://www.ultimate-numbers.com";
-//	private static final String HOST = "http://local.appspot.com:8888";
-//	private static final String HOST = "http://local.appspot.com:8890"; // tcp monitor
+	public static final String HOST = "www.ultimate-numbers.com";
+//	private static final String HOST = "local.appspot.com:8888";
+//	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
+	public static final String SCHEME_HOST = "http://" + HOST;
 	
 	private static CloudClient Current;
 	
@@ -49,13 +48,12 @@ public class CloudClient {
 	}
 	
 	public void clearCookies() {
-		CookieSyncManager.createInstance(UltimateApplication.current()); 
 	    CookieManager cookieManager = CookieManager.getInstance();
 	    cookieManager.removeAllCookie();	
 	}
 	
 	public void submitRetrieveTeams(final CloudResponseHandler responseHandler) {
-		JsonArrayRequest request = new JsonArrayRequest(getUrl("/rest/mobile/teams"), new Response.Listener<JSONArray>() {
+		UltimateJsonArrayRequest request = new UltimateJsonArrayRequest(getUrl("/rest/mobile/teams"), new Response.Listener<JSONArray>() {
 			@Override
 			public void onResponse(final JSONArray jsonArray) {
 				List<Team> teams = new  ArrayList<Team>();
@@ -82,7 +80,7 @@ public class CloudClient {
 	}
 	
 	private String getUrl(String relativePath) {
-		return HOST + relativePath;
+		return SCHEME_HOST + relativePath;
 	}
 	
 	private void handleError(final CloudResponseHandler responseHandler, final VolleyError error) {

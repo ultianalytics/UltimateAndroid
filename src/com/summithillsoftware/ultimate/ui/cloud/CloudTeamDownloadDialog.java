@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.team.TeamsListAdaptor;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
@@ -39,7 +40,9 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 	}
 	
 	private void requestTeamSelection() {
-		// TODO finish
+		selectionInstructionsLabel.setText(R.string.label_cloud_download_team_selection_instructions);
+		TeamsListAdaptor adaptor = new TeamsListAdaptor(this.getActivity());
+		selectionListView.setAdapter(adaptor);
 	}
 
 }

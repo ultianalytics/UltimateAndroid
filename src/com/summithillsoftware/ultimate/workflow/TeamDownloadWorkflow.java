@@ -9,7 +9,6 @@ import com.summithillsoftware.ultimate.model.Team;
 
 public class TeamDownloadWorkflow extends CloudWorkflow {
 	private List<Team> teamsAvailable;
-	private CloudWorkflowStatus lastRetrievalStartedStatus;
 	private String teamCloudId;
 	private Team downloadedTeam;
 
@@ -22,9 +21,9 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 				retrieveTeamsList();
 				break;
 			case AuthenticationEnded:
-				if (lastRetrievalStartedStatus == CloudWorkflowStatus.TeamListRetrievalStarted) {
+				if (teamsAvailable == null) {
 					retrieveTeamsList();
-				} else {
+				} else if (teamCloudId != null) {
 					retrieveTeam();
 				}
 				break;		
@@ -41,7 +40,6 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		teamsAvailable = null;
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.TeamListRetrievalStarted);
-		lastRetrievalStartedStatus = CloudWorkflowStatus.TeamListRetrievalStarted;
 		CloudClient.current().submitRetrieveTeams(new CloudResponseHandler() {
 			@SuppressWarnings("unchecked")
 			@Override

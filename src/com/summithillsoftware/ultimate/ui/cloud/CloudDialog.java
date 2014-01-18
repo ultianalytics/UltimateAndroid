@@ -15,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -27,6 +30,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
@@ -37,7 +41,7 @@ import com.summithillsoftware.ultimate.workflow.Workflow;
 public abstract class CloudDialog extends UltimateDialogFragment implements OnWorkflowChangedListener {
 	private static final String WORKFLOW_ID_ARG = "workflowId";
 	private static final String ACCESS_CHECK_PATH = "access-test.jsp";
-	private static final String ACCESS_CHECK_URL = CloudClient.HOST + "/" + ACCESS_CHECK_PATH;
+	private static final String ACCESS_CHECK_URL = CloudClient.SCHEME_HOST + "/" + ACCESS_CHECK_PATH;
 	private static final String SIGNON_PAGE_JS_OBJECT_NAME = "UltimateAndroid";
 	
 	// widgets
@@ -46,10 +50,14 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	protected View signonView;
 	protected View selectionView;
 	protected WebView webView;
+	protected TextView selectionInstructionsLabel;
+	protected ListView selectionListView;
+	protected Button selectionCancelButton;
 	private Button cancelButton;
 	private Button webViewCancelButton;
 	private TextView statusTextView;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,12 +100,15 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	private void connectWidgets(View view) {
 		cancelButton = (Button) view.findViewById(R.id.cancelButton);
 		webViewCancelButton = (Button) view.findViewById(R.id.webViewCancelButton);
+		selectionCancelButton = (Button) view.findViewById(R.id.selectionCancelButton);
 		viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
 		loadingView = (View) view.findViewById(R.id.loadingView);
 		selectionView = (View) view.findViewById(R.id.selectionView);
 		signonView = (View) view.findViewById(R.id.signonView);
 		webView = (WebView) view.findViewById(R.id.webView); 
 		statusTextView = (TextView) view.findViewById(R.id.statusTextView);
+		selectionInstructionsLabel = (TextView) view.findViewById(R.id.selectionInstructionsLabel);
+		selectionListView = (ListView) view.findViewById(R.id.selectionListView);
 	}
 
 	private void populateView() {
@@ -115,6 +126,11 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				dismissDialog();
 			}
 		});
+		selectionCancelButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				dismissDialog();
+			}
+		});		
 	}
 
 	private void registerDialogCancelListener(Dialog dialog) {
@@ -213,6 +229,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		setProgressText(R.string.label_cloud_waiting_for_signon);
 		configureWebView();
 		String accessTestUrl = ACCESS_CHECK_URL + "?redirect=true&cache-buster=" + System.currentTimeMillis();
+		CookieManager.getInstance().removeSessionCookie();
 		webView.loadUrl(accessTestUrl);
 	}
 	
@@ -224,9 +241,17 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	private void handleUserSignedOn() {
+		captureAuthenticationCookie();
 		captureEmailFromSignonPage();
 		getWorkflow().setStatus(CloudWorkflowStatus.AuthenticationEnded);
 		getWorkflow().resume();
+	}
+	
+	private void captureAuthenticationCookie() {
+		CookieManager cookieManager = CookieManager.getInstance();
+        String cookie = cookieManager.getCookie(webView.getUrl()); 
+        Preferences.current().setCloudAuthenticationCookie(cookie);
+        Preferences.current().save();
 	}
 	
 	private void captureEmailFromSignonPage() {
@@ -256,6 +281,10 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		webView.addJavascriptInterface(new SignonJavascriptInterface(), SIGNON_PAGE_JS_OBJECT_NAME);
 		webView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished (WebView view, String url) {
+				CookieSyncManager.getInstance().sync();
+				CookieManager cookieManager = CookieManager.getInstance();
+                String cookie = cookieManager.getCookie(url);
+                Log.i(Constants.ULTIMATE, "cookie = " + cookie);
 				CloudDialog.this.webViewPageLoadFinished(url);
 			}
 		});

@@ -198,7 +198,10 @@
     <string name="label_cloud_downloading_games">Downloading games&#8230;</string>
     <string name="label_cloud_downloading_game">Downloading game&#8230;</string>    
     <string name="label_cloud_uploading_team">Uploading team&#8230;</string> 
-    <string name="label_cloud_uploading_game">Uploading game&#8230;</string> 
+    <string name="label_cloud_uploading_game">Uploading game&#8230;</string>
+    <string name="label_cloud_download_team_selection_instructions">Tap the team you would like to download</string>
+	<string name="label_cloud_download_game_selection_instructions">Tap the game you would like to download</string>     
+    
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>

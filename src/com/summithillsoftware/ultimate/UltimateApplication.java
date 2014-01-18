@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.webkit.CookieSyncManager;
 
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.workflow.Workflow;
@@ -26,6 +27,7 @@ public class UltimateApplication extends Application {
 	public final void onCreate() {
         super.onCreate(); 
         Current = this;
+        CookieSyncManager.createInstance(this);
         ensureOneTeam();
         SoundPlayer.current().loadSounds();
     }  

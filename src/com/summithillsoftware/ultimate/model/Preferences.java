@@ -35,6 +35,7 @@ public class Preferences implements Externalizable {
 	private int timeoutsPerHalf = DEFAULT_TIMEOUTS_PER_HALF;
 	private int timeoutFloatersPerGame = DEFAULT_FLOATERS_PER_GAME;
 	private String cloudEMail;
+	private String cloudAuthenticationCookie;
 
 	static {
 		Current = restore();
@@ -144,6 +145,7 @@ public class Preferences implements Externalizable {
 		timeoutsPerHalf = input.readInt();
 		timeoutFloatersPerGame = input.readInt();
 		cloudEMail = (String)input.readObject();
+		cloudAuthenticationCookie = (String)input.readObject();
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
@@ -154,6 +156,7 @@ public class Preferences implements Externalizable {
 		output.writeInt(timeoutsPerHalf);
 		output.writeInt(timeoutFloatersPerGame);
 		output.writeObject(cloudEMail);
+		output.writeObject(cloudAuthenticationCookie);
 	}
 
 	public String getCloudEMail() {
@@ -162,6 +165,14 @@ public class Preferences implements Externalizable {
 
 	public void setCloudEMail(String cloudEMail) {
 		this.cloudEMail = cloudEMail;
+	}
+
+	public String getCloudAuthenticationCookie() {
+		return cloudAuthenticationCookie;
+	}
+
+	public void setCloudAuthenticationCookie(String cloudAuthenticationCookie) {
+		this.cloudAuthenticationCookie = cloudAuthenticationCookie;
 	}
 }
 

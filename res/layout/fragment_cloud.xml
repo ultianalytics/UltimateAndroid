@@ -10,8 +10,8 @@
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="10dp" >
 
         <ProgressBar
@@ -35,14 +35,14 @@
             android:layout_margin="10dp"
             android:text="@string/button_cancel" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/signonView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp" >
-        
+
         <Button
             android:id="@+id/webViewCancelButton"
             style="@style/redButton"
@@ -55,7 +55,6 @@
             android:id="@+id/webView"
             android:layout_width="320dp"
             android:layout_height="470dp" />
-        
     </LinearLayout>
 
     <LinearLayout
@@ -64,15 +63,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp" >
-        
+
         <TextView
-            android:id="@+id/temp2"
+            android:id="@+id/selectionInstructionsLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/undefined"
-            android:textSize="20sp" 
-            android:textStyle="bold"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/selectionListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+        <Button
+            android:id="@+id/selectionCancelButton"
+            style="@style/redButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/game_action_pull_buttons_height"
+            android:layout_margin="10dp"
+            android:text="@string/button_cancel" />
     </LinearLayout>
 
 </ViewFlipper>
