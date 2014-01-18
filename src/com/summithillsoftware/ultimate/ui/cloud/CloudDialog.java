@@ -31,6 +31,7 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.model.Preferences;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
@@ -168,9 +169,12 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		viewFlipper.setDisplayedChild(2);
 	}
 
-	private void dismissDialog() {
+	protected void dismissDialog() {
 		// make sure no crash if rotate while waiting for timer to pop
 		try {
+			if (getActivity() instanceof Refreshable) {
+				((Refreshable)getActivity()).refresh();
+			}
 			dismiss();
 		} catch (Exception e) {
 			Log.w(ULTIMATE, "Error dismissing dialog", e);
@@ -182,7 +186,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		// verify the work flow didn't change
 		if (getWorkflowId() != null && !workflow.getWorkflowId().equals(getWorkflowId())) {
 			Log.e(ULTIMATE, "Workflow invalid...chnaged since view opened");
-			dismiss();
+			dismissDialog();
 		}
 		return (CloudWorkflow)UltimateApplication.current().getActiveWorkflow();
 	}
@@ -204,7 +208,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-						dismiss();
+						dismissDialog();
 					}
 				});
 	}

@@ -14,11 +14,12 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamDownloadDialog;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 
-public class TeamsActivity extends UltimateActivity  {
+public class TeamsActivity extends UltimateActivity implements Refreshable {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,11 @@ public class TeamsActivity extends UltimateActivity  {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		populateView();
+
+	}
+	
+	private void populateView() {
 		getTeamsListViewAdapter().resetTeams();
 	}
 	
@@ -88,6 +94,11 @@ public class TeamsActivity extends UltimateActivity  {
 		TeamDownloadWorkflow workflow = new TeamDownloadWorkflow();
 	    downloadDialog.setWorkflow(workflow);
 	    downloadDialog.show(fragmentManager, "dialog");
+	}
+
+	@Override
+	public void refresh() {
+		populateView();
 	}
 
 }

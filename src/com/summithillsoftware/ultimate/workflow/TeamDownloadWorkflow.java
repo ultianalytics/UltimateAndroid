@@ -27,7 +27,7 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 					retrieveTeam();
 				}
 				break;		
-			case TeamListRetrievalComplete:
+			case TeamChosen:
 				retrieveTeam();
 				break;				
 			default:
@@ -61,7 +61,25 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 	
 	private void retrieveTeam() {
 		if (teamCloudId != null) {
-			// TODO implement
+			setLastErrorStatus(CloudResponseStatus.Ok);
+			setStatus(CloudWorkflowStatus.TeamRetrievalStarted);
+			CloudClient.current().submitRetrieveTeam(teamCloudId, new CloudResponseHandler() {
+				@Override
+				public void onResponse(CloudResponseStatus status, Object responseObect) {
+					if (status == CloudResponseStatus.Ok) {
+						Team downloadedTeam = (Team)responseObect;
+						saveTeam(downloadedTeam);
+						setStatus(CloudWorkflowStatus.TeamRetrievalComplete);
+					} else if (status == CloudResponseStatus.Unauthorized) {
+						setStatus(CloudWorkflowStatus.CredentialsRejected);
+					} else {
+						setStatus(CloudWorkflowStatus.Error);
+						setLastErrorStatus(status);
+					}
+					notifyChange();
+				}
+			});
+			notifyChange();
 		}
 	}
 
@@ -75,6 +93,26 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 
 	public Team getDownloadedTeam() {
 		return downloadedTeam;
+	}
+
+	public String getTeamCloudId() {
+		return teamCloudId;
+	}
+
+	public void setTeamCloudId(String teamCloudId) {
+		this.teamCloudId = teamCloudId;
+	}
+	
+	private void saveTeam(Team downloadedTeam) {
+		// refresh team object if current
+		boolean isCurrentTeam = Team.isCurrentTeam(downloadedTeam.getCloudId());
+		if (isCurrentTeam) {
+			Team.setCurrentTeam(null);
+		}
+		downloadedTeam.save();
+		if (isCurrentTeam) {
+			Team.setCurrentTeam(downloadedTeam);
+		}
 	}
 
 

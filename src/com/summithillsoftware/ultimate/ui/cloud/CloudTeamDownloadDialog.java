@@ -1,7 +1,12 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.ui.team.TeamsListAdaptor;
+import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
@@ -29,7 +34,7 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 			showLoadingView();
 			break;		
 		case TeamRetrievalComplete:
-			dismiss();
+			dismissDialog();
 			break;				
 		case Error:
 			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());
@@ -41,8 +46,28 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 	
 	private void requestTeamSelection() {
 		selectionInstructionsLabel.setText(R.string.label_cloud_download_team_selection_instructions);
-		TeamsListAdaptor adaptor = new TeamsListAdaptor(this.getActivity());
+		CloudTeamsSelectionListAdaptor adaptor = new CloudTeamsSelectionListAdaptor(this.getActivity());
 		selectionListView.setAdapter(adaptor);
+		registerTeamSelectedListener();
+		showSelectionView();
+	}
+	
+	private void handleTeamSelection(Team team) {
+		TeamDownloadWorkflow workflow = (TeamDownloadWorkflow)getWorkflow();
+		workflow.setTeamCloudId(team.getCloudId());
+		workflow.setStatus(CloudWorkflowStatus.TeamChosen);
+		workflow.resume();
+	}
+	
+	private void registerTeamSelectedListener() {
+		selectionListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Team selectedTeam = (Team)selectionListView.getAdapter().getItem(position);
+				handleTeamSelection(selectedTeam);
+			}
+
+		});
 	}
 
 }

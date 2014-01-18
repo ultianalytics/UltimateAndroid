@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.android.volley.toolbox.Volley;
 import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.UltimateApplication;
@@ -70,6 +71,28 @@ public class CloudClient {
 					responseHandler.onResponse(CloudResponseStatus.Ok, teams);
 				} catch (JSONException e) {
 					Log.e(Constants.ULTIMATE, "Unable to convert JSON teams to Team objects", e);
+					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+				}
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				handleError(responseHandler, error);
+			}
+		});
+		
+		addRequestToQueue(request, responseHandler);
+	}
+	
+	public void submitRetrieveTeam(final String cloudId, final CloudResponseHandler responseHandler) {
+		UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.GET, getUrl("/rest/mobile/team/" + cloudId + "?players=true"), null, new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(final JSONObject responseObject) {
+				try {
+					Team team = Team.fromJsonObject(responseObject);
+					responseHandler.onResponse(CloudResponseStatus.Ok, team);
+				} catch (JSONException e) {
+					Log.e(Constants.ULTIMATE, "Unable to convert JSON team to Team object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}
