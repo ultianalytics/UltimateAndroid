@@ -34,6 +34,7 @@ public class CloudClient {
 //	private static final String HOST = "local.appspot.com:8888";
 //	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
 	public static final String SCHEME_HOST = "http://" + HOST;
+	private static final String JSON_TEAM_CLOUD_ID = "cloudId";
 	
 	private static CloudClient Current;
 	
@@ -155,6 +156,62 @@ public class CloudClient {
 		});
 		
 		addRequestToQueue(request, responseHandler);
+	}
+	
+	
+	// response is the team's cloud id
+	public void submitUploadTeam(final Team team, final CloudResponseHandler responseHandler) {
+		JSONObject teamAsJson = null;
+		try {
+			teamAsJson = team.toJsonObject();
+		} catch (JSONException e1) {
+			Log.e(Constants.ULTIMATE, "Unable to convert Team to JSON Object", e1);
+			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+		}
+		if (teamAsJson != null) {
+			UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.POST, getUrl("/rest/mobile/team"), teamAsJson, new Response.Listener<JSONObject>() {
+				@Override
+				public void onResponse(final JSONObject responseObject) {
+					try {
+						String cloudId = responseObject.getString(JSON_TEAM_CLOUD_ID);
+						responseHandler.onResponse(CloudResponseStatus.Ok, cloudId);
+					} catch (JSONException e) {
+						Log.e(Constants.ULTIMATE, "Unable to get cloud id from upload response", e);
+						responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+					}
+				}
+			}, new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					handleError(responseHandler, error);
+				}
+			});
+			addRequestToQueue(request, responseHandler);
+		}
+	}
+	
+	public void submitUploadGame(final Game game, final CloudResponseHandler responseHandler) {
+		JSONObject gameAsJson = null;
+		try {
+			gameAsJson = game.toJsonObject();
+		} catch (JSONException e1) {
+			Log.e(Constants.ULTIMATE, "Unable to convert Game to JSON Object", e1);
+			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+		}
+		if (gameAsJson != null) {
+			UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.POST, getUrl("/rest/mobile/game"), gameAsJson, new Response.Listener<JSONObject>() {
+				@Override
+				public void onResponse(final JSONObject responseObject) {
+					responseHandler.onResponse(CloudResponseStatus.Ok, null);
+				}
+			}, new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					handleError(responseHandler, error);
+				}
+			});
+			addRequestToQueue(request, responseHandler);
+		}
 	}
 	
 	private String getUrl(String relativePath) {
