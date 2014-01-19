@@ -10,6 +10,7 @@
 	<dimen name="game_action_recent_event_text_size">16sp</dimen>
 	<dimen name="game_action_button_undo_button_size">16sp</dimen>
 	<dimen name="game_action_pull_buttons_height">44dp</dimen>
+	<dimen name="cloud_dialog_content_view_length">440dp</dimen>
 		    
 </resources>
 
