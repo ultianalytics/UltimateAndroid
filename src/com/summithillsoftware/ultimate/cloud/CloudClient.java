@@ -12,7 +12,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.webkit.CookieManager;
+import static com.android.volley.DefaultRetryPolicy.*;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Request.Method;
@@ -35,6 +37,7 @@ public class CloudClient {
 //	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
 	public static final String SCHEME_HOST = "http://" + HOST;
 	private static final String JSON_TEAM_CLOUD_ID = "cloudId";
+	private static final int SOCKET_TIMEOUT_SECONDS = 45;
 	
 	private static CloudClient Current;
 	
@@ -255,6 +258,7 @@ public class CloudClient {
 	}
 	
 	private void addRequestToQueue(Request<?> request, CloudResponseHandler handler) {
+		request.setRetryPolicy(new DefaultRetryPolicy(SOCKET_TIMEOUT_SECONDS * 1000, DEFAULT_MAX_RETRIES, DEFAULT_BACKOFF_MULT));
 		if (isConnected()) {
 			queue.add(request);
 		} else {
