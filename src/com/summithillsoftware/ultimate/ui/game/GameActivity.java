@@ -30,10 +30,12 @@ import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
+import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
 public class GameActivity extends UltimateActivity {
 	private List<Integer> gameToScores;
@@ -93,6 +95,9 @@ public class GameActivity extends UltimateActivity {
 			return true;
 		case R.id.action_action:
 			goToActionActivity();
+			return true;
+		case R.id.action_upload:
+			showGameUploadDialog();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -299,6 +304,14 @@ public class GameActivity extends UltimateActivity {
 			gameToNames.add(getString(R.string.spinner_game_to_time));
 		}
 		return gameToNames;
+	}
+	
+	private void showGameUploadDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    CloudGameUploadDialog uploadDialog = new CloudGameUploadDialog();
+		GameUploadWorkflow workflow = new GameUploadWorkflow();
+		uploadDialog.setWorkflow(workflow);
+		uploadDialog.show(fragmentManager, "dialog");
 	}
 
 }

@@ -5,7 +5,7 @@ import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
-public class GameUploadDialog extends CloudDialog {
+public class CloudGameUploadDialog extends CloudDialog {
 	
 	protected void workflowChanged(final Workflow workflow) {
 		GameUploadWorkflow gameUploadWorkflow = (GameUploadWorkflow)workflow;

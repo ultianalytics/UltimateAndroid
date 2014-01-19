@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.team;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
+import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
 public class TeamActivity extends UltimateActivity {
 	public static final String NEW_TEAM = "NewTeam";
@@ -57,6 +60,9 @@ public class TeamActivity extends UltimateActivity {
 		case R.id.action_teams:
 			goToTeamsActivity();
 			return true;
+		case R.id.action_upload:
+			showTeamUploadDialog();
+			return true;			
 		case R.id.action_games:
 			if (isNewTeam() || Team.current().getPlayers().size() == 0) {
 				displayErrorMessage(getString(R.string.alert_team_no_games_without_players_title), getString(R.string.alert_team_no_games_without_players_message));
@@ -186,6 +192,13 @@ public class TeamActivity extends UltimateActivity {
 		startActivity(new Intent(this, GamesActivity.class));
 	}
 
+	private void showTeamUploadDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    CloudTeamUploadDialog uploadDialog = new CloudTeamUploadDialog();
+		TeamUploadWorkflow workflow = new TeamUploadWorkflow();
+		uploadDialog.setWorkflow(workflow);
+		uploadDialog.show(fragmentManager, "dialog");
+	}
 
 
 }
