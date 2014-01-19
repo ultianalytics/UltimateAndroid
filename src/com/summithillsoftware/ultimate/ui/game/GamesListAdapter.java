@@ -80,6 +80,9 @@ public class GamesListAdapter extends BaseAdapter {
 		if (!game.getTournamentName().trim().isEmpty()) {
 			String tournamentDescription = UltimateApplication.current().getString(R.string.label_game_at_tournament) + " " + game.getTournamentName();
 			tournamentView.setText(tournamentDescription);
+			tournamentView.setVisibility(View.VISIBLE);
+		} else {
+			tournamentView.setVisibility(View.GONE);
 		}
 		
 		return rowView;
