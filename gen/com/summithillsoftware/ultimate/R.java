@@ -1982,8 +1982,10 @@ containing a value of this type.
         public static final int title_activity_stats=0x7f0b004e;
         public static final int title_activity_team=0x7f0b0046;
         public static final int title_activity_teams=0x7f0b0045;
+        public static final int toast_download_complete=0x7f0b012a;
         public static final int toast_games_no_games_yet=0x7f0b0128;
         public static final int toast_players_no_players_yet=0x7f0b0129;
+        public static final int toast_upload_complete=0x7f0b012b;
         public static final int undefined=0x7f0b000e;
         public static final int zero=0x7f0b000f;
     }

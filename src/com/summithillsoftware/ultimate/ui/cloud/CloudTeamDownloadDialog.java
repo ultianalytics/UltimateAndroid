@@ -37,7 +37,7 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 			showLoadingView();
 			break;		
 		case TeamRetrievalComplete:
-			dismissDialog();
+			displayCompleteAndThenDismiss(false);
 			break;				
 		case Error:
 			displayCloudError(teamDownloadWorkflow.getLastErrorStatus());

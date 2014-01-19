@@ -22,7 +22,7 @@ public class CloudGameUploadDialog extends CloudDialog {
 			showLoadingView();
 			break;	
 		case GameUploadComplete:
-			dismissDialog();
+			displayCompleteAndThenDismiss(true);
 			break;				
 		case Error:
 			gameUploadWorkflow.setStatus(CloudWorkflowStatus.Cancel);

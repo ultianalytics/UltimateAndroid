@@ -22,7 +22,7 @@ public class CloudTeamUploadDialog extends CloudDialog {
 			showLoadingView();
 			break;	
 		case TeamUploadComplete:
-			dismissDialog();
+			displayCompleteAndThenDismiss(true);
 			break;				
 		case Error:
 			teamUploadWorkflow.setStatus(CloudWorkflowStatus.Cancel);

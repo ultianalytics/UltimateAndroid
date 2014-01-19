@@ -4,6 +4,8 @@ import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +25,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.summithillsoftware.ultimate.Constants;
@@ -55,6 +60,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	protected ListView selectionListView;
 	private Button cancelButton;
 	private TextView statusTextView;
+	private ProgressBar progressBar;
 	
 	private boolean hasUserBeenAskedToSignon;
 
@@ -108,6 +114,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 		selectionInstructionsLabel = (TextView) view.findViewById(R.id.selectionInstructionsLabel);
 		selectionListView = (ListView) view.findViewById(R.id.selectionListView);
+		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 	}
 
 	private void populateView() {
@@ -295,6 +302,20 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				CloudDialog.this.webViewPageLoadFinished(url);
 			}
 		});
+	}
+	
+	protected void displayCompleteAndThenDismiss(boolean isUpload) {
+		Timer timer = new Timer();
+		setProgressText(isUpload ? R.string.toast_upload_complete : R.string.toast_download_complete);
+		progressBar.setVisibility(View.GONE);
+		showLoadingView();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				CloudDialog.this.dismissDialog();
+			}
+		};
+		timer.schedule(task, 1000);
 	}
 	
 	protected abstract void workflowChanged(final Workflow workflow);

@@ -37,7 +37,7 @@ public class CloudGameDownloadDialog extends CloudDialog {
 			showLoadingView();
 			break;		
 		case GameRetrievalComplete:
-			dismissDialog();
+			displayCompleteAndThenDismiss(false);
 			break;				
 		case Error:
 			gameDownloadWorkflow.setStatus(CloudWorkflowStatus.Cancel);
