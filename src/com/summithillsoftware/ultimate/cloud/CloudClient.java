@@ -37,6 +37,7 @@ public class CloudClient {
 //	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
 	public static final String SCHEME_HOST = "http://" + HOST;
 	private static final String JSON_TEAM_CLOUD_ID = "cloudId";
+	private static final String JSON_TEAM_ID = "teamId";
 	private static final int SOCKET_TIMEOUT_SECONDS = 45;
 	
 	private static CloudClient Current;
@@ -193,10 +194,11 @@ public class CloudClient {
 		}
 	}
 	
-	public void submitUploadGame(final Game game, final CloudResponseHandler responseHandler) {
+	public void submitUploadGame(final Game game, final Team team, final CloudResponseHandler responseHandler) {
 		JSONObject gameAsJson = null;
 		try {
 			gameAsJson = game.toJsonObject();
+			gameAsJson.put(JSON_TEAM_ID, team.getCloudId());
 		} catch (JSONException e1) {
 			Log.e(Constants.ULTIMATE, "Unable to convert Game to JSON Object", e1);
 			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);

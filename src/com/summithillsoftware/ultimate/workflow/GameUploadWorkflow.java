@@ -4,6 +4,7 @@ import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseHandler;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.model.Game;
+import com.summithillsoftware.ultimate.model.Team;
 
 public class GameUploadWorkflow extends CloudWorkflow {
 
@@ -27,7 +28,7 @@ public class GameUploadWorkflow extends CloudWorkflow {
 	private void uploadCurrentGame() {
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.GameUploadStarted);
-		CloudClient.current().submitUploadGame(Game.current(), new CloudResponseHandler() {
+		CloudClient.current().submitUploadGame(Game.current(), Team.current(), new CloudResponseHandler() {
 			@Override
 			public void onResponse(CloudResponseStatus status, Object responseObect) {
 				if (status == CloudResponseStatus.Ok) {

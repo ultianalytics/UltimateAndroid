@@ -1,13 +1,19 @@
 package com.summithillsoftware.ultimate.cloud;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.summithillsoftware.ultimate.model.Preferences;
 
@@ -34,4 +40,21 @@ public class UltimateJsonObjectRequest extends JsonObjectRequest {
 		}
 		return headers;
 	}
+	
+	// overridden to handle a blank response string from service
+    @Override
+    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+        try {
+            String jsonString =
+                new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            if (jsonString.isEmpty()) {
+            	
+            } else {
+            	return super.parseNetworkResponse(response);
+            }
+            return Response.success(null, HttpHeaderParser.parseCacheHeaders(response));
+        } catch (UnsupportedEncodingException e) {
+            return Response.error(new ParseError(e));
+        } 
+    }
 }
