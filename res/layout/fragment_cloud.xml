@@ -56,9 +56,10 @@
                 android:id="@+id/selectionInstructionsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="14dp"
                 android:gravity="center"
                 android:text="@string/undefined"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ListView

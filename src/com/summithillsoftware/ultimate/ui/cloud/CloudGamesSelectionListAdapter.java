@@ -62,7 +62,7 @@ public class CloudGamesSelectionListAdapter extends BaseAdapter {
 		View rowView = reusableRowView;
 		if (reusableRowView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout_cloud_games, null);
+			rowView = inflater.inflate(R.layout.rowlayout_games, null);
 		}
 	
 		TextView opponentNameView = (TextView)rowView.findViewById(R.id.text_game_opponent_name);

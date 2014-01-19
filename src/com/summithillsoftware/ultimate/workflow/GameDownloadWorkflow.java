@@ -19,7 +19,7 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 			switch (getStatus()) {
 			case NotStarted:
 				// uncomment to force signon
-				 CloudClient.current().clearExistingAuthentication();
+				// CloudClient.current().clearExistingAuthentication();
 				retrieveGamesList();
 				break;
 			case AuthenticationEnded:
