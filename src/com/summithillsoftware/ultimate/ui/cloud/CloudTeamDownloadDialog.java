@@ -22,6 +22,9 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 		case CredentialsRejected:
 			requestSignon();
 			break;	
+		case AuthenticationEnded:
+			showLoadingView();
+			break;				
 		case TeamListRetrievalStarted:
 			setProgressText(R.string.label_cloud_downloading_teams);
 			showLoadingView();

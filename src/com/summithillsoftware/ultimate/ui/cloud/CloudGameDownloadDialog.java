@@ -22,6 +22,9 @@ public class CloudGameDownloadDialog extends CloudDialog {
 		case CredentialsRejected:
 			requestSignon();
 			break;	
+		case AuthenticationEnded:
+			showLoadingView();
+			break;			
 		case GameListRetrievalStarted:
 			setProgressText(R.string.label_cloud_downloading_games);
 			showLoadingView();

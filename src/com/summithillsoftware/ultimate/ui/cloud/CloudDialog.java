@@ -53,9 +53,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	protected WebView webView;
 	protected TextView selectionInstructionsLabel;
 	protected ListView selectionListView;
-	protected Button selectionCancelButton;
 	private Button cancelButton;
-	private Button webViewCancelButton;
 	private TextView statusTextView;
 	
 	private boolean hasUserBeenAskedToSignon;
@@ -102,8 +100,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	
 	private void connectWidgets(View view) {
 		cancelButton = (Button) view.findViewById(R.id.cancelButton);
-		webViewCancelButton = (Button) view.findViewById(R.id.webViewCancelButton);
-		selectionCancelButton = (Button) view.findViewById(R.id.selectionCancelButton);
 		viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
 		loadingView = (View) view.findViewById(R.id.loadingView);
 		selectionView = (View) view.findViewById(R.id.selectionView);
@@ -124,16 +120,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				dismissDialog();
 			}
 		});
-		webViewCancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				dismissDialog();
-			}
-		});
-		selectionCancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				dismissDialog();
-			}
-		});		
 	}
 
 	private void registerDialogCancelListener(Dialog dialog) {

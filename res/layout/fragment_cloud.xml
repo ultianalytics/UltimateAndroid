@@ -1,91 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/viewFlipper"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:inAnimation="@android:anim/slide_in_left"
-    android:outAnimation="@android:anim/slide_out_right" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/loadingView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp" >
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="320dp"
+        android:layout_height="@dimen/cloud_dialog_content_view_length"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right" >
 
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <LinearLayout
+            android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-
-        <TextView
-            android:id="@+id/statusTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:text="@string/label_cloud_talking_to_server" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            style="@style/redButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
-            android:text="@string/button_cancel" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/signonView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp" >
-
-        <Button
-            android:id="@+id/webViewCancelButton"
-            style="@style/redButton"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
-            android:text="@string/button_cancel" />
-
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="320dp"
-            android:layout_height="470dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/selectionView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp" >
-
-        <TextView
-            android:id="@+id/selectionInstructionsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/undefined"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/selectionListView"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:text="@string/label_cloud_talking_to_server" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/signonView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/selectionCancelButton"
-            style="@style/redButton"
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/selectionView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/game_action_pull_buttons_height"
-            android:layout_margin="10dp"
-            android:text="@string/button_cancel" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp" >
 
-</ViewFlipper>
+            <TextView
+                android:id="@+id/selectionInstructionsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/undefined"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/selectionListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
+        </LinearLayout>
+    </ViewFlipper>
+
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/redButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/button_cancel" />
+
+</LinearLayout>
