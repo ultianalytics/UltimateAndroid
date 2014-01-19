@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.cloud;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -37,7 +38,7 @@ public class CloudGamesSelectionListAdapter extends BaseAdapter {
 			
 			GameDownloadWorkflow workflow = (GameDownloadWorkflow)UltimateApplication.current().getActiveWorkflow();
 			sortedGames = workflow.getGamesAvailable();
-			// TODO...sort these
+			Collections.sort(sortedGames,GameDescription.GameDescriptionListComparator);
 		}
 		return sortedGames;
 	}

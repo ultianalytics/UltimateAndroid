@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.team;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -25,6 +26,7 @@ public class TeamsListAdaptor extends BaseAdapter {
 	
 	public void resetTeams() {
 		teams = Team.retrieveTeamDescriptions();
+		Collections.sort(teams,TeamDescription.TeamDescriptionListComparator);
 		notifyDataSetChanged();
 	}
 	

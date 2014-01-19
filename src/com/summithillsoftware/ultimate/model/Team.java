@@ -468,4 +468,10 @@ public class Team implements Externalizable {
 			return team;
 		}
 	}
+	
+	public static Comparator<Team> TeamListComparator = new Comparator<Team>() {
+		public int compare(Team team1, Team team2) {
+			return team1.getName().compareTo(team2.getName());
+		}
+	};
 }

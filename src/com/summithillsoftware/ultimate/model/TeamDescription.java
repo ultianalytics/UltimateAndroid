@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.model;
 
+import java.util.Comparator;
+
 public class TeamDescription {
 	private String teamId;	
 	private String name;
@@ -24,5 +26,11 @@ public class TeamDescription {
 	public boolean isCurrentTeam() {
 		return Team.isCurrentTeam(teamId);
 	}
+	
+	public static Comparator<TeamDescription> TeamDescriptionListComparator = new Comparator<TeamDescription>() {
+		public int compare(TeamDescription team1, TeamDescription team2) {
+			return team1.getName().compareTo(team2.getName());
+		}
+	};
 	
 }

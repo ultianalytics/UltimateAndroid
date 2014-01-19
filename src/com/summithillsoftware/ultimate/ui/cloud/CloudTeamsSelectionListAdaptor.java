@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -27,6 +28,7 @@ public class CloudTeamsSelectionListAdaptor extends BaseAdapter {
 	public void resetTeams() {
 		TeamDownloadWorkflow workflow = (TeamDownloadWorkflow)UltimateApplication.current().getActiveWorkflow();
 		teams = workflow.getTeamsAvailable();
+		Collections.sort(teams,Team.TeamListComparator);
 		notifyDataSetChanged();
 	}
 	
