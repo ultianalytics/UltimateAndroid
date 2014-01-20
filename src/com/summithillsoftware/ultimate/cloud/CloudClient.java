@@ -64,6 +64,10 @@ public class CloudClient {
 	    cookieManager.removeSessionCookie();
 	}
 	
+	public String websiteUrlForCloudId(String cloudId) {
+		return SCHEME_HOST + "/team/" + cloudId + "/main";
+	}
+	
 	public void submitRetrieveTeams(final CloudResponseHandler responseHandler) {
 		UltimateJsonArrayRequest request = new UltimateJsonArrayRequest(getUrl("/rest/mobile/teams"), new Response.Listener<JSONArray>() {
 			@Override

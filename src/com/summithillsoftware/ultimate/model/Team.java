@@ -289,6 +289,10 @@ public class Team implements Externalizable {
 	public void setCloudId(String cloudId) {
 		this.cloudId = cloudId;
 	}
+	public boolean hasCloudId() {
+		return cloudId != null & !cloudId.trim().isEmpty();
+	}
+	
 	public String getLeaguevineJson() {
 		return leaguevineJson;
 	}

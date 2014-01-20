@@ -133,6 +133,7 @@
     <string name="label_game_at_tournament">at</string>
     <string name="label_team_playerdisplay">Display:</string>
     <string name="label_team_players">Players</string>
+    <string name="label_team_website">Website:</string>
     <string name="label_team_name">Name:</string>
     <string name="label_team_mixed">Mixed:</string>
     <string name="label_team_code">(check if co-ed)</string>

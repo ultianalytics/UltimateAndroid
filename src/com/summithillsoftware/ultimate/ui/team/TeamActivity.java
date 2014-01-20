@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.team;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
@@ -22,10 +24,20 @@ import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 public class TeamActivity extends UltimateActivity {
 	public static final String NEW_TEAM = "NewTeam";
 	
+	// widgets
+	private TextView text_team_name;
+	private CheckBox mixedTeamCheckbox;
+	private RadioGroup radiogroup_team_playerdisplay;
+	private Button button_cancel;
+	private View view_team_players_button;
+	private View view_website;
+	private Button button_website;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
+		connectWidgets();
 		setupActionBar();  // Show the Up button in the action bar.
 	}
 	
@@ -74,6 +86,15 @@ public class TeamActivity extends UltimateActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private void connectWidgets() {
+		text_team_name = (TextView)findViewById(R.id.teamFragment).findViewById(R.id.text_team_name);
+		mixedTeamCheckbox = (CheckBox)findViewById(R.id.teamFragment).findViewById(R.id.mixedTeamCheckbox);
+		radiogroup_team_playerdisplay = (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_playerdisplay);
+		button_cancel = (Button)findViewById(R.id.teamFragment).findViewById(R.id.button_cancel);
+		view_team_players_button = (View)findViewById(R.id.teamFragment).findViewById(R.id.view_team_players_button);
+		view_website = (View)findViewById(R.id.teamFragment).findViewById(R.id.view_website);
+		button_website = (Button)findViewById(R.id.teamFragment).findViewById(R.id.button_website);
+	}
 	
 	public void saveClicked(View v) {
 		if (isTeamValid()) {
@@ -91,6 +112,10 @@ public class TeamActivity extends UltimateActivity {
 	
 	public void playersClicked(View v) {
 		goToPlayersActivity();
+	}
+	
+	public void websiteClicked(View v) {
+		openWebsiteInBrower();
 	}
 
 	public void cancelClicked(View v) {
@@ -118,53 +143,36 @@ public class TeamActivity extends UltimateActivity {
 	private void populateView() {
 		if (!isNewTeam()) {
 			if (!Team.current().isDefaultTeamName()) {
-				getNameTextView().setText(Team.current().getName());
+				text_team_name.setText(Team.current().getName());
 			}
-			getMixedTeamCheckBox().setChecked(Team.current().isMixed());
-			getPlayerDisplayRadioGroup().check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
+			mixedTeamCheckbox.setChecked(Team.current().isMixed());
+			radiogroup_team_playerdisplay.check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
 		}
 		
 		if (isNewTeam() || Team.current().isDefaultTeamName()) { 
-			getPlayersView().setVisibility(View.GONE);
-			getNameTextView().requestFocus();
+			view_team_players_button.setVisibility(View.GONE);
+			text_team_name.requestFocus();
 		} else {
-			getPlayersView().setVisibility(View.VISIBLE);
-			getCancelButton().requestFocus();
+			view_team_players_button.setVisibility(View.VISIBLE);
+			button_cancel.requestFocus();
 		}
+		view_website.setVisibility(Team.current().hasCloudId() ? View.VISIBLE : View.GONE);
+		button_website.setText(getWebsite());
 	}
 	
 	private void populateAndSaveTeam() {
 		Team team = isNewTeam() ? new Team() : Team.current();
 		team.setName(getTeamName());
-		team.setMixed(getMixedTeamCheckBox().isChecked());
-		team.setDisplayingPlayerNumber(getPlayerDisplayRadioGroup().getCheckedRadioButtonId() == R.id.radio_team_playerdisplay_number);
+		team.setMixed(mixedTeamCheckbox.isChecked());
+		team.setDisplayingPlayerNumber(radiogroup_team_playerdisplay.getCheckedRadioButtonId() == R.id.radio_team_playerdisplay_number);
 		team.save();
 		Team.setCurrentTeamId(team.getTeamId());
 	}
 
 	private String getTeamName() {
-		return getNameTextView().getText().toString().trim();
+		return text_team_name.getText().toString().trim();
 	}
-	private TextView getNameTextView() {
-		return (TextView)findViewById(R.id.teamFragment).findViewById(R.id.text_team_name);
-	}
-	
-	private CheckBox getMixedTeamCheckBox() {
-		return (CheckBox)findViewById(R.id.teamFragment).findViewById(R.id.mixedTeamCheckbox);
-	}
-	
-	private RadioGroup getPlayerDisplayRadioGroup() {
-		return (RadioGroup)findViewById(R.id.teamFragment).findViewById(R.id.radiogroup_team_playerdisplay);
-	}
-	
-	private Button getCancelButton() {
-		return (Button)findViewById(R.id.teamFragment).findViewById(R.id.button_cancel);
-	}
-	
-	private View getPlayersView() {
-		return (View)findViewById(R.id.teamFragment).findViewById(R.id.view_team_players_button);
-	}
-	
+
 	private boolean isNewTeam() {
 		return getIntent().getBooleanExtra(NEW_TEAM, false);
 	}
@@ -191,6 +199,12 @@ public class TeamActivity extends UltimateActivity {
 	private void goToGamesActivity() {
 		startActivity(new Intent(this, GamesActivity.class));
 	}
+	
+	private void openWebsiteInBrower() {
+		String website = getWebsite();
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+		startActivity(browserIntent);
+	}
 
 	private void showTeamUploadDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
@@ -200,5 +214,8 @@ public class TeamActivity extends UltimateActivity {
 		uploadDialog.show(fragmentManager, "dialog");
 	}
 
+	private String getWebsite() {
+		return Team.current().hasCloudId() ? CloudClient.current().websiteUrlForCloudId(Team.current().getCloudId()) : "";
+	}
 
 }

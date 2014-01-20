@@ -53,8 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_team_code"
-                    android:textColor="@color/ultimate_form_label"
-                    android:textAppearance="@style/FormLabel" />
+                    android:textAppearance="@style/FormLabel"
+                    android:textColor="@color/ultimate_form_label" />
             </TableRow>
 
             <TableRow
@@ -95,8 +95,6 @@
                 </RadioGroup>
             </TableRow>
 
-
-            
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,10 +106,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="playersClicked"
-                    android:text="@string/label_team_players"/>
+                    android:text="@string/label_team_players" />
             </TableRow>
-            
 
+            <TableRow
+                android:id="@+id/view_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_team_website"
+                    android:textAppearance="@style/FormLabel" />
+
+                <Button
+                    android:id="@+id/button_website"
+                    style="@style/FormCellButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="websiteClicked"
+                    android:text="@string/undefined"
+                    android:textColor="@color/ultimate_form_data" />
+            </TableRow>
         </TableLayout>
 
         <LinearLayout
