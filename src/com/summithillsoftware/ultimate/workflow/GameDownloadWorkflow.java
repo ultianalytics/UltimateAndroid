@@ -73,8 +73,8 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 					} else if (status == CloudResponseStatus.Unauthorized) {
 						setStatus(CloudWorkflowStatus.CredentialsRejected);
 					} else {
-						setStatus(CloudWorkflowStatus.Error);
 						setLastErrorStatus(status);
+						setStatus(CloudWorkflowStatus.Error);
 					}
 				}
 			});

@@ -37,8 +37,8 @@ public class TeamUploadWorkflow extends CloudWorkflow {
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
+					setLastErrorStatus(status);					
 					setStatus(CloudWorkflowStatus.Error);
-					setLastErrorStatus(status);
 				}
 			}
 		});

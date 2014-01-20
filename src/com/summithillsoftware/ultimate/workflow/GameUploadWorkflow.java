@@ -44,8 +44,8 @@ public class GameUploadWorkflow extends CloudWorkflow {
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
+					setLastErrorStatus(status);					
 					setStatus(CloudWorkflowStatus.Error);
-					setLastErrorStatus(status);
 				}
 			}
 		});
@@ -63,8 +63,8 @@ public class GameUploadWorkflow extends CloudWorkflow {
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
+					setLastErrorStatus(status);					
 					setStatus(CloudWorkflowStatus.Error);
-					setLastErrorStatus(status);
 				}
 			}
 		});
