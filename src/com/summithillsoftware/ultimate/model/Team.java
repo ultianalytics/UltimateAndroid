@@ -458,7 +458,7 @@ public class Team implements Externalizable {
 				JSONArray jsonArray = jsonObject.getJSONArray(JSON_PLAYERS);
 				for (int i = 0; i < jsonArray.length(); i++) {
 					Player player = Player.fromJsonObject((JSONObject)jsonArray.get(i));
-					if (!player.isAnonymous()) {
+					if (player.getName() != null && !player.getName().trim().isEmpty() && !player.isAnonymous()) {
 						team.players.add(player);
 					}
 				}
