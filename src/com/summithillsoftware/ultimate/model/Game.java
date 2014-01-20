@@ -583,6 +583,9 @@ public class Game implements Externalizable {
 	}
 
 	public List<Player> currentLineSorted() {
+		if (currentLine == null || currentLine.isEmpty()) {
+			currentLine = Team.current().getDefaultLine();
+		}
 		ArrayList<Player> sortedList = new ArrayList<Player>(currentLine);
 		if (Team.current().isDisplayingPlayerNumber()) {
 			Collections.sort(sortedList, Player.PlayerNumberComparator);

@@ -369,20 +369,22 @@ public class Team implements Externalizable {
 	    int maleCount = 0;
 	    int femaleCount = 0;
 	    for (Player player : sortedPlayers) {
-			if (isMixed()) {
-				if (player.isMale() && maleCount < 4) {
+	    	if (!player.isAnonymous()) {
+				if (isMixed()) {
+					if (player.isMale() && maleCount < 4) {
+						line.add(player);
+						maleCount++;
+					} else if (!player.isMale() && femaleCount < 4) {
+						line.add(player);
+						femaleCount++;
+					}
+				} else {
 					line.add(player);
-					maleCount++;
-				} else if (!player.isMale() && femaleCount < 4) {
-					line.add(player);
-					femaleCount++;
 				}
-			} else {
-				line.add(player);
-			}
-			if (line.size() >= 7) {
-				break;
-			}
+				if (line.size() >= 7) {
+					break;
+				}
+	    	}
 		}
 	    return line;
 	}
@@ -420,7 +422,9 @@ public class Team implements Externalizable {
 		if (players != null && !players.isEmpty()) {
 			JSONArray jsonPlayers = new JSONArray();
 			for (Player player : players) {
-				jsonPlayers.put(player.toJsonObject());
+				if (!player.isAnonymous()) {
+					jsonPlayers.put(player.toJsonObject());
+				}
 			}
 			jsonObject.put(JSON_PLAYERS, jsonPlayers);
 		}
@@ -449,7 +453,9 @@ public class Team implements Externalizable {
 				JSONArray jsonArray = jsonObject.getJSONArray(JSON_PLAYERS);
 				for (int i = 0; i < jsonArray.length(); i++) {
 					Player player = Player.fromJsonObject((JSONObject)jsonArray.get(i));
-					team.players.add(player);
+					if (!player.isAnonymous()) {
+						team.players.add(player);
+					}
 				}
 			}
 			if (jsonObject.has(JSON_IS_MIXED)) {
