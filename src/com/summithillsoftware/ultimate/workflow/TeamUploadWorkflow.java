@@ -6,7 +6,6 @@ import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.model.Team;
 
 public class TeamUploadWorkflow extends CloudWorkflow {
-	private String teamCloudId;
 
 	public void resume() {
 		synchronized (this) {
@@ -32,30 +31,21 @@ public class TeamUploadWorkflow extends CloudWorkflow {
 			@Override
 			public void onResponse(CloudResponseStatus status, Object responseObect) {
 				if (status == CloudResponseStatus.Ok) {
+					String cloudId = (String)responseObect;
 					setStatus(CloudWorkflowStatus.TeamUploadComplete);
-					saveCloudId();
+					saveCloudId(cloudId);
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
 					setStatus(CloudWorkflowStatus.Error);
 					setLastErrorStatus(status);
 				}
-				notifyChange();
 			}
 		});
-		notifyChange();
 	}
 	
-	public String getTeamCloudId() {
-		return teamCloudId;
-	}
-
-	public void setTeamCloudId(String teamCloudId) {
-		this.teamCloudId = teamCloudId;
-	}
-	
-	private void saveCloudId() {
-		Team.current().setCloudId(teamCloudId);
+	private void saveCloudId(String cloudId) {
+		Team.current().setCloudId(cloudId);
 		Team.current().save();
 	}
 

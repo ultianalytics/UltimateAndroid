@@ -55,10 +55,8 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 					setLastErrorStatus(status);
 					setStatus(CloudWorkflowStatus.Error);
 				}
-				notifyChange();
 			}
 		});
-		notifyChange();
 	}
 	
 	private void retrieveGame() {
@@ -78,10 +76,8 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 						setStatus(CloudWorkflowStatus.Error);
 						setLastErrorStatus(status);
 					}
-					notifyChange();
 				}
 			});
-			notifyChange();
 		}
 	}
 

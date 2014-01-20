@@ -53,10 +53,8 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 					setStatus(CloudWorkflowStatus.Error);
 					setLastErrorStatus(status);
 				}
-				notifyChange();
 			}
 		});
-		notifyChange();
 	}
 	
 	private void retrieveTeam() {
@@ -76,10 +74,8 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 						setStatus(CloudWorkflowStatus.Error);
 						setLastErrorStatus(status);
 					}
-					notifyChange();
 				}
 			});
-			notifyChange();
 		}
 	}
 

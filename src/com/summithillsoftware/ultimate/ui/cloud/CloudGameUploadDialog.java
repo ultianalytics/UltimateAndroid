@@ -16,7 +16,11 @@ public class CloudGameUploadDialog extends CloudDialog {
 			break;
 		case CredentialsRejected:
 			requestSignon();
-			break;	
+			break;
+		case TeamUploadStarted:
+			setProgressText(R.string.label_cloud_uploading_team);
+			showLoadingView();
+			break;				
 		case GameUploadStarted:
 			setProgressText(R.string.label_cloud_uploading_game);
 			showLoadingView();
