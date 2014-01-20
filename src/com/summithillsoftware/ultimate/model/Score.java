@@ -10,6 +10,7 @@ import android.content.Context;
 import com.summithillsoftware.ultimate.R;
 
 public class Score implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private int ours;
 	private int theirs;
 	

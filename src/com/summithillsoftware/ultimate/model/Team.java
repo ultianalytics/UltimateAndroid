@@ -25,6 +25,7 @@ import android.util.Log;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Team implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_TEAM_ID = "teamId";
 	private static final String JSON_CLOUD_ID = "cloudId";
 	private static final String JSON_NAME = "name";

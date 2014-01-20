@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.R;
 
 public class OffenseEvent extends Event {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_PASSER = "passer";
 	private static final String JSON_RECEIVER = "receiver";
 

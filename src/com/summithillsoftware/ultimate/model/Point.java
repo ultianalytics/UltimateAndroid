@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Point implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_SUMMARY = "summary";
 	private static final String JSON_EVENTS = "events";
 	private static final String JSON_LINE = "line";

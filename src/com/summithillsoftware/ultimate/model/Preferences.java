@@ -17,6 +17,7 @@ import android.util.Log;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Preferences implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	
 	public static final int MINIMUM_GAME_POINT = 9;
 	public static final int MAXIMUM_GAME_POINT = 17;

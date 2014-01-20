@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 
 public class Player implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_NAME = "name";
 	private static final String JSON_POSITION = "position";
 	private static final String JSON_NUMBER = "number";

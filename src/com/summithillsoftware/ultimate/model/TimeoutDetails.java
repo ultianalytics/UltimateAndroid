@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TimeoutDetails implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_QUOTA_PER_HALF = "quotaPerHalf";
 	private static final String JSON_QUOTA_FLOATERS = "quotaFloaters";
 	private static final String JSON_TAKEN_FIRST_HALF = "takenFirstHalf";

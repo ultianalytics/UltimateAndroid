@@ -38,6 +38,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Game implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_GAME_ID = "gameId";
 	private static final String JSON_OPPONENT_NAME = "opponentName";
 	private static final String JSON_TOURNAMENT_NAME = "tournamentName";
@@ -158,7 +159,7 @@ public class Game implements Externalizable {
 		return read(Team.current().getTeamId(), gameId, true);
 	}
 
-	private static Game read(String teamId, String gameId,
+	static Game read(String teamId, String gameId,
 			boolean mergePlayersWithCurrentTeam) {
 		// will answer NULL if error or not found
 		Game game = null;
@@ -204,21 +205,7 @@ public class Game implements Externalizable {
 	}
 
 	public static List<GameDescription> retrieveGameDescriptionsForCurrentTeam() {
-		List<GameDescription> descriptions = new ArrayList<GameDescription>();
-		String teamId = Team.current().getTeamId();
-		for (String gameFileName : getAllGameFileNames(Team.current()
-				.getTeamId())) {
-			Game game = read(teamId, gameFileName, false);
-			GameDescription gameDesc = new GameDescription(game.gameId);
-			gameDesc.setOpponentName(game.getOpponentName());
-			gameDesc.setTournamentName(game.getTournamentName());
-			gameDesc.setScore(game.getScore());
-			gameDesc.setStartDate(game.getStartDateTime());
-			descriptions.add(gameDesc);
-		}
-		Collections.sort(descriptions,
-				GameDescription.GameDescriptionListComparator);
-		return descriptions;
+		return GameDescription.retrieveGameDescriptionsForTeam(Team.current().getTeamId());
 	}
 
 	public static int numberOfGamesForTeam(String teamId) {
@@ -246,6 +233,7 @@ public class Game implements Externalizable {
 		if (isCurrentGame(gameId)) {
 			setCurrentGame(null);
 		}
+		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
 		File file = getFile(Team.current().getTeamId(), gameId);
 		if (file.exists()) {
 			boolean didDelete = file.delete();
@@ -259,6 +247,7 @@ public class Game implements Externalizable {
 	public void save() {
 		FileOutputStream fileOutputStream = null;
 		ObjectOutputStream objectOutputStream = null;
+		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
 		try {
 			fileOutputStream = new FileOutputStream(getFile(Team.current()
 					.getTeamId(), getGameId()));
@@ -296,7 +285,7 @@ public class Game implements Externalizable {
 		return FILE_NAME_PREFIX + java.util.UUID.randomUUID().toString();
 	}
 
-	private static File getTeamDir(String teamId) {
+	static File getTeamDir(String teamId) {
 		File teamDir = new File(UltimateApplication.current().getFilesDir(),
 				GAMES_DIRECTORY_NAME_PREFIX + teamId);
 		if (!teamDir.exists()) {

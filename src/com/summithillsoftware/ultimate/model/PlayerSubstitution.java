@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PlayerSubstitution implements Externalizable {
+	private static final long serialVersionUID = 1L;	
 	private static final String JSON_FROM_PLAYER = "fromPlayer";
 	private static final String JSON_TO_PLAYER = "toPlayer";
 	private static final String JSON_SUB_REASON = "reason";

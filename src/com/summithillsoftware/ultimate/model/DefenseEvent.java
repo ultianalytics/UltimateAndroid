@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.R;
 
 public class DefenseEvent extends Event {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_DEFENDER = "defender";
 	private static final String JSON_HANGTIME = "hangtime";
 	private static final String HANGTIME_DETAIL_PROPERTY_NAME = "hangtime";

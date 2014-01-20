@@ -1,15 +1,33 @@
 package com.summithillsoftware.ultimate.model;
 
+import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
+
+import java.io.Externalizable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GameDescription {
+import android.util.Log;
+
+public class GameDescription implements Externalizable {
+	private static final long serialVersionUID = 1L;
+	private static final String FILE_NAME_PREFIX = "info-about-";
 	private static final String JSON_GAME_ID = "gameId";
 	private static final String JSON_OPPONENT_NAME = "opponentName";
 	private static final String JSON_TOURNAMENT_NAME = "tournamentName";
@@ -21,6 +39,10 @@ public class GameDescription {
 	private String opponentName = "";
 	private String tournamentName = "";	
 	private Score score;
+	
+	public GameDescription() {
+		super();
+	}
 	
 	public GameDescription(String gameId) {
 		super();
@@ -58,6 +80,24 @@ public class GameDescription {
 		this.score = score;
 	}
 
+	@Override
+	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeObject(gameId);
+		output.writeObject(startDate);
+		output.writeObject(opponentName);
+		output.writeObject(tournamentName);		
+		output.writeObject(score);
+	}
+	
+	@Override
+	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		gameId = (String)input.readObject();
+		startDate = (Date)input.readObject();
+		opponentName = (String)input.readObject();
+		tournamentName = (String)input.readObject();
+		score = (Score)input.readObject();
+	}
+	
 	public static GameDescription fromJsonObject(JSONObject jsonObject)
 			throws JSONException {
 		if (jsonObject == null) {
@@ -88,9 +128,97 @@ public class GameDescription {
 			return game;
 		}
 	}
+	
+	public static List<GameDescription> retrieveGameDescriptionsForTeam(String teamId) {
+		List<GameDescription> descriptions = new ArrayList<GameDescription>();
+		for (String gameFileName : Game.getAllGameFileNames(teamId)) {
+			GameDescription gameDesc = read(teamId, gameFileName);
+			if (gameDesc == null) {
+				gameDesc = createGameDescriptionFromGame(Game.read(teamId, gameFileName, false), teamId);
+			} 
+			descriptions.add(gameDesc);
+		}
+		Collections.sort(descriptions, GameDescription.GameDescriptionListComparator);
+		return descriptions;
+	}
+	
+	public static GameDescription createGameDescriptionFromGame(Game game, String teamId) {
+		GameDescription gameDesc = new GameDescription(game.getGameId());
+		gameDesc.setOpponentName(game.getOpponentName());
+		gameDesc.setTournamentName(game.getTournamentName());
+		gameDesc.setScore(game.getScore());
+		gameDesc.setStartDate(game.getStartDateTime());
+		gameDesc.saveForTeam(teamId);
+		return gameDesc;
+	}
+	
+	public static void clearGameDescription(String teamId, String gameId) {
+		File file = getFile(teamId, gameId);
+		if (file.exists()) {
+			boolean didDelete = file.delete();
+			if (!didDelete) {
+				Log.e(ULTIMATE, "Attempted to delete game description file but it did not delete");
+			}
+		}
+	}
+	
+	private static GameDescription read(String teamId, String gameId) {
+		// will answer NULL if error or not found
+		GameDescription game = null;
+		File existingFile = getFile(teamId, gameId);
+		if (existingFile != null && existingFile.exists()) {
+			FileInputStream fileInputStream = null;
+			ObjectInputStream objectInputStream = null;
+			try {
+				fileInputStream = new FileInputStream(existingFile);
+				objectInputStream = new ObjectInputStream(fileInputStream);
+				game = (GameDescription) objectInputStream.readObject();
+			} catch (Exception e) {
+				Log.e(ULTIMATE, "Error restoring game description from file", e);
+				throw new RuntimeException("Could not restore game description", e);
+			} finally {
+				try {
+					objectInputStream.close();
+					fileInputStream.close();
+				} catch (Exception e2) {
+					Log.e(ULTIMATE,"Unable to close files when restoring game description file", e2);
+				}
+			}
+		}
+		return game;
+	}
+	
+	public void saveForTeam(String  teamId) {
+		FileOutputStream fileOutputStream = null;
+		ObjectOutputStream objectOutputStream = null;
+		try {
+			fileOutputStream = new FileOutputStream(getFile(teamId, getGameId()));
+			objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(this);
+		} catch (Exception e) {
+			Log.e(ULTIMATE, "Error saving game description file", e);
+		} finally {
+			try {
+				objectOutputStream.close();
+				fileOutputStream.close();
+			} catch (Exception e2) {
+				Log.e(ULTIMATE, "Unable to close files when saving game description file",
+						e2);
+			}
+		}
+	}
+	
+	private static File getFile(String teamId, String gameId) {
+		if (teamId == null || gameId == null) {
+			return null;
+		}
+		return new File(Game.getTeamDir(teamId), FILE_NAME_PREFIX + gameId);
+	}
+	
 	public static Comparator<GameDescription> GameDescriptionListComparator = new Comparator<GameDescription>() {
 		public int compare(GameDescription game1, GameDescription game2) {
 			return game2.getStartDate().compareTo(game1.getStartDate());
 		}
 	};
+
 }

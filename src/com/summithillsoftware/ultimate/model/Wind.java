@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Wind implements Externalizable {
+	private static final long serialVersionUID = 1L;
 	private static final String JSON_MPH = "mph";
 	private static final String JSON_DIRECTION_DEGREES = "degrees";
 	private static final String JSON_IS_FIRST_LEFT_TO_RIGHT = "leftToRight";
