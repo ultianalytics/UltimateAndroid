@@ -99,6 +99,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.settings.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

@@ -49,7 +49,7 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 		if (item.getItemId() == R.id.action_download) {
 			showTeamDownloadDialog();
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

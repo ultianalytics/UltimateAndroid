@@ -14,6 +14,14 @@
         ultimate:showAsAction="always|withText"
         android:title="@string/menuitem_team_download" 
         android:icon="@drawable/ic_action_download"
-        />    
+        />   
+        
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="200"
+        ultimate:showAsAction="never|withText"
+        android:title="@string/menuitem_settings" 
+        android:icon="@drawable/ic_action_gear"
+        />      
 
 </menu>

@@ -1,8 +1,8 @@
 package com.summithillsoftware.ultimate.ui;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
-import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -21,7 +22,9 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
 
 public class UltimateActivity extends ActionBarActivity {
 	
@@ -180,6 +183,9 @@ public class UltimateActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.action_settings:
+			goToSettingsActivity();
+			return true;	
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -192,5 +198,9 @@ public class UltimateActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void goToSettingsActivity() {
+		startActivity(new Intent(this, SettingsActivity.class));
 	}
 }
