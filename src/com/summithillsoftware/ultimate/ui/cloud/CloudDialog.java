@@ -153,6 +153,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	protected void showSignonView() {
+		webView.setVisibility(View.VISIBLE);
 		viewFlipper.setDisplayedChild(1);
 	}
 	
@@ -234,6 +235,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	private void handleUserSignedOn() {
+		webView.setVisibility(View.INVISIBLE);
 		captureAuthenticationCookie();
 		captureEmailFromSignonPage();
 		getWorkflow().setStatus(CloudWorkflowStatus.AuthenticationEnded);
