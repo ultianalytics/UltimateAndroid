@@ -52,7 +52,7 @@ public class CloudTeamsSelectionListAdaptor extends BaseAdapter {
 		View rowView = reusableRowView;
 		if (reusableRowView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout_cloud_teams, null);
+			rowView = inflater.inflate(R.layout.rowlayout_teams, null);
 		}
 	
 		TextView teamNameTextView = (TextView)rowView.findViewById(R.id.text_team_name);
