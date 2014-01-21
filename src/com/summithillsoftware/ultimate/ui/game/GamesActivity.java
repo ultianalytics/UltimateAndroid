@@ -39,6 +39,13 @@ public class GamesActivity extends UltimateActivity implements Refreshable {
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    menu.findItem(R.id.action_download).setVisible(Team.current().hasCloudId());
+	    return true;
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
