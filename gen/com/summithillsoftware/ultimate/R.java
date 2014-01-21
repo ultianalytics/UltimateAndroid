@@ -1154,6 +1154,7 @@ containing a value of this type.
         public static final int game_action_portrait_recents_seperator_space=0x7f09001b;
         public static final int game_action_pull_buttons_height=0x7f09001e;
         public static final int game_action_recent_event_text_size=0x7f09001a;
+        public static final int instructions_text_size=0x7f090024;
         public static final int line_toolbar_button_margin=0x7f090013;
         public static final int standard_button_text_size=0x7f090015;
     }

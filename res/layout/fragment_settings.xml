@@ -52,15 +52,16 @@
                     android:gravity="center"
                     android:text="@string/label_settings_signed_off_explanation"
                     android:textAppearance="@style/FormLabel"
+                    android:textSize="@dimen/instructions_text_size"
                     android:textStyle="italic" />
             </TableRow>
 
             <Button
                 android:id="@+id/signoffButton"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:onClick="signoffClicked"
-                android:gravity="center_horizontal"
                 android:text="@string/button_signoff" />
 
             <TableRow
@@ -92,6 +93,7 @@
             android:gravity="center"
             android:text="@string/label_settings_find_website_explanation"
             android:textAppearance="@style/FormLabel"
+            android:textSize="@dimen/instructions_text_size"
             android:textStyle="italic" />
     </LinearLayout>
 
