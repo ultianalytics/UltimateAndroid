@@ -163,6 +163,10 @@ public class Preferences implements Externalizable {
 	public String getCloudEMail() {
 		return cloudEMail;
 	}
+	
+	public boolean hasCloudEMail() {
+		return cloudEMail != null && !cloudEMail.trim().isEmpty();
+	}
 
 	public void setCloudEMail(String cloudEMail) {
 		this.cloudEMail = cloudEMail;

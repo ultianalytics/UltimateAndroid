@@ -36,6 +36,7 @@ public class CloudClient {
 //	private static final String HOST = "local.appspot.com:8888";
 //	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
 	public static final String SCHEME_HOST = "http://" + HOST;
+	public static final String ADMIN_URL = SCHEME_HOST + "/team/admin";
 	private static final String JSON_TEAM_CLOUD_ID = "cloudId";
 	private static final String JSON_TEAM_ID = "teamId";
 	private static final int SOCKET_TIMEOUT_SECONDS = 45;

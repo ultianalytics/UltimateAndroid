@@ -10,7 +10,7 @@
 
   <fragment 
     android:name="com.summithillsoftware.ultimate.ui.settings.SettingsFragment"
-    android:id="@+id/teamFragment"
+    android:id="@+id/settingsFragment"
     android:layout_height="match_parent" 
     android:layout_width="match_parent"
   />
