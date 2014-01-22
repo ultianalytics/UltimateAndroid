@@ -101,7 +101,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	private void updateTitle() {
 		String score = GameActivity.formatScore(game(), this);
-		setTitle(getString(R.string.common_versus_short) + " " + game().getOpponentName() + " : " + score);
+		setTitle(score + " " + getString(R.string.common_versus_short) + " " + game().getOpponentName());
 	}
 	
 	private void showLineDialog() {
