@@ -113,6 +113,7 @@
                     android:id="@+id/label_game_first_point_oline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="6sp"
                     android:text="@string/label_game_first_point_oline"
                     android:textAppearance="@style/FormLabel" />
@@ -170,7 +171,7 @@
                     android:onClick="eventsClicked"
                     android:text="@string/button_game_events" />
             </TableRow>
-            
+
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -184,7 +185,6 @@
                     android:onClick="statisticsClicked"
                     android:text="@string/button_game_statistics" />
             </TableRow>
-                        
         </TableLayout>
 
         <LinearLayout
