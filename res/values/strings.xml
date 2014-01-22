@@ -214,7 +214,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
-    <string name="button_save_and_add">Save, Add New</string>
+    <string name="button_save_and_add">Save, New</string>
     <string name="button_done">DONE</string>
     <string name="button_start">Start Game</string>
     <string name="button_game_events">Events</string>
