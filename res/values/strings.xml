@@ -67,13 +67,13 @@
     <string name="title_activity_game_action">Action</string>
     <string name="title_activity_events">Game Events</string>
     <string name="title_activity_stats">Player Statistics</string>
-    <string name="title_activity_settings">Website Settings</string>    
+    <string name="title_activity_settings">Website Settings</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
     <string name="menuitem_team_download">Download</string>
     <string name="menuitem_upload">Upload</string>
-    <string name="menuitem_settings">Website Settings</string>    
+    <string name="menuitem_settings">Website Settings</string>
     <string name="action_settings">Settings</string>
     <string name="action_delete">Delete</string>
     <string name="action_teams">Teams</string>
@@ -205,7 +205,6 @@
     <string name="label_settings_signed_off_explanation">(you will be asked to sign in the next time you upload or download a team/game)</string>
     <string name="label_settings_admin_site">Your Admin Site:</string>
     <string name="label_settings_find_website_explanation">Return to the team view to see a link to the specific website for your team(s)</string>
-        
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -271,7 +270,6 @@
     <string name="button_overtime_receive">Receive</string>
     <string name="button_overtime_defend">Pull</string>
     <string name="button_signoff">Sign out</string>
-    
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>
@@ -299,6 +297,6 @@
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
     <string name="toast_download_complete">Download Complete</string>
     <string name="toast_upload_complete">Upload Complete</string>
-
+    <string name="title_activity_events_in_action">EventsInActionActivity</string>
 
 </resources>

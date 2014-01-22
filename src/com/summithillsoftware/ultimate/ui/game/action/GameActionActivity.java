@@ -24,7 +24,7 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.event.EventDialogFragment;
-import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
+import com.summithillsoftware.ultimate.ui.game.events.EventsInActionActivity;
 import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
@@ -129,7 +129,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void showEventsActivity() {
-		Intent intent = new Intent(this, EventsActivity.class);
+		Intent intent = new Intent(this, EventsInActionActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}

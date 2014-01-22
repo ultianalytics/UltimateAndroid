@@ -1659,16 +1659,17 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int events=0x7f0d0000;
-        public static final int game=0x7f0d0001;
-        public static final int game_action=0x7f0d0002;
-        public static final int games=0x7f0d0003;
-        public static final int main=0x7f0d0004;
-        public static final int player=0x7f0d0005;
-        public static final int players=0x7f0d0006;
-        public static final int settings=0x7f0d0007;
-        public static final int stats=0x7f0d0008;
-        public static final int team=0x7f0d0009;
-        public static final int teams=0x7f0d000a;
+        public static final int events_in_action=0x7f0d0001;
+        public static final int game=0x7f0d0002;
+        public static final int game_action=0x7f0d0003;
+        public static final int games=0x7f0d0004;
+        public static final int main=0x7f0d0005;
+        public static final int player=0x7f0d0006;
+        public static final int players=0x7f0d0007;
+        public static final int settings=0x7f0d0008;
+        public static final int stats=0x7f0d0009;
+        public static final int team=0x7f0d000a;
+        public static final int teams=0x7f0d000b;
     }
     public static final class raw {
         public static final int error_sound=0x7f050000;
@@ -1996,6 +1997,7 @@ containing a value of this type.
         public static final int spinner_game_to_9=0x7f0b011a;
         public static final int spinner_game_to_time=0x7f0b011f;
         public static final int title_activity_events=0x7f0b004d;
+        public static final int title_activity_events_in_action=0x7f0b0135;
         public static final int title_activity_game=0x7f0b004a;
         public static final int title_activity_game_action=0x7f0b004c;
         public static final int title_activity_game_new=0x7f0b004b;

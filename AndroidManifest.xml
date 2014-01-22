@@ -87,6 +87,14 @@
         <activity
             android:name="com.summithillsoftware.ultimate.ui.game.events.EventsActivity"
             android:label="@string/title_activity_events"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
+        </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.game.events.EventsInActionActivity"
+            android:label="@string/title_activity_events"
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -94,7 +102,8 @@
         </activity>
         <activity
             android:name="com.summithillsoftware.ultimate.ui.stats.StatsActivity"
-            android:label="@string/title_activity_stats" >
+            android:label="@string/title_activity_stats"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
