@@ -1139,6 +1139,14 @@ containing a value of this type.
         public static final int event_player_list_font_size=0x7f090020;
         public static final int event_player_list_show_all_font_size=0x7f090021;
         public static final int event_player_list_width=0x7f09001f;
+        public static final int font_size10=0x7f090025;
+        public static final int font_size20=0x7f090026;
+        public static final int font_size30=0x7f090027;
+        public static final int font_size40=0x7f090028;
+        public static final int font_size50=0x7f090029;
+        public static final int font_size60=0x7f09002a;
+        public static final int font_size70=0x7f09002b;
+        public static final int font_size80=0x7f09002c;
         public static final int form_text_size=0x7f090014;
         public static final int game_action_button_height=0x7f090018;
         public static final int game_action_button_margin=0x7f090019;

@@ -14,6 +14,16 @@
 	<dimen name="event_player_list_font_size">18sp</dimen>
 	<dimen name="event_player_list_show_all_font_size">16sp</dimen>
 	<dimen name="event_player_check_icon_dimension">30dp</dimen>
-	<dimen name="cloud_dialog_content_view_length">520dp</dimen> 	
+	<dimen name="cloud_dialog_content_view_length">520dp</dimen> 
+	
+	
+	<dimen name="font_size10">10sp</dimen>
+	<dimen name="font_size20">12sp</dimen>
+	<dimen name="font_size30">14sp</dimen>
+	<dimen name="font_size40">16sp</dimen>
+	<dimen name="font_size50">18sp</dimen>
+	<dimen name="font_size60">20sp</dimen>
+	<dimen name="font_size70">22sp</dimen>
+	<dimen name="font_size80">24sp</dimen>	
 
 </resources>
