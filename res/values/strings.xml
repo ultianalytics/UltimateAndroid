@@ -287,8 +287,8 @@
     <string name="radio_player_position_any">Any</string>
     <string name="radio_player_gender_male">Male</string>
     <string name="radio_player_gender_female">Female</string>
-    <string name="radio_game_start_offense">Offense</string>
-    <string name="radio_game_start_defense">Defense</string>
+    <string name="radio_game_start_offense">O-line</string>
+    <string name="radio_game_start_defense">D-line</string>
     <string name="radio_line_change_type_substitution">Substitution</string>
     <string name="radio_line_change_type_correction">Correction</string>
     <string name="radio_line_substitution_type_injury">Injury</string>
