@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
@@ -420,12 +421,20 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 		
 	private int hangtimeMillisecondsFromTextView() {
-		    float hangtime = Float.parseFloat(hangtimeTextView.getText().toString());
-		    int hangtimeMs = (int)(hangtime * 1000f);
-		    if (hangtimeMs < 0) {
-		        hangtimeMs = 0;
-		    }
-		    return hangtimeMs;
+		int hangtimeMs = 0;
+		try {
+			String hangtimeString = hangtimeTextView.getText() == null ? "" : hangtimeTextView.getText().toString().trim();
+			if (!hangtimeString.isEmpty()) {
+				float hangtime = Float.parseFloat(hangtimeTextView.getText().toString());
+				hangtimeMs = (int)(hangtime * 1000f);
+				if (hangtimeMs < 0) {
+					hangtimeMs = 0;
+				}
+			}
+		} catch (Exception e) {
+			Log.e(Constants.ULTIMATE, "Unable to format hangtime", e);
+		}
+		return hangtimeMs;	
 	}
 	
 	private Game game() {
