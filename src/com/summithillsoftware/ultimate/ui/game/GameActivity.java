@@ -104,12 +104,9 @@ public class GameActivity extends UltimateActivity {
 	}
 
 	public void saveClicked(View v) {
-		boolean isNew = isNewGame();
 		if (isGameValid()) {
 			populateAndSaveGame();
-			if (isNew) {
-				goToActionActivity();
-			}
+			goToActionActivity();
 		} 
 	}
 	
