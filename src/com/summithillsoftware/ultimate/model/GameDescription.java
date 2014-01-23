@@ -23,6 +23,8 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.summithillsoftware.ultimate.Constants;
+
 import android.util.Log;
 
 public class GameDescription implements Externalizable {
@@ -132,11 +134,22 @@ public class GameDescription implements Externalizable {
 	public static List<GameDescription> retrieveGameDescriptionsForTeam(String teamId) {
 		List<GameDescription> descriptions = new ArrayList<GameDescription>();
 		for (String gameFileName : Game.getAllGameFileNames(teamId)) {
-			GameDescription gameDesc = read(teamId, gameFileName);
+			GameDescription gameDesc = null;
+			try {
+				gameDesc = read(teamId, gameFileName);
+			} catch (Exception e) {
+				Log.e(Constants.ULTIMATE, "Error trying to read game description file", e);
+			}
 			if (gameDesc == null) {
-				gameDesc = createGameDescriptionFromGame(Game.read(teamId, gameFileName, false), teamId);
+				try {
+					gameDesc = createGameDescriptionFromGame(Game.read(teamId, gameFileName, false), teamId);
+				} catch (Exception e) {
+					Log.e(Constants.ULTIMATE, "Error trying to create game description file from game...probably game corruption", e);
+				}
 			} 
-			descriptions.add(gameDesc);
+			if (gameDesc != null) {
+				descriptions.add(gameDesc);
+			}
 		}
 		Collections.sort(descriptions, GameDescription.GameDescriptionListComparator);
 		return descriptions;
