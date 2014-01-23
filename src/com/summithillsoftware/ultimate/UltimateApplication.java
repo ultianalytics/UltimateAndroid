@@ -56,5 +56,10 @@ public class UltimateApplication extends Application {
 		this.activeWorkflow = activeWorkflow;
 	}
 
-   
+	// returns true if the smallest width >= sw600dp
+	public boolean isTablet() {
+		int smallestScreenWidthDp = getResources().getConfiguration().smallestScreenWidthDp;
+		//Log.i(Constants.ULTIMATE, "smallestScreenWidthDp = " + smallestScreenWidthDp);
+		return smallestScreenWidthDp >= 600;
+	}
 }

@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.game.action;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.CessationEvent;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
@@ -43,7 +45,11 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		registerListeners();
 		fieldFragment.setGameActionEventListener(this);
 		recentsFragment.setGameActionEventListener(this);
-		setupActionBar();  // Show the Up button in the action bar.		
+		setupActionBar();  // Show the Up button in the action bar.	
+		// If we aren't running on a tablet then force portrait
+		if (!UltimateApplication.current().isTablet()) {
+			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 	}
 
 	@Override
