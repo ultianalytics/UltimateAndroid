@@ -10,13 +10,9 @@ import static com.summithillsoftware.ultimate.model.Action.Halftime;
 
 import java.io.Externalizable;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +30,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
@@ -159,33 +156,14 @@ public class Game implements Externalizable {
 		return read(Team.current().getTeamId(), gameId, true);
 	}
 
-	static Game read(String teamId, String gameId,
-			boolean mergePlayersWithCurrentTeam) {
+	static Game read(String teamId, String gameId, boolean mergePlayersWithCurrentTeam) {
 		// will answer NULL if error or not found
 		Game game = null;
 		File existingFile = getFile(teamId, gameId);
 		if (existingFile != null && existingFile.exists()) {
-			FileInputStream fileInputStream = null;
-			ObjectInputStream objectInputStream = null;
-			try {
-				fileInputStream = new FileInputStream(existingFile);
-				objectInputStream = new ObjectInputStream(fileInputStream);
-				game = (Game) objectInputStream.readObject();
-				if (mergePlayersWithCurrentTeam) {
-					game.mergePlayersWithCurrentTeam();
-				}
-			} catch (Exception e) {
-				Log.e(ULTIMATE, "Error restoring game from file", e);
-				throw new RuntimeException("Could not restore game", e);
-			} finally {
-				try {
-					objectInputStream.close();
-					fileInputStream.close();
-				} catch (Exception e2) {
-					Log.e(ULTIMATE,
-							"Unable to close files when restoring game file",
-							e2);
-				}
+			game = (Game)AtomicFile.readObject(existingFile);
+			if (game != null && mergePlayersWithCurrentTeam) {
+				game.mergePlayersWithCurrentTeam();
 			}
 		}
 		return game;
@@ -236,33 +214,20 @@ public class Game implements Externalizable {
 		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
 		File file = getFile(Team.current().getTeamId(), gameId);
 		if (file.exists()) {
-			boolean didDelete = file.delete();
+			boolean didDelete = AtomicFile.delete(file);
 			if (!didDelete) {
-				Log.e(ULTIMATE,
-						"Attempted to delete game file but it did not delete");
+				Log.e(ULTIMATE, "Attempted to delete game file but it did not delete");
 			}
 		}
 	}
 
 	public void save() {
-		FileOutputStream fileOutputStream = null;
-		ObjectOutputStream objectOutputStream = null;
 		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
-		try {
-			fileOutputStream = new FileOutputStream(getFile(Team.current()
-					.getTeamId(), getGameId()));
-			objectOutputStream = new ObjectOutputStream(fileOutputStream);
-			objectOutputStream.writeObject(this);
-		} catch (Exception e) {
-			Log.e(ULTIMATE, "Error saving game file", e);
-		} finally {
-			try {
-				objectOutputStream.close();
-				fileOutputStream.close();
-			} catch (Exception e2) {
-				Log.e(ULTIMATE, "Unable to close files when saving game file",
-						e2);
-			}
+		File file = getFile(Team.current().getTeamId(), getGameId());
+		boolean success = AtomicFile.writeObject(this, file);
+		if (!success) {
+			Log.e(ULTIMATE, "Unable to save game");
+			throw new RuntimeException("Error saving game");
 		}
 	}
 

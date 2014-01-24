@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.ui.game;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.summithillsoftware.ultimate.CorruptObject;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
@@ -94,9 +96,30 @@ public class GamesActivity extends UltimateActivity implements Refreshable {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				GameDescription selectedGame = (GameDescription)getGamesListViewAdapter().getItem(position);
-				Game.setCurrentGameId(selectedGame.getGameId());
-				goToGameActivity(false);
+				final GameDescription selectedGame = (GameDescription)getGamesListViewAdapter().getItem(position);
+				try {
+					Game.setCurrentGameId(selectedGame.getGameId());
+					goToGameActivity(false);
+				} catch (CorruptObject err) {
+					displayConfirmDialog(
+							getString(R.string.alert_file_game_corrupt_title), 
+							getString(R.string.alert_file_game_corrupt_message), 
+							getString(R.string.alert_file_corrupt_delete),
+							getString(R.string.alert_file_corrupt_try_again), 
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+									Game.delete(selectedGame.getGameId());
+									refresh();
+								}
+					 		},
+					 		new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+									// no-op...alert simply closes
+								}
+					 		});
+				}
 			}
 
 		});

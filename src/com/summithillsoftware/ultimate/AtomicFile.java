@@ -21,18 +21,8 @@ import android.util.Log;
 public class AtomicFile {
 	private static String A_PREFIX = "DATA_A-";
 	private static String B_PREFIX = "DATA_B-";	
-	
-	private static AtomicFile Current;
-	
-	static {
-		Current = new AtomicFile();
-	}
-	
-	public static AtomicFile current() {
-		return Current;
-	}
 		
-	public boolean writeObjectAtomicallyToFile(Externalizable object, File destination) {
+	public static boolean writeObject(Externalizable object, File destination) {
 		FileOutputStream fileOutputStream = null;
 		ObjectOutputStream objectOutputStream = null;
 		File actualOutputFile = getOutputFile(destination);
@@ -59,7 +49,7 @@ public class AtomicFile {
 		return success;
 	}
 	
-	public Object readObjectAtomicallyFromFile(File destination) {
+	public static Object readObject(File destination) {
 		File inputFile = getInputFile(destination);
 		if (inputFile == null) {
 			return null;
@@ -72,8 +62,8 @@ public class AtomicFile {
 				Object obj = objectInputStream.readObject();
 				return obj;
 			} catch (Exception e) {
-				Log.e(ULTIMATE, "Error restoring atomic object from file", e);
-				throw new RuntimeException("Could not restore atomic object", e);
+				Log.e(ULTIMATE, "Error restoring atomic object from file " + destination.getAbsolutePath(), e);
+				throw new CorruptObject("Could not restore atomic object", e);
 			} finally {
 				try {
 					objectInputStream.close();
@@ -85,7 +75,7 @@ public class AtomicFile {
 		}
 	}
 	
-	public boolean deleteFileAtomically(File destination) {
+	public static boolean delete(File destination) {
 		boolean didDelete = false;
 		if (destination.exists()) {
 			File file1 = getInputFile(destination);
@@ -97,7 +87,7 @@ public class AtomicFile {
 		return didDelete;
 	}
 	
-	private File getInputFile(File destination) {
+	private static File getInputFile(File destination) {
 		if (destination.exists()) {
 			FileInputStream inputStream = null;
 			File inputFile = null;
@@ -124,7 +114,7 @@ public class AtomicFile {
 		}
 	}
 	
-	private File getOutputFile(File destination) {
+	private static File getOutputFile(File destination) {
 		String fileNamePrefix = null;
 		File inputFile = getInputFile(destination);
 		if (inputFile == null) {
@@ -135,7 +125,7 @@ public class AtomicFile {
 		return new File(destination.getParentFile(), fileNamePrefix + destination.getName());
 	}
 	
-	private boolean commitWriteToFile(File destination, String actualOutputFileName) {
+	private static boolean commitWriteToFile(File destination, String actualOutputFileName) {
 		FileOutputStream outStream = null;
 		boolean success = true;
 		try {
