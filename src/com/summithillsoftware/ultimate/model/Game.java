@@ -729,6 +729,11 @@ public class Game implements Externalizable {
 						- point.getTimeStartedSeconds());
 				summary.setPreviousPoint(lastPoint);
 				point.setSummary(summary);
+				
+	            if (point.isPeriodEnd()) {
+	                periodEndCount++;
+	            }
+	            
 				lastPoint = point;
 			}
 			periodsComplete = periodEndCount;
