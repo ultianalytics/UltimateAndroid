@@ -4,13 +4,9 @@ import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
 import java.io.Externalizable;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,6 +18,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Team implements Externalizable {
@@ -60,7 +57,17 @@ public class Team implements Externalizable {
 			if (Current == null) {
 				String currentTeamFileName = Preferences.current().getCurrentTeamFileName(); 
 				if (currentTeamFileName != null) {
-					Current = read(currentTeamFileName);
+					try {
+						Current = read(currentTeamFileName);
+					} catch (Exception e) {
+						List<TeamDescription> teams = retrieveTeamDescriptions();
+						if (teams.size() > 0) {
+							String otherTeamId = teams.get(0).getTeamId();
+							Current = Team.read(otherTeamId);
+							Preferences.current().setCurrentTeamFileName(otherTeamId);
+							Preferences.current().save();
+						}
+					}
 				}
 				if (Current == null) {
 					Team newTeam = new Team();
@@ -117,10 +124,14 @@ public class Team implements Externalizable {
 	public static List<TeamDescription> retrieveTeamDescriptions() {
 		ArrayList<TeamDescription> descriptions = new ArrayList<TeamDescription>();
 		for (String teamFileName : getAllTeamFileNames()) {
-			Team team = read(teamFileName);
-			TeamDescription description = new TeamDescription(teamFileName,
-					team.getName(), team.getCloudId());
-			descriptions.add(description);
+			try {
+				Team team = read(teamFileName);
+				TeamDescription description = new TeamDescription(teamFileName,
+						team.getName(), team.getCloudId());
+				descriptions.add(description);
+			} catch (Exception e) {
+				// skip the team
+			}
 		}
 		return descriptions;
 	}
@@ -169,22 +180,7 @@ public class Team implements Externalizable {
 		Team team = null;
 		File existingFile = getFile(teamId);
 		if (existingFile != null && existingFile.exists()) {
-			FileInputStream fileInputStream = null;
-			ObjectInputStream objectInputStream = null;
-			try {
-				fileInputStream = new FileInputStream(existingFile);
-				objectInputStream = new ObjectInputStream(fileInputStream);
-				team = (Team) objectInputStream.readObject();
-			} catch (Exception e) {
-				Log.e(ULTIMATE, "Error restoring team from file", e);
-			} finally {
-				try {
-					objectInputStream.close();
-					fileInputStream.close();
-				} catch (Exception e2) {
-					Log.e(ULTIMATE, "Unable to close files when restoring team file", e2);
-				}
-			}
+			team = (Team)AtomicFile.readObject(existingFile);
 		}
 		return team;
 	}
@@ -205,22 +201,12 @@ public class Team implements Externalizable {
 	}
 	
 	public void save() {
-		FileOutputStream fileOutputStream = null;
-		ObjectOutputStream objectOutputStream = null;
-		try {
-			fileOutputStream = new FileOutputStream(getFile(teamId));
-			objectOutputStream = new ObjectOutputStream(fileOutputStream);
-			objectOutputStream.writeObject(this);
-	   } catch (Exception e) {
-		   Log.e(ULTIMATE, "Error saving team file", e);
-	   } finally {
-			try {
-				objectOutputStream.close();
-				fileOutputStream.close();
-			} catch (Exception e2) {
-				Log.e(ULTIMATE, "Unable to close files when saving team file", e2);
-			}
-	   }
+		File file = getFile(teamId);
+		boolean success = AtomicFile.writeObject(this, file);
+		if (!success) {
+			Log.e(ULTIMATE, "Unable to save team");
+			throw new RuntimeException("Error saving tream");
+		}
 	}
 	
 	public void delete() {
@@ -239,9 +225,9 @@ public class Team implements Externalizable {
 		
 		// delete the team
 		File file = getFile(this.getTeamId());
-		boolean deleted = file.delete();
-		if (!deleted) {
-			Log.e(ULTIMATE, "failed to delete team");
+		boolean didDelete = AtomicFile.delete(file);
+		if (!didDelete) {
+			Log.e(ULTIMATE, "Attempted to delete team file but it did not delete");
 		}
 	}
 
