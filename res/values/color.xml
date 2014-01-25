@@ -9,7 +9,8 @@
 	<color name="ultimate_form_data">#FFFFFF</color>
 	<color name="ultimate_radio_button_selected">#FFFFFF</color>
 	<color name="ultimate_radio_button_unselected">#8F8F8F</color>
-	<color name="ultimate_action_bar">#666600</color> <!-- olive + -->
+	<color name="ultimate_theme_color">#999919</color> <!--  olivish -->
+	<color name="ultimate_action_bar">#666600</color> <!-- olivish darker -->
 	
 	<!--  misc colors -->
 		 <color name="White">#FFFFFF</color>
