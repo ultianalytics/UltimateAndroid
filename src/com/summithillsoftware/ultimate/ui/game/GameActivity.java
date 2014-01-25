@@ -269,7 +269,7 @@ public class GameActivity extends UltimateActivity {
 	
 	public static int getScoreColor(Game game) {
 		if (game.getScore().isOurLead()) {
-			return Color.GREEN;
+			return UltimateApplication.current().getResources().getColor(R.color.ultimate_winning_green);
 		} else if (game.getScore().isTheirLead()) {
 			return Color.RED;
 		} else {
