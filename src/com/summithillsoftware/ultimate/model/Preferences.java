@@ -4,16 +4,13 @@ import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 
 import java.io.Externalizable;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 
 import android.util.Log;
 
+import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class Preferences implements Externalizable {
@@ -51,47 +48,24 @@ public class Preferences implements Externalizable {
 	
 	public void save() {
 		synchronized (PREFERENCES_FILE_NAME) {
-			FileOutputStream fileOutputStream = null;
-			ObjectOutputStream objectOutputStream = null;
-			try {
-				fileOutputStream = new FileOutputStream(getFile());
-				objectOutputStream = new ObjectOutputStream(fileOutputStream);
-				objectOutputStream.writeObject(this);
-		   } catch (Exception e) {
-			   Log.e(ULTIMATE, "Error saving preferences file", e);
-		   } finally {
-				try {
-					objectOutputStream.close();
-					fileOutputStream.close();
-				} catch (Exception e2) {
-					Log.e(ULTIMATE, "Unable to close files when saving preferences file", e2);
-				}
-		   }
+			File file = getFile();
+			boolean success = AtomicFile.writeObject(this, file);
+			if (!success) {
+				Log.e(ULTIMATE, "Unable to save preferences");
+				throw new RuntimeException("Error saving preferences");
+			}
 		}
 	}
 	
 	private static Preferences restore() {
 		// will answer NULL if error or not found
 		synchronized (PREFERENCES_FILE_NAME) {
+			
+			// will answer NULL if error or not found
 			Preferences preferences = null;
 			File existingFile = getFile();
-			if (existingFile.exists()) {
-				FileInputStream fileInputStream = null;
-				ObjectInputStream objectInputStream = null;
-				try {
-					fileInputStream = new FileInputStream(existingFile);
-					objectInputStream = new ObjectInputStream(fileInputStream);
-					preferences = (Preferences) objectInputStream.readObject();
-				} catch (Exception e) {
-					Log.e(ULTIMATE, "Error restoring preferences file", e);
-				} finally {
-					try {
-						objectInputStream.close();
-						fileInputStream.close();
-					} catch (Exception e2) {
-						Log.e(ULTIMATE, "Unable to close files when restoring preferences file", e2);
-					}
-				}
+			if (existingFile != null && AtomicFile.exists(existingFile)) {
+				preferences = (Preferences)AtomicFile.readObject(existingFile);
 			}
 			return preferences;
 		}
