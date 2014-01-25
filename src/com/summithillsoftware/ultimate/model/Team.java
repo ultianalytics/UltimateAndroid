@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,21 +166,22 @@ public class Team implements Externalizable {
 	}
 	
 	private static List<String> getAllTeamFileNames() {
-		ArrayList<String> fileNames = new ArrayList<String>();
+
 		File teamsDir = getTeamsDir();
-		for (File file : teamsDir.listFiles()) {
-			if (file.isFile() && file.getName().startsWith(FILE_NAME_PREFIX)) {
-				fileNames.add(file.getName());
-			}
+		if (teamsDir != null && teamsDir.exists() && teamsDir.isDirectory()) {
+			Set<String> teamFileNames = AtomicFile.findFileNames(teamsDir, FILE_NAME_PREFIX);
+			return new ArrayList<String>(teamFileNames);
+		} else {
+			return Collections.emptyList();
 		}
-		return fileNames;
+
 	}
 	
 	private static Team read(String teamId) {
 		// will answer NULL if error or not found
 		Team team = null;
 		File existingFile = getFile(teamId);
-		if (existingFile != null && existingFile.exists()) {
+		if (existingFile != null && AtomicFile.exists(existingFile)) {
 			team = (Team)AtomicFile.readObject(existingFile);
 		}
 		return team;
@@ -232,7 +234,7 @@ public class Team implements Externalizable {
 	}
 
 	public boolean hasBeenSaved() {
-		return getFile(this.getTeamId()).exists();
+		return AtomicFile.exists(getFile(this.getTeamId()));
 	}
 	
 	public boolean isDefaultTeamName() {

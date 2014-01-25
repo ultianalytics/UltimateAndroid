@@ -9,26 +9,87 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.util.Log;
 
 /*
- * This class uses an A/B strategy to write to the file system atomically.  The file name provided is used to 
- * store a pointer (the file name) of the actual file written to (either A or B).  When the file 
- * is written successfully the pointer file contents are changed to contain the name of the actual file.
+ * Atomic file helper.  When writing a file will create a backup by renaming the file first.  
+ * If no errors during writing the backup will be deleted.  Reading will always use the
+ * backup file if it exists.
+ * New files: a 0-byte file is created before writing a new file
+ * 
+ * Atomic file consumers should use this helper for 
+ * 1.) Writing the file
+ * 2.) Reading the file
+ * 3.) Deleting the file
+ * 4.) Testing existence of the file
+ * 5.) Searching for files in a directory
  */
 
 public class AtomicFile {
-	private static String A_PREFIX = "DATA_A-";
-	private static String B_PREFIX = "DATA_B-";	
+	private static String BACKUP_SUFFIX = ".bak";
 		
+	
+	public static boolean exists(File file) {
+		if (file.exists()) {
+			return true;
+		} else {
+			File backup = getBackupFile(file);
+			return backup.exists() ? backup.length() > 0 : false;
+		}
+	}
+	
+	public static Set<String> findFileNames(File directory, String startsWith) {
+		Set<String> fileNames = new HashSet<String>();
+		File[] allFiles = directory.listFiles();
+		for (int i = 0; i < allFiles.length; i++) {
+			File file = allFiles[i];
+			if (file.getName().startsWith(startsWith)) {
+				if (file.getName().endsWith(BACKUP_SUFFIX)) {
+					if (file.length() > 0) {
+						fileNames.add(file.getName().substring(0, file.getName().length() - BACKUP_SUFFIX.length()));
+					}
+				} else {
+					fileNames.add(file.getName());
+				}
+			}
+		}
+		return fileNames;
+	}
+	
 	public static boolean writeObject(Externalizable object, File destination) {
+		boolean success = true;
+		
+		// handle backup
+		
+		File backup = getBackupFile(destination);
+		if (backup.exists()) {
+			// last write failed...don't overwrite the backup
+		} else {
+			if (destination.exists()) {
+				// make backup before writing (rename the original to *.bak )
+				File originalToRename = new File(destination.getParentFile(), destination.getName());
+				originalToRename.renameTo(backup);
+			} else {
+				// new file..create empty backup
+				try {
+					backup.createNewFile();
+				} catch (IOException e) {
+					success = false;
+					Log.e(ULTIMATE, "Error creating file backup for new file " + destination.getAbsolutePath(), e);
+				}
+			}
+		}
+	
+		// write new contents
+	
 		FileOutputStream fileOutputStream = null;
 		ObjectOutputStream objectOutputStream = null;
-		File actualOutputFile = getOutputFile(destination);
-		boolean success = true;
+
 		try {
-			fileOutputStream = new FileOutputStream(actualOutputFile);
+			fileOutputStream = new FileOutputStream(destination);
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(object);
 		} catch (Exception e) {
@@ -43,15 +104,23 @@ public class AtomicFile {
 				success = false;
 			}
 		}
+		
+		// remove backup if all went well
+		
 		if (success) {
-			commitWriteToFile(destination, actualOutputFile.getName());
+			backup.delete();
 		}
+		
 		return success;
 	}
 	
 	public static Object readObject(File destination) {
-		File inputFile = getInputFile(destination);
-		if (inputFile == null) {
+		if (!exists(destination)) {
+			return null;
+		}
+		File backupFile = getBackupFile(destination);
+		File inputFile = backupFile.exists() ? backupFile : destination;
+		if (!inputFile.exists()) {
 			return null;
 		} else {
 			FileInputStream fileInputStream = null;
@@ -76,72 +145,22 @@ public class AtomicFile {
 	}
 	
 	public static boolean delete(File destination) {
-		boolean didDelete = false;
+		boolean didDeleteOriginal = true;
+		boolean didDeleteBackup = true;
 		if (destination.exists()) {
-			File file1 = getInputFile(destination);
-			File file2 = getOutputFile(destination);
-			didDelete = destination.delete();
-			file1.delete();
-			file2.delete();
+			didDeleteOriginal = destination.delete();
 		}
-		return didDelete;
+		File backup = getBackupFile(destination);
+		if (backup.exists()) {
+			didDeleteBackup = backup.delete();
+		}
+		return didDeleteOriginal && didDeleteBackup;
 	}
 	
-	private static File getInputFile(File destination) {
-		if (destination.exists()) {
-			FileInputStream inputStream = null;
-			File inputFile = null;
-		    try {
-				inputStream = new FileInputStream(destination);
-				byte[] data = new byte[(int)destination.length()];
-				inputStream.read(data);
-				inputStream.close();
-				String fileName = new String(data, "UTF-8");
-				inputFile = new File(destination.getParentFile(), fileName);
-			} catch (Exception e) {
-				Log.e(Constants.ULTIMATE, "Unable to read atomic file", e);
-				e.printStackTrace();
-			} finally {
-				try {
-					inputStream.close();
-				} catch (Exception e) {
-					Log.e(Constants.ULTIMATE, "Unable to close atomic file", e);
-				}
-			}
-		    return inputFile;
-		} else {
-			return null;
-		}
+	private static File getBackupFile(File file) {
+		return new File(file.getParentFile(), file.getName() + BACKUP_SUFFIX);
 	}
 	
-	private static File getOutputFile(File destination) {
-		String fileNamePrefix = null;
-		File inputFile = getInputFile(destination);
-		if (inputFile == null) {
-			fileNamePrefix = A_PREFIX;
-		} else {
-			fileNamePrefix = inputFile.getName().startsWith(A_PREFIX) ? B_PREFIX : A_PREFIX;
-		}
-		return new File(destination.getParentFile(), fileNamePrefix + destination.getName());
-	}
 	
-	private static boolean commitWriteToFile(File destination, String actualOutputFileName) {
-		FileOutputStream outStream = null;
-		boolean success = true;
-		try {
-			outStream = new FileOutputStream(destination);
-			outStream.write(actualOutputFileName.getBytes());
-		} catch (Exception e) {
-			success = false;
-		} finally {
-			try {
-				outStream.close();
-			} catch (IOException e) {
-				Log.e(Constants.ULTIMATE, "Unable to close atomic file", e);
-				success = false;
-			}
-		}
-		return success;
-	}
 
 }

@@ -159,8 +159,8 @@ public class Game implements Externalizable {
 	static Game read(String teamId, String gameId, boolean mergePlayersWithCurrentTeam) {
 		// will answer NULL if error or not found
 		Game game = null;
-		File existingFile = getFile(teamId, gameId);
-		if (existingFile != null && existingFile.exists()) {
+		File existingFile = getGameFile(teamId, gameId);
+		if (existingFile != null && AtomicFile.exists(existingFile)) {
 			game = (Game)AtomicFile.readObject(existingFile);
 			if (game != null && mergePlayersWithCurrentTeam) {
 				game.mergePlayersWithCurrentTeam();
@@ -170,16 +170,15 @@ public class Game implements Externalizable {
 	}
 
 	public static List<String> getAllGameFileNames(String teamId) {
-		List<String> fileNames = new ArrayList<String>();
+		
 		File teamDir = getTeamDir(teamId);
 		if (teamDir != null && teamDir.exists() && teamDir.isDirectory()) {
-			for (String fileName : teamDir.list()) {
-				if (fileName.startsWith(FILE_NAME_PREFIX)) {
-					fileNames.add(fileName);
-				}
-			}
+			Set<String> gameFileNames = AtomicFile.findFileNames(teamDir, FILE_NAME_PREFIX);
+			return new ArrayList<String>(gameFileNames);
+		} else {
+			return Collections.emptyList();
 		}
-		return fileNames;
+
 	}
 
 	public static List<GameDescription> retrieveGameDescriptionsForCurrentTeam() {
@@ -212,9 +211,9 @@ public class Game implements Externalizable {
 			setCurrentGame(null);
 		}
 		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
-		File file = getFile(Team.current().getTeamId(), gameId);
-		if (file.exists()) {
-			boolean didDelete = AtomicFile.delete(file);
+		File file = getGameFile(Team.current().getTeamId(), gameId);
+		if (AtomicFile.exists(file)) {
+			boolean didDelete = AtomicFile.delete(file); 
 			if (!didDelete) {
 				Log.e(ULTIMATE, "Attempted to delete game file but it did not delete");
 			}
@@ -223,7 +222,7 @@ public class Game implements Externalizable {
 
 	public void save() {
 		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
-		File file = getFile(Team.current().getTeamId(), getGameId());
+		File file = getGameFile(Team.current().getTeamId(), getGameId());
 		boolean success = AtomicFile.writeObject(this, file);
 		if (!success) {
 			Log.e(ULTIMATE, "Unable to save game");
@@ -232,14 +231,14 @@ public class Game implements Externalizable {
 	}
 
 	public boolean hasBeenSaved() {
-		return getFile(Team.current().getTeamId(), getGameId()).exists();
+		return AtomicFile.exists(getGameFile(Team.current().getTeamId(), getGameId()));
 	}
 
 	public void delete() {
 		delete(getGameId());
 	}
 
-	private static File getFile(String teamId, String gameId) {
+	private static File getGameFile(String teamId, String gameId) {
 		if (teamId == null || gameId == null) {
 			return null;
 		}
