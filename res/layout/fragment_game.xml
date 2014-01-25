@@ -22,8 +22,8 @@
                 android:clickable="true"
                 android:onClick="dateClicked"
                 android:text="@string/fake_date"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_size40" />
+                android:textSize="@dimen/font_size40"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/label_game_score"
@@ -33,8 +33,8 @@
                 android:clickable="true"
                 android:onClick="scoreClicked"
                 android:text="@string/fake_score"
-				android:textStyle="bold"                
-                android:textSize="@dimen/font_size40" />
+                android:textSize="@dimen/font_size40"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <TableLayout
@@ -61,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_opponent_name"
                     android:inputType="textCapWords|textNoSuggestions"
+                    android:textCursorDrawable="@null"
                     android:textSize="@dimen/form_text_size" />
             </TableRow>
 
@@ -82,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_tournament_name"
                     android:inputType="textCapWords|textNoSuggestions"
+                    android:textCursorDrawable="@null"
                     android:textSize="@dimen/form_text_size" />
             </TableRow>
 

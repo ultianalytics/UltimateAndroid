@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_team_name"
                     android:inputType="textCapWords|textNoSuggestions"
+                    android:textCursorDrawable="@null"
                     android:textSize="@dimen/form_text_size" />
             </TableRow>
 
@@ -65,8 +66,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="6dp"
-                    android:layout_gravity="center_vertical"                    
                     android:text="@string/label_team_playerdisplay"
                     android:textAppearance="@style/FormLabel" />
 
