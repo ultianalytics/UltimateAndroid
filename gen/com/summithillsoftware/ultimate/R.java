@@ -1299,9 +1299,11 @@ containing a value of this type.
         public static final int too_many_females_on_field=0x7f020081;
         public static final int too_many_males_on_field=0x7f020082;
         public static final int trash_white=0x7f020083;
-        public static final int undo=0x7f020084;
-        public static final int undo_button_background=0x7f020085;
-        public static final int unknown_event=0x7f020086;
+        public static final int ultimate_action_bar_background=0x7f020084;
+        public static final int ultimate_logo=0x7f020085;
+        public static final int undo=0x7f020086;
+        public static final int undo_button_background=0x7f020087;
+        public static final int unknown_event=0x7f020088;
     }
     public static final class id {
         public static final int actionView=0x7f0600e8;
@@ -2034,6 +2036,7 @@ containing a value of this type.
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
+  NOTE: Theme.Base.AppCompat from appcompat is the equivalent of dark Holo 
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -2042,12 +2045,11 @@ containing a value of this type.
          */
         public static final int AppBaseTheme=0x7f0c0083;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0c0084;
-        public static final int FormCellButton=0x7f0c0087;
-        public static final int FormData=0x7f0c0086;
-        public static final int FormLabel=0x7f0c0085;
+        public static final int FormCellButton=0x7f0c0088;
+        public static final int FormData=0x7f0c0087;
+        public static final int FormLabel=0x7f0c0086;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0c0063;
@@ -2141,6 +2143,7 @@ containing a value of this type.
         /**  Base platform-dependent theme providing a light-themed activity. 
          */
         public static final int Theme_Base_Light=0x7f0c007d;
+        public static final int UltimateActionBar=0x7f0c0085;
         /**  Styles in here can be extended for customisation in your application. Each utilises
          one of the Base styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles. 
@@ -2235,14 +2238,14 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0c000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0c0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0022;
-        public static final int buttonGameAction=0x7f0c008d;
-        public static final int buttonGameActionInitiatorPlayer=0x7f0c008e;
-        public static final int buttonLineAction=0x7f0c0089;
-        public static final int buttonLinePlayer=0x7f0c0088;
-        public static final int buttonStatType=0x7f0c008f;
-        public static final int buttonUndo=0x7f0c008a;
-        public static final int redButton=0x7f0c008c;
-        public static final int standardButton=0x7f0c008b;
+        public static final int buttonGameAction=0x7f0c008e;
+        public static final int buttonGameActionInitiatorPlayer=0x7f0c008f;
+        public static final int buttonLineAction=0x7f0c008a;
+        public static final int buttonLinePlayer=0x7f0c0089;
+        public static final int buttonStatType=0x7f0c0090;
+        public static final int buttonUndo=0x7f0c008b;
+        public static final int redButton=0x7f0c008d;
+        public static final int standardButton=0x7f0c008c;
     }
     public static final class styleable {
         /**  ============================================ 
