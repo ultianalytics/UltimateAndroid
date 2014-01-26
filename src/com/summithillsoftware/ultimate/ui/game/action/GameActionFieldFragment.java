@@ -121,14 +121,22 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 	}
 	
 	private void updateSelectedPasser(Player selectedPlayer) {
+		boolean selectedPlayerFound = false;
 		for (int i = 0; i <= 7; i++) {
 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
-			playerFragment.setSelected(playerFragment.isFragmentForPlayer(selectedPlayer));
+			boolean isFragmentForPlayer = playerFragment.isFragmentForPlayer(selectedPlayer);
+			playerFragment.setSelected(isFragmentForPlayer);
+			if (isFragmentForPlayer) {
+				selectedPlayerFound = true;
+			}
 			playerFragment.setInitialPlayerBeenSelected(selectedPlayer != null);
 		}
 		if (selectedPlayer != null) {
 			throwawayButton.setVisibility(View.VISIBLE);
 			pickInitialPlayerInstructionsTextView.setVisibility(View.GONE);
+		}
+		if (selectedPlayer == null || (!selectedPlayerFound && !selectedPlayer.isAnonymous())) {
+			updateSelectedPasser(Player.anonymous());
 		}
 	}
         
