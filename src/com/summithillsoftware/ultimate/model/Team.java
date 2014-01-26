@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate.model;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.io.Externalizable;
 import java.io.File;
 import java.io.IOException;
@@ -17,10 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class Team implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -206,7 +203,7 @@ public class Team implements Externalizable {
 		File file = getFile(teamId);
 		boolean success = AtomicFile.writeObject(this, file);
 		if (!success) {
-			Log.e(ULTIMATE, "Unable to save team");
+			UltimateLogger.logError( "Unable to save team");
 			throw new RuntimeException("Error saving tream");
 		}
 	}
@@ -229,7 +226,7 @@ public class Team implements Externalizable {
 		File file = getFile(this.getTeamId());
 		boolean didDelete = AtomicFile.delete(file);
 		if (!didDelete) {
-			Log.e(ULTIMATE, "Attempted to delete team file but it did not delete");
+			UltimateLogger.logError( "Attempted to delete team file but it did not delete");
 		}
 	}
 

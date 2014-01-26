@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate.ui.game.pull;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,7 +7,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
@@ -168,7 +166,7 @@ public class PullDialogFragment extends UltimateDialogFragment {
 		try {
 			dismiss();
 		} catch (Exception e) {
-			Log.w(ULTIMATE, "Error dismissing dialog", e);
+			UltimateLogger.logWarning( "Error dismissing dialog", e);
 		}
 	}
 	

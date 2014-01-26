@@ -1,8 +1,6 @@
 package com.summithillsoftware.ultimate.model;
 
-import com.summithillsoftware.ultimate.Constants;
-
-import android.util.Log;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class EventHolder {
 	private Event event;
@@ -22,11 +20,11 @@ public class EventHolder {
 	
 	public boolean validate() {
 		if (event == null) {
-			Log.e(Constants.ULTIMATE, "Invalid event holder...no event");
+			UltimateLogger.logError( "Invalid event holder...no event");
 			return false;
 		}
 		if (point == null) {
-			Log.e(Constants.ULTIMATE, "Invalid event holder...no point");
+			UltimateLogger.logError( "Invalid event holder...no point");
 			return false;
 		}
 		return true;

@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,8 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
-
-import android.util.Log;
 
 /*
  * Atomic file helper.  When writing a file will create a backup by renaming the file first.  
@@ -78,7 +74,7 @@ public class AtomicFile {
 					backup.createNewFile();
 				} catch (IOException e) {
 					success = false;
-					Log.e(ULTIMATE, "Error creating file backup for new file " + destination.getAbsolutePath(), e);
+					UltimateLogger.logError( "Error creating file backup for new file " + destination.getAbsolutePath(), e);
 				}
 			}
 		}
@@ -93,14 +89,14 @@ public class AtomicFile {
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(object);
 		} catch (Exception e) {
-			Log.e(ULTIMATE, "Error writing object " + object.toString() + " to atomic file " + destination.toString(), e);
+			UltimateLogger.logError( "Error writing object " + object.toString() + " to atomic file " + destination.toString(), e);
 			success = false;
 		} finally {
 			try {
 				objectOutputStream.close();
 				fileOutputStream.close();
 			} catch (Exception e2) {
-				Log.e(ULTIMATE, "Unable to close files when saving atomic file", e2);
+				UltimateLogger.logError( "Unable to close files when saving atomic file", e2);
 				success = false;
 			}
 		}
@@ -131,14 +127,14 @@ public class AtomicFile {
 				Object obj = objectInputStream.readObject();
 				return obj;
 			} catch (Exception e) {
-				Log.e(ULTIMATE, "Error restoring atomic object from file " + destination.getAbsolutePath(), e);
+				UltimateLogger.logError( "Error restoring atomic object from file " + destination.getAbsolutePath(), e);
 				throw new CorruptObject("Could not restore atomic object", e);
 			} finally {
 				try {
 					objectInputStream.close();
 					fileInputStream.close();
 				} catch (Exception e2) {
-					Log.e(ULTIMATE, "Unable to close files when restoring atomic object from file " + destination.toString(), e2);
+					UltimateLogger.logError( "Unable to close files when restoring atomic object from file " + destination.toString(), e2);
 				}
 			}
 		}

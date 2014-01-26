@@ -1,17 +1,15 @@
 package com.summithillsoftware.ultimate.ui;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.util.ArrayList;
 
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.Prediction;
-import android.util.Log;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class UltimateGestureHelper {
 	public static String SWIPE_RIGHT = "swiperight";
@@ -72,7 +70,7 @@ public class UltimateGestureHelper {
 		if (gestureLibrary == null) {
 			gestureLibrary = GestureLibraries.fromRawResource(UltimateApplication.current(), R.raw.gestures);
 	        if (!gestureLibrary.load()) {
-	        	Log.e(ULTIMATE, "Failed to load gestures");
+	        	UltimateLogger.logError( "Failed to load gestures");
 	         } 
 		}
 		return gestureLibrary;

@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Timer;
@@ -12,7 +10,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +25,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.model.Preferences;
@@ -170,7 +167,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 			}
 			dismiss();
 		} catch (Exception e) {
-			Log.w(ULTIMATE, "Error dismissing dialog", e);
+			UltimateLogger.logWarning( "Error dismissing dialog", e);
 		}
 	}
 	
@@ -178,7 +175,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		Workflow workflow = UltimateApplication.current().getActiveWorkflow();
 		// verify the work flow didn't change
 		if (getWorkflowId() != null && !workflow.getWorkflowId().equals(getWorkflowId())) {
-			Log.e(ULTIMATE, "Workflow invalid...changed since view opened");
+			UltimateLogger.logError( "Workflow invalid...changed since view opened");
 			dismiss();
 		}
 		return (CloudWorkflow)UltimateApplication.current().getActiveWorkflow();
@@ -246,7 +243,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		CookieSyncManager.getInstance().sync();
 		CookieManager cookieManager = CookieManager.getInstance();
         String cookie = cookieManager.getCookie(CloudClient.SCHEME_HOST); 
-        //Log.i(Constants.ULTIMATE, "cookie = " + cookie);
+        //UltimateLogger.logInfo( "cookie = " + cookie);
         if (cookie != null) {
         	Preferences.current().setCloudAuthenticationCookie(cookie);
         	Preferences.current().save();
@@ -267,7 +264,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				return true;
 			}
 		} catch (MalformedURLException e) {
-			Log.e(Constants.ULTIMATE, "Could not read URL during signon", e);
+			UltimateLogger.logError( "Could not read URL during signon", e);
 			return false;
 		}
 		return false;
@@ -278,7 +275,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 			String host = new URL(urlAsString).getHost();
 			return host.contains(CloudClient.HOST);
 		} catch (MalformedURLException e) {
-			Log.e(Constants.ULTIMATE, "Could not read URL during signon", e);
+			UltimateLogger.logError( "Could not read URL during signon", e);
 			return false;
 		}
 	}

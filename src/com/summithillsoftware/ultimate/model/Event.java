@@ -29,11 +29,9 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
-import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public abstract class Event implements Externalizable {
 	private static final String JSON_EVENT_TYPE = "type";
@@ -335,7 +333,7 @@ public abstract class Event implements Externalizable {
 			} else if (type.equals(JSON_EVENT_TYPE_CESSATION)) {
 				return CessationEvent.eventfromJsonObject(jsonObject);
 			} else {
-				Log.e(Constants.ULTIMATE, "No valid event type in json");
+				UltimateLogger.logError( "No valid event type in json");
 				return null;
 			}
 		}

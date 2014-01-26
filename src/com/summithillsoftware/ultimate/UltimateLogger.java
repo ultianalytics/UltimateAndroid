@@ -41,7 +41,12 @@ public class UltimateLogger {
 	
 	public static final void logWarning(String s) {
 		Log.w(Constants.ULTIMATE, s);
-		logEntry("ERROR: " + s);
+		logEntry("WARNING: " + s);
+	}
+	
+	public static final void logWarning(String s, Throwable t) {
+		Log.w(Constants.ULTIMATE, s, t);
+		logEntry("WARNING: " + s + "\n" + t.toString() + "\n" + exceptionAsString(t));
 	}
 	
 	private static final void logEntry(String s) {

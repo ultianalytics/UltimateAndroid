@@ -1,5 +1,8 @@
 package com.summithillsoftware.ultimate.cloud;
 
+import static com.android.volley.DefaultRetryPolicy.DEFAULT_BACKOFF_MULT;
+import static com.android.volley.DefaultRetryPolicy.DEFAULT_MAX_RETRIES;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +13,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.webkit.CookieManager;
-import static com.android.volley.DefaultRetryPolicy.*;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.ParseError;
@@ -23,8 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.model.Preferences;
@@ -82,7 +83,7 @@ public class CloudClient {
 					}
 					responseHandler.onResponse(CloudResponseStatus.Ok, teams);
 				} catch (JSONException e) {
-					Log.e(Constants.ULTIMATE, "Unable to convert JSON teams to Team objects", e);
+					UltimateLogger.logError( "Unable to convert JSON teams to Team objects", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}
@@ -109,7 +110,7 @@ public class CloudClient {
 					}
 					responseHandler.onResponse(CloudResponseStatus.Ok, games);
 				} catch (JSONException e) {
-					Log.e(Constants.ULTIMATE, "Unable to convert JSON game descriptions to GameDescription objects", e);
+					UltimateLogger.logError( "Unable to convert JSON game descriptions to GameDescription objects", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}
@@ -131,7 +132,7 @@ public class CloudClient {
 					Team team = Team.fromJsonObject(responseObject);
 					responseHandler.onResponse(CloudResponseStatus.Ok, team);
 				} catch (JSONException e) {
-					Log.e(Constants.ULTIMATE, "Unable to convert JSON team to Team object", e);
+					UltimateLogger.logError( "Unable to convert JSON team to Team object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}
@@ -153,7 +154,7 @@ public class CloudClient {
 					Game game = Game.fromJsonObject(responseObject);
 					responseHandler.onResponse(CloudResponseStatus.Ok, game);
 				} catch (JSONException e) {
-					Log.e(Constants.ULTIMATE, "Unable to convert JSON game to Game object", e);
+					UltimateLogger.logError( "Unable to convert JSON game to Game object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
 			}
@@ -174,7 +175,7 @@ public class CloudClient {
 		try {
 			teamAsJson = team.toJsonObject();
 		} catch (JSONException e1) {
-			Log.e(Constants.ULTIMATE, "Unable to convert Team to JSON Object", e1);
+			UltimateLogger.logError( "Unable to convert Team to JSON Object", e1);
 			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 		}
 		if (teamAsJson != null) {
@@ -185,7 +186,7 @@ public class CloudClient {
 						String cloudId = responseObject.getString(JSON_TEAM_CLOUD_ID);
 						responseHandler.onResponse(CloudResponseStatus.Ok, cloudId);
 					} catch (JSONException e) {
-						Log.e(Constants.ULTIMATE, "Unable to get cloud id from upload response", e);
+						UltimateLogger.logError( "Unable to get cloud id from upload response", e);
 						responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 					}
 				}
@@ -205,7 +206,7 @@ public class CloudClient {
 			gameAsJson = game.toJsonObject();
 			gameAsJson.put(JSON_TEAM_ID, team.getCloudId());
 		} catch (JSONException e1) {
-			Log.e(Constants.ULTIMATE, "Unable to convert Game to JSON Object", e1);
+			UltimateLogger.logError( "Unable to convert Game to JSON Object", e1);
 			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 		}
 		if (gameAsJson != null) {
@@ -235,7 +236,7 @@ public class CloudClient {
 			errorMessage += " http status=" + error.networkResponse.statusCode;
 			errorMessage += " more..." + error.networkResponse.toString();
 		}
-		Log.e(Constants.ULTIMATE, errorMessage, error);
+		UltimateLogger.logError( errorMessage, error);
 		responseHandler.onResponse(errorStatus, null);
 	}
 	

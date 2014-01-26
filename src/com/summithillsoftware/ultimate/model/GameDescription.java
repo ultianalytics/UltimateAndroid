@@ -1,7 +1,5 @@
 package com.summithillsoftware.ultimate.model;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,9 +21,7 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.summithillsoftware.ultimate.Constants;
-
-import android.util.Log;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class GameDescription implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -138,13 +134,13 @@ public class GameDescription implements Externalizable {
 			try {
 				gameDesc = read(teamId, gameFileName);
 			} catch (Exception e) {
-				Log.e(Constants.ULTIMATE, "Error trying to read game description file", e);
+				UltimateLogger.logError( "Error trying to read game description file", e);
 			}
 			if (gameDesc == null) {
 				try {
 					gameDesc = createGameDescriptionFromGame(Game.read(teamId, gameFileName, false), teamId);
 				} catch (Exception e) {
-					Log.e(Constants.ULTIMATE, "Error trying to create game description file from game...probably game corruption", e);
+					UltimateLogger.logError( "Error trying to create game description file from game...probably game corruption", e);
 				}
 			} 
 			if (gameDesc != null) {
@@ -170,7 +166,7 @@ public class GameDescription implements Externalizable {
 		if (file.exists()) {
 			boolean didDelete = file.delete();
 			if (!didDelete) {
-				Log.e(ULTIMATE, "Attempted to delete game description file but it did not delete");
+				UltimateLogger.logError( "Attempted to delete game description file but it did not delete");
 			}
 		}
 	}
@@ -187,14 +183,14 @@ public class GameDescription implements Externalizable {
 				objectInputStream = new ObjectInputStream(fileInputStream);
 				game = (GameDescription) objectInputStream.readObject();
 			} catch (Exception e) {
-				Log.e(ULTIMATE, "Error restoring game description from file", e);
+				UltimateLogger.logError( "Error restoring game description from file", e);
 				throw new RuntimeException("Could not restore game description", e);
 			} finally {
 				try {
 					objectInputStream.close();
 					fileInputStream.close();
 				} catch (Exception e2) {
-					Log.e(ULTIMATE,"Unable to close files when restoring game description file", e2);
+					UltimateLogger.logError("Unable to close files when restoring game description file", e2);
 				}
 			}
 		}
@@ -209,13 +205,13 @@ public class GameDescription implements Externalizable {
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(this);
 		} catch (Exception e) {
-			Log.e(ULTIMATE, "Error saving game description file", e);
+			UltimateLogger.logError( "Error saving game description file", e);
 		} finally {
 			try {
 				objectOutputStream.close();
 				fileOutputStream.close();
 			} catch (Exception e2) {
-				Log.e(ULTIMATE, "Unable to close files when saving game description file",
+				UltimateLogger.logError( "Unable to close files when saving game description file",
 						e2);
 			}
 		}

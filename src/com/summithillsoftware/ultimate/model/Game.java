@@ -1,6 +1,5 @@
 package com.summithillsoftware.ultimate.model;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 import static com.summithillsoftware.ultimate.model.Action.EndOfFirstQuarter;
 import static com.summithillsoftware.ultimate.model.Action.EndOfFourthQuarter;
 import static com.summithillsoftware.ultimate.model.Action.EndOfOvertime;
@@ -28,11 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class Game implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -200,7 +198,7 @@ public class Game implements Externalizable {
 		if (teamDir.exists()) {
 			boolean didDelete = teamDir.delete();
 			if (!didDelete) {
-				Log.e(ULTIMATE,
+				UltimateLogger.logError(
 						"Attempted to delete team folder but it did not delete");
 			}
 		}
@@ -215,7 +213,7 @@ public class Game implements Externalizable {
 		if (AtomicFile.exists(file)) {
 			boolean didDelete = AtomicFile.delete(file); 
 			if (!didDelete) {
-				Log.e(ULTIMATE, "Attempted to delete game file but it did not delete");
+				UltimateLogger.logError( "Attempted to delete game file but it did not delete");
 			}
 		}
 	}
@@ -225,7 +223,7 @@ public class Game implements Externalizable {
 		File file = getGameFile(Team.current().getTeamId(), getGameId());
 		boolean success = AtomicFile.writeObject(this, file);
 		if (!success) {
-			Log.e(ULTIMATE, "Unable to save game");
+			UltimateLogger.logError( "Unable to save game");
 			throw new RuntimeException("Error saving game");
 		}
 	}
@@ -856,8 +854,7 @@ public class Game implements Externalizable {
 			getCurrentPoint().getSubstitutions().add(substitution);
 			adjustLineForSubstitution(substitution);
 		} else {
-			Log.e(ULTIMATE,
-					"Error..can't add subsitution to a point which is not in progress");
+			UltimateLogger.logError("Error..can't add subsitution to a point which is not in progress");
 		}
 	}
 

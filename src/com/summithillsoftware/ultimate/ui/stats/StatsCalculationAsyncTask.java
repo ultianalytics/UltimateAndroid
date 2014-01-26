@@ -4,10 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
 import com.summithillsoftware.ultimate.stats.PlayerStatisticsCalculator;
@@ -67,7 +66,7 @@ public class StatsCalculationAsyncTask extends AsyncTask<Void, Void, List<Player
 				try { Thread.sleep(500); } catch (InterruptedException e) { /* no-op */ }
 			}
 		} catch (Exception e) {
-			Log.e(Constants.ULTIMATE, "Unable to generated stats for statsTypeId=" + statsTypeId, e);
+			UltimateLogger.logError( "Unable to generated stats for statsTypeId=" + statsTypeId, e);
 			stats = Collections.emptyList();
 		}
 		return stats;

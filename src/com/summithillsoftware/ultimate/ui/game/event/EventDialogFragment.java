@@ -1,10 +1,8 @@
 package com.summithillsoftware.ultimate.ui.game.event;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.Constants;
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
@@ -272,7 +270,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		try {
 			dismiss();
 		} catch (Exception e) {
-			Log.w(ULTIMATE, "Error dismissing dialog", e);
+			UltimateLogger.logWarning( "Error dismissing dialog", e);
 		}
 	}
 	
@@ -432,7 +430,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 				}
 			}
 		} catch (Exception e) {
-			Log.e(Constants.ULTIMATE, "Unable to format hangtime", e);
+			UltimateLogger.logError( "Unable to format hangtime", e);
 		}
 		return hangtimeMs;	
 	}

@@ -1,17 +1,14 @@
 package com.summithillsoftware.ultimate.model;
 
-import static com.summithillsoftware.ultimate.Constants.ULTIMATE;
-
 import java.io.Externalizable;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import android.util.Log;
-
 import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class Preferences implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +48,7 @@ public class Preferences implements Externalizable {
 			File file = getFile();
 			boolean success = AtomicFile.writeObject(this, file);
 			if (!success) {
-				Log.e(ULTIMATE, "Unable to save preferences");
+				UltimateLogger.logError( "Unable to save preferences");
 				throw new RuntimeException("Error saving preferences");
 			}
 		}
