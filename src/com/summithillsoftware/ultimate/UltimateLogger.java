@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class UltimateLogger {
 	private static final String LOGS_DIRECTORY = "ultimatelogs";
-	private static final long MAX_FILE_SIZE = 5000; 
+	private static final long MAX_FILE_SIZE = 250000; // 250k
 	private static final String LOG_PREFIX = "log-";
 	private static final String LOG_SUFFIX = ".log";	
 	
