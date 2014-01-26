@@ -52,6 +52,7 @@ public class TeamActivity extends UltimateActivity {
 	    super.onPrepareOptionsMenu(menu);
 	    menu.findItem(R.id.action_delete).setVisible(!isNewTeam());
 	    menu.findItem(R.id.action_teams).setVisible(!isNewTeam());
+	    menu.findItem(R.id.action_upload).setVisible(!isNewTeam() && !getTeamName().isEmpty());	    
 	    return true;
 	}
 

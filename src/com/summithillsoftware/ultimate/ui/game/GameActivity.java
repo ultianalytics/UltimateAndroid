@@ -75,6 +75,7 @@ public class GameActivity extends UltimateActivity {
 	    super.onPrepareOptionsMenu(menu);
 	    menu.findItem(R.id.action_delete).setVisible(!isNewGame());
 	    menu.findItem(R.id.action_action).setVisible(!isNewGame());
+	    menu.findItem(R.id.action_upload).setVisible(!isNewGame());	 	    
 	    return true;
 	}
 
