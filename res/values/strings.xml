@@ -122,7 +122,7 @@
     <string name="alert_timeout_which_half_undo_message">From which half should we undo a timeout?</string>
     <string name="alert_overtime_recieve_or_defend_title">Overtime: who will receive?</string>
     <string name="alert_overtime_recieve_or_defend_message">You are about to begin an overtime period.\n\nWill our team receive or pull?</string>
-    <string name="alert_cloud_error_title">Communication Error</string>
+    <string name="alert_cloud_error_title">Upload/Download Error</string>
     <string name="alert_cloud_error_message">Sorry&#8230;an error was received when trying to talk to the server (possibly network related).</string>
     <string name="alert_cloud_not_connected_error_title">No Internet Connectivity</string>
     <string name="alert_cloud_not_connected_error_message">Sorry&#8230;we can\'t connect to the internet.  Please try again when you have connectivity.</string>
