@@ -6,9 +6,11 @@ import android.webkit.CookieSyncManager;
 
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.workflow.Workflow;
+import com.testflightapp.lib.TestFlight;
 
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
+	private static final String TEST_FLIGHT_APP_ID = "b9c54b7f-ef84-4875-a67f-afdaa6887045";
 	private boolean isAppStartInProgress;
 	private Workflow activeWorkflow;
 	
@@ -27,6 +29,7 @@ public class UltimateApplication extends Application {
 	public final void onCreate() {
         super.onCreate(); 
         Current = this;
+        TestFlight.takeOff(this, TEST_FLIGHT_APP_ID);
         CookieSyncManager.createInstance(this);
         ensureOneTeam();
         SoundPlayer.current().loadSounds();
