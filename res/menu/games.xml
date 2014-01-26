@@ -13,7 +13,7 @@
         android:orderInCategory="110"
         ultimate:showAsAction="always|withText"
         android:title="@string/menuitem_team_download" 
-        android:icon="@drawable/ic_action_download"
+        android:icon="@drawable/download_cloud_white"
         />    
         
 </menu>

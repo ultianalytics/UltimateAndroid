@@ -10,7 +10,7 @@
         ultimate:showAsAction="always|withText"/>
     <item
         android:id="@+id/action_upload"
-        android:icon="@drawable/ic_action_upload"
+        android:icon="@drawable/upload_cloud_white"
         android:orderInCategory="35"
         android:title="@string/menuitem_upload"
         ultimate:showAsAction="always|withText"/>
