@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
+import com.summithillsoftware.ultimate.ui.support.SupportActivity;
 
 public class UltimateActivity extends ActionBarActivity {
 	
@@ -186,6 +187,9 @@ public class UltimateActivity extends ActionBarActivity {
 		case R.id.action_settings:
 			goToSettingsActivity();
 			return true;	
+		case R.id.action_support:
+			goToSupportActivity();
+			return true;				
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -202,5 +206,9 @@ public class UltimateActivity extends ActionBarActivity {
 	
 	private void goToSettingsActivity() {
 		startActivity(new Intent(this, SettingsActivity.class));
+	}
+	
+	private void goToSupportActivity() {
+		startActivity(new Intent(this, SupportActivity.class));
 	}
 }

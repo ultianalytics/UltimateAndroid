@@ -23,5 +23,11 @@
         android:title="@string/menuitem_settings" 
         android:icon="@drawable/ic_action_gear"
         />      
+        
+    <item
+        android:id="@+id/action_support"
+        android:orderInCategory="400"
+        ultimate:showAsAction="never|withText"
+        android:title="@string/menuitem_support" />      
 
 </menu>

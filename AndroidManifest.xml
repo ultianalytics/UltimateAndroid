@@ -112,6 +112,10 @@
             android:name="com.summithillsoftware.ultimate.ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.support.SupportActivity"
+            android:label="@string/title_activity_support" >
+        </activity>
     </application>
 
 </manifest>
