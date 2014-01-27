@@ -67,7 +67,7 @@ public class UltimateLogger {
 		}
 	}
 	
-	private static File getLogsDir() {
+	public static File getLogsDir() {
 		File teamDir = new File(UltimateApplication.current().getFilesDir(),
 				LOGS_DIRECTORY);
 		if (!teamDir.exists()) {

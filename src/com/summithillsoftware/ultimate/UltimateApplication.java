@@ -1,5 +1,8 @@
 package com.summithillsoftware.ultimate;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.app.Application;
 import android.content.res.Configuration;
 import android.webkit.CookieSyncManager;
@@ -64,5 +67,17 @@ public class UltimateApplication extends Application {
 		int smallestScreenWidthDp = getResources().getConfiguration().smallestScreenWidthDp;
 		//UltimateLogger.logInfo( "smallestScreenWidthDp = " + smallestScreenWidthDp);
 		return smallestScreenWidthDp >= 600;
+	}
+	
+	public File createZipForSupport(boolean includeTeamsAndGames) {
+		File dirToZip = includeTeamsAndGames ? getFilesDir() : UltimateLogger.getLogsDir();
+		try {
+			File zipFile = File.createTempFile("ultimate-files", ".zip");
+			DirectoryZipper.zipDirectoryToFile(dirToZip, zipFile);
+			return zipFile;
+		} catch (IOException e) {
+			UltimateLogger.logError("Could not create zip for support", e);
+			return null;
+		} 
 	}
 }
