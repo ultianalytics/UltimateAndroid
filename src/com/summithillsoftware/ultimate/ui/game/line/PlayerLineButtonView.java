@@ -14,6 +14,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Player;
 
 public class PlayerLineButtonView extends RelativeLayout {
+	private static int BUTTON_HEIGHT = 40;
 	private PlayerLineButton button;
 	private TextView pointsPlayedTextView;
 
@@ -59,7 +60,11 @@ public class PlayerLineButtonView extends RelativeLayout {
     
     public void setWidth(int newWidth) {
         LayoutParams params=(LayoutParams) this.getLayoutParams();
-        params.width=newWidth;
+        if (params == null) {
+        	params = new LayoutParams(newWidth, BUTTON_HEIGHT);
+        } else {
+        	params.width=newWidth;
+        }
         this.setLayoutParams(params);
     }
     
