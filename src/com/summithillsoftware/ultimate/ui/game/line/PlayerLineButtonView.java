@@ -53,6 +53,16 @@ public class PlayerLineButtonView extends RelativeLayout {
     	button.setOnClickListener(buttonClickListener);
     }
 	
+    public float getTextSize() {
+    	return button.getTextSize();
+    }
+    
+    public void setWidth(int newWidth) {
+        LayoutParams params=(LayoutParams) this.getLayoutParams();
+        params.width=newWidth;
+        this.setLayoutParams(params);
+    }
+    
 	public void updateView(List<Player> playersOnField, Set<Player>originalLine) {
 		button.updateView(playersOnField, originalLine);
 		// TODO...show gender and number of points played
