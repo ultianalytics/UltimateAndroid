@@ -17,7 +17,7 @@ public class PlayerLineButton extends Button {
 	
 	private Player player;
 	private boolean isButtonOnFieldView;
-	boolean playerLineStatusChanged;
+	private boolean playerLineStatusChanged;
 
 	public PlayerLineButton(Context context) {
 		super(context);

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.summithillsoftware.ultimate.ui.game.line.PlayerLineButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/buttonLinePlayer"
+        android:maxLines="1"
+        android:padding="6dp" />
+
+    <TextView
+        android:id="@+id/pointsPlayedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/undefined"
+        android:textSize="@dimen/font_size10" />
+
+</merge>
