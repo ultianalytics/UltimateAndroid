@@ -59,7 +59,8 @@ public class TeamsListAdaptor extends BaseAdapter {
 		TeamDescription team = teams.get(index);
 		teamNameTextView.setText(team.getName());
 		cloudIdTextView.setText(team.getCloudId());	
-		teamNameTextView.setTextColor(context.getResources().getColor(team.isCurrentTeam() ? R.color.list_name_current:R.color.list_name));
+//		teamNameTextView.setTypeface(null, team.isCurrentTeam() ? Typeface.BOLD : Typeface.NORMAL);
+//		teamNameTextView.setTextColor(context.getResources().getColor(team.isCurrentTeam() ? R.color.list_name_current:R.color.list_name));
 		
 		return rowView;
 	}
