@@ -53,7 +53,7 @@ public class UltimateLogger {
 		synchronized (logAFile) {
 			FileWriter writer = null;
 			try {
-				String logEntry = new Date().toString() + ": " + s;
+				String logEntry = "\n" + new Date().toString() + ": " + s;
 				writer = new FileWriter(currentLogFile, true);
 				writer.write(logEntry);
 				switchFilesIfNeeded();

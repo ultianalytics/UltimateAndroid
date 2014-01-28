@@ -1,10 +1,10 @@
 package com.summithillsoftware.ultimate;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.os.Environment;
 import android.webkit.CookieSyncManager;
 
 import com.summithillsoftware.ultimate.model.Team;
@@ -14,6 +14,8 @@ import com.testflightapp.lib.TestFlight;
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
 	private static final String TEST_FLIGHT_APP_ID = "b9c54b7f-ef84-4875-a67f-afdaa6887045";
+	private static final String ULTIMATE_EXT_DRIVE_FOLDER = "ultimate";
+	private static final String ULTIMATE_SUPPORT_ZIP_PREFIX = "ultimate-";
 	private boolean isAppStartInProgress;
 	private Workflow activeWorkflow;
 	
@@ -72,12 +74,21 @@ public class UltimateApplication extends Application {
 	public File createZipForSupport(boolean includeTeamsAndGames) {
 		File dirToZip = includeTeamsAndGames ? getFilesDir() : UltimateLogger.getLogsDir();
 		try {
-			File zipFile = File.createTempFile("ultimate-files", ".zip");
+			String zipFileName = ULTIMATE_SUPPORT_ZIP_PREFIX + java.util.UUID.randomUUID().toString() + ".zip";
+			File zipFile = new File(getAppExternalStorageFolder(), zipFileName);
 			DirectoryZipper.zipDirectoryToFile(dirToZip, zipFile);
 			return zipFile;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			UltimateLogger.logError("Could not create zip for support", e);
 			return null;
 		} 
+	}
+	
+	private File getAppExternalStorageFolder() {
+		File dir = new File(Environment.getExternalStorageDirectory(), ULTIMATE_EXT_DRIVE_FOLDER);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		return dir;
 	}
 }

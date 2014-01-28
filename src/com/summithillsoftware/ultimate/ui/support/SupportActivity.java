@@ -46,10 +46,11 @@ public class SupportActivity extends UltimateActivity {
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  
 		emailIntent.setType("plain/text"); 
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { "support@ultimate-numbers.com" });
-		Uri uri = Uri.parse("file://" + attachment);
+		Uri uri = Uri.fromFile(attachment);
 		emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
 		
 		startActivity(emailIntent);  
+		finish();
 	}
 
 }
