@@ -2,11 +2,10 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <com.summithillsoftware.ultimate.ui.game.line.PlayerLineButton
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/buttonLinePlayer"
-        android:maxLines="1"
-        android:padding="6dp" />
+        style="@style/buttonLinePlayer" />
 
     <TextView
         android:id="@+id/pointsPlayedTextView"

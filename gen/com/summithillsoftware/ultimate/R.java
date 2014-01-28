@@ -1397,7 +1397,7 @@ containing a value of this type.
         public static final int beginning=0x7f060011;
         public static final int benchGestureOverlay=0x7f060098;
         public static final int benchOverlay=0x7f06009a;
-        public static final int button=0x7f0600f0;
+        public static final int button=0x7f0600ee;
         public static final int button_cancel=0x7f060071;
         public static final int button_events=0x7f06006e;
         public static final int button_last_line=0x7f060092;
@@ -1472,7 +1472,7 @@ containing a value of this type.
         public static final int icon_team=0x7f0600fd;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f060027;
-        public static final int imageView=0x7f0600ef;
+        public static final int imageView=0x7f0600f0;
         public static final int image_event=0x7f0600f5;
         public static final int inboundMeasureHangTimeButton=0x7f0600ae;
         public static final int inboundNoHangTimeButton=0x7f0600af;
@@ -1517,7 +1517,7 @@ containing a value of this type.
         public static final int playerSelectedImageView=0x7f0600f1;
         public static final int playerTwoListView=0x7f06005f;
         public static final int playersFragment=0x7f060043;
-        public static final int pointsPlayedTextView=0x7f0600ee;
+        public static final int pointsPlayedTextView=0x7f0600ef;
         public static final int progressBar=0x7f06004a;
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;

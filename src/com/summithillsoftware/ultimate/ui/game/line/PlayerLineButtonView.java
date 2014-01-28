@@ -26,11 +26,11 @@ public class PlayerLineButtonView extends RelativeLayout {
 	}
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public PlayerLineButtonView(Context context) {
-		super(context);
+		this(context, null, 0);
 	}
 
 	public Player getPlayer() {
