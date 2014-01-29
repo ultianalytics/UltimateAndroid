@@ -1,6 +1,7 @@
 package com.summithillsoftware.ultimate.ui.game.line;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import android.content.Context;
@@ -18,6 +19,7 @@ public class PlayerLineButtonView extends RelativeLayout {
 	private PlayerLineButton button;
 	private TextView pointsPlayedTextView;
 	private View.OnClickListener onClickListener;
+	private float pointsPlayed;
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -51,6 +53,15 @@ public class PlayerLineButtonView extends RelativeLayout {
 		setTag(player.getName());
 	}
 	
+	public float getPointsPlayed() {
+		return pointsPlayed;
+	}
+
+	public void setPointsPlayed(float pointsPlayed) {
+		this.pointsPlayed = pointsPlayed;
+		populatePointsPlayed();
+	}
+	
 	public boolean isButtonOnFieldView() {
 		return button.isButtonOnFieldView();
 	}
@@ -80,6 +91,12 @@ public class PlayerLineButtonView extends RelativeLayout {
 	public void updateView(List<Player> playersOnField, Set<Player>originalLine) {
 		button.updateView(playersOnField, originalLine);
 		// TODO...show gender and number of points played
-		pointsPlayedTextView.setText("");
+		populatePointsPlayed();
 	}
+	
+	private void populatePointsPlayed() {
+		pointsPlayedTextView.setText(String.format(Locale.getDefault(), "%.1f", pointsPlayed));
+	}
+
+
 }
