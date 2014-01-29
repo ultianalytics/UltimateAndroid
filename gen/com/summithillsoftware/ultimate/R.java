@@ -1722,7 +1722,7 @@ containing a value of this type.
         public static final int fragment_team=0x7f030034;
         public static final int fragment_teams=0x7f030035;
         public static final int fragment_timeouts=0x7f030036;
-        public static final int line_button_view_components=0x7f030037;
+        public static final int line_button_view=0x7f030037;
         public static final int line_row=0x7f030038;
         public static final int recent_event_button=0x7f030039;
         public static final int rowlayout_event_player=0x7f03003a;

@@ -26,7 +26,7 @@ public class PlayerLineButtonView extends RelativeLayout {
 	public PlayerLineButtonView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.line_button_view_components, this);
+        inflater.inflate(R.layout.line_button_view, this);
         pointsPlayedTextView = (TextView) findViewById(R.id.pointsPlayedTextView);        
         button = (PlayerLineButton) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
