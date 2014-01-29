@@ -78,7 +78,7 @@ public class PlayerLineButton extends Button {
 			if (isButtonOnFieldView) {
 				setTextColor(getResources().getColor(R.color.DarkOrange));
 			} else {
-				setTextColor(getResources().getColor(R.color.DarkOliveGreen));
+				setTextColor(getResources().getColor(R.color.ultimate_action_bar));
 			}
 		}
 	}

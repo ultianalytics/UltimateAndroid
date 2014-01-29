@@ -130,7 +130,7 @@
         <Button
             android:id="@+id/button_last_line"
             style="@style/buttonLineAction"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/button_line_last_oline" />
@@ -138,7 +138,7 @@
         <Button
             android:id="@+id/clear"
             style="@style/buttonLineAction"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/button_line_clear" />
