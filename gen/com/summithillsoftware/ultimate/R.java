@@ -1722,20 +1722,19 @@ containing a value of this type.
         public static final int fragment_team=0x7f030034;
         public static final int fragment_teams=0x7f030035;
         public static final int fragment_timeouts=0x7f030036;
-        public static final int line_button=0x7f030037;
-        public static final int line_button_view_components=0x7f030038;
-        public static final int line_row=0x7f030039;
-        public static final int recent_event_button=0x7f03003a;
-        public static final int rowlayout_event_player=0x7f03003b;
-        public static final int rowlayout_event_player_show_all=0x7f03003c;
-        public static final int rowlayout_events_event=0x7f03003d;
-        public static final int rowlayout_events_point=0x7f03003e;
-        public static final int rowlayout_games=0x7f03003f;
-        public static final int rowlayout_players=0x7f030040;
-        public static final int rowlayout_statistics_player=0x7f030041;
-        public static final int rowlayout_substitutions=0x7f030042;
-        public static final int rowlayout_teams=0x7f030043;
-        public static final int support_simple_spinner_dropdown_item=0x7f030044;
+        public static final int line_button_view_components=0x7f030037;
+        public static final int line_row=0x7f030038;
+        public static final int recent_event_button=0x7f030039;
+        public static final int rowlayout_event_player=0x7f03003a;
+        public static final int rowlayout_event_player_show_all=0x7f03003b;
+        public static final int rowlayout_events_event=0x7f03003c;
+        public static final int rowlayout_events_point=0x7f03003d;
+        public static final int rowlayout_games=0x7f03003e;
+        public static final int rowlayout_players=0x7f03003f;
+        public static final int rowlayout_statistics_player=0x7f030040;
+        public static final int rowlayout_substitutions=0x7f030041;
+        public static final int rowlayout_teams=0x7f030042;
+        public static final int support_simple_spinner_dropdown_item=0x7f030043;
     }
     public static final class menu {
         public static final int events=0x7f0d0000;
