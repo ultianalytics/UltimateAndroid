@@ -15,11 +15,13 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Player;
 
 public class PlayerLineButtonView extends RelativeLayout {
-	private static int BUTTON_HEIGHT = 40;
+	private static final int BUTTON_HEIGHT = 40;
+	private static final int PLAYING_TIME_FACTOR_RANGE = 5;
 	private PlayerLineButton button;
 	private TextView pointsPlayedTextView;
 	private View.OnClickListener onClickListener;
 	private float pointsPlayed;
+	private int playingTimeFactor; // number between 0 and 4
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -48,18 +50,16 @@ public class PlayerLineButtonView extends RelativeLayout {
 		return button.getPlayer();
 	}
 	
-	public void setPlayer(Player player) {
+	public void setPlayer(Player player, float pointsPlayed, float playingTimeFactor) {
 		button.setPlayer(player);
+		this.pointsPlayed = pointsPlayed;
+		setPointsPlayedFactor(playingTimeFactor);
 		setTag(player.getName());
+		populateDecorations();
 	}
 	
-	public float getPointsPlayed() {
-		return pointsPlayed;
-	}
-
-	public void setPointsPlayed(float pointsPlayed) {
-		this.pointsPlayed = pointsPlayed;
-		populatePointsPlayed();
+	private void setPointsPlayedFactor(float factor) { // factor is between 0 and 1
+		this.playingTimeFactor = (int)Math.ceil(factor * (float)PLAYING_TIME_FACTOR_RANGE);
 	}
 	
 	public boolean isButtonOnFieldView() {
@@ -68,6 +68,7 @@ public class PlayerLineButtonView extends RelativeLayout {
 
 	public void setButtonOnFieldView(boolean isOnField, List<Player> playersOnField, Set<Player>originalLine) {
 		button.setButtonOnFieldView(isOnField, playersOnField, originalLine);
+		populateDecorations();
 	}
 	
     public void setOnClickListener(View.OnClickListener buttonClickListener) {
@@ -90,13 +91,27 @@ public class PlayerLineButtonView extends RelativeLayout {
     
 	public void updateView(List<Player> playersOnField, Set<Player>originalLine) {
 		button.updateView(playersOnField, originalLine);
-		// TODO...show gender and number of points played
+		populateDecorations();
+	}
+	
+	private void populateDecorations() {
 		populatePointsPlayed();
+		// TODO...show gender if mixed team
 	}
 	
 	private void populatePointsPlayed() {
-		pointsPlayedTextView.setText(String.format(Locale.getDefault(), "%.1f", pointsPlayed));
+		String formattedPoints = "";
+		if (pointsPlayed > 0) {
+			if (Math.ceil(pointsPlayed) == pointsPlayed) {
+				formattedPoints = Integer.toString((int)pointsPlayed);
+			} else {
+				formattedPoints = String.format(Locale.getDefault(), "%.1f", pointsPlayed);
+			}
+		}
+		pointsPlayedTextView.setText(formattedPoints);
+		pointsPlayedTextView.setVisibility(button.isEnabled() ? View.VISIBLE : View.INVISIBLE);
 	}
+
 
 
 }

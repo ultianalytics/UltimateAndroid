@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.game.line;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import android.animation.Animator;
@@ -48,6 +49,8 @@ import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
+import com.summithillsoftware.ultimate.stats.PlayerStat;
+import com.summithillsoftware.ultimate.stats.PlayerStatisticsCalculator;
 import com.summithillsoftware.ultimate.ui.DefaultAnimatorListener;
 import com.summithillsoftware.ultimate.ui.Size;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
@@ -60,6 +63,8 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 public class LineDialogFragment extends UltimateDialogFragment {
 	private static int BUTTON_MARGIN = 2;
 	private static String LINE_STATE_PROPERTY = "line";
+	private Map<String, PlayerStat> pointsPerPlayer;
+	private Map<String, Float> pointsPlayedFactorPerPlayer;
 	
 	// widgets
 	private Button lastLineButton;
@@ -260,7 +265,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     
     private PlayerLineButtonView createLineButton(Player player) {
     	PlayerLineButtonView button = createPlayerLineButtonView();
-		button.setPlayer(player);
+		button.setPlayer(player, pointsPlayerForPlayer(player), playingTimeFactorForPlayer(player));
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  playerButtonClicked((PlayerLineButtonView)v);
@@ -269,6 +274,18 @@ public class LineDialogFragment extends UltimateDialogFragment {
         button.setWidth(buttonWidth);
         return button;
     }
+
+	private float playingTimeFactorForPlayer(Player player) {
+		Float playedFactor = getPointsPlayedFactorPerPlayer().get(player.getName());
+		float factor = playedFactor == null ? 0.0f : playedFactor.floatValue();
+		return factor;
+	}
+
+	private float pointsPlayerForPlayer(Player player) {
+		PlayerStat pointsPlayedStat = getPointsPerPlayer().get(player.getName());
+		float pointsPlayed = pointsPlayedStat == null ? 0.0f : pointsPlayedStat.getFloatValue();
+		return pointsPlayed;
+	}
     
     private PlayerLineButtonView createPlayerLineButtonView() {
     	PlayerLineButtonView button = new PlayerLineButtonView(getActivity());
@@ -279,14 +296,15 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	if (clickedButton.isButtonOnFieldView()) {  // player on field
     		line.remove(clickedButton.getPlayer());
     		PlayerLineButtonView benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
-    		clickedButton.setPlayer(Player.anonymous());
+    		clickedButton.setPlayer(Player.anonymous(), 0, 0);
     		benchButton.updateView(line, originalLine);
     	} else {  // player on bench
     		if (line.size() < 7) {
     			if (validateMoveToField(clickedButton.getPlayer())) {
 		    		line.add(clickedButton.getPlayer());
 		    		PlayerLineButtonView fieldButton = getButtonForPlayerName(Player.anonymous(), true);
-		    		fieldButton.setPlayer(clickedButton.getPlayer());
+		    		Player player = clickedButton.getPlayer();
+		    		fieldButton.setPlayer(player, pointsPlayerForPlayer(player), playingTimeFactorForPlayer(player));
 		    		fieldButton.updateView(line, originalLine);
     			} else {
     				errorSoundAndVibrate();
@@ -630,6 +648,20 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	
 	private boolean doesPointHaveSubstitutions() {
 		return Game.current().doesCurrentPointHaveSubstitutions() && !Game.current().isCurrentPointFinished();
+	}
+
+	public Map<String, PlayerStat> getPointsPerPlayer() {
+		if (pointsPerPlayer == null) {
+			pointsPerPlayer = PlayerStatisticsCalculator.pointsPerPlayer(Game.current(), true, true);
+		}
+		return pointsPerPlayer;
+	}
+
+	public Map<String, Float> getPointsPlayedFactorPerPlayer() {
+		if (pointsPlayedFactorPerPlayer == null) {
+			pointsPlayedFactorPerPlayer = PlayerStatisticsCalculator.pointsPlayedFactorPerPlayer(Game.current());
+		}
+		return pointsPlayedFactorPerPlayer;
 	}
 
 }
