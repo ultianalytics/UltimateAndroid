@@ -21,7 +21,6 @@ public class PlayerLineButtonView extends RelativeLayout {
 	private TextView pointsPlayedTextView;
 	private View.OnClickListener onClickListener;
 	private float pointsPlayed;
-	private int playingTimeFactor; // number between 0 and 4
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -51,15 +50,15 @@ public class PlayerLineButtonView extends RelativeLayout {
 	}
 	
 	public void setPlayer(Player player, float pointsPlayed, float playingTimeFactor) {
-		button.setPlayer(player);
+		button.setPlayer(player, integralPointsPlayedFactor(playingTimeFactor));
 		this.pointsPlayed = pointsPlayed;
-		setPointsPlayedFactor(playingTimeFactor);
 		setTag(player.getName());
 		populateDecorations();
 	}
 	
-	private void setPointsPlayedFactor(float factor) { // factor is between 0 and 1
-		this.playingTimeFactor = (int)Math.ceil(factor * (float)PLAYING_TIME_FACTOR_RANGE);
+	// return: 0 <= integer < PLAYING_TIME_FACTOR_RANGE
+	private int integralPointsPlayedFactor(float factor) { // factor is between 0 and 1
+		return (int)Math.ceil(factor * (float)PLAYING_TIME_FACTOR_RANGE);
 	}
 	
 	public boolean isButtonOnFieldView() {

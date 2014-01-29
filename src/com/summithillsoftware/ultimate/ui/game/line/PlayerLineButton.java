@@ -18,6 +18,7 @@ public class PlayerLineButton extends Button {
 	private Player player;
 	private boolean isButtonOnFieldView;
 	private boolean playerLineStatusChanged;
+	private int playingTimeFactor; // 0-4
 
 	public PlayerLineButton(Context context) {
 		super(context);
@@ -39,8 +40,9 @@ public class PlayerLineButton extends Button {
 				+ isButtonOnFieldView + ", tag=" + getTag() +"]";
 	}
 
-	public void setPlayer(Player player) {
+	public void setPlayer(Player player, int playingTimeFactor) {
 		this.player = player;
+		this.playingTimeFactor = playingTimeFactor;
 		String description = player.isAnonymous() ? 
 				UltimateApplication.current().getString(R.string.button_line_field_slot_open) : 
 					(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
