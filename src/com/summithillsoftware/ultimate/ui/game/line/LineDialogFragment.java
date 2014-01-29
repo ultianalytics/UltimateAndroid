@@ -211,7 +211,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     			buttonRowView = addButtonRowLayout(buttonContainer);
     			numberOfButtonsInRow = 0;
     		}
-    		PlayerLineButton button = createLineButton(player);
+    		PlayerLineButtonView button = createLineButton(player);
     		button.setButtonOnFieldView(isField, line, originalLine);
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
@@ -258,33 +258,34 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	return label;
     }
     
-    private PlayerLineButton createLineButton(Player player) {
-    	PlayerLineButton button = createPlayerLineButton();
+    private PlayerLineButtonView createLineButton(Player player) {
+    	PlayerLineButtonView button = createPlayerLineButtonView();
 		button.setPlayer(player);
         button.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-                 playerButtonClicked((PlayerLineButton)v);
+                 playerButtonClicked((PlayerLineButtonView)v);
              }
          });	
         button.setWidth(buttonWidth);
         return button;
     }
     
-    private PlayerLineButton createPlayerLineButton() {
-    	return (PlayerLineButton) getActivity().getLayoutInflater().inflate(R.layout.line_button, null);
+    private PlayerLineButtonView createPlayerLineButtonView() {
+    	PlayerLineButtonView button = new PlayerLineButtonView(getActivity());
+    	return button;
     }
     
-    private void playerButtonClicked(PlayerLineButton clickedButton) {
+    private void playerButtonClicked(PlayerLineButtonView clickedButton) {
     	if (clickedButton.isButtonOnFieldView()) {  // player on field
     		line.remove(clickedButton.getPlayer());
-    		PlayerLineButton benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
+    		PlayerLineButtonView benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
     		clickedButton.setPlayer(Player.anonymous());
     		benchButton.updateView(line, originalLine);
     	} else {  // player on bench
     		if (line.size() < 7) {
     			if (validateMoveToField(clickedButton.getPlayer())) {
 		    		line.add(clickedButton.getPlayer());
-		    		PlayerLineButton fieldButton = getButtonForPlayerName(Player.anonymous(), true);
+		    		PlayerLineButtonView fieldButton = getButtonForPlayerName(Player.anonymous(), true);
 		    		fieldButton.setPlayer(clickedButton.getPlayer());
 		    		fieldButton.updateView(line, originalLine);
     			} else {
@@ -301,8 +302,8 @@ public class LineDialogFragment extends UltimateDialogFragment {
     	if (Team.current().isMixed()) {
     		int maleCount = 0;
     		int femaleCount = 0;
-    		for (View view : ViewHelper.allDescendentViews(lineFieldPlayers, PlayerLineButton.class)) {
-				Player linePlayer = ((PlayerLineButton)view).getPlayer();
+    		for (View view : ViewHelper.allDescendentViews(lineFieldPlayers, PlayerLineButtonView.class)) {
+				Player linePlayer = ((PlayerLineButtonView)view).getPlayer();
 				if (!linePlayer.isAnonymous()) {
 					
 					if (linePlayer.isMale()) {
@@ -352,9 +353,9 @@ public class LineDialogFragment extends UltimateDialogFragment {
 
     }
     
-    private PlayerLineButton getButtonForPlayerName(Player player, boolean onField) {
+    private PlayerLineButtonView getButtonForPlayerName(Player player, boolean onField) {
     	ViewGroup containerView = (ViewGroup)getView().findViewById(onField ? R.id.lineFieldPlayers : R.id.lineBenchPlayers);
-    	return (PlayerLineButton) UltimateActivity.findFirstViewWithTag(containerView, player.getName());
+    	return (PlayerLineButtonView) UltimateActivity.findFirstViewWithTag(containerView, player.getName());
     }
 
 	private void registerLastLineButtonClickListener() {
@@ -516,7 +517,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		int availableWidth = size.width - (marginSpace * 4);
 		buttonWidth = availableWidth / numberOfButtons;
 		
-		float textHeight = createPlayerLineButton().getTextSize();
+		float textHeight = createPlayerLineButtonView().getTextSize();
 		buttonHeight = (int)textHeight * 3;
 	}
 	
