@@ -17,13 +17,21 @@ public class PlayerLineButtonView extends RelativeLayout {
 	private static int BUTTON_HEIGHT = 40;
 	private PlayerLineButton button;
 	private TextView pointsPlayedTextView;
+	private View.OnClickListener onClickListener;
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.line_button_view_components, this);
+        pointsPlayedTextView = (TextView) findViewById(R.id.pointsPlayedTextView);        
         button = (PlayerLineButton) findViewById(R.id.button);
-        pointsPlayedTextView = (TextView) findViewById(R.id.pointsPlayedTextView);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	if (onClickListener != null) {
+            		onClickListener.onClick(PlayerLineButtonView.this);
+            	}
+            }
+        });	
 	}
 
 	public PlayerLineButtonView(Context context, AttributeSet attrs) {
@@ -40,6 +48,7 @@ public class PlayerLineButtonView extends RelativeLayout {
 	
 	public void setPlayer(Player player) {
 		button.setPlayer(player);
+		setTag(player.getName());
 	}
 	
 	public boolean isButtonOnFieldView() {
@@ -50,8 +59,8 @@ public class PlayerLineButtonView extends RelativeLayout {
 		button.setButtonOnFieldView(isOnField, playersOnField, originalLine);
 	}
 	
-    public void setButtonOnClickListener(View.OnClickListener buttonClickListener) {
-    	button.setOnClickListener(buttonClickListener);
+    public void setOnClickListener(View.OnClickListener buttonClickListener) {
+    	onClickListener = buttonClickListener;
     }
 	
     public float getTextSize() {
