@@ -13,8 +13,6 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 
 public class PlayerLineButton extends Button {
-	private static final int[] LINE_STATE_CHANGED = { R.attr.state_changed };
-	
 	private Player player;
 	private boolean isButtonOnFieldView;
 	private boolean playerLineStatusChanged;
@@ -90,18 +88,33 @@ public class PlayerLineButton extends Button {
 
 	@Override
     protected int[] onCreateDrawableState(int extraSpace) {
-        // If the player has changed from/top line/bench then we merge our custom message unread state into
-        // the existing drawable state before returning it.
-        if (playerLineStatusChanged && isEnabled()) {
-            // Add extra state.
-            final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
- 
-            mergeDrawableStates(drawableState, LINE_STATE_CHANGED);
- 
-            return drawableState;
-        } else {
-            return super.onCreateDrawableState(extraSpace);
-        }
+        // If the player has changed from/top line/bench or if they have a points played factor then we merge our 
+		//  custom style attributes into the existing drawable state so they effect the selectors.
+		int[] additionalStyleAttributes = customStyleAttributes();
+		if (additionalStyleAttributes.length > 0) {
+			final int[] drawableState = super.onCreateDrawableState(extraSpace + additionalStyleAttributes.length);
+			mergeDrawableStates(drawableState, additionalStyleAttributes);
+			return drawableState;
+		} else {
+			return super.onCreateDrawableState(extraSpace);
+		}
     }
+	
+	private int[] customStyleAttributes() {
+		boolean playerChanged = playerLineStatusChanged && isEnabled();
+		switch (playingTimeFactor) {
+		case 4:
+			return playerChanged ? new int[]{ R.attr.state_changed,  R.attr.playing_time_factor4}: new int[]{ R.attr.playing_time_factor4};
+		case 3:
+			return playerChanged ? new int[]{ R.attr.state_changed,  R.attr.playing_time_factor3}: new int[]{ R.attr.playing_time_factor3};
+		case 2:
+			return playerChanged ? new int[]{ R.attr.state_changed,  R.attr.playing_time_factor2}: new int[]{ R.attr.playing_time_factor2};	
+		case 1:
+			return playerChanged ? new int[]{ R.attr.state_changed,  R.attr.playing_time_factor1}: new int[]{ R.attr.playing_time_factor1};		
+		default:
+			return playerChanged ? new int[]{ R.attr.state_changed,  R.attr.playing_time_factor1}: new int[]{ R.attr.playing_time_factor0};
+		}
+	}
+
 
 }

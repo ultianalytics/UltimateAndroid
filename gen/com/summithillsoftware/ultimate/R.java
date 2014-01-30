@@ -519,6 +519,46 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int panelMenuListWidth=0x7f010046;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int playing_time_factor0=0x7f01006b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int playing_time_factor1=0x7f01006c;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int playing_time_factor2=0x7f01006d;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int playing_time_factor3=0x7f01006e;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int playing_time_factor4=0x7f01006f;
         /**  Default PopupMenu style. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -3447,13 +3487,94 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #PlayerLineState_playing_time_factor0 com.summithillsoftware.ultimate:playing_time_factor0}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayerLineState_playing_time_factor1 com.summithillsoftware.ultimate:playing_time_factor1}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayerLineState_playing_time_factor2 com.summithillsoftware.ultimate:playing_time_factor2}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayerLineState_playing_time_factor3 com.summithillsoftware.ultimate:playing_time_factor3}</code></td><td></td></tr>
+           <tr><td><code>{@link #PlayerLineState_playing_time_factor4 com.summithillsoftware.ultimate:playing_time_factor4}</code></td><td></td></tr>
            <tr><td><code>{@link #PlayerLineState_state_changed com.summithillsoftware.ultimate:state_changed}</code></td><td></td></tr>
            </table>
+           @see #PlayerLineState_playing_time_factor0
+           @see #PlayerLineState_playing_time_factor1
+           @see #PlayerLineState_playing_time_factor2
+           @see #PlayerLineState_playing_time_factor3
+           @see #PlayerLineState_playing_time_factor4
            @see #PlayerLineState_state_changed
          */
         public static final int[] PlayerLineState = {
-            0x7f01006a
+            0x7f01006a, 0x7f01006b, 0x7f01006c, 0x7f01006d,
+            0x7f01006e, 0x7f01006f
         };
+        /**
+          <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#playing_time_factor0}
+          attribute's value can be found in the {@link #PlayerLineState} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.summithillsoftware.ultimate:playing_time_factor0
+        */
+        public static final int PlayerLineState_playing_time_factor0 = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#playing_time_factor1}
+          attribute's value can be found in the {@link #PlayerLineState} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.summithillsoftware.ultimate:playing_time_factor1
+        */
+        public static final int PlayerLineState_playing_time_factor1 = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#playing_time_factor2}
+          attribute's value can be found in the {@link #PlayerLineState} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.summithillsoftware.ultimate:playing_time_factor2
+        */
+        public static final int PlayerLineState_playing_time_factor2 = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#playing_time_factor3}
+          attribute's value can be found in the {@link #PlayerLineState} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.summithillsoftware.ultimate:playing_time_factor3
+        */
+        public static final int PlayerLineState_playing_time_factor3 = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#playing_time_factor4}
+          attribute's value can be found in the {@link #PlayerLineState} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.summithillsoftware.ultimate:playing_time_factor4
+        */
+        public static final int PlayerLineState_playing_time_factor4 = 5;
         /**
           <p>This symbol is the offset where the {@link com.summithillsoftware.ultimate.R.attr#state_changed}
           attribute's value can be found in the {@link #PlayerLineState} array.

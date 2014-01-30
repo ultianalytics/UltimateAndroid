@@ -1,37 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:app="http://schemas.android.com/apk/res/com.summithillsoftware.ultimate">
+    
+     <item android:state_enabled="false">
+         <shape android:shape="rectangle"  >
+             <solid  android:color="@android:color/transparent" />       
+         </shape>
+     </item>   
+     
      <item android:state_pressed="true" >
          <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#B2B266" android:endColor="#666619"  />            
+             <gradient  android:angle="-90"  android:startColor="#CCCC7F" android:endColor="#99993F"  />            
          </shape>
-     </item>
-    <item android:state_focused="true">
-         <shape android:shape="rectangle"  >
-             <corners android:radius="3dip" />
-             <stroke android:width="1dip" android:color="#666619" />
-             <solid  android:color="#308d9e"/>       
-         </shape>
-     </item>
-     <item app:state_changed="true">
+     </item>     
+    
+	 <!-- Player HAS changed state -->
+    <item app:playing_time_factor0="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#B2B266" android:endColor="#7F7F19" />            
+             <gradient  android:angle="-90"  android:startColor="#CCCC7F" android:endColor="#C1C172" />            
          </shape>
-     </item>
-    <item android:state_enabled="false">
-         <shape android:shape="rectangle"  >
-             <solid  android:color="@android:color/transparent" />       
-         </shape>
-     </item>       
-    <item >
+     </item>  	 
+     <item app:playing_time_factor1="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
-             <stroke android:width="1dip" android:color="#7F7F19" />
-             <gradient  android:angle="-90"  android:startColor="#B2B266" android:endColor="#7F7F19" />            
+             <stroke android:width="6dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#C1C172" android:endColor="#848426" />            
          </shape>
      </item>
+     <item app:playing_time_factor2="true" app:state_changed="true">
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="6dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#B7B765" android:endColor="#7A7A19" />            
+         </shape>
+     </item>
+     <item app:playing_time_factor3="true" app:state_changed="true">
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="6dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#ADAD58" android:endColor="#70700C" />            
+         </shape>
+     </item>
+     <item app:playing_time_factor4="true" app:state_changed="true">
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="6dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#A3A34C" android:endColor="#666600" />            
+         </shape>
+     </item> 
+  
+     
+    <!-- Player has NOT changed state -->
+    <item app:playing_time_factor0="true">
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#CCCC7F" android:endColor="#C1C172" />            
+         </shape>
+     </item>      
+     <item app:playing_time_factor1="true" >
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#C1C172" android:endColor="#848426" />            
+         </shape>
+     </item>
+     <item app:playing_time_factor2="true" >
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#B7B765" android:endColor="#7A7A19" />            
+         </shape>
+     </item>
+     <item app:playing_time_factor3="true" >
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#ADAD58" android:endColor="#70700C" />            
+         </shape>
+     </item>
+     <item app:playing_time_factor4="true" >
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#666619" />
+             <gradient  android:angle="-90"  android:startColor="#A3A34C" android:endColor="#666600" />            
+         </shape>
+     </item>     
+
+
 </selector>
