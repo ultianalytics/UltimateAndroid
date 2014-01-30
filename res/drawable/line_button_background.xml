@@ -21,35 +21,35 @@
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#CCCC7F" android:endColor="#C1C172" />            
+             <gradient  android:angle="-90"  android:startColor="#B2B266" android:endColor="#7F7F33" />            
          </shape>
      </item>  	 
      <item app:playing_time_factor1="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#C1C172" android:endColor="#848426" />            
+             <gradient  android:angle="-90"  android:startColor="#A5A559" android:endColor="#727226" />            
          </shape>
      </item>
      <item app:playing_time_factor2="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#B7B765" android:endColor="#7A7A19" />            
+             <gradient  android:angle="-90"  android:startColor="#98984C" android:endColor="#656519" />            
          </shape>
      </item>
      <item app:playing_time_factor3="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#ADAD58" android:endColor="#70700C" />            
+             <gradient  android:angle="-90"  android:startColor="#8B8B3F" android:endColor="#58580C" />            
          </shape>
      </item>
      <item app:playing_time_factor4="true" app:state_changed="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="6dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#A3A34C" android:endColor="#666600" />            
+             <gradient  android:angle="-90"  android:startColor="#7F7F33" android:endColor="#4C4C00" />            
          </shape>
      </item> 
   
@@ -59,37 +59,37 @@
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#CCCC7F" android:endColor="#C1C172" />            
+             <gradient  android:angle="-90"  android:startColor="#B2B266" android:endColor="#7F7F33" />            
          </shape>
-     </item>      
-     <item app:playing_time_factor1="true" >
+     </item>  	 
+     <item app:playing_time_factor1="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#C1C172" android:endColor="#848426" />            
+             <gradient  android:angle="-90"  android:startColor="#A5A559" android:endColor="#727226" />            
          </shape>
      </item>
-     <item app:playing_time_factor2="true" >
+     <item app:playing_time_factor2="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#B7B765" android:endColor="#7A7A19" />            
+             <gradient  android:angle="-90"  android:startColor="#98984C" android:endColor="#656519" />            
          </shape>
      </item>
-     <item app:playing_time_factor3="true" >
+     <item app:playing_time_factor3="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#ADAD58" android:endColor="#70700C" />            
+             <gradient  android:angle="-90"  android:startColor="#8B8B3F" android:endColor="#58580C" />            
          </shape>
      </item>
-     <item app:playing_time_factor4="true" >
+     <item app:playing_time_factor4="true">
         <shape android:shape="rectangle"  >
              <corners android:radius="3dip" />
              <stroke android:width="1dip" android:color="#666619" />
-             <gradient  android:angle="-90"  android:startColor="#A3A34C" android:endColor="#666600" />            
+             <gradient  android:angle="-90"  android:startColor="#7F7F33" android:endColor="#4C4C00" />            
          </shape>
-     </item>     
+     </item>    
 
 
 </selector>
