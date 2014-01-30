@@ -145,6 +145,7 @@
                 android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minEms="5"
                 android:onClick="saveClicked"
                 android:text="@string/button_save" />
 
@@ -156,6 +157,7 @@
                 android:id="@+id/button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minEms="5"
                 android:onClick="cancelClicked"
                 android:text="@string/button_cancel" />
         </LinearLayout>
