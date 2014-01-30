@@ -7,3 +7,6 @@ target/
 
 # ignore all files ending with ~
 *~
+
+# ignore .DS_STORE
+.DS_STORE
