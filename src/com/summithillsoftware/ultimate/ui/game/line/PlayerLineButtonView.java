@@ -58,7 +58,10 @@ public class PlayerLineButtonView extends RelativeLayout {
 	
 	// return: 0 <= integer < PLAYING_TIME_FACTOR_RANGE
 	private int integralPointsPlayedFactor(float factor) { // factor is between 0 and 1
-		return (int)Math.ceil(factor * (float)PLAYING_TIME_FACTOR_RANGE);
+		int answer = (int)Math.ceil(factor * (float)(PLAYING_TIME_FACTOR_RANGE - 1));
+		answer = Math.min(answer, PlayerLineButtonView.PLAYING_TIME_FACTOR_RANGE - 1);
+		answer = Math.max(answer, 0);
+		return answer;
 	}
 	
 	public boolean isButtonOnFieldView() {
