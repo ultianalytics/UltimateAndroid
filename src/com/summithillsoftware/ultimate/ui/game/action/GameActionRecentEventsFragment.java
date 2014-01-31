@@ -1,6 +1,8 @@
 package com.summithillsoftware.ultimate.ui.game.action;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
@@ -27,6 +30,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	private RecentEventButton event2Button;
 	private View event3ButtonSeparator;	
 	private RecentEventButton event3Button;
+	private TextView ephemeralMessage;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		event2Button = (RecentEventButton)view.findViewById(R.id.event2Button);
 		event3ButtonSeparator = view.findViewById(R.id.event3ButtonSeparator);
 		event3Button = (RecentEventButton)view.findViewById(R.id.event3Button);
+		ephemeralMessage = (TextView)view.findViewById(R.id.ephemeralMessage);
 	}
 	
 	private void registerWidgetListeners() {
@@ -177,6 +182,28 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	
 	private int blankEventImage() {
 		return R.drawable.unknown_event;
+	}
+	
+	public void displayEphemeralMessage(String message, int seconds) {
+		Timer timer = new Timer();
+		ephemeralMessage.setText(message);
+		// TODO...animate this
+		ephemeralMessage.setVisibility(View.VISIBLE);
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				getActivity().runOnUiThread(new Runnable(){
+					@Override
+					public void run() {
+						// TODO...animate this
+						if (ephemeralMessage != null) {
+							ephemeralMessage.setVisibility(View.INVISIBLE);
+						}
+					}
+				});
+			}
+		};
+		timer.schedule(task, seconds * 1000);
 	}
 	
 }

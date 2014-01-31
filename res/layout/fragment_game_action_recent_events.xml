@@ -3,15 +3,41 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/undoLastEventButton"
-        style="@style/buttonUndo"
+    <LinearLayout
+        android:id="@+id/leftColumn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="10dp"
-        android:text="@string/button_action_undo"
-        android:textSize="@dimen/game_action_button_undo_button_size" />
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/undoLastEventButton"
+            style="@style/buttonUndo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_action_undo"
+            android:textSize="@dimen/game_action_button_undo_button_size" />
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/ephemeralMessage"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:textSize="@dimen/font_size40"
+                android:text="@string/toast_swipe_up_to_see_more" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -19,24 +45,26 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/specialActionButtons"
-        android:layout_toRightOf="@id/undoLastEventButton"
+        android:layout_toRightOf="@id/leftColumn"
         android:orientation="vertical" >
 
         <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
             android:id="@+id/event1Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        
-        <View android:id="@+id/event2ButtonSeparator"
-            style="@style/horizontal_separator_light"/>
+
+        <View
+            android:id="@+id/event2ButtonSeparator"
+            style="@style/horizontal_separator_light" />
 
         <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
             android:id="@+id/event2Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        
-        <View android:id="@+id/event3ButtonSeparator"
-            style="@style/horizontal_separator_light"/>
+
+        <View
+            android:id="@+id/event3ButtonSeparator"
+            style="@style/horizontal_separator_light" />
 
         <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
             android:id="@+id/event3Button"

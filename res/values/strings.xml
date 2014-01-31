@@ -308,6 +308,7 @@
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
     <string name="toast_download_complete">Download Complete</string>
+    <string name="toast_swipe_up_to_see_more">Swipe up to see more</string>
     <string name="toast_upload_complete">Upload Complete</string>
     <string name="checkbox_support_log_files">Log files</string>
 	<string name="checkbox_support_team_files">Team/Game files</string>    
