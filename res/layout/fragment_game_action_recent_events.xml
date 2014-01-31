@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/specialActionButtons"
         android:layout_toRightOf="@id/undoLastEventButton"
         android:orientation="vertical" >
@@ -25,11 +26,17 @@
             android:id="@+id/event1Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        
+        <View android:id="@+id/event2ButtonSeparator"
+            style="@style/horizontal_separator_light"/>
 
         <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
             android:id="@+id/event2Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        
+        <View android:id="@+id/event3ButtonSeparator"
+            style="@style/horizontal_separator_light"/>
 
         <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
             android:id="@+id/event3Button"

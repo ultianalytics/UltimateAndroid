@@ -23,7 +23,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	private Button timeoutButton;
 	private Button cessationButton;
 	private RecentEventButton event1Button;
+	private View event2ButtonSeparator;
 	private RecentEventButton event2Button;
+	private View event3ButtonSeparator;	
 	private RecentEventButton event3Button;
 	
 	@Override
@@ -50,7 +52,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		timeoutButton = (Button)view.findViewById(R.id.timeoutButton);
 		cessationButton = (Button)view.findViewById(R.id.cessationButton);
 		event1Button = (RecentEventButton)view.findViewById(R.id.event1Button);
+		event2ButtonSeparator = view.findViewById(R.id.event2ButtonSeparator);
 		event2Button = (RecentEventButton)view.findViewById(R.id.event2Button);
+		event3ButtonSeparator = view.findViewById(R.id.event3ButtonSeparator);
 		event3Button = (RecentEventButton)view.findViewById(R.id.event3Button);
 	}
 	
@@ -151,7 +155,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).getEvent().toString() : "");
 		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).getEvent().toString() : "");
 		event1Button.setEventImage(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).getEvent().imageMonochrome() : blankEventImage());
+		event2ButtonSeparator.setVisibility(lastFewEvents.size() >= 2 ? View.VISIBLE :View.INVISIBLE);
 		event2Button.setEventImage(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).getEvent().imageMonochrome() : blankEventImage());
+		event3ButtonSeparator.setVisibility(lastFewEvents.size() >= 3 ? View.VISIBLE :View.INVISIBLE);
 		event3Button.setEventImage(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).getEvent().imageMonochrome() : blankEventImage());
 		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);
 	}

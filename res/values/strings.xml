@@ -37,7 +37,7 @@
     <string name="event_description_callahaned">%1$s callahan\'d</string>
     <string name="event_description_o_goal">%1$s goal</string>
     <string name="event_description_o_goal_from">%1$s pass for goal</string>
-    <string name="event_description_o_goal_from_to">%1$s goal (%2$s to %3$s)</string>
+    <string name="event_description_o_goal_from_to">Goal (%2$s to %3$s)</string>
     <string name="event_description_pull">%1$s pull%2$s</string>
     <string name="event_description_pull_from">Pull from %1$s%2$s</string>
     <string name="event_description_pull_seconds_short">%1$s sec</string>

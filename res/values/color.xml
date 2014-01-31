@@ -12,6 +12,7 @@
 	<color name="ultimate_theme_color">#999919</color> <!--  olivish -->
 	<color name="ultimate_action_bar">#666600</color> <!-- olivish darker -->
 	<color name="ultimate_winning_green">#999919</color> <!-- olivish darker -->
+	<color name="ultimate_light_separator">#505050</color> 
 	
 	<!--  misc colors -->
 		 <color name="White">#FFFFFF</color>

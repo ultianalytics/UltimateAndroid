@@ -169,5 +169,14 @@
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+    
+    <style name="horizontal_separator_light">
+        <item name="android:background">@color/ultimate_light_separator</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
 
 </resources>
