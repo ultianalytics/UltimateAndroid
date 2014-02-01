@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.PointEvent;
@@ -23,17 +24,27 @@ import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class GameActionRecentEventsFragment extends UltimateFragment {
 	private GameActionEventListener gameActionEventListener;
+	private static final int MAX_EVENTS_TO_DISPLAY = 3;
+	private static final int MAX_EVENTS_TO_DISPLAY_LANDSCAPE = 6;
 	
 	// widgets
 	private Button undoLastEventButton;
 	private Button timeoutButton;
 	private Button cessationButton;
+	private TextView ephemeralMessage;
 	private RecentEventButton event1Button;
 	private View event2ButtonSeparator;
 	private RecentEventButton event2Button;
 	private View event3ButtonSeparator;	
 	private RecentEventButton event3Button;
-	private TextView ephemeralMessage;
+	private View event4ButtonSeparator;	
+	private RecentEventButton event4Button;
+	private View event5ButtonSeparator;	
+	private RecentEventButton event5Button;	
+	private View event6ButtonSeparator;	
+	private RecentEventButton event6Button;		
+
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,12 +69,19 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		undoLastEventButton = (Button)view.findViewById(R.id.undoLastEventButton);
 		timeoutButton = (Button)view.findViewById(R.id.timeoutButton);
 		cessationButton = (Button)view.findViewById(R.id.cessationButton);
+		ephemeralMessage = (TextView)view.findViewById(R.id.ephemeralMessage);		
 		event1Button = (RecentEventButton)view.findViewById(R.id.event1Button);
 		event2ButtonSeparator = view.findViewById(R.id.event2ButtonSeparator);
 		event2Button = (RecentEventButton)view.findViewById(R.id.event2Button);
 		event3ButtonSeparator = view.findViewById(R.id.event3ButtonSeparator);
 		event3Button = (RecentEventButton)view.findViewById(R.id.event3Button);
-		ephemeralMessage = (TextView)view.findViewById(R.id.ephemeralMessage);
+		// extras for tablet landscape
+		event4ButtonSeparator = view.findViewById(R.id.event4ButtonSeparator);
+		event4Button = (RecentEventButton)view.findViewById(R.id.event4Button);
+		event5ButtonSeparator = view.findViewById(R.id.event5ButtonSeparator);
+		event5Button  = (RecentEventButton)view.findViewById(R.id.event5Button);	
+		event6ButtonSeparator = view.findViewById(R.id.event6ButtonSeparator);
+		event6Button = (RecentEventButton)view.findViewById(R.id.event6Button);		
 	}
 	
 	private void registerWidgetListeners() {
@@ -108,7 +126,27 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 			public void onClick(View v) {
 				handleEventEditPressed(3);
 			}
-		});			
+		});	
+		if (event4Button != null) {
+			event4Button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					handleEventEditPressed(4);
+				}
+			});	
+			event5Button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					handleEventEditPressed(5);
+				}
+			});	
+			event6Button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					handleEventEditPressed(6);
+				}
+			});			
+		}
 	}
 	
 	private void handleEventEditPressed(int inverseOrderPostion) { // position starts at 1
@@ -158,7 +196,9 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	}
 
 	private void populateRecentEvents() {
-		List<PointEvent> lastFewEvents = Game.current().getLastEvents(3);
+		int maxEventsToDisplay = getMaxEventsToDisplay(); 
+		List<PointEvent> lastFewEvents = Game.current().getLastEvents(maxEventsToDisplay);
+		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);		
 		event1Button.setEventDescription(lastFewEvents.size() >= 1 ? lastFewEvents.get(0).getEvent().toString() : "");
 		event2Button.setEventDescription(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).getEvent().toString() : "");
 		event3Button.setEventDescription(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).getEvent().toString() : "");
@@ -167,7 +207,18 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		event2Button.setEventImage(lastFewEvents.size() >= 2 ? lastFewEvents.get(1).getEvent().imageMonochrome() : blankEventImage());
 		event3ButtonSeparator.setVisibility(lastFewEvents.size() >= 3 ? View.VISIBLE :View.INVISIBLE);
 		event3Button.setEventImage(lastFewEvents.size() >= 3 ? lastFewEvents.get(2).getEvent().imageMonochrome() : blankEventImage());
-		undoLastEventButton.setVisibility(lastFewEvents.size() > 0 ? View.VISIBLE :View.INVISIBLE);
+		// extras for landscape
+		if (MAX_EVENTS_TO_DISPLAY_LANDSCAPE == maxEventsToDisplay) {
+			event4Button.setEventDescription(lastFewEvents.size() >= 4 ? lastFewEvents.get(3).getEvent().toString() : "");
+			event5Button.setEventDescription(lastFewEvents.size() >= 5 ? lastFewEvents.get(4).getEvent().toString() : "");
+			event6Button.setEventDescription(lastFewEvents.size() >= 6 ? lastFewEvents.get(5).getEvent().toString() : "");			
+			event4ButtonSeparator.setVisibility(lastFewEvents.size() >= 4 ? View.VISIBLE :View.INVISIBLE);
+			event4Button.setEventImage(lastFewEvents.size() >= 4 ? lastFewEvents.get(3).getEvent().imageMonochrome() : blankEventImage());
+			event5ButtonSeparator.setVisibility(lastFewEvents.size() >= 5 ? View.VISIBLE :View.INVISIBLE);
+			event5Button.setEventImage(lastFewEvents.size() >= 5 ? lastFewEvents.get(4).getEvent().imageMonochrome() : blankEventImage());
+			event6ButtonSeparator.setVisibility(lastFewEvents.size() >= 6 ? View.VISIBLE :View.INVISIBLE);
+			event6Button.setEventImage(lastFewEvents.size() >= 6 ? lastFewEvents.get(5).getEvent().imageMonochrome() : blankEventImage());			
+		}
 	}
 	
 	public void refresh() {
@@ -201,17 +252,21 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
     			TimerTask task = new TimerTask() {
     				@Override
     				public void run() {
-    					getActivity().runOnUiThread(new Runnable(){
-    						@Override
-    						public void run() {
-    							if (ephemeralMessage != null) {
-    						    	Animation animation = new AlphaAnimation(1.0f, 0.0f);
-    						    	animation.setDuration(500);
-    						    	animation.setFillAfter(true); 
-    						    	ephemeralMessage.startAnimation(animation);
-    							}
-    						}
-    					});
+    					try {
+							getActivity().runOnUiThread(new Runnable(){
+								@Override
+								public void run() {
+									if (ephemeralMessage != null) {
+								    	Animation animation = new AlphaAnimation(1.0f, 0.0f);
+								    	animation.setDuration(500);
+								    	animation.setFillAfter(true); 
+								    	ephemeralMessage.startAnimation(animation);
+									}
+								}
+							});
+						} catch (Exception e) {
+							UltimateLogger.logWarning("couldn't finish the end of animating removal of action view ephemeral message...maybe rotation occured", e);
+						}
     				}
     			};
     			timer.schedule(task, seconds * 1000);
@@ -221,4 +276,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
     	ephemeralMessage.startAnimation(animation);
 	}
 	
+	public int getMaxEventsToDisplay() {
+		return event4Button == null ? MAX_EVENTS_TO_DISPLAY : MAX_EVENTS_TO_DISPLAY_LANDSCAPE;
+	}
 }

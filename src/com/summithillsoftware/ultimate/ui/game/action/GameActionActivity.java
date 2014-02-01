@@ -177,9 +177,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    		showLineDialog();
 		    	}
 		    }
-		    if (game().hasNumberOfEvent(4)) {
-		    	recentsFragment.displayEphemeralMessage(getString(R.string.toast_swipe_up_to_see_more), 5);
-		    }
+		    displayInstructionsToSeeMoreEventsIfNecessary();
+		}
+	}
+
+	private void displayInstructionsToSeeMoreEventsIfNecessary() {
+		int maxNumberOfEventsInRecentsList = recentsFragment.getMaxEventsToDisplay();
+		if (game().hasNumberOfEvent(maxNumberOfEventsInRecentsList + 1)) {
+			recentsFragment.displayEphemeralMessage(getString(R.string.toast_swipe_up_to_see_more), 5);
 		}
 	}
 	

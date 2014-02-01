@@ -78,6 +78,34 @@
                 android:id="@+id/event3Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/event4ButtonSeparator"
+                style="@style/horizontal_separator_light" />
+
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event4Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/event5ButtonSeparator"
+                style="@style/horizontal_separator_light" />
+
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event5Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            <View
+                android:id="@+id/event6ButtonSeparator"
+                style="@style/horizontal_separator_light" />
+
+            <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
+                android:id="@+id/event6Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />  
+                          
         </LinearLayout>
 
         <TextView
