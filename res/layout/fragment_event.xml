@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minWidth="200dp"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:padding="6dp" >
@@ -74,6 +75,7 @@
         android:gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:minHeight="100dp"
         android:layout_margin="40dp"
         android:text="@string/label_event_no_edits_allowed"
         android:textColor="@color/ultimate_form_label"
