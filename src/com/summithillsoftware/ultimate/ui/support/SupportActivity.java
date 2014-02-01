@@ -38,16 +38,18 @@ public class SupportActivity extends UltimateActivity {
 		boolean includeLogs = includeLogFilesCheckbox.isChecked();
 		boolean includeTeams = includeTeamsCheckbox.isChecked();
 		
-		File attachment = null;
-		if (includeLogs || includeTeams) {
-			attachment = UltimateApplication.current().createZipForSupport(includeTeams);
-		}
-		
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  
 		emailIntent.setType("plain/text"); 
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { "support@ultimate-numbers.com" });
-		Uri uri = Uri.fromFile(attachment);
-		emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+		
+		if (includeLogs || includeTeams) {
+			File attachment = null;
+			attachment = UltimateApplication.current().createZipForSupport(includeTeams);
+			if (attachment != null) {
+				Uri uri = Uri.fromFile(attachment);
+				emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+			}
+		}
 		
 		startActivity(emailIntent);  
 		finish();
