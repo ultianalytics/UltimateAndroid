@@ -177,8 +177,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    		showLineDialog();
 		    	}
 		    }
-		    // TODO...make this conditional...only display when 4 events
-			recentsFragment.displayEphemeralMessage(getString(R.string.toast_swipe_up_to_see_more), 3);
+		    if (game().hasNumberOfEvent(4)) {
+		    	recentsFragment.displayEphemeralMessage(getString(R.string.toast_swipe_up_to_see_more), 5);
+		    }
 		}
 	}
 	

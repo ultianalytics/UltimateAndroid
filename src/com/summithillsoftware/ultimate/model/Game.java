@@ -372,6 +372,28 @@ public class Game implements Externalizable {
 		}
 		return answerList;
 	}
+	
+	// true if game has exact number indicated
+	public boolean hasNumberOfEvent(int number) {
+		if (!hasEvents()) {
+			return number == 0;
+		}
+		if (getCurrentPoint().numberOfEvents() >= number) {
+			return number == getCurrentPoint().numberOfEvents();
+		}
+		Iterator<Point> reversePointIterator = pointsInMostRecentOrder().iterator();
+		int count = 0;
+		while (reversePointIterator.hasNext() && count < number) {
+			Point point = reversePointIterator.next();
+			count += point.numberOfEvents();
+			if (count > number) {
+				return false;
+			} else if (count == number) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public int getNumberOfPoints() {
 		return points.size();

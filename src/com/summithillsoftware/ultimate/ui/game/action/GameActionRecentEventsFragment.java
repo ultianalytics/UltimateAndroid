@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.PointEvent;
+import com.summithillsoftware.ultimate.ui.DefaultAnimationListener;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class GameActionRecentEventsFragment extends UltimateFragment {
@@ -184,26 +187,38 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		return R.drawable.unknown_event;
 	}
 	
-	public void displayEphemeralMessage(String message, int seconds) {
-		Timer timer = new Timer();
+	public void displayEphemeralMessage(String message, final int seconds) {
 		ephemeralMessage.setText(message);
-		// TODO...animate this
-		ephemeralMessage.setVisibility(View.VISIBLE);
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run() {
-				getActivity().runOnUiThread(new Runnable(){
-					@Override
-					public void run() {
-						// TODO...animate this
-						if (ephemeralMessage != null) {
-							ephemeralMessage.setVisibility(View.INVISIBLE);
-						}
-					}
-				});
-			}
-		};
-		timer.schedule(task, seconds * 1000);
+		
+    	Animation animation = new AlphaAnimation(0.0f, 1.0f);
+    	animation.setDuration(500);
+    	animation.setFillAfter(true); // persist animation
+    	animation.setAnimationListener(new DefaultAnimationListener() {
+    		@Override
+    		public void onAnimationEnd(Animation paramAnimation) {
+    			
+    			Timer timer = new Timer();
+    			TimerTask task = new TimerTask() {
+    				@Override
+    				public void run() {
+    					getActivity().runOnUiThread(new Runnable(){
+    						@Override
+    						public void run() {
+    							if (ephemeralMessage != null) {
+    						    	Animation animation = new AlphaAnimation(1.0f, 0.0f);
+    						    	animation.setDuration(500);
+    						    	animation.setFillAfter(true); 
+    						    	ephemeralMessage.startAnimation(animation);
+    							}
+    						}
+    					});
+    				}
+    			};
+    			timer.schedule(task, seconds * 1000);
+    		}
+    	});
+    	ephemeralMessage.setVisibility(View.VISIBLE);
+    	ephemeralMessage.startAnimation(animation);
 	}
 	
 }
