@@ -43,8 +43,9 @@
             android:textSize="@dimen/game_action_button_undo_button_size" />
 
         <LinearLayout
+            android:id="@+id/recentsList"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/undoLastEventButton"
             android:orientation="vertical" >
@@ -54,16 +55,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <View
+                android:id="@+id/event2ButtonSeparator"
+                style="@style/horizontal_separator_light" />
+
             <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
                 android:id="@+id/event2Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/event3ButtonSeparator"
+                style="@style/horizontal_separator_light" />
 
             <com.summithillsoftware.ultimate.ui.game.action.RecentEventButton
                 android:id="@+id/event3Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/ephemeralMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/recentsList"
+            android:layout_alignRight="@id/recentsList"
+            android:layout_below="@id/recentsList"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/toast_swipe_up_to_see_more"
+            android:textSize="@dimen/font_size40"
+            android:textStyle="italic"
+            android:visibility="invisible" />
+        
     </RelativeLayout>
 
 </LinearLayout>
