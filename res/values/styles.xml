@@ -177,6 +177,14 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
     </style>
+    
+    <style name="ultimateRadioButton">
+        <!-- android:button customizes the radio button itself (was necessary to be explicit because theme didn't work in dialogs) -->
+	    <item name="android:button">@drawable/apptheme_btn_radio_holo_dark</item>
+		<!-- android:textColor makes the text bold if selected -->	    
+	    <item name="android:textColor">@color/radio_button_text_color</item>
+	</style>
+    
 
 
 </resources>

@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/undefined"
-            android:textColor="@color/radio_button_text_color"
+            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            android:textColor="@color/radio_button_text_color"
+            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            android:textColor="@color/radio_button_text_color"
+            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            android:textColor="@color/radio_button_text_color"
+            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
     </RadioGroup>
 

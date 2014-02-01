@@ -2178,12 +2178,12 @@ containing a value of this type.
         /**  Application theme. 
          */
         public static final int AppTheme=0x7f0c0084;
-        public static final int ButtonAppTheme=0x7f0c0092;
+        public static final int ButtonAppTheme=0x7f0c0093;
         public static final int FormCellButton=0x7f0c0088;
         public static final int FormData=0x7f0c0087;
         public static final int FormLabel=0x7f0c0086;
-        public static final int ImageButtonAppTheme=0x7f0c0093;
-        public static final int SpinnerAppTheme=0x7f0c0094;
+        public static final int ImageButtonAppTheme=0x7f0c0094;
+        public static final int SpinnerAppTheme=0x7f0c0095;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0c0063;
@@ -2381,6 +2381,7 @@ containing a value of this type.
         public static final int horizontal_separator_light=0x7f0c0091;
         public static final int redButton=0x7f0c008d;
         public static final int standardButton=0x7f0c008c;
+        public static final int ultimateRadioButton=0x7f0c0092;
     }
     public static final class styleable {
         /**  ============================================ 

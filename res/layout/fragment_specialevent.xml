@@ -24,12 +24,14 @@
             android:id="@+id/eventChoice1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ultimateRadioButton"
             android:text="@string/undefined" />
 
         <RadioButton
             android:id="@+id/eventChoice2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
 
@@ -37,6 +39,7 @@
             android:id="@+id/eventChoice3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
 
@@ -44,6 +47,7 @@
             android:id="@+id/eventChoice4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
     </RadioGroup>
