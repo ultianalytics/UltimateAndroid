@@ -31,13 +31,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="55" />
+            
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />            
 
             <fragment
                 android:id="@+id/recentsFragment"
                 android:name="com.summithillsoftware.ultimate.ui.game.action.GameActionRecentEventsFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="45" />
+                android:layout_weight="40" />
         </LinearLayout>
     </android.gesture.GestureOverlayView>
 
