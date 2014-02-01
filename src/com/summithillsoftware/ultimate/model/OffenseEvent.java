@@ -227,7 +227,7 @@ public class OffenseEvent extends Event {
 			receiver = Player.anonymous();
 		}		
 		if (!OFFENSE_ACTIONS.contains(getAction())) {
-			throw new RuntimeException("Invalid action for offense event " + getAction());
+			throw new InvalidEventException("Invalid action for offense event " + getAction());
 		}
 	}
 	

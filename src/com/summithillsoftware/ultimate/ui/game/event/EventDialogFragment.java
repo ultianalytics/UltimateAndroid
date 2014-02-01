@@ -177,23 +177,27 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	}
 	
 	private void handleEventTypeChange(RadioGroup radioGroup) {
-		switch (radioGroup.getCheckedRadioButtonId()) {
-		case R.id.radioButtonEventAction1:
-			replacementEvent().setAction((Action)radioButtonEventAction1.getTag());
-			break;
-		case R.id.radioButtonEventAction2:
-			replacementEvent().setAction((Action)radioButtonEventAction2.getTag());
-			break;
-		case R.id.radioButtonEventAction3:
-			replacementEvent().setAction((Action)radioButtonEventAction3.getTag());
-			break;
-		case R.id.radioButtonEventAction4:
-			replacementEvent().setAction((Action)radioButtonEventAction4.getTag());
-			break;
-		default:
-			break;
+		try {
+			switch (radioGroup.getCheckedRadioButtonId()) {
+			case R.id.radioButtonEventAction1:
+				replacementEvent().setAction((Action)radioButtonEventAction1.getTag());
+				break;
+			case R.id.radioButtonEventAction2:
+				replacementEvent().setAction((Action)radioButtonEventAction2.getTag());
+				break;
+			case R.id.radioButtonEventAction3:
+				replacementEvent().setAction((Action)radioButtonEventAction3.getTag());
+				break;
+			case R.id.radioButtonEventAction4:
+				replacementEvent().setAction((Action)radioButtonEventAction4.getTag());
+				break;
+			default:
+				break;
+			}
+			configureForEventType(replacementEvent());
+		} catch (Exception e) {
+			dismiss();
 		}
-		configureForEventType(replacementEvent());
 	}
 	
 	private void handlePlayerOneSelection(AdapterView<?> parent, View view, int position, long id) {

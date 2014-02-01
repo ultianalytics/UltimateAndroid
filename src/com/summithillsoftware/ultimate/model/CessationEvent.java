@@ -9,6 +9,7 @@ import static com.summithillsoftware.ultimate.model.Action.Halftime;
 import static com.summithillsoftware.ultimate.model.Action.Timeout;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.json.JSONException;
@@ -19,6 +20,14 @@ import com.summithillsoftware.ultimate.R;
 public class CessationEvent extends Event {
 	private static final long serialVersionUID = 8990822261864009064L;
 	private static final String NEXT_PERIOD_START_ONLINE_DETAIL = "nextPeriodStartO";
+	public static final EnumSet<Action> CESSATION_ACTIONS = EnumSet.of(
+			EndOfFirstQuarter,
+			Halftime,
+			EndOfThirdQuarter,
+			EndOfFourthQuarter,
+			EndOfOvertime,
+			GameOver,
+			Timeout);
 
 	public static CessationEvent createWithAction(Action action) {
 		CessationEvent evt = new CessationEvent();
@@ -223,6 +232,11 @@ public class CessationEvent extends Event {
 		return jsonObject;
 	}
 
+	protected void ensureValid() {
+		if (!CESSATION_ACTIONS.contains(getAction())) {
+			throw new InvalidEventException("Invalid action for cessation event " + getAction());
+		}
+	}
 }
 
 

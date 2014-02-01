@@ -179,7 +179,7 @@ public class DefenseEvent extends Event {
 		}
 
 		if (!DEFENSE_ACTIONS.contains(getAction())) {
-			throw new RuntimeException("Invalid action for defense event " + getAction());
+			throw new InvalidEventException("Invalid action for defense event " + getAction());
 		}
 	}
 	
