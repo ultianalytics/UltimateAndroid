@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="200dp"
     android:animateLayoutChanges="true"
+    android:minWidth="200dp"
     android:orientation="vertical"
     android:padding="6dp" >
 
@@ -60,27 +60,27 @@
         android:id="@+id/eventTypeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:text="@string/undefined"
         android:textColor="@color/White"
-        android:textStyle="bold"
-        android:textSize="@dimen/event_player_list_font_size" />
-    
+        android:textSize="@dimen/event_player_list_font_size"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/eventTypeNotEditableTextView"
-        android:visibility="gone"
-        android:gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="100dp"
         android:layout_margin="40dp"
+        android:gravity="center"
+        android:minHeight="100dp"
         android:text="@string/label_event_no_edits_allowed"
         android:textColor="@color/ultimate_form_label"
+        android:textSize="@dimen/event_player_list_font_size"
         android:textStyle="italic"
-        android:textSize="@dimen/event_player_list_font_size" />    
+        android:visibility="gone" />
 
     <RadioGroup
         android:id="@+id/radioGroupEventAction"
@@ -93,38 +93,38 @@
 
         <RadioButton
             android:id="@+id/radioButtonEventAction1"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/undefined"
-            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
             android:id="@+id/radioButtonEventAction2"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
             android:id="@+id/radioButtonEventAction3"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
 
         <RadioButton
             android:id="@+id/radioButtonEventAction4"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/undefined"
-            style="@style/ultimateRadioButton"
             android:textSize="@dimen/event_player_list_font_size" />
     </RadioGroup>
 
@@ -152,7 +152,18 @@
             android:inputType="number" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/playersSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/ultimate_light_separator" />
+
     <LinearLayout
+        android:id="@+id/playersView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -176,8 +187,7 @@
         <com.summithillsoftware.ultimate.ui.game.event.EventPlayerSelectionListView
             android:id="@+id/playerTwoListView"
             android:layout_width="@dimen/event_player_list_width"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
 
 </LinearLayout>

@@ -35,6 +35,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 	private TextView eventTypeNotEditableTextView;
 	private ImageButton doneButton; 
 	private ImageButton cancelButton; 
+	private View playersSeparator;
 	private EventPlayerSelectionListView playerOneListView; 
 	private EventPlayerSelectionListView playerTwoListView;  
 	private TextView eventTypeTextView;
@@ -84,6 +85,7 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		eventTypeNotEditableTextView = (TextView)view.findViewById(R.id.eventTypeNotEditableTextView);
 		doneButton = (ImageButton)view.findViewById(R.id.doneButton);
 		cancelButton = (ImageButton)view.findViewById(R.id.cancelButton);
+		playersSeparator = (View)view.findViewById(R.id.playersSeparator);
 		playerOneListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerOneListView);
 		playerTwoListView = (EventPlayerSelectionListView)view.findViewById(R.id.playerTwoListView);
 		fromToTextView = (TextView)view.findViewById(R.id.fromToTextView);
@@ -283,35 +285,35 @@ public class EventDialogFragment extends UltimateDialogFragment {
 			switch (event.getAction()) {
 			case Catch:
 				eventTypeTextView.setText(R.string.label_event_category_catch);
-				configurePlayerListsVisibility(true, true);
+				configurePlayerListsVisibility(true, true, false);
 				break;
 			case Goal:
 				eventTypeTextView.setText(R.string.label_event_category_our_goal);
-				configurePlayerListsVisibility(true, true);
+				configurePlayerListsVisibility(true, true, false);
 				break;				
 			case Throwaway:
 				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForOffenseTurnover(Action.Throwaway);
 				break;	
 			case Drop:
 				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
-				configurePlayerListsVisibility(true, true);
+				configurePlayerListsVisibility(true, true, true);
 				configureEventTypeRadioGroupForOffenseTurnover(Action.Drop);
 				break;	
 			case Stall:
 				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForOffenseTurnover(Action.Stall);
 				break;	
 			case MiscPenalty:
 				eventTypeTextView.setText(R.string.label_event_category_our_turnover);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForOffenseTurnover(Action.MiscPenalty);
 				break;		
 			case Callahan:
 				eventTypeTextView.setText(R.string.label_event_category_callahaned);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, false);
 				break;				
 			default:
 				break;
@@ -320,39 +322,41 @@ public class EventDialogFragment extends UltimateDialogFragment {
 			switch (event.getAction()) {
 			case Pull:
 				eventTypeTextView.setText(R.string.label_event_category_pull);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForPull(Action.Pull);
 				showPullHangtimeEntryField(true);
 				break;
 			case PullOb:
 				eventTypeTextView.setText(R.string.label_event_category_pull);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForPull(Action.PullOb);
 				showPullHangtimeEntryField(false);
 				break;
 			case Goal:
 				eventTypeTextView.setText(R.string.label_event_category_their_goal);
+				configurePlayerListsVisibility(false, false, false);
 				showEventTypeNotEditable();
 				break;		
 			case De:
 				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, true);
 				configureEventTypeRadioGroupForDefenseTurnover(Action.De);
 				break;		
 			case Throwaway:
 				eventTypeTextView.setText(R.string.label_event_category_their_turnover);
 				configureEventTypeRadioGroupForDefenseTurnover(Action.Throwaway);
-				configurePlayerListsVisibility(false, false);
+				configurePlayerListsVisibility(false, false, false);
 				break;			
 			case Callahan:
 				eventTypeTextView.setText(R.string.label_event_category_callahan);
-				configurePlayerListsVisibility(true, false);
+				configurePlayerListsVisibility(true, false, false);
 				break;					
 			default:
 				break;
 			}
 		} else if (event.isCessationEvent()) {
 			showEventTypeNotEditable();
+			configurePlayerListsVisibility(false, false, false);
 			switch (event.getAction()) {
 			case EndOfFirstQuarter:
 				eventTypeTextView.setText(R.string.label_event_category_end_1st_qtr);
@@ -378,7 +382,8 @@ public class EventDialogFragment extends UltimateDialogFragment {
 		}
 	}
 	
-	private void configurePlayerListsVisibility(boolean showPlayerOneList, boolean showPlayerTwoList) {
+	private void configurePlayerListsVisibility(boolean showPlayerOneList, boolean showPlayerTwoList, boolean showSeparator) {
+		playersSeparator.setVisibility(showSeparator ? View.VISIBLE : View.GONE);
 		playerOneListView.setVisibility(showPlayerOneList ? View.VISIBLE : View.GONE);
 		fromToTextView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
 		playerTwoListView.setVisibility(showPlayerTwoList ? View.VISIBLE : View.GONE);
