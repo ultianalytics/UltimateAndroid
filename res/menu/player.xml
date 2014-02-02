@@ -4,7 +4,7 @@
         android:id="@+id/action_delete"
         android:orderInCategory="50"
         ultimate:showAsAction="ifRoom|withText"
-        android:icon="@drawable/trash_white"
+        android:icon="@drawable/ic_action_trash"
         android:title="@string/action_delete"/>    
         
     <item

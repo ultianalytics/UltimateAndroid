@@ -5,6 +5,6 @@
         android:orderInCategory="100"
         ultimate:showAsAction="ifRoom|withText"
         android:title="@string/menuitem_player_add" 
-        android:icon="@drawable/plus_white"
+        android:icon="@drawable/ic_action_add"
         />
 </menu>
