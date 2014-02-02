@@ -54,6 +54,10 @@ public class CessationEvent extends Event {
 	public CessationEvent() {
 	}
 	
+	public CessationEvent(CessationEvent event) {
+		super(event);
+	}
+	
 	public boolean isCessationEvent() {
 		return true;
 	}
