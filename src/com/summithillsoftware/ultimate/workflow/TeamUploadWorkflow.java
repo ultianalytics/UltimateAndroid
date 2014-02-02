@@ -27,6 +27,7 @@ public class TeamUploadWorkflow extends CloudWorkflow {
 	private void uploadCurrentTeam() {
 		setLastErrorStatus(CloudResponseStatus.Ok);
 		setStatus(CloudWorkflowStatus.TeamUploadStarted);
+		Team.current().ensureValid();
 		CloudClient.current().submitUploadTeam(Team.current(), new CloudResponseHandler() {
 			@Override
 			public void onResponse(CloudResponseStatus status, Object responseObect) {

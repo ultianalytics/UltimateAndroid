@@ -320,21 +320,14 @@ public class Team implements Externalizable {
 		return player;
 	}
 	
-	
-//    if (playerName == nil) {
-//        return nil;
-//    }
-//    Player* player = [[Team getCurrentTeam] getPlayer:playerName];
-//    if (!player) {
-//        player = [[Player alloc] initName:playerName];
-//        [[Team getCurrentTeam] addPlayer:player];
-//    }
-//    return player;
-	
 	public boolean addPlayer(Player player) {
-		Boolean replaced = removePlayer(player);
-		getPlayers().add(player); 
-		return replaced;
+		if (player.isAnonymous()) {
+			return false;
+		} else {
+			Boolean replaced = removePlayer(player);
+			getPlayers().add(player); 
+			return replaced;
+		}
 	}
 	
 	public boolean removePlayer(Player player) {
@@ -377,6 +370,14 @@ public class Team implements Externalizable {
 	    	}
 		}
 	    return line;
+	}
+	
+	public void ensureValid() {
+		for (Player player : new ArrayList<Player>(getPlayers())) {
+			if (player.isAnonymous()) {
+				removePlayer(player);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")

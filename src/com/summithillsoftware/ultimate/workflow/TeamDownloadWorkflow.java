@@ -105,6 +105,7 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		if (isCurrentTeam) {
 			Team.setCurrentTeam(null);
 		}
+		downloadedTeam.ensureValid();
 		downloadedTeam.save();
 		if (isCurrentTeam) {
 			Team.setCurrentTeam(downloadedTeam);
