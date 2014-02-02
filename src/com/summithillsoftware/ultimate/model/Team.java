@@ -209,6 +209,9 @@ public class Team implements Externalizable {
 	}
 	
 	public void delete() {
+		// delete the associated games
+		Game.deleteAllGamesForTeam(this.getTeamId());
+		
 		// move "current" to another team		
 		if (isCurrentTeam(this.getTeamId())) {
 			for (TeamDescription team : retrieveTeamDescriptions()) {
@@ -218,9 +221,6 @@ public class Team implements Externalizable {
 				}
 			}
 		}
-		
-		// delete the associated games
-		Game.deleteAllGamesForTeam(this.getTeamId());
 		
 		// delete the team
 		File file = getFile(this.getTeamId());
