@@ -148,6 +148,10 @@ public class TeamActivity extends UltimateActivity {
 			}
 			mixedTeamCheckbox.setChecked(Team.current().isMixed());
 			radiogroup_team_playerdisplay.check(Team.current().isDisplayingPlayerNumber() ? R.id.radio_team_playerdisplay_number : R.id.radio_team_playerdisplay_name);
+			view_website.setVisibility(Team.current().hasCloudId() ? View.VISIBLE : View.GONE);
+			button_website.setText(getWebsite());
+		} else {
+			view_website.setVisibility(View.GONE);
 		}
 		
 		if (isNewTeam() || Team.current().isDefaultTeamName()) { 
@@ -157,8 +161,6 @@ public class TeamActivity extends UltimateActivity {
 			view_team_players_button.setVisibility(View.VISIBLE);
 			button_cancel.requestFocus();
 		}
-		view_website.setVisibility(Team.current().hasCloudId() ? View.VISIBLE : View.GONE);
-		button_website.setText(getWebsite());
 	}
 	
 	private void populateAndSaveTeam() {
