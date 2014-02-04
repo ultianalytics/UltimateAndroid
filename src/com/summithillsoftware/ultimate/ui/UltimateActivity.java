@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -21,9 +22,11 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
 import com.summithillsoftware.ultimate.ui.support.SupportActivity;
 
@@ -109,6 +112,7 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.setCancelable(false);
  		errorDialog.setButton(BUTTON_POSITIVE, getString(android.R.string.ok), acknowledgementListener);
  		errorDialog.show();
+ 		styleAlertDialog(errorDialog);
 	}
 	
 	public void displayConfirmDialog(String title, String message, String yesButtonText, String noButtonText, DialogInterface.OnClickListener yesHandler) {
@@ -128,6 +132,7 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.setButton(BUTTON_POSITIVE, yesButtonText, yesHandler);
  		errorDialog.setButton(BUTTON_NEGATIVE, noButtonText, noHandler);
  		errorDialog.show();
+ 		styleAlertDialog(errorDialog);
 	}
 	
 	public void displayThreeButtonDialog(String title, String message, String button1Text, String button2Text, String cancelButtonText, DialogInterface.OnClickListener button1Handler, DialogInterface.OnClickListener button2Handler, DialogInterface.OnClickListener cancelHandler) {
@@ -139,6 +144,7 @@ public class UltimateActivity extends ActionBarActivity {
  		errorDialog.setButton(BUTTON_NEUTRAL, button2Text, button2Handler);
  		errorDialog.setButton(BUTTON_NEGATIVE, cancelButtonText, cancelHandler);
  		errorDialog.show();
+ 		styleAlertDialog(errorDialog);
 	}
 
 	public Size getScreenSize() {
@@ -210,5 +216,26 @@ public class UltimateActivity extends ActionBarActivity {
 	
 	private void goToSupportActivity() {
 		startActivity(new Intent(this, SupportActivity.class));
+	}
+	
+	private void styleAlertDialog(AlertDialog dialog) {
+	    try {
+	        Resources resources = dialog.getContext().getResources();
+	        int color = resources.getColor(R.color.ultimate_theme_color); 
+
+	        int alertTitleId = resources.getIdentifier("alertTitle", "id", "android");
+	        TextView alertTitle = (TextView) dialog.getWindow().getDecorView().findViewById(alertTitleId);
+	        if (alertTitle != null) {
+	        	alertTitle.setTextColor(color);
+	        }
+
+	        int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
+	        View titleDivider = dialog.getWindow().getDecorView().findViewById(titleDividerId);
+	        if (titleDivider != null) {
+	        	titleDivider.setBackgroundColor(color);	
+	        }
+	    } catch (Exception ex) {
+	        UltimateLogger.logError("Unable to apply custom style to alert dialog", ex);
+	    }
 	}
 }
