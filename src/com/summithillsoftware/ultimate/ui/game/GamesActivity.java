@@ -13,7 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.summithillsoftware.ultimate.CorruptObject;
+import com.summithillsoftware.ultimate.ObjectStoreError;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
@@ -100,7 +100,7 @@ public class GamesActivity extends UltimateActivity implements Refreshable {
 				try {
 					Game.setCurrentGameId(selectedGame.getGameId());
 					goToGameActivity(false);
-				} catch (CorruptObject err) {
+				} catch (ObjectStoreError err) {
 					displayConfirmDialog(
 							getString(R.string.alert_file_game_corrupt_title), 
 							getString(R.string.alert_file_game_corrupt_message), 

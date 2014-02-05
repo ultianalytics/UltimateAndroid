@@ -8,7 +8,6 @@ import java.io.ObjectOutput;
 
 import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
 
 public class Preferences implements Externalizable {
 	private static final long serialVersionUID = 1L;
@@ -46,11 +45,7 @@ public class Preferences implements Externalizable {
 	public void save() {
 		synchronized (PREFERENCES_FILE_NAME) {
 			File file = getFile();
-			boolean success = AtomicFile.writeObject(this, file);
-			if (!success) {
-				UltimateLogger.logError( "Unable to save preferences");
-				throw new RuntimeException("Error saving preferences");
-			}
+			AtomicFile.writeObject(this, file);
 		}
 	}
 	

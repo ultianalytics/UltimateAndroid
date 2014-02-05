@@ -201,11 +201,7 @@ public class Team implements Externalizable {
 	
 	public void save() {
 		File file = getFile(teamId);
-		boolean success = AtomicFile.writeObject(this, file);
-		if (!success) {
-			UltimateLogger.logError( "Unable to save team");
-			throw new RuntimeException("Error saving tream");
-		}
+		AtomicFile.writeObject(this, file);
 	}
 	
 	public void delete() {

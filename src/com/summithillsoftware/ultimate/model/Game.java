@@ -226,11 +226,7 @@ public class Game implements Externalizable {
 	public void save() {
 		GameDescription.clearGameDescription(Team.current().getTeamId(), gameId);
 		File file = getGameFile(Team.current().getTeamId(), getGameId());
-		boolean success = AtomicFile.writeObject(this, file);
-		if (!success) {
-			UltimateLogger.logError( "Unable to save game");
-			throw new RuntimeException("Error saving game");
-		}
+		AtomicFile.writeObject(this, file);
 	}
 
 	public boolean hasBeenSaved() {

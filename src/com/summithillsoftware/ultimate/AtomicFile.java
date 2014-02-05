@@ -1,12 +1,12 @@
 package com.summithillsoftware.ultimate;
 
-import java.io.Externalizable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,8 +25,7 @@ import java.util.Set;
  */
 
 public class AtomicFile {
-	private static String BACKUP_SUFFIX = ".bak";
-		
+	public static String BACKUP_SUFFIX = ".bak";
 	
 	public static boolean exists(File file) {
 		if (file.exists()) {
@@ -55,8 +54,11 @@ public class AtomicFile {
 		return fileNames;
 	}
 	
-	public static boolean writeObject(Externalizable object, File destination) {
+	// will throw runtime ObjectStoreError if write failed
+	public static void writeObject(Serializable object, File destination) {
 		boolean success = true;
+		Exception failure = null;
+		boolean isNew = false;
 		
 		// handle backup
 		
@@ -70,9 +72,11 @@ public class AtomicFile {
 				originalToRename.renameTo(backup);
 			} else {
 				// new file..create empty backup
+				isNew = true;
 				try {
 					backup.createNewFile();
 				} catch (IOException e) {
+					failure = e;
 					success = false;
 					UltimateLogger.logError( "Error creating file backup for new file " + destination.getAbsolutePath(), e);
 				}
@@ -89,13 +93,27 @@ public class AtomicFile {
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(object);
 		} catch (Exception e) {
+			failure = e;
 			UltimateLogger.logError( "Error writing object " + object.toString() + " to atomic file " + destination.toString(), e);
 			success = false;
+			// if new file try and cleanup (but don't compromise state if unsuccessful)
+			if (isNew) {
+				boolean destDeleted = true;
+				if (destination.exists()) {
+					destDeleted = destination.delete();
+				}
+				if (destDeleted) {
+					backup.delete();
+				}
+			}
 		} finally {
 			try {
 				objectOutputStream.close();
 				fileOutputStream.close();
 			} catch (Exception e2) {
+				if (failure == null) {
+					failure = e2;
+				}
 				UltimateLogger.logError( "Unable to close files when saving atomic file", e2);
 				success = false;
 			}
@@ -104,10 +122,17 @@ public class AtomicFile {
 		// remove backup if all went well
 		
 		if (success) {
-			backup.delete();
+			if (backup.exists()) {
+				boolean backupDeleted = backup.delete();
+				if (!backupDeleted) {
+					failure = new Exception("Unable to remove backup file");
+				}
+			}
 		}
 		
-		return success;
+		if (failure != null) {
+			throw new ObjectStoreError("Unable to write object to atomic file", failure);
+		}
 	}
 	
 	public static Object readObject(File destination) {
@@ -128,7 +153,7 @@ public class AtomicFile {
 				return obj;
 			} catch (Exception e) {
 				UltimateLogger.logError( "Error restoring atomic object from file " + destination.getAbsolutePath(), e);
-				throw new CorruptObject("Could not restore atomic object", e);
+				throw new ObjectStoreError("Could not restore atomic object", e);
 			} finally {
 				try {
 					objectInputStream.close();
