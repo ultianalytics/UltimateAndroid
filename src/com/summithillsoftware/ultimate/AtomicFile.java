@@ -153,6 +153,21 @@ public class AtomicFile {
 		return didDeleteOriginal && didDeleteBackup;
 	}
 	
+	public static boolean rename(File destination, String newName) {
+		boolean didRenameOriginal = true;
+		boolean didRenameBackup = true;
+		if (destination.exists()) {
+			File newPath = new File(destination.getParentFile(), newName);
+			didRenameOriginal = destination.renameTo(newPath);
+		}
+		File backup = getBackupFile(destination);
+		if (backup.exists()) {
+			File newPath = new File(backup.getParentFile(), newName + BACKUP_SUFFIX);
+			didRenameBackup = backup.renameTo(newPath);
+		}
+		return didRenameOriginal && didRenameBackup;
+	}
+	
 	private static File getBackupFile(File file) {
 		return new File(file.getParentFile(), file.getName() + BACKUP_SUFFIX);
 	}

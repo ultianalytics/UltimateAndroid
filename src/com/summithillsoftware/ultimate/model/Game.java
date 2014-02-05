@@ -159,9 +159,14 @@ public class Game implements Externalizable {
 		Game game = null;
 		File existingFile = getGameFile(teamId, gameId);
 		if (existingFile != null && AtomicFile.exists(existingFile)) {
-			game = (Game)AtomicFile.readObject(existingFile);
-			if (game != null && mergePlayersWithCurrentTeam) {
-				game.mergePlayersWithCurrentTeam();
+			try {
+				game = (Game)AtomicFile.readObject(existingFile);
+				if (game != null && mergePlayersWithCurrentTeam) {
+					game.mergePlayersWithCurrentTeam();
+				}
+			} catch (Exception e) {
+				AtomicFile.rename(existingFile, "CORRUPT-" + gameId);
+				UltimateLogger.logError("Error retrieving game from file", e);
 			}
 		}
 		return game;
