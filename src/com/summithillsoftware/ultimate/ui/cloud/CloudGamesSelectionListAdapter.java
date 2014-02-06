@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.DateUtil;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.GameDescription;
+import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameDownloadWorkflow;
 
 public class CloudGamesSelectionListAdapter extends BaseAdapter {

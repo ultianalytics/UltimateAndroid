@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate;
+package com.summithillsoftware.ultimate.util;
 
 public class ObjectStoreError extends RuntimeException {
 	private static final long serialVersionUID = 1L;

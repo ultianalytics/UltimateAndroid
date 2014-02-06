@@ -16,13 +16,13 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class PullDialogFragment extends UltimateDialogFragment {
 	private static final String PLAYER_NAME_ARG = "playerName";

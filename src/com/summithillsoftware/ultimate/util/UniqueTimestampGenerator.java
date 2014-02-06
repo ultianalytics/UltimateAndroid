@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.model;
+package com.summithillsoftware.ultimate.util;
 
 public class UniqueTimestampGenerator {
 	public static UniqueTimestampGenerator Current;

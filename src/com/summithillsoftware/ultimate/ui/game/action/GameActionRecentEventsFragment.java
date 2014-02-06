@@ -15,12 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.PointEvent;
 import com.summithillsoftware.ultimate.ui.DefaultAnimationListener;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class GameActionRecentEventsFragment extends UltimateFragment {
 	private GameActionEventListener gameActionEventListener;

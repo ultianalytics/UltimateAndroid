@@ -40,15 +40,12 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.SoundPlayer;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PlayerSubstitution;
 import com.summithillsoftware.ultimate.model.SubstitutionReason;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.model.UniqueTimestampGenerator;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
 import com.summithillsoftware.ultimate.stats.PlayerStatisticsCalculator;
 import com.summithillsoftware.ultimate.ui.DefaultAnimatorListener;
@@ -58,6 +55,9 @@ import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
+import com.summithillsoftware.ultimate.util.SoundPlayer;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
+import com.summithillsoftware.ultimate.util.UniqueTimestampGenerator;
 
 @SuppressWarnings("deprecation")
 public class LineDialogFragment extends UltimateDialogFragment {

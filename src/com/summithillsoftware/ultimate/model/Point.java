@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.summithillsoftware.ultimate.util.UniqueTimestampGenerator;
+
 public class Point implements Externalizable {
 	private static final long serialVersionUID = 1L;
 	private static final String JSON_SUMMARY = "summary";

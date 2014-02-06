@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate;
+package com.summithillsoftware.ultimate.util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+
+import com.summithillsoftware.ultimate.Constants;
+import com.summithillsoftware.ultimate.UltimateApplication;
 
 import android.util.Log;
 

@@ -23,7 +23,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.DateUtil;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
@@ -35,6 +34,7 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
+import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
 public class GameActivity extends UltimateActivity {

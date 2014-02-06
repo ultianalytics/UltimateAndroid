@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.summithillsoftware.ultimate.ObjectStoreError;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
@@ -21,6 +20,7 @@ import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudGameDownloadDialog;
+import com.summithillsoftware.ultimate.util.ObjectStoreError;
 import com.summithillsoftware.ultimate.workflow.GameDownloadWorkflow;
 
 public class GamesActivity extends UltimateActivity implements Refreshable {

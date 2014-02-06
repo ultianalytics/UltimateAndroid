@@ -26,9 +26,9 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
 import com.summithillsoftware.ultimate.ui.support.SupportActivity;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class UltimateActivity extends ActionBarActivity {
 	

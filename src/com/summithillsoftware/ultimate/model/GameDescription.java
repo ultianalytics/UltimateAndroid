@@ -21,7 +21,7 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.summithillsoftware.ultimate.UltimateLogger;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class GameDescription implements Externalizable {
 	private static final long serialVersionUID = 1L;

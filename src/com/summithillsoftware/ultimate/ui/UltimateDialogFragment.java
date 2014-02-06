@@ -3,7 +3,7 @@ package com.summithillsoftware.ultimate.ui;
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 
-import com.summithillsoftware.ultimate.SoundPlayer;
+import com.summithillsoftware.ultimate.util.SoundPlayer;
 
 import android.app.AlertDialog;
 import android.content.Context;

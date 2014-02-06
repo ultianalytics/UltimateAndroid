@@ -25,11 +25,11 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 
 public class CloudClient {

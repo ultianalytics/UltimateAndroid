@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate;
+package com.summithillsoftware.ultimate.util;
 
 import java.util.Calendar;
 import java.util.Date;

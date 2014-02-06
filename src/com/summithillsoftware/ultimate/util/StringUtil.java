@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.model;
+package com.summithillsoftware.ultimate.util;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 

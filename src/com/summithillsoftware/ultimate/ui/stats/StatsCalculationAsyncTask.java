@@ -6,10 +6,10 @@ import java.util.List;
 import android.os.AsyncTask;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
 import com.summithillsoftware.ultimate.stats.PlayerStatisticsCalculator;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class StatsCalculationAsyncTask extends AsyncTask<Void, Void, List<PlayerStat>> {
 	private int statsTypeId;

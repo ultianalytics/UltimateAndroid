@@ -27,10 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
+import com.summithillsoftware.ultimate.util.AtomicFile;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Game implements Externalizable {
 	private static final long serialVersionUID = 1L;

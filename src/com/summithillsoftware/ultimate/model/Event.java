@@ -31,7 +31,7 @@ import org.json.JSONObject;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public abstract class Event implements Externalizable {
 	private static final String JSON_EVENT_TYPE = "type";

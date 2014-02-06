@@ -1,8 +1,11 @@
-package com.summithillsoftware.ultimate;
+package com.summithillsoftware.ultimate.util;
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+
+import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.UltimateApplication;
 
 public class SoundPlayer {
 	private static SoundPlayer Current;

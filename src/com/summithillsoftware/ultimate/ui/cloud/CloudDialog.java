@@ -27,13 +27,13 @@ import android.widget.ViewFlipper;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.cloud.CloudResponseStatus;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.OnWorkflowChangedListener;

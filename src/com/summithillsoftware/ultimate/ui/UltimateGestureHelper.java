@@ -9,7 +9,7 @@ import android.gesture.Prediction;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.UltimateLogger;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class UltimateGestureHelper {
 	public static String SWIPE_RIGHT = "swiperight";

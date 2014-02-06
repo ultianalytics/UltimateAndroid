@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.summithillsoftware.ultimate.AtomicFile;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.util.AtomicFile;
 
 public class Preferences implements Externalizable {
 	private static final long serialVersionUID = 1L;

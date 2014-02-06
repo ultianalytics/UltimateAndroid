@@ -1,6 +1,6 @@
 package com.summithillsoftware.ultimate.model;
 
-import com.summithillsoftware.ultimate.UltimateLogger;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class EventHolder {
 	private Event event;

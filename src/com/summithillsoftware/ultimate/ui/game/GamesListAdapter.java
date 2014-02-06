@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.DateUtil;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
+import com.summithillsoftware.ultimate.util.DateUtil;
 
 public class GamesListAdapter extends BaseAdapter {
 	private List<GameDescription> sortedGames;

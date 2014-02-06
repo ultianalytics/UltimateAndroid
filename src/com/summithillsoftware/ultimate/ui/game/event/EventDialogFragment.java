@@ -18,7 +18,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.UltimateLogger;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
@@ -28,6 +27,7 @@ import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class EventDialogFragment extends UltimateDialogFragment {
 	
