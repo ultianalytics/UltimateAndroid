@@ -19,5 +19,16 @@
         android:orderInCategory="60"
         android:title="@string/action_delete"
         ultimate:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_gear"
+        android:orderInCategory="200"
+        android:title="@string/menuitem_settings"
+        ultimate:showAsAction="never|withText"/>
+    <item
+        android:id="@+id/action_support"
+        android:orderInCategory="400"
+        android:title="@string/menuitem_support"
+        ultimate:showAsAction="never|withText"/>
 
 </menu>

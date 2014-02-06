@@ -6,11 +6,6 @@
         ultimate:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_action_trash"
         android:title="@string/action_delete"/>    
-        
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        ultimate:showAsAction="never"
-        android:title="@string/action_settings"/>
+
 
 </menu>

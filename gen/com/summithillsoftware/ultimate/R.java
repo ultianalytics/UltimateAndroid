@@ -1415,7 +1415,7 @@ containing a value of this type.
     public static final class id {
         public static final int actionView=0x7f0600f7;
         public static final int action_action=0x7f060113;
-        public static final int action_add=0x7f060117;
+        public static final int action_add=0x7f060118;
         public static final int action_bar=0x7f06001c;
         public static final int action_bar_activity_content=0x7f060015;
         public static final int action_bar_container=0x7f06001b;
@@ -1425,15 +1425,15 @@ containing a value of this type.
         public static final int action_bar_title=0x7f060022;
         public static final int action_context_bar=0x7f06001d;
         public static final int action_delete=0x7f060115;
-        public static final int action_download=0x7f060118;
-        public static final int action_games=0x7f060119;
-        public static final int action_line=0x7f060116;
+        public static final int action_download=0x7f060119;
+        public static final int action_games=0x7f06011a;
+        public static final int action_line=0x7f060117;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f060112;
-        public static final int action_support=0x7f06011b;
-        public static final int action_teams=0x7f06011a;
+        public static final int action_settings=0x7f060116;
+        public static final int action_support=0x7f060112;
+        public static final int action_teams=0x7f06011b;
         public static final int action_upload=0x7f060114;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int adminSiteButton=0x7f0600c2;
