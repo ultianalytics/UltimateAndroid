@@ -117,6 +117,10 @@
             android:name="com.summithillsoftware.ultimate.ui.support.SupportActivity"
             android:label="@string/title_activity_support" >
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.twitter.TwitterActivity"
+            android:label="@string/title_activity_twitter" >
+        </activity>
     </application>
 
 </manifest>

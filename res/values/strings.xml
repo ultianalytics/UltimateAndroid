@@ -69,13 +69,16 @@
     <string name="title_activity_stats">Player Statistics</string>
     <string name="title_activity_settings">Website Settings</string>
     <string name="title_activity_events_in_action">Events</string>
-    <string name="title_activity_support">Support</string>    
+	<string name="title_activity_twitter">Tweets</string>
+    <string name="title_activity_support">Support</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
     <string name="menuitem_team_download">Download</string>
     <string name="menuitem_upload">Upload</string>
     <string name="menuitem_settings">Website Settings</string>
+    <string name="menuitem_twitter_logout">Signout</string>
+    <string name="menuitem_twitter">Twitter</string>
     <string name="menuitem_support">Support</string>
     <string name="action_settings">Settings</string>
     <string name="action_delete">Delete</string>
@@ -281,7 +284,7 @@
     <string name="button_overtime_receive">Receive</string>
     <string name="button_overtime_defend">Pull</string>
     <string name="button_signoff">Sign out</string>
-	<string name="button_support_send_email">Send E-mail to Support</string>    
+    <string name="button_support_send_email">Send E-mail to Support</string>
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>
@@ -311,7 +314,6 @@
     <string name="toast_swipe_up_to_see_more">Swipe up to see more</string>
     <string name="toast_upload_complete">Upload Complete</string>
     <string name="checkbox_support_log_files">Log files</string>
-	<string name="checkbox_support_team_files">Team/Game files</string>    
-
+    <string name="checkbox_support_team_files">Team/Game files</string>
 
 </resources>

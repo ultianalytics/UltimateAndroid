@@ -15,23 +15,23 @@
         android:title="@string/menuitem_upload"
         ultimate:showAsAction="always|withText"/>
     <item
+        android:id="@+id/action_twitter"
+        android:icon="@drawable/ic_action_twitter"
+        android:orderInCategory="50"
+        android:title="@string/menuitem_twitter"
+        ultimate:showAsAction="always|withText"/>    
+    <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_trash"
-        android:orderInCategory="50"
-        android:showAsAction="ifRoom|withText"
+        android:orderInCategory="65"
         android:title="@string/action_delete"
         ultimate:showAsAction="ifRoom|withText"/>
-    <item
-        android:id="@+id/action_teams"
-        android:orderInCategory="75"
-        android:title="@string/action_teams"
-        ultimate:showAsAction="never"/>
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_gear"
         android:orderInCategory="200"
-        android:title="@string/menuitem_settings"
-        ultimate:showAsAction="never|withText"/>
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menuitem_settings"/>
     <item
         android:id="@+id/action_support"
         android:orderInCategory="400"

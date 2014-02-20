@@ -51,7 +51,6 @@ public class TeamActivity extends UltimateActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 	    super.onPrepareOptionsMenu(menu);
 	    menu.findItem(R.id.action_delete).setVisible(!isNewTeam());
-	    menu.findItem(R.id.action_teams).setVisible(!isNewTeam());
 	    menu.findItem(R.id.action_upload).setVisible(!isNewTeam() && !getTeamName().isEmpty());	    
 	    return true;
 	}
@@ -69,9 +68,6 @@ public class TeamActivity extends UltimateActivity {
 			return navigateUp();
 		case R.id.action_delete:
 			deleteClicked();
-			return true;
-		case R.id.action_teams:
-			goToTeamsActivity();
 			return true;
 		case R.id.action_upload:
 			showTeamUploadDialog();
@@ -189,10 +185,6 @@ public class TeamActivity extends UltimateActivity {
 			return false;
 		}
 		return true;
-	}
-	
-	private void goToTeamsActivity() {
-		startActivity(new Intent(this, TeamsActivity.class));
 	}
 	
 	private void goToPlayersActivity() {

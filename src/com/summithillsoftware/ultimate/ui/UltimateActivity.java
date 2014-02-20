@@ -28,6 +28,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
 import com.summithillsoftware.ultimate.ui.support.SupportActivity;
+import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class UltimateActivity extends ActionBarActivity {
@@ -195,6 +196,9 @@ public class UltimateActivity extends ActionBarActivity {
 			return true;	
 		case R.id.action_support:
 			goToSupportActivity();
+			return true;	
+		case R.id.action_twitter:
+			goToTwitterActivity();
 			return true;				
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -216,6 +220,10 @@ public class UltimateActivity extends ActionBarActivity {
 	
 	private void goToSupportActivity() {
 		startActivity(new Intent(this, SupportActivity.class));
+	}
+	
+	private void goToTwitterActivity() {
+		startActivity(new Intent(this, TwitterActivity.class));
 	}
 	
 	private void styleAlertDialog(AlertDialog dialog) {
