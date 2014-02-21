@@ -1,10 +1,12 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ultimate="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/action_twitter_logout"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_export"
-        android:title="@string/menuitem_twitter_logout"/>
-
+        android:orderInCategory="25"
+        android:showAsAction="always|withText"
+        android:title="@string/menuitem_twitter_logout"
+        ultimate:showAsAction="always|withText"/>
 </menu>
+

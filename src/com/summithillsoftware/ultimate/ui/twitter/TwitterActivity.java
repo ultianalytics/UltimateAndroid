@@ -35,6 +35,13 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 		return true;
 	}
 	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    menu.findItem(R.id.action_twitter_logout).setVisible(!isSignedIn());
+	    return true;
+	}
+	
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -64,6 +71,11 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
         getSupportActionBar().addTab(tab, false);
 	}
 	
+	
+	private boolean isSignedIn() {
+		// TODO...finish this
+		return true;
+	}
 	
 	/* ActionBar.TabListener */
 
