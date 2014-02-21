@@ -25,6 +25,7 @@
     <style name="UltimateActionBar"
            parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@drawable/ultimate_action_bar_background</item>
+		<item name="android:backgroundStacked">@color/ultimate_charcoal</item>        
         <item name="android:icon">@drawable/ultimate_logo</item>
 
         <!-- Support library compatibility -->
