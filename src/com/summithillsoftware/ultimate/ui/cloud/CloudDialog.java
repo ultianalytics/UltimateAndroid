@@ -57,9 +57,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	private TextView statusTextView;
 	private ProgressBar progressBar;
 	
-	private boolean hasUserBeenAskedToSignon;
-
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -222,7 +219,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	}
 	
 	protected void requestSignon() {
-		hasUserBeenAskedToSignon = false;
 		CloudClient.current().clearExistingAuthentication();
 		setProgressText(R.string.label_cloud_waiting_for_signon);
 		configureWebView();
@@ -280,15 +276,6 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		}
 	}
 	
-	private void webViewPageLoadFinished(String urlAsString) {
-		if (!isUltimateURL(urlAsString)) {
-			hasUserBeenAskedToSignon = true;
-			showSignonView();
-		} else if (hasUserBeenAskedToSignon && isAccessTestPageURL(urlAsString)) {
-			handleUserSignedOn();
-		}
-	}
-	
 	@SuppressLint("SetJavaScriptEnabled")
 	private void configureWebView() {
 		WebSettings webSettings = webView.getSettings();
@@ -299,6 +286,14 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				CloudDialog.this.webViewPageLoadFinished(url);
 			}
 		});
+	}
+	
+	private void webViewPageLoadFinished(String urlAsString) {
+		if (!isUltimateURL(urlAsString)) {
+			showSignonView();
+		} else if (isAccessTestPageURL(urlAsString)) {
+			handleUserSignedOn();
+		}
 	}
 	
 	protected void displayCompleteAndThenDismiss(boolean isUpload) {
