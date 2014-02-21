@@ -140,6 +140,8 @@
     <string name="alert_file_game_corrupt_message">Ouch!  We experienced an error attempting to read the game data.\n\nWould you like to delete the game now or try again?</string>
     <string name="alert_file_corrupt_delete">Delete</string>
     <string name="alert_file_corrupt_try_again">Try again</string>
+    <string name="alert_twitter_signon_error_title">Twitter Signon Error</string>
+    <string name="alert_twitter_signon_error_message">We are unable to communicate to Twitter to sign you on.  Try again later.  If the problem persists please send a note to support.</string>    
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -219,6 +221,7 @@
     <string name="label_settings_find_website_explanation">Return to the team view to see a link to the specific website for your team(s)</string>
     <string name="label_support_need_help_question">Need Help?</string>
     <string name="label_support_include">Include:</string>
+    <string name="label_twitter_waiting_for_signon">Waiting for sign in&#8230;</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -313,6 +316,7 @@
     <string name="toast_download_complete">Download Complete</string>
     <string name="toast_swipe_up_to_see_more">Swipe up to see more</string>
     <string name="toast_upload_complete">Upload Complete</string>
+    <string name="toast_signon_complete">Signon Complete</string>
     <string name="checkbox_support_log_files">Log files</string>
     <string name="checkbox_support_team_files">Team/Game files</string>
     

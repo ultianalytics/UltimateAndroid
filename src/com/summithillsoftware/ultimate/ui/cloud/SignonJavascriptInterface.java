@@ -12,7 +12,6 @@ public class SignonJavascriptInterface {
 		if (email != null && !email.isEmpty()) {
 			Preferences.current().setCloudEMail(email);
 			Preferences.current().save();
-			UltimateLogger.logInfo( "remembering last user to authenticate is " + email);
 			UltimateLogger.logInfo("remembering last user to authenticate is " + email);
 		}
 	}

@@ -10,7 +10,7 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.util.AtomicFile;
 
 public class Preferences implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
 	
 	public static final int MINIMUM_GAME_POINT = 9;
 	public static final int MAXIMUM_GAME_POINT = 17;
@@ -30,6 +30,9 @@ public class Preferences implements Externalizable {
 	private int timeoutFloatersPerGame = DEFAULT_FLOATERS_PER_GAME;
 	private String cloudEMail;
 	private String cloudAuthenticationCookie;
+	private String twitterOAuthUserAccessToken;
+	private String twitterOAuthUserAccessTokenSecret;
+	private String twitterMoniker;
 
 	static {
 		Current = restore();
@@ -105,6 +108,8 @@ public class Preferences implements Externalizable {
 	}
 
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		currentTeamFileName = (String)input.readObject();
 		currentGameFileName = (String)input.readObject();
 		tournamentName = (String)input.readObject();
@@ -113,9 +118,13 @@ public class Preferences implements Externalizable {
 		timeoutFloatersPerGame = input.readInt();
 		cloudEMail = (String)input.readObject();
 		cloudAuthenticationCookie = (String)input.readObject();
+		twitterOAuthUserAccessToken = (String)input.readObject();
+		twitterOAuthUserAccessTokenSecret = (String)input.readObject();
+		twitterMoniker = (String)input.readObject();
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(currentTeamFileName);
 		output.writeObject(currentGameFileName);
 		output.writeObject(tournamentName);
@@ -124,6 +133,9 @@ public class Preferences implements Externalizable {
 		output.writeInt(timeoutFloatersPerGame);
 		output.writeObject(cloudEMail);
 		output.writeObject(cloudAuthenticationCookie);
+		output.writeObject(twitterOAuthUserAccessToken);
+		output.writeObject(twitterOAuthUserAccessTokenSecret);
+		output.writeObject(twitterMoniker);
 	}
 
 	public String getCloudEMail() {
@@ -144,6 +156,31 @@ public class Preferences implements Externalizable {
 
 	public void setCloudAuthenticationCookie(String cloudAuthenticationCookie) {
 		this.cloudAuthenticationCookie = cloudAuthenticationCookie;
+	}
+
+	public String getTwitterOAuthUserAccessToken() {
+		return twitterOAuthUserAccessToken;
+	}
+
+	public void setTwitterOAuthUserAccessToken(String twitterOAuthUserAccessToken) {
+		this.twitterOAuthUserAccessToken = twitterOAuthUserAccessToken;
+	}
+
+	public String getTwitterOAuthUserAccessTokenSecret() {
+		return twitterOAuthUserAccessTokenSecret;
+	}
+
+	public void setTwitterOAuthUserAccessTokenSecret(
+			String twitterOAuthUserAccessTokenSecret) {
+		this.twitterOAuthUserAccessTokenSecret = twitterOAuthUserAccessTokenSecret;
+	}
+
+	public String getTwitterMoniker() {
+		return twitterMoniker;
+	}
+
+	public void setTwitterMoniker(String twitterMoniker) {
+		this.twitterMoniker = twitterMoniker;
 	}
 }
 

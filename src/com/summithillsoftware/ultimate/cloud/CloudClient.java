@@ -255,7 +255,7 @@ public class CloudClient {
 		return CloudResponseStatus.Unknown;
 	}
 	
-	private boolean isConnected() {
+	public boolean isConnected() {
 		ConnectivityManager cm = (ConnectivityManager) UltimateApplication.current().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo networkInfo = cm.getActiveNetworkInfo();  
 		// if no network is available then networkInfo will be null

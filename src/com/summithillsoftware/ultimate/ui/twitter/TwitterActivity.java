@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.twitter;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -11,7 +12,9 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.view.Menu;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.twitter.TwitterClient;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 
 public class TwitterActivity extends UltimateActivity implements TabListener, ViewPager.OnPageChangeListener {
 	private ViewPager viewPager;
@@ -48,6 +51,14 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
         outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (!TwitterClient.current().isSignedIn()) {
+			showSignonDialog();
+		}
+	}
+	
 	private void connectWidgets() {
 		viewPager = (ViewPager)findViewById(R.id.twitterFragment).findViewById(R.id.pager);
 		pageAdapter = new TwitterPagerAdapter(getSupportFragmentManager());
@@ -73,8 +84,13 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	
 	
 	private boolean isSignedIn() {
-		// TODO...finish this
-		return true;
+		return TwitterClient.current().isSignedIn();
+	}
+	
+	private void showSignonDialog() {
+	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    TwitterSignonDialog signonDialog = new TwitterSignonDialog();
+	    signonDialog.show(fragmentManager, "dialog");
 	}
 	
 	/* ActionBar.TabListener */
@@ -118,5 +134,6 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
     public void onPageSelected(int position) {
 		getSupportActionBar().setSelectedNavigationItem(position);
     }
+
 
 }
