@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.ui.twitter;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -11,9 +13,10 @@ import android.view.Menu;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
-public class TwitterActivity extends UltimateActivity implements TabListener {
+public class TwitterActivity extends UltimateActivity implements TabListener, ViewPager.OnPageChangeListener {
 	private ViewPager viewPager;
 	private TwitterPagerAdapter pageAdapter;
+	private ArrayList<Tab> tabs = new ArrayList<Tab>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,9 @@ public class TwitterActivity extends UltimateActivity implements TabListener {
 		setContentView(R.layout.activity_twitter);
 		connectWidgets();
 		configureTabs();
-		
+	    if (savedInstanceState != null) {
+	    	getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+	    }
 	}
 
 	@Override
@@ -30,38 +35,76 @@ public class TwitterActivity extends UltimateActivity implements TabListener {
 		return true;
 	}
 	
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+    }
+	
 	private void connectWidgets() {
 		viewPager = (ViewPager)findViewById(R.id.twitterFragment).findViewById(R.id.pager);
 		pageAdapter = new TwitterPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(pageAdapter);
+		viewPager.setOnPageChangeListener(this);
 	}
 	
 	private void configureTabs() {
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
         Tab tab = getSupportActionBar().newTab().setText(R.string.tab_twitter_tweet).setTabListener(this);
+        tab.setTag("tweet");
+        tabs.add(tab);
         getSupportActionBar().addTab(tab, true);
         tab = getSupportActionBar().newTab().setText(R.string.tab_twitter_tweet_log).setTabListener(this);
+        tab.setTag("log");
+        tabs.add(tab);
         getSupportActionBar().addTab(tab, false);
         tab = getSupportActionBar().newTab().setText(R.string.tab_twitter_auto_tweet).setTabListener(this);
+        tab.setTag("auto");
+        tabs.add(tab);
         getSupportActionBar().addTab(tab, false);
 	}
+	
+	
+	/* ActionBar.TabListener */
 
 	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
+		// no-op
 		
 	}
 
 	@Override
-	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        for (int i=0; i < tabs.size(); i++) {
+            if (tabs.get(i).getTag().equals(tab.getTag())) {
+                viewPager.setCurrentItem(i);
+            }
+        }
+    }
+
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
+		// no-op
 		
 	}
+
+	
+	/*   ViewPager.OnPageChangeListener */
+	
+	@Override
+	public void onPageScrollStateChanged(int state) {
+		// no-op
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		// no-op
+	}
+
+	@Override
+    public void onPageSelected(int position) {
+		getSupportActionBar().setSelectedNavigationItem(position);
+    }
 
 }
