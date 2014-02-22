@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tweet_entry_height"
         android:textSize="@dimen/tweet_text_size"
+        android:maxLength="140"
         android:inputType="textMultiLine" >
 
         <requestFocus />

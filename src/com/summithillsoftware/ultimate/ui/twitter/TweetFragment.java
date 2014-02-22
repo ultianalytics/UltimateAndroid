@@ -1,6 +1,8 @@
 package com.summithillsoftware.ultimate.ui.twitter;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import com.summithillsoftware.ultimate.twitter.TweetQueue;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
 public class TweetFragment extends UltimateFragment {
+	private static final int MAX_CHARS = 140;
+	
 	// widgets - tweet view
 	private TextView tweetCharacterCount;
 	private EditText tweetText;
@@ -23,6 +27,7 @@ public class TweetFragment extends UltimateFragment {
 		View view = inflater.inflate(R.layout.fragment_twitter_tweet, null);
 		connectWidgets(view);
 		registerWidgetListeners();
+		updateCharacterCount();
 		return view;
 	}
 
@@ -38,13 +43,33 @@ public class TweetFragment extends UltimateFragment {
 				tweet();
 			}
 		});
+		tweetText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {
+				// no-op
+			}
+			@Override
+			public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {
+				// no-op
+			}
+			@Override
+			public void afterTextChanged(Editable paramEditable) {
+				updateCharacterCount();
+			}
+		});
 	}
 
 	private void tweet() {
-		String text = tweetText.getText().toString();
-		if (text != null && !text.trim().isEmpty()) {
-			TweetQueue.current().submitTweet(text.trim());
+		String text = tweetText.getText().toString().trim();
+		if (text != null && !text.isEmpty()) {
+			TweetQueue.current().submitTweet(text);
 			tweetText.setText("");
 		}
+	}
+	
+	private void updateCharacterCount() {
+		String text = tweetText.getText().toString().trim();
+		int availableChars = MAX_CHARS - text.length();
+		tweetCharacterCount.setText(Integer.toString(availableChars));
 	}
 }
