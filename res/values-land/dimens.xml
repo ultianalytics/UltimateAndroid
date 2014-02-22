@@ -4,5 +4,6 @@
     <dimen name="game_action_button_text_size">12sp</dimen>
 	<dimen name="game_action_initiator_text_size">10sp</dimen>
 	<dimen name="cloud_dialog_content_view_length">250dp</dimen>
+	<dimen name="tweet_entry_height">60dp</dimen>
 
 </resources>

@@ -15,6 +15,8 @@
 	<dimen name="event_player_list_show_all_font_size">16sp</dimen>
 	<dimen name="event_player_check_icon_dimension">30dp</dimen>
 	<dimen name="cloud_dialog_content_view_length">520dp</dimen> 
+	<dimen name="tweet_entry_height">200dp</dimen>
+	<dimen name="tweet_text_size">18sp</dimen>
 	
 	
 	<dimen name="font_size10">10sp</dimen>
