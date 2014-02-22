@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,14 +92,19 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 	}
 
 	private void registerDialogCancelListener(Dialog dialog) {
-		dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+		// catch back button and 
+		dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
 			@Override
-			public void onCancel(DialogInterface arg0) {
-				// Nothing yet...just coded in case we want to do something here
-				// later
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+					((TwitterActivity)getActivity()).signonDismissed();
+					return true;
+				}
+				return false;
 			}
 		});
 	}
+
 	
 	private void dismissDialog() {
 		try {
