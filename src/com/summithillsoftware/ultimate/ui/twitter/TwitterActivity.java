@@ -93,7 +93,7 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	
 	private void populateTitle() {
 		String moniker = Preferences.current().getTwitterMoniker();
-		moniker = moniker == null ? "" : " (" + moniker + ")";
+		moniker = moniker == null ? "" : " @" + moniker;
 		setTitle(getString(R.string.title_activity_twitter) + moniker);
 	}
 	
