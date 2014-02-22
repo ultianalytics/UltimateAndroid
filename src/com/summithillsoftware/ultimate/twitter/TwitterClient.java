@@ -136,7 +136,7 @@ public class TwitterClient {
 	}
 	
 	private void setTwitterCredentials(String twitterOAuthUserAccessToken, String twitterOAuthUserAccessTokenSecret, String moniker) {
-		Preferences.current().setTwitterOAuthUserAccessToken(twitterOAuthUserAccessTokenSecret);
+		Preferences.current().setTwitterOAuthUserAccessToken(twitterOAuthUserAccessToken);
 		Preferences.current().setTwitterOAuthUserAccessTokenSecret(twitterOAuthUserAccessTokenSecret);
 		Preferences.current().setTwitterMoniker(moniker);
 		Preferences.current().save();
