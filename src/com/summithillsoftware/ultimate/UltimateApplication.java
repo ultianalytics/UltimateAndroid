@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.webkit.CookieSyncManager;
 
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.twitter.TweetQueue;
 import com.summithillsoftware.ultimate.util.DirectoryZipper;
 import com.summithillsoftware.ultimate.util.SoundPlayer;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
@@ -39,6 +40,7 @@ public class UltimateApplication extends Application {
         Current = this;
         TestFlight.takeOff(this, TEST_FLIGHT_APP_ID);
         CookieSyncManager.createInstance(this);
+        TweetQueue.current();  // gets twitter looper initialized
         ensureOneTeam();
         SoundPlayer.current().loadSounds();
     }  

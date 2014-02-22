@@ -5,11 +5,34 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tweetCharacterCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/undefined"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/tweet_text_size" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/tweetText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tweet_entry_height"
+        android:textSize="@dimen/tweet_text_size"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/tweetButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tab_twitter_tweet"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/button_tweet_send" />
 
 </LinearLayout>

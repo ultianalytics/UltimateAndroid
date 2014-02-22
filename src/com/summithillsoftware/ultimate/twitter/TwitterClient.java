@@ -1,5 +1,6 @@
 package com.summithillsoftware.ultimate.twitter;
 
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -116,6 +117,16 @@ public class TwitterClient {
 		}
 	}
 	
+	// IMPORTANT: Do not call on UI thread
+	public void tweet(String text) {
+		try {
+			Status status = getAuthenticatedTwitter().updateStatus(text);
+			UltimateLogger.logInfo("Tweet sent. Status returned is " + status);
+		} catch (TwitterException e) {
+			UltimateLogger.logError("Tweet failed", e);
+		}
+	}
+    
 	public void clearTwitterCredentials() {
 		Preferences.current().setTwitterOAuthUserAccessToken(null);
 		Preferences.current().setTwitterOAuthUserAccessTokenSecret(null);
@@ -155,6 +166,13 @@ public class TwitterClient {
 			twitter = factory.getInstance();
 		}
 		return twitter;
+	}
+	
+	private Twitter getAuthenticatedTwitter() {
+	    Twitter authenticatedTwitter = getTwitter();
+	    AccessToken accessToken = new AccessToken(getTwitterOAuthUserAccessToken(), getTwitterOAuthUserAccessTokenSecret());
+	    authenticatedTwitter.setOAuthAccessToken(accessToken);
+		return authenticatedTwitter;
 	}
 	
 	private Configuration getTwitterConfiguration() {

@@ -284,6 +284,7 @@
     <string name="button_stattype_ds">Ds</string>
     <string name="button_stattype_pulls">Pulls</string>
     <string name="button_stattype_pullobs">Pulls OB</string>
+    <string name="button_tweet_send">Tweet</string>
     <string name="button_overtime_receive">Receive</string>
     <string name="button_overtime_defend">Pull</string>
     <string name="button_signoff">Sign out</string>
