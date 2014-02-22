@@ -1,5 +1,7 @@
 package com.summithillsoftware.ultimate.twitter;
 
+import com.summithillsoftware.ultimate.util.UltimateLogger;
+
 import android.os.Handler;
 import android.os.Looper;
 
@@ -46,7 +48,8 @@ public class TweetQueue {
 	
 	// runs on background looper thread
 	private void sendTweet(Tweet tweet) {
-		TwitterClient.current().tweet(tweet.getText());
+		TwitterClient.current().tweet(tweet);
+		UltimateLogger.logError("Tweet sent.  Status is " + tweet.getStatus());
 	}
 	
 }
