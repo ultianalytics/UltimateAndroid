@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.twitter.TwitterClient;
-import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
 public class TwitterActivity extends UltimateActivity implements TabListener, ViewPager.OnPageChangeListener {
