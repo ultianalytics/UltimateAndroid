@@ -69,8 +69,16 @@ public class TwitterClient {
 		return moniker != null && !moniker.isEmpty();
 	}
 	
-	public boolean isAuthentiationCallbackUrl(String url) {
+	public boolean isAuthenticationCallbackUrl(String url) {
 		return url.contains(TWITTER_CALLBACK_PATH);
+	}
+	
+	public boolean isAuthenticationCancelledCallbackUrl(String url) {
+		if (isAuthenticationCallbackUrl(url)) {
+			Uri uri =  Uri.parse(url);
+			return uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER) == null;
+		}
+		return false;
 	}
 	
 	// IMPORTANT: Do not call on UI thread

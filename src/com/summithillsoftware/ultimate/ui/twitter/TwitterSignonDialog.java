@@ -139,8 +139,12 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 			public void onPageFinished (WebView view, String url) {
 				if (!isShowSignonView()) {
 					showSignonView();
-				} else if (TwitterClient.current().isAuthentiationCallbackUrl(url)) {
-					new TwitterSetCredentialsAsyncTask(url).execute();
+				} else if (TwitterClient.current().isAuthenticationCallbackUrl(url)) {
+					if (TwitterClient.current().isAuthenticationCancelledCallbackUrl(url)) {
+						dismissDialog();
+					} else {
+						new TwitterSetCredentialsAsyncTask(url).execute();
+					}
 				}
 			}
 		});
