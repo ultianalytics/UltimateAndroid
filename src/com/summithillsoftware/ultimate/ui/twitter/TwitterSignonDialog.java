@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,26 +108,33 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		}
 	}
 
-	protected void requestSignon() {
+	private void requestSignon() {
 		if (CloudClient.current().isConnected()) {
 			setProgressText(R.string.label_twitter_waiting_for_signon);
 			showLoadingView();
 			configureWebView();
-			String twitterSignonUrl = TwitterClient.current().getAuthenticationURL();
-			if (twitterSignonUrl == null) {
-				displayTwitterError();
-			} else {
-				webView.loadUrl(twitterSignonUrl);
-			}
+			new TwitterGetAuthenticationUrlAsyncTask().execute();
 		} else {
 			displayNoConnectivity();
+		}
+	}
+	
+	private void requestSignon(String twitterSignonUrl) {
+		if (twitterSignonUrl == null) {
+			displayTwitterError();
+		} else {
+			webView.loadUrl(twitterSignonUrl);
 		}
 	}
 	
 	private void configureWebView() {
 		webView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished (WebView view, String url) {
-				showSignonView();
+				if (!isShowSignonView()) {
+					showSignonView();
+				} else if (TwitterClient.current().isAuthentiationCallbackUrl(url)) {
+					new TwitterSetCredentialsAsyncTask(url).execute();
+				}
 			}
 		});
 	}
@@ -137,6 +145,10 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 	
 	private void showLoadingView() {
 		viewFlipper.setDisplayedChild(0);
+	}
+	
+	private boolean isShowSignonView() {
+		return viewFlipper.getDisplayedChild() == 1;
 	}
 	
 	private void showSignonView() {
@@ -183,5 +195,39 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 						dismissDialog();
 					}
 				});
+	}
+	
+	private class TwitterGetAuthenticationUrlAsyncTask extends AsyncTask<Void, Void, String> {
+		@Override
+		protected String doInBackground(Void... paramArrayOfParams) {
+			return TwitterClient.current().getAuthenticationURL();
+		}
+		@Override
+		protected void onPostExecute(String twitterSignonUrl) {
+			requestSignon(twitterSignonUrl);
+		}
+	}
+	
+	private class TwitterSetCredentialsAsyncTask extends AsyncTask<Void, Void, Boolean> {
+		private String callbackUrl;
+		
+		public TwitterSetCredentialsAsyncTask(String callbackUrl) {
+			super();
+			this.callbackUrl = callbackUrl;
+		}
+		
+		@Override
+		protected Boolean doInBackground(Void... paramArrayOfParams) {
+			return TwitterClient.current().setTwitterCredentialsFromCallbackUrl(callbackUrl);
+		}
+		@Override
+		protected void onPostExecute(Boolean credentialsSaved) {
+			if (credentialsSaved) {
+				displayCompleteAndThenDismiss();
+			} else {
+				displayTwitterError();
+			}
+		}
+
 	}
 }

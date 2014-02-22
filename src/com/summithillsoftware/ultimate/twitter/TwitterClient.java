@@ -3,9 +3,11 @@ package com.summithillsoftware.ultimate.twitter;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
+import android.net.Uri;
 
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.model.Preferences;
@@ -31,7 +33,8 @@ import com.summithillsoftware.ultimate.util.UltimateLogger;
  */
 
 public class TwitterClient {
-	public static final String TWITTER_CALLBACK_URL = CloudClient.SCHEME_HOST + "/rest/view/twitter-oauth-callback";
+	public static final String TWITTER_CALLBACK_PATH = "/twitter-oauth-callback.jsp";
+	public static final String TWITTER_CALLBACK_URL = CloudClient.SCHEME_HOST + TWITTER_CALLBACK_PATH;
 	public static final String TWITTER_API_CONSUMER_KEY = "60ShZrkvkw28IqELlstXXA";
 	public static final String TWITTER_API_CONSUMER_SECRET = "QXabIEDdPW1HZC3hm3JkOVpD8vhXLbO5kKOjakbKivg";
 	public static final String APP_ONLY_AUTH_URL = "https://api.twitter.com/oauth2/token";
@@ -39,7 +42,15 @@ public class TwitterClient {
 	public static final String AUTHORIZE_URL = "https://api.twitter.com/oauth2/token";
 	public static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
 	
+	// Twitter oauth urls
+    static final String URL_TWITTER_AUTH = "auth_url";
+    static final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
+    static final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
+	
 	private static TwitterClient Current;
+	
+	private Twitter twitter;
+	private RequestToken requestToken;
 	
 	static {
 		Current = new TwitterClient();
@@ -58,10 +69,50 @@ public class TwitterClient {
 		return moniker != null && !moniker.isEmpty();
 	}
 	
-	public void setTwitterCredentials(String twitterOAuthUserAccessToken, String twitterOAuthUserAccessTokenSecret) {
+	public boolean isAuthentiationCallbackUrl(String url) {
+		return url.contains(TWITTER_CALLBACK_PATH);
+	}
+	
+	// IMPORTANT: Do not call on UI thread
+	public String getAuthenticationURL() {
+	    TwitterFactory factory = new TwitterFactory(getTwitterConfiguration());
+	    Twitter twitter = factory.getInstance();
+	    try {
+	    	requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
+	    	return requestToken.getAuthenticationURL();
+	    } catch (TwitterException e) {
+            // Error in updating status
+            UltimateLogger.logError("Twitter oAuth failure...unable to get authentication request token for the app", e);
+            return null;
+        }
+	}
+	
+	// IMPORTANT: Do not call on UI thread
+	public boolean setTwitterCredentialsFromCallbackUrl(String callbackUrl) {
+		AccessToken accessToken;
+		try {
+			Uri uri =  Uri.parse(callbackUrl);
+			String verifier = uri.getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+			accessToken = getTwitter().getOAuthAccessToken(requestToken, verifier);
+		} catch (TwitterException e) {
+			UltimateLogger.logError("Twitter error: unable to getOAuthAccessToken", e);
+			return false;
+		}
+		try {
+			setTwitterCredentials(accessToken.getToken(), accessToken.getTokenSecret());
+			return true;
+		} catch (Exception e) {
+			UltimateLogger.logError("Twitter error: could not glean token and secret from twitter response", e);
+			requestToken = null;
+			return false;
+		}
+	}
+	
+	private void setTwitterCredentials(String twitterOAuthUserAccessToken, String twitterOAuthUserAccessTokenSecret) {
 		Preferences.current().setTwitterOAuthUserAccessToken(twitterOAuthUserAccessTokenSecret);
 		Preferences.current().setTwitterOAuthUserAccessTokenSecret(twitterOAuthUserAccessTokenSecret);
 		Preferences.current().save();
+		UltimateLogger.logInfo("Twitter credentials saved for this user");
 	}
 
 	public String getTwitterMoniker() {
@@ -73,25 +124,21 @@ public class TwitterClient {
 		Preferences.current().save();
 	}
 	
-	public String getAuthenticationURL() {
-	    TwitterFactory factory = new TwitterFactory(getTwitterConfiguration());
-	    Twitter twitter = factory.getInstance();
-	    try {
-	    	RequestToken requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URL);
-	    	return requestToken.getAuthenticationURL();
-	    } catch (TwitterException e) {
-            // Error in updating status
-            UltimateLogger.logError("Twitter oAuth failure...unable to get authentication request token for the app", e);
-            return null;
-        }
-	}
-	
 	private String getTwitterOAuthUserAccessTokenSecret() {
 		return Preferences.current().getTwitterOAuthUserAccessTokenSecret();
 	}
 	
 	private String getTwitterOAuthUserAccessToken() {
 		return Preferences.current().getTwitterOAuthUserAccessToken();
+	}
+	
+	private Twitter getTwitter() {
+		if (twitter == null) {
+			TwitterFactory factory = new TwitterFactory(getTwitterConfiguration());
+			Twitter twitter = factory.getInstance();
+			return twitter;
+		}
+		return twitter;
 	}
 	
 	private Configuration getTwitterConfiguration() {
