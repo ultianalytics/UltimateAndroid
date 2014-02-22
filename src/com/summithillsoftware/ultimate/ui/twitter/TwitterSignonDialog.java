@@ -100,8 +100,9 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		});
 	}
 	
-	protected void dismissDialog() {
+	private void dismissDialog() {
 		try {
+			((TwitterActivity)getActivity()).signonDismissed();
 			dismiss();
 		} catch (Exception e) {
 			UltimateLogger.logWarning( "Error dismissing dialog", e);

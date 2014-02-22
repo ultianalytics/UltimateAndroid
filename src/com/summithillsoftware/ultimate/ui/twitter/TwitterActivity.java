@@ -10,16 +10,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.twitter.TwitterClient;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
-import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 
 public class TwitterActivity extends UltimateActivity implements TabListener, ViewPager.OnPageChangeListener {
 	private ViewPager viewPager;
 	private TwitterPagerAdapter pageAdapter;
 	private ArrayList<Tab> tabs = new ArrayList<Tab>();
+	private MenuItem logoutMenuItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,8 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 	    super.onPrepareOptionsMenu(menu);
-	    menu.findItem(R.id.action_twitter_logout).setVisible(!isSignedIn());
+	    logoutMenuItem = menu.findItem(R.id.action_twitter_logout);
+	    updateLogoutMenu();
 	    return true;
 	}
 	
@@ -56,6 +60,47 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 		super.onStart();
 		if (!TwitterClient.current().isSignedIn()) {
 			showSignonDialog();
+		} else {
+			populateView();
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			return navigateUp();
+		case R.id.action_twitter_logout:
+			TwitterClient.current().clearTwitterCredentials();
+			showSignonDialog();
+			populateView();
+			return true;
+		}		
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public void signonDismissed() {
+		if (isSignedIn()) {
+			populateView();
+		} else {
+			finish();
+		}
+	}
+	
+	private void populateView() {
+		populateTitle();
+		updateLogoutMenu();
+	}
+	
+	private void populateTitle() {
+		String moniker = Preferences.current().getTwitterMoniker();
+		moniker = moniker == null ? "" : " (" + moniker + ")";
+		setTitle(getString(R.string.title_activity_twitter) + moniker);
+	}
+	
+	private void updateLogoutMenu() {
+		if (logoutMenuItem != null) {
+			logoutMenuItem.setVisible(isSignedIn());
 		}
 	}
 	

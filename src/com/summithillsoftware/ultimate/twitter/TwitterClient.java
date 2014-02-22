@@ -99,7 +99,7 @@ public class TwitterClient {
 			return false;
 		}
 		try {
-			setTwitterCredentials(accessToken.getToken(), accessToken.getTokenSecret());
+			setTwitterCredentials(accessToken.getToken(), accessToken.getTokenSecret(), twitter.getScreenName());
 			return true;
 		} catch (Exception e) {
 			UltimateLogger.logError("Twitter error: could not glean token and secret from twitter response", e);
@@ -108,9 +108,18 @@ public class TwitterClient {
 		}
 	}
 	
-	private void setTwitterCredentials(String twitterOAuthUserAccessToken, String twitterOAuthUserAccessTokenSecret) {
+	public void clearTwitterCredentials() {
+		Preferences.current().setTwitterOAuthUserAccessToken(null);
+		Preferences.current().setTwitterOAuthUserAccessTokenSecret(null);
+		Preferences.current().setTwitterMoniker(null);
+		Preferences.current().save();
+		UltimateLogger.logInfo("Twitter credentials cleared for this user");
+	}
+	
+	private void setTwitterCredentials(String twitterOAuthUserAccessToken, String twitterOAuthUserAccessTokenSecret, String moniker) {
 		Preferences.current().setTwitterOAuthUserAccessToken(twitterOAuthUserAccessTokenSecret);
 		Preferences.current().setTwitterOAuthUserAccessTokenSecret(twitterOAuthUserAccessTokenSecret);
+		Preferences.current().setTwitterMoniker(moniker);
 		Preferences.current().save();
 		UltimateLogger.logInfo("Twitter credentials saved for this user");
 	}
@@ -135,8 +144,7 @@ public class TwitterClient {
 	private Twitter getTwitter() {
 		if (twitter == null) {
 			TwitterFactory factory = new TwitterFactory(getTwitterConfiguration());
-			Twitter twitter = factory.getInstance();
-			return twitter;
+			twitter = factory.getInstance();
 		}
 		return twitter;
 	}
