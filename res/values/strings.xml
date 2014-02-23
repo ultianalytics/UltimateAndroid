@@ -222,6 +222,7 @@
     <string name="label_support_need_help_question">Need Help?</string>
     <string name="label_support_include">Include:</string>
     <string name="label_twitter_waiting_for_signon">Waiting for sign in&#8230;</string>
+	<string name="label_twitter_recents">Recent Tweets</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -324,5 +325,19 @@
     <string name="tab_twitter_tweet">AdHoc Tweet</string>
     <string name="tab_twitter_auto_tweet">Auto Tweet</string>
     <string name="tab_twitter_tweet_log">Tweet Log</string>
+    <string name="twitter_description_error">ERROR SENDING TO TWITTER</string>
+    <string name="twitter_description_skipped">SKIPPED&#8230;TOO MANY RECENT TWEETS</string>
+    <string name="twitter_description_rejected">TWITTER REJECTED</string>    
+    <string name="twitter_description_rejected_rate_limit">TWITTER REJECTED&#8230;TOO MANY RECENT TWEETS</string>
+    <string name="twitter_description_rejected_duplicate">TWITTER REJECTED&#8230;DUPLICATE</string>
+    <string name="twitter_description_rejected_bad_credentials">TWITTER REJECTED&#8230;BAD CREDENTIALS</string>
+    <string name="twitter_description_rejected_comm_error">COMMUNICATIONS ERROR</string>
+    <string name="twitter_description_unknown">UNKNOWN ERROR</string>
+    <string name="twitter_description_waiting">WAITING TO SEND</string>
+    <string name="twitter_description_seconds">s</string>
+    <string name="twitter_description_minutes">m</string>
+    <string name="twitter_description_hours">h</string>
+    <string name="twitter_description_days">d</string>
+    <string name="twitter_description_old">old</string>
 
 </resources>

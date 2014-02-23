@@ -121,23 +121,23 @@ public class TwitterClient {
 	public void tweet(Tweet tweet) {
 		try {
 			Status status = getAuthenticatedTwitter().updateStatus(tweet.getText());
-			tweet.setStatus(TweetStatus.OK);
+			tweet.setCompletionStatus(TweetSendStatus.OK);
 			tweet.setLimitStatus(status.getRateLimitStatus());
 		} catch (TwitterException e) {
 			if (e.getStatusCode() == 403) {
 				if (e.getErrorCode() == 187) {
-					tweet.setStatus(TweetStatus.RejectedRetweet);
+					tweet.setCompletionStatus(TweetSendStatus.RejectedRetweet);
 				} else if (e.getErrorCode() == 88 || e.getErrorCode() == 185) {
-					tweet.setStatus(TweetStatus.RejectedRateLimitExceeded);
+					tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);
 				} else {
-					tweet.setStatus(TweetStatus.RejectedForUnkownReason);
+					tweet.setCompletionStatus(TweetSendStatus.RejectedForUnkownReason);
 				}
 			} else if (e.getStatusCode() == 429) {
-				tweet.setStatus(TweetStatus.RejectedRateLimitExceeded);				
+				tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);				
 			} else if (e.getStatusCode() == 401) {
-				tweet.setStatus(TweetStatus.RejectedBadCredentials);
+				tweet.setCompletionStatus(TweetSendStatus.RejectedBadCredentials);
 			} else if (e.getStatusCode() == 401) {
-				tweet.setStatus(TweetStatus.UnknownError);
+				tweet.setCompletionStatus(TweetSendStatus.UnknownError);
 			}
 			UltimateLogger.logError("Tweet failed" + tweet , e);
 		}

@@ -1,7 +1,7 @@
 package com.summithillsoftware.ultimate.util;
 
 public class UniqueTimestampGenerator {
-	public static UniqueTimestampGenerator Current;
+	private static UniqueTimestampGenerator Current;
 	
 	private int lastEventTimeIntervalSinceReferenceDateSeconds;
 	

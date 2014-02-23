@@ -1,11 +1,12 @@
 package com.summithillsoftware.ultimate.twitter;
 
-public enum TweetStatus {
+public enum TweetSendStatus {
 	OK,
 	RejectedRetweet,
 	RejectedRateLimitExceeded,
 	RejectedForUnkownReason,
 	RejectedBadCredentials,
 	CommunicationsError,
-	UnknownError
+	UnknownError,
+	NotStarted
 }

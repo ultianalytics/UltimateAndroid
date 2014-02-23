@@ -4,12 +4,18 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:orientation="vertical" >
-    
-        <TextView
-        android:id="@+id/textView1"
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tab_twitter_tweet_log"
+        android:text="@string/label_twitter_recents"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:id="@+id/tweetList"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
