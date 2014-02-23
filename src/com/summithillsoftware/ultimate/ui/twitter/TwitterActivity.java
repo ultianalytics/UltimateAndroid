@@ -139,7 +139,6 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	    if (prev != null) {
 	        ft.remove(prev);
 	    }
-	    ft.addToBackStack(null);
 	    
 	    TwitterSignonDialog signonDialog = new TwitterSignonDialog();
 	    signonDialog.show(fragmentManager, "dialog");
