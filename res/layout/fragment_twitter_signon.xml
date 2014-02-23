@@ -7,8 +7,8 @@
 
     <ViewFlipper
         android:id="@+id/viewFlipper"
-        android:layout_width="320dp"
-        android:layout_height="@dimen/cloud_dialog_content_view_length"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twitter_signon_webview_height"
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right" >
 

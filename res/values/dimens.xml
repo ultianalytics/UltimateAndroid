@@ -25,6 +25,7 @@
 	<dimen name="instructions_text_size">10sp</dimen>
 	<dimen name="tweet_entry_height">100dp</dimen>
 	<dimen name="tweet_text_size">14sp</dimen>
+	<dimen name="twitter_signon_webview_height">600dp</dimen>
 	
 	<dimen name="font_size10">8sp</dimen>
 	<dimen name="font_size20">10sp</dimen>
