@@ -47,6 +47,9 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		View view = inflater.inflate(R.layout.fragment_twitter_signon, container,
 				false);
 		connectWidgets(view);
+		populateView();
+		registerWidgetListeners();
+		requestSignon();
 		return view;
 	}
 
@@ -63,9 +66,6 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		populateView();
-		registerWidgetListeners();
-		requestSignon();
 	}
 
 	private void connectWidgets(View view) {

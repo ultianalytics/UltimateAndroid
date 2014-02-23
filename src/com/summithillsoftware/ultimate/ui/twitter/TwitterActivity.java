@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate.ui.twitter;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -133,10 +134,19 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	
 	private void showSignonDialog() {
 	    FragmentManager fragmentManager = getSupportFragmentManager();
+	    FragmentTransaction ft = fragmentManager.beginTransaction();
+	    Fragment prev = fragmentManager.findFragmentByTag("dialog");
+	    if (prev != null) {
+	        ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+	    
 	    TwitterSignonDialog signonDialog = new TwitterSignonDialog();
 	    signonDialog.show(fragmentManager, "dialog");
+	    
+	    ft.commit();
 	}
-	
+
 	/* ActionBar.TabListener */
 
 	@Override
