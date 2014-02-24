@@ -71,5 +71,6 @@ public class TweetFragment extends UltimateFragment {
 		String text = tweetText.getText().toString().trim();
 		int availableChars = MAX_CHARS - text.length();
 		tweetCharacterCount.setText(Integer.toString(availableChars));
+		tweetButton.setEnabled(!text.isEmpty());
 	}
 }

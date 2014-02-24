@@ -34,6 +34,7 @@
         android:id="@+id/tweetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_tweet_send" />
-
+        android:text="@string/button_tweet_send"
+        android:enabled="true"/>
+    
 </LinearLayout>
