@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Preferences;
+import com.summithillsoftware.ultimate.twitter.TweetQueue;
 import com.summithillsoftware.ultimate.twitter.TwitterClient;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
@@ -33,7 +34,6 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	    if (savedInstanceState != null) {
 	    	getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
 	    }
-	    refreshCurrentTab();
 	}
 
 	@Override
@@ -78,6 +78,12 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 			return true;
 		}		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onPause();
+		TweetQueue.current().setTweetListener(null);  // clear tweet listening
 	}
 	
 	public void signonDismissed() {
@@ -146,13 +152,6 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
 	    
 	    ft.commit();
 	}
-	
-	private void refreshCurrentTab() {
-		Fragment fragment = pageAdapter.getItem(viewPager.getCurrentItem());
-		if (fragment != null && fragment instanceof TweetLogFragment) {
-			((TweetLogFragment)fragment).refresh();
-		}
-	}
 
 	/* ActionBar.TabListener */
 
@@ -167,7 +166,6 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
         for (int i=0; i < tabs.size(); i++) {
             if (tabs.get(i).getTag().equals(tab.getTag())) {
                 viewPager.setCurrentItem(i);
-        	    refreshCurrentTab();
             }
         }
     }
@@ -196,6 +194,8 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
     public void onPageSelected(int position) {
 		getSupportActionBar().setSelectedNavigationItem(position);
     }
+
+
 
 
 }

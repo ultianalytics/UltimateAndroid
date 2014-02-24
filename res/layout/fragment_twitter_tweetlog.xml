@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_twitter_recents"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        style="@style/tweetSectionHeader"/>
 
     <ListView
         android:id="@+id/tweetList"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

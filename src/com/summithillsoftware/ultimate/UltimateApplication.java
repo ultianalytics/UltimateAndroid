@@ -5,6 +5,8 @@ import java.io.File;
 import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.webkit.CookieSyncManager;
 
 import com.summithillsoftware.ultimate.model.Team;
@@ -87,6 +89,11 @@ public class UltimateApplication extends Application {
 			UltimateLogger.logError("Could not create zip for support", e);
 			return null;
 		} 
+	}
+	
+	public void runOnUiThread(Runnable runnable) {
+		Handler handler = new Handler(Looper.getMainLooper());
+		handler.post(runnable);
 	}
 	
 	private File getAppExternalStorageFolder() {

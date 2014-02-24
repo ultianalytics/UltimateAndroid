@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class TweetQueue {
@@ -18,11 +19,14 @@ public class TweetQueue {
 	private static long TWEET_SEND_DELAY_MS = TWEET_SEND_DELAY_SECONDS * 1000; 
 	private static int TWEET_QUEUE_PROCESSING_DELAY_MS = TWEET_QUEUE_PROCESSING_DELAY_SECONDS * 1000;
 
-	private static int TWEET_LOG_SIZE = 30;;
+	private static int TWEET_LOG_SIZE = 30;
 	private static TweetQueue Current;
 	private Handler handler;
 	private Queue<Tweet> waitingQueue;
-	private List<Tweet> completedList;
+	private List<Tweet> recentsList;
+	
+	private String tweetListenerMutex = "ListenerMutex";
+	private TweetListener tweetListener;
 	
 	static {
 		Current = new TweetQueue();
@@ -31,7 +35,7 @@ public class TweetQueue {
 	private TweetQueue() {
 		createHandler();
 		waitingQueue = new ConcurrentLinkedQueue<Tweet>();
-		completedList = Collections.synchronizedList(new ArrayList<Tweet>());
+		recentsList = Collections.synchronizedList(new ArrayList<Tweet>());
 	}
 	
 	public static TweetQueue current() {
@@ -59,7 +63,7 @@ public class TweetQueue {
 	
 	// returns the recent tweets in order: most recent first
 	public List<Tweet>recentTweets() {
-		List<Tweet> recents = new ArrayList<Tweet>(completedList);
+		List<Tweet> recents = new ArrayList<Tweet>(recentsList);
 		Collections.reverse(recents);
 		return recents;
 	}
@@ -74,7 +78,8 @@ public class TweetQueue {
 	private void queueTweet(final Tweet tweet) {
 		tweet.setProgressStatus(TweetProgressStatus.Queued);
 		waitingQueue.add(tweet);
-		waitForNextProcessingInterval();
+		schueduleNextQueueProcessing();
+		notifyTweetStateChange();
 	}
 	
 	private synchronized void processWaitingTweets() {
@@ -84,22 +89,24 @@ public class TweetQueue {
 			Tweet tweet = waitingQueue.poll();  // get and remove from queue
 			processWaitingTweet(tweet);
 		}
-		waitForNextProcessingInterval();
+		schueduleNextQueueProcessing();
 	}
 	
 	private void processWaitingTweet(Tweet tweet) {
-		if (tweet.isCancelled()) {
-			// no-op
-		} else if (shouldSkipTweet(tweet)) {
-			tweet.setProgressStatus(TweetProgressStatus.Skipped);
-		} else {
-			sendTweet(tweet);
-			tweet.setProgressStatus(TweetProgressStatus.Sent);
+		if (!tweet.isCancelled()) {
+			recentsList.add(tweet);
+			if (shouldSkipTweet(tweet)) {
+				tweet.setProgressStatus(TweetProgressStatus.Skipped);
+			} else {
+				tweet.setProgressStatus(TweetProgressStatus.Sending);
+				sendTweet(tweet);
+				tweet.setProgressStatus(TweetProgressStatus.Sent);
+			}
+			notifyTweetStateChange();
 		}
-		completedList.add(tweet);
 	}
 	
-	private void waitForNextProcessingInterval() {
+	private void schueduleNextQueueProcessing() {
 		long pauseTimeUntilNextProcessing = TWEET_QUEUE_PROCESSING_DELAY_MS;
 		Tweet futureTweet = waitingQueue.peek();
 		if (futureTweet != null) {
@@ -144,11 +151,35 @@ public class TweetQueue {
 		// (rate limiting logic)
 		return false;
 	}
+
+	public void setTweetListener(TweetListener tweetListener) {
+		synchronized (tweetListenerMutex) {
+			this.tweetListener = tweetListener;
+		}
+	}
 	
 	private void cleanupCompletedList() {
-		if (completedList.size() > TWEET_LOG_SIZE) {
-			completedList = completedList.subList(completedList.size() - TWEET_LOG_SIZE, completedList.size());
+		if (recentsList.size() > TWEET_LOG_SIZE) {
+			recentsList = recentsList.subList(recentsList.size() - TWEET_LOG_SIZE, recentsList.size());
 		}
+	}
+	
+	private void notifyTweetStateChange() {
+		synchronized (tweetListenerMutex) {
+			if (tweetListener != null) {
+				UltimateApplication.current().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						tweetListener.tweetStateChanged();
+					}
+				});
+			}
+		}
+	}
+
+	// TweetListener wil be called back on the main thread
+	public static interface TweetListener {
+		public void tweetStateChanged();
 	}
 
 	

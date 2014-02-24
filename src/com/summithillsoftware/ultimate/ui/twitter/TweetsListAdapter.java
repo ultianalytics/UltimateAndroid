@@ -14,13 +14,14 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.twitter.Tweet;
 import com.summithillsoftware.ultimate.twitter.TweetQueue;
 
-public class TweetsListAdapter extends BaseAdapter {
+public class TweetsListAdapter extends BaseAdapter implements TweetQueue.TweetListener {
 	private List<Tweet> recentTweets;
 	private Context context;
 
 	public TweetsListAdapter(Context context) {
 		super();
 		this.context = context;
+		TweetQueue.current().setTweetListener(this);
 		resetTweets();
 	}
 	
@@ -95,7 +96,9 @@ public class TweetsListAdapter extends BaseAdapter {
 		if (tweet.isSkipped()) {
 			return context.getString(R.string.twitter_description_skipped) + ": " + tweet.getText();
 		} else if (tweet.isWaiting()) {
-			return context.getString(R.string.twitter_description_waiting) + ": " + tweet.getText();			
+			return context.getString(R.string.twitter_description_waiting) + ": " + tweet.getText();	
+		} else if (tweet.isSending()) {
+			return context.getString(R.string.twitter_description_sending) + ": " + tweet.getText();				
 		} else {
 			switch (tweet.getSendStatus()) {
 			case RejectedRetweet:
@@ -133,6 +136,13 @@ public class TweetsListAdapter extends BaseAdapter {
 	    } else {
 	        return context.getString(R.string.twitter_description_old);
 	    }
+	}
+
+	/*  TweetQueue.TweetListener */
+	
+	@Override
+	public void tweetStateChanged() {
+		resetTweets();
 	}
 
 }

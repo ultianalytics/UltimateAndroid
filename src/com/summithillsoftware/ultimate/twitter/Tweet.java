@@ -31,79 +31,83 @@ public class Tweet {
 		this.text = text;
 	}
 	
-	public boolean isAdHoc() {
+	public synchronized boolean isAdHoc() {
 		return event == null;
 	}
 	
-	public boolean isUndoOfTweet(Tweet otherTweet) {
+	public synchronized boolean isUndoOfTweet(Tweet otherTweet) {
 		if (isUndo && event != null) {
 			return event.equals(otherTweet.event);
 		}
 		return false;
 	}
 	
-	public boolean isCancelled() {
+	public synchronized boolean isCancelled() {
 		return progressStatus == TweetProgressStatus.Cancelled;
 	}
 	
-	public boolean isSkipped() {
+	public synchronized boolean isSkipped() {
 		return progressStatus == TweetProgressStatus.Skipped;
 	}
 	
-	public boolean isWaiting() {
+	public synchronized boolean isWaiting() {
 		return progressStatus == TweetProgressStatus.Queued;
 	}
 	
-	public boolean isSentAndAccepted() {
+	public synchronized boolean isSending() {
+		return progressStatus == TweetProgressStatus.Sending;
+	}
+	
+	public synchronized boolean isSentAndAccepted() {
 		return progressStatus == TweetProgressStatus.Sent && sendStatus == TweetSendStatus.OK;
 	}
 	
-	public String getText() {
+	public synchronized String getText() {
 		return text;
 	}
 
-	public void setText(String text) {
+	public synchronized void setText(String text) {
 		this.text = text;
 	}
 
-	public TweetSendStatus getSendStatus() {
+	public synchronized TweetSendStatus getSendStatus() {
 		return sendStatus;
 	}
 
-	public void setCompletionStatus(TweetSendStatus sendStatus) {
+	public synchronized void setCompletionStatus(TweetSendStatus sendStatus) {
 		this.sendStatus = sendStatus;
 	}
 	
-	public boolean wasSendSuccessful() {
+	public synchronized boolean wasSendSuccessful() {
 		return sendStatus == TweetSendStatus.OK;
 	}
 
-	public RateLimitStatus getLimitStatus() {
+	public synchronized RateLimitStatus getLimitStatus() {
 		return limitStatus;
 	}
 
-	public void setLimitStatus(RateLimitStatus limitStatus) {
+	public synchronized void setLimitStatus(RateLimitStatus limitStatus) {
 		this.limitStatus = limitStatus;
 	}
 	
-	public long getTime() {
+	public synchronized long getTime() {
 		return time;
 	}
 
-	public Event getEvent() {
+	public synchronized Event getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public synchronized void setEvent(Event event) {
 		this.event = event;
 	}
 	
-	public long getId() {
+	public synchronized long getId() {
 		return time;
 	}
 
 	@Override
-	public int hashCode() {
+	public synchronized int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (time ^ (time >>> 32));
@@ -111,7 +115,7 @@ public class Tweet {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public synchronized boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -124,27 +128,27 @@ public class Tweet {
 		return true;
 	}
 
-	public TweetProgressStatus getProgressStatus() {
+	public synchronized TweetProgressStatus getProgressStatus() {
 		return progressStatus;
 	}
 
-	public void setProgressStatus(TweetProgressStatus progressStatus) {
+	public synchronized void setProgressStatus(TweetProgressStatus progressStatus) {
 		this.progressStatus = progressStatus;
 	}
 
-	public boolean isUndo() {
+	public synchronized boolean isUndo() {
 		return isUndo;
 	}
 
-	public void setUndo(boolean isUndo) {
+	public synchronized void setUndo(boolean isUndo) {
 		this.isUndo = isUndo;
 	}
 
-	public boolean isOptional() {
+	public synchronized boolean isOptional() {
 		return isOptional;
 	}
 
-	public void setOptional(boolean isOptional) {
+	public synchronized void setOptional(boolean isOptional) {
 		this.isOptional = isOptional;
 	}
 

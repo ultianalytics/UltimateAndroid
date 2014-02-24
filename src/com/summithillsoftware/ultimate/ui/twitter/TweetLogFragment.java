@@ -29,13 +29,6 @@ public class TweetLogFragment extends UltimateFragment {
 		adaptor.resetTweets();
 	}
 	
-	public void refresh() {
-		TweetsListAdapter adaptor = (TweetsListAdapter)getTweetsListView().getAdapter();
-		if (adaptor != null) {
-			adaptor.resetTweets();
-		}
-	}
-	
 	private ListView getTweetsListView() {
 		return (ListView)getView().findViewById(R.id.tweetList);
 	}

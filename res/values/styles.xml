@@ -185,6 +185,12 @@
 		<!-- android:textColor makes the text bold if selected -->	    
 	    <item name="android:textColor">@color/radio_button_text_color</item>
 	</style>
+	
+    <style name="tweetSectionHeader">
+        <item name="android:textSize">@dimen/font_size60</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ultimate_form_data</item>
+    </style>
     
 
 
