@@ -24,7 +24,8 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class GameDescription implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String FILE_NAME_PREFIX = "info-about-";
 	private static final String JSON_GAME_ID = "gameId";
 	private static final String JSON_OPPONENT_NAME = "opponentName";
@@ -80,6 +81,7 @@ public class GameDescription implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(gameId);
 		output.writeObject(startDate);
 		output.writeObject(opponentName);
@@ -89,6 +91,8 @@ public class GameDescription implements Externalizable {
 	
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		gameId = (String)input.readObject();
 		startDate = (Date)input.readObject();
 		opponentName = (String)input.readObject();

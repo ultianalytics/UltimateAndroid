@@ -9,7 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Wind implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_MPH = "mph";
 	private static final String JSON_DIRECTION_DEGREES = "degrees";
 	private static final String JSON_IS_FIRST_LEFT_TO_RIGHT = "leftToRight";
@@ -43,6 +44,8 @@ public class Wind implements Externalizable {
 	
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		mph = input.readInt();
 		directionDegrees = input.readInt();
 		isFirstPullLeftToRight = input.readBoolean();
@@ -51,6 +54,7 @@ public class Wind implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeInt(mph);
 		output.writeInt(directionDegrees);
 		output.writeBoolean(isFirstPullLeftToRight);

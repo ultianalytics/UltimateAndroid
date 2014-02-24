@@ -15,7 +15,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 
 public class Player implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_NAME = "name";
 	private static final String JSON_POSITION = "position";
 	private static final String JSON_NUMBER = "number";
@@ -189,6 +190,8 @@ public class Player implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		name = (String)input.readObject();
 		number = (String)input.readObject();
 		isMale = input.readBoolean();
@@ -198,6 +201,7 @@ public class Player implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(name);
 		output.writeObject(number);
 		output.writeBoolean(isMale);

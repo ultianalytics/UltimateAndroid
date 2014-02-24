@@ -10,7 +10,7 @@ import android.content.Context;
 import com.summithillsoftware.ultimate.R;
 
 public class Score implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
 	private int ours;
 	private int theirs;
 	
@@ -90,11 +90,14 @@ public class Score implements Externalizable {
 	}
 	
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		ours = input.readInt();
 		theirs = input.readInt();
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeInt(ours);
 		output.writeInt(theirs);
 	}

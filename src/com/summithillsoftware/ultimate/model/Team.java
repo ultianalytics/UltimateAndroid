@@ -20,7 +20,8 @@ import com.summithillsoftware.ultimate.util.AtomicFile;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Team implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_TEAM_ID = "teamId";
 	private static final String JSON_CLOUD_ID = "cloudId";
 	private static final String JSON_NAME = "name";
@@ -379,6 +380,8 @@ public class Team implements Externalizable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		teamId = (String)input.readObject();
 		name = (String)input.readObject();
 		cloudId = (String)input.readObject();
@@ -391,6 +394,7 @@ public class Team implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(teamId);
 		output.writeObject(name);
 		output.writeObject(cloudId);

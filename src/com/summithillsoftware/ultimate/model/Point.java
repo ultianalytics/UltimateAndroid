@@ -17,7 +17,8 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.util.UniqueTimestampGenerator;
 
 public class Point implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_SUMMARY = "summary";
 	private static final String JSON_EVENTS = "events";
 	private static final String JSON_LINE = "line";
@@ -222,6 +223,8 @@ public class Point implements Externalizable {
 	
 	@SuppressWarnings("unchecked")
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		events = (List<Event>)input.readObject();
 		line = (List<Player>)input.readObject();
 		substitutions = (List<PlayerSubstitution>)input.readObject();
@@ -230,6 +233,7 @@ public class Point implements Externalizable {
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(events);
 		output.writeObject(line);
 		output.writeObject(substitutions);

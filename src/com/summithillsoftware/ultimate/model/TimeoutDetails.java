@@ -9,7 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TimeoutDetails implements Externalizable {
-	private static final long serialVersionUID = 1L;
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_QUOTA_PER_HALF = "quotaPerHalf";
 	private static final String JSON_QUOTA_FLOATERS = "quotaFloaters";
 	private static final String JSON_TAKEN_FIRST_HALF = "takenFirstHalf";
@@ -59,6 +60,8 @@ public class TimeoutDetails implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		quotaPerHalf = input.readInt();
 		quotaFloaters = input.readInt();
 		takenFirstHalf = input.readInt();
@@ -67,6 +70,7 @@ public class TimeoutDetails implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeInt(quotaPerHalf);
 		output.writeInt(quotaFloaters);
 		output.writeInt(takenFirstHalf);

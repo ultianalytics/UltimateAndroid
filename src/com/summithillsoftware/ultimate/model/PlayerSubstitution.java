@@ -12,7 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PlayerSubstitution implements Externalizable {
-	private static final long serialVersionUID = 1L;	
+	private static final byte serialVersionUID = 1;	
+	
 	private static final String JSON_FROM_PLAYER = "fromPlayer";
 	private static final String JSON_TO_PLAYER = "toPlayer";
 	private static final String JSON_SUB_REASON = "reason";
@@ -90,6 +91,8 @@ public class PlayerSubstitution implements Externalizable {
 	
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		fromPlayer = (Player)input.readObject();
 		toPlayer = (Player)input.readObject();
 		reason = (SubstitutionReason)input.readObject();
@@ -98,6 +101,7 @@ public class PlayerSubstitution implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(fromPlayer);
 		output.writeObject(toPlayer);
 		output.writeObject(reason);

@@ -34,6 +34,8 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public abstract class Event implements Externalizable {
+	private static final byte serialVersionUID = 1;
+	
 	private static final String JSON_EVENT_TYPE = "type";
 	private static final String JSON_EVENT_TYPE_CESSATION = "Cessation";
 	private static final String JSON_EVENT_TYPE_OFFENSE = "Offense";
@@ -288,6 +290,8 @@ public abstract class Event implements Externalizable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
+		@SuppressWarnings("unused")
+		byte version = input.readByte();  // if vars change use this to decide how far to read
 		action = (Action)input.readObject();
 		details = (Map<String, Object>)input.readObject();
 		timestamp = input.readLong();
@@ -296,6 +300,7 @@ public abstract class Event implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
+		output.writeByte(serialVersionUID);
 		output.writeObject(action);
 		output.writeObject(details);
 		output.writeLong(timestamp);
