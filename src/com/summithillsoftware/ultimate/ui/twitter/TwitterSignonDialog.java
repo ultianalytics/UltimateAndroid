@@ -47,9 +47,7 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		View view = inflater.inflate(R.layout.fragment_twitter_signon, container,
 				false);
 		connectWidgets(view);
-		populateView();
 		registerWidgetListeners();
-		requestSignon();
 		return view;
 	}
 
@@ -64,8 +62,9 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
+	public void onResume() {
+		super.onResume();
+		requestSignon();
 	}
 
 	private void connectWidgets(View view) {
@@ -78,10 +77,6 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 	}
 
-	private void populateView() {
-
-	}
-	
 
 	private void registerWidgetListeners() {
 		cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +193,7 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 				getString(R.string.alert_cloud_not_connected_error_message));
 	}
 	
-	protected void displayTwitterError(String title, String message) {
+	private void displayTwitterError(String title, String message) {
 		((UltimateActivity)getActivity()).displayErrorMessage(title, message, 
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -241,4 +236,6 @@ public class TwitterSignonDialog extends UltimateDialogFragment {
 		}
 
 	}
+
+
 }
