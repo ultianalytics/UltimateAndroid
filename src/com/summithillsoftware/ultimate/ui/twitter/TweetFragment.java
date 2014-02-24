@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -21,6 +22,7 @@ public class TweetFragment extends UltimateFragment {
 	private TextView tweetCharacterCount;
 	private EditText tweetText;
 	private Button tweetButton;
+	private ImageButton clearButton;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class TweetFragment extends UltimateFragment {
 		tweetCharacterCount = (TextView)view.findViewById(R.id.tweetCharacterCount);
 		tweetText = (EditText)view.findViewById(R.id.tweetText);
 		tweetButton = (Button)view.findViewById(R.id.tweetButton);
+		clearButton = (ImageButton)view.findViewById(R.id.clearButton);
 	}
 	
 	private void registerWidgetListeners() {
@@ -43,6 +46,11 @@ public class TweetFragment extends UltimateFragment {
 				tweet();
 			}
 		});
+		clearButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				clear();
+			}
+		});		
 		tweetText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {
@@ -67,10 +75,16 @@ public class TweetFragment extends UltimateFragment {
 		}
 	}
 	
+	private void clear() {
+		tweetText.setText("");
+		updateCharacterCount();
+	}
+	
 	private void updateCharacterCount() {
 		String text = tweetText.getText().toString().trim();
 		int availableChars = MAX_CHARS - text.length();
 		tweetCharacterCount.setText(Integer.toString(availableChars));
 		tweetButton.setEnabled(!text.isEmpty());
+		clearButton.setEnabled(!text.isEmpty());
 	}
 }

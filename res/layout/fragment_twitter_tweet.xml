@@ -9,23 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <ImageButton
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:enabled="false"
+            android:src="@drawable/ic_action_cancel_white"
+            android:contentDescription="@string/image_description" />
+
         <TextView
             android:id="@+id/tweetCharacterCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/undefined"
             android:layout_alignParentRight="true"
+            android:text="@string/undefined"
             android:textSize="@dimen/tweet_text_size" />
-
     </RelativeLayout>
 
     <EditText
         android:id="@+id/tweetText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tweet_entry_height"
-        android:textSize="@dimen/tweet_text_size"
+        android:inputType="textMultiLine"
         android:maxLength="140"
-        android:inputType="textMultiLine" >
+        android:textSize="@dimen/tweet_text_size" >
 
         <requestFocus />
     </EditText>
@@ -34,7 +43,7 @@
         android:id="@+id/tweetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_tweet_send"
-        android:enabled="true"/>
-    
+        android:enabled="true"
+        android:text="@string/button_tweet_send" />
+
 </LinearLayout>
