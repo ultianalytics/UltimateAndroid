@@ -223,6 +223,7 @@
     <string name="label_support_include">Include:</string>
     <string name="label_twitter_waiting_for_signon">Waiting for sign in&#8230;</string>
 	<string name="label_twitter_recents">Recent Tweets</string>
+	<string name="label_twitter_auto_tweet">Auto-Tweet Settings</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -313,6 +314,9 @@
     <string name="radio_line_substitution_type_other">Other</string>
     <string name="radio_stats_include_game">Game</string>
     <string name="radio_stats_include_tournament">Tournament</string>
+    <string name="radio_auto_tweet_none">None</string>
+    <string name="radio_auto_tweet_min">Goals</string>
+    <string name="radio_auto_tweet_max">Goals + Turnovers</string>
     <string name="toast_games_no_games_yet">Tap the plus sign to add a new game for this team</string>
     <string name="toast_players_no_players_yet">Tap the plus sign to add a new player for this team</string>
     <string name="toast_download_complete">Download Complete</string>
