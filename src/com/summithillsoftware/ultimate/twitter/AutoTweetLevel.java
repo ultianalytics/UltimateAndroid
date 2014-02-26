@@ -1,6 +1,6 @@
 package com.summithillsoftware.ultimate.twitter;
 
-public enum GameTweetLevel {
+public enum AutoTweetLevel {
 	NONE,
 	GOALS,
 	TURNOVERS

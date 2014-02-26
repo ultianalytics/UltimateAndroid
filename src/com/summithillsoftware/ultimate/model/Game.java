@@ -852,6 +852,14 @@ public class Game implements Externalizable {
 		this.selectedEvent = selectedEvent;
 	}
 
+	public Event getFirstEventTweeted() {
+		return firstEventTweeted;
+	}
+
+	public void setFirstEventTweeted(Event firstEventTweeted) {
+		this.firstEventTweeted = firstEventTweeted;
+	}
+	
 	public boolean isTimeBasedGame() {
 		return getGamePoint() == TIME_BASED_GAME_POINT;
 	}
@@ -1110,5 +1118,6 @@ public class Game implements Externalizable {
 			return game;
 		}
 	}
+
 
 }

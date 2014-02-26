@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minWidth="200dp"
     android:orientation="vertical"
     android:padding="18dp" >
 
@@ -22,32 +23,32 @@
 
         <RadioButton
             android:id="@+id/eventChoice1"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ultimateRadioButton"
             android:text="@string/undefined" />
 
         <RadioButton
             android:id="@+id/eventChoice2"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/eventChoice3"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/eventChoice4"
+            style="@style/ultimateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ultimateRadioButton"            
             android:text="@string/undefined"
             android:visibility="gone" />
     </RadioGroup>

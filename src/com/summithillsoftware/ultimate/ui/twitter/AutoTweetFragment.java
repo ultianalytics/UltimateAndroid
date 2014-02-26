@@ -8,7 +8,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.summithillsoftware.ultimate.R;
-import com.summithillsoftware.ultimate.twitter.GameTweetLevel;
+import com.summithillsoftware.ultimate.twitter.AutoTweetLevel;
 import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 
@@ -38,13 +38,13 @@ public class AutoTweetFragment extends UltimateFragment {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.tweetMaxRadioButton:
-					GameTweeter.current().setTweetLevel(GameTweetLevel.TURNOVERS);
+					GameTweeter.current().setTweetLevel(AutoTweetLevel.TURNOVERS);
 					break;
 				case R.id.tweetMinRadioButton:
-					GameTweeter.current().setTweetLevel(GameTweetLevel.GOALS);
+					GameTweeter.current().setTweetLevel(AutoTweetLevel.GOALS);
 					break;					
 				default:
-					GameTweeter.current().setTweetLevel(GameTweetLevel.NONE);
+					GameTweeter.current().setTweetLevel(AutoTweetLevel.NONE);
 					break;
 				}
 			}

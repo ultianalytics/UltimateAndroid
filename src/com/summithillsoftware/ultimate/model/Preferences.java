@@ -7,7 +7,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
-import com.summithillsoftware.ultimate.twitter.GameTweetLevel;
+import com.summithillsoftware.ultimate.twitter.AutoTweetLevel;
 import com.summithillsoftware.ultimate.util.AtomicFile;
 
 public class Preferences implements Externalizable {
@@ -34,7 +34,7 @@ public class Preferences implements Externalizable {
 	private String twitterOAuthUserAccessToken;
 	private String twitterOAuthUserAccessTokenSecret;
 	private String twitterMoniker;
-	private GameTweetLevel tweetLevel;
+	private AutoTweetLevel tweetLevel;
 
 	static {
 		Current = restore();
@@ -123,7 +123,7 @@ public class Preferences implements Externalizable {
 		twitterOAuthUserAccessToken = (String)input.readObject();
 		twitterOAuthUserAccessTokenSecret = (String)input.readObject();
 		twitterMoniker = (String)input.readObject();
-		tweetLevel = (GameTweetLevel)input.readObject();
+		tweetLevel = (AutoTweetLevel)input.readObject();
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
@@ -187,11 +187,11 @@ public class Preferences implements Externalizable {
 		this.twitterMoniker = twitterMoniker;
 	}
 
-	public GameTweetLevel getTweetLevel() {
+	public AutoTweetLevel getTweetLevel() {
 		return tweetLevel;
 	}
 
-	public void setTweetLevel(GameTweetLevel tweetLevel) {
+	public void setTweetLevel(AutoTweetLevel tweetLevel) {
 		this.tweetLevel = tweetLevel;
 	}
 }
