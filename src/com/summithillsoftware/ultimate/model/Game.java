@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.util.AtomicFile;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
@@ -728,7 +729,7 @@ public class Game implements Externalizable {
 	}
 
 	private void tweetEvent(Event event, Point point, boolean isUndo) {
-		// TODO...finish this
+		GameTweeter.current().tweetGameEvent(event, point, isUndo);
 	}
 
 	public Date getStartDateTime() {

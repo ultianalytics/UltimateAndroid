@@ -46,7 +46,15 @@ public class GameTweeter {
 		Preferences.current().save();
 	}
 	
-	public void tweetEvent(Event event, Point point, boolean isUndo) {
+	public void tweetGameEvent(Event event, Point point, boolean isUndo) {
+		if (point.getEvents().size() == 1) {
+			tweetFirstEventOfPoint(event, point, isUndo);
+		} else {
+			tweetEvent(event, point, isUndo);
+		}
+	}
+	
+	private void tweetEvent(Event event, Point point, boolean isUndo) {
 		Game game = game();
         tweetFirstEventOfGameIfNecessary(event, point, isUndo);
 		if (isTweetingEvents()) {
@@ -69,7 +77,7 @@ public class GameTweeter {
 		}
 	}
 	
-	public void tweetFirstEventOfPoint(Event event, Point point, boolean isUndo) {
+	private void tweetFirstEventOfPoint(Event event, Point point, boolean isUndo) {
 		if (isTweetingEvents()) {
 			tweetFirstEventOfGameIfNecessary(event, point, isUndo);
 			String message = pointBeginTweetMessage(event, point, isUndo);
