@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
@@ -41,39 +42,27 @@ public class GameTweeter {
 	}
 	
 	public void tweetEvent(Event event, Point point, boolean isUndo) {
+		Game game = game();
+        tweetFirstEventOfGameIfNecessary(event, point, isUndo);
 		if (isTweetingEvents()) {
-			
+			if (event.isGoal()) {
+				String message = goalTweetMessage(event, isUndo);
+				Tweet tweet = createTweet(message, event, isUndo);
+				tweet(tweet);
+				if (game.isNextEventImmediatelyAfterHalftime()) {
+					String halftimeMessage = halftimeTweetMessageIsUndo(isUndo);
+					Tweet halftimeTweet = createTweet(halftimeMessage, event, isUndo);
+					tweet(halftimeTweet);
+				}
+			} else if (event.isTurnover() && getTweetLevel() == AutoTweetLevel.TURNOVERS) {
+				String message = turnoverTweetMessage(event, isUndo);
+				Tweet tweet = createTweet(message, event, isUndo);
+				tweet.setOptional(true);
+				tweet(tweet);
+				updateGameTweeted(event, isUndo);
+			}
 		}
-		
 	}
-//	-(void)tweetEvent:(Event*) event forGame: (Game*) game point: (UPoint*) point isUndo: (BOOL) isUndo {
-//	    if ([self isTweetingEvents]) {
-//	        [self tweetFirstEventOfGameIfNecessary:event forGame:game point:point isUndo:isUndo];
-//	        if ([event isGoal]) {
-//	            NSString* message = [self goalTweetMessage:event forGame:game isUndo:isUndo]; 
-//	            Tweet* tweet = [[Tweet alloc] initMessage:[NSString stringWithFormat:@"%@  %@", message, [self getTime]] type:@"Event"];
-//	            tweet.isUndo = isUndo;
-//	            tweet.associatedEvent = event;
-//	            [self tweet: tweet];
-//	            if ([game isNextEventImmediatelyAfterHalftime]) {
-//	                NSString* halftimeMessage = [self halftimeTweetMessageIsUndo: isUndo]; 
-//	                Tweet* tweet = [[Tweet alloc] initMessage:[NSString stringWithFormat:@"%@  %@", halftimeMessage, [self getTime]] type:@"Halftime"];
-//	                tweet.isUndo = isUndo;
-//	                tweet.associatedEvent = event;
-//	                [self tweet: tweet];
-//	            }
-//	            [self updateGameTweeted:game event: event undo: isUndo];
-//	        } else if ([event isTurnover] && [self getAutoTweetLevel] == TweetGoalsAndTurns) {
-//	            NSString* message = [self turnoverTweetMessage:event forGame:game isUndo:isUndo]; 
-//	            Tweet* tweet = [[Tweet alloc] initMessage:[NSString stringWithFormat:@"%@  %@", message, [self getTime]] type:@"Event"];
-//	            tweet.isUndo = isUndo;
-//	            tweet.associatedEvent = event;
-//	            tweet.isOptional = YES;
-//	            [self tweet: tweet]; 
-//	            [self updateGameTweeted:game event: event undo: isUndo];
-//	        }
-//	    }
-//	}
 	
 	private void tweetFirstEventOfGameIfNecessary(Event event, Point point, boolean isUndo) {
 		if (!hasGameBeenTweeted() || (isUndo && game().getFirstEventTweeted().equals(event))) {
@@ -148,6 +137,42 @@ public class GameTweeter {
 				}
 			} else {
 				message = message + ". " + getGameScoreDescription();
+			}
+		}
+		return message;
+	}
+	
+	private String halftimeTweetMessageIsUndo(boolean isUndo) {
+		return isUndo ? "\"Halftime\" was a boo-boo...never mind." : "Halftime.";
+	}
+	
+	private String turnoverTweetMessage(Event event, boolean isUndo) {
+		String message = ourTeam() + (event.getAction() == Action.De ? " steal" : " lose") + " the disc";
+		if (isUndo) {
+			message = "\"" + message + "\" was a boo-boo...never mind.";
+		} else {
+			if (event.isD()) {
+				message = message + "!!! (" + event.toString() + ")"; 
+			} else {
+				String cause;
+				switch (event.getAction()) {
+		        case Drop:
+		            cause = "drop";
+		            break;
+		        case Throwaway:
+		            cause = "throwaway";
+		            break;
+		        case Stall:
+		            cause = "stall";
+		            break;
+		        case MiscPenalty:
+		            cause = "penalty";
+		            break;
+		        default:
+		            cause = "not sure why";
+		            break;
+				}
+				message = message + " (" + cause + ")"; 
 			}
 		}
 		return message;
