@@ -1,7 +1,11 @@
 package com.summithillsoftware.ultimate.twitter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import android.text.TextUtils;
 
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Action;
@@ -9,6 +13,7 @@ import com.summithillsoftware.ultimate.model.DefenseEvent;
 import com.summithillsoftware.ultimate.model.Event;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.OffenseEvent;
+import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Point;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
@@ -61,6 +66,20 @@ public class GameTweeter {
 				tweet(tweet);
 				updateGameTweeted(event, isUndo);
 			}
+		}
+	}
+	
+	public void tweetFirstEventOfPoint(Event event, Point point, boolean isUndo) {
+		if (isTweetingEvents()) {
+			tweetFirstEventOfGameIfNecessary(event, point, isUndo);
+			String message = pointBeginTweetMessage(event, point, isUndo);
+			Tweet tweet = createTweet(message, event, isUndo);
+			tweet.setOptional(true);
+			tweet(tweet);
+			if (event.isGoal() || event.isTurnover()) {
+				tweetEvent(event, point, isUndo);
+			}
+			updateGameTweeted(event, isUndo);
 		}
 	}
 	
@@ -176,6 +195,24 @@ public class GameTweeter {
 			}
 		}
 		return message;
+	}
+	
+	private String pointBeginTweetMessage(Event event, Point point, boolean isUndo) {
+		Game game = game();
+		if (isUndo) {
+			return "New point was a boo-boo...never mind.";
+		} else {
+			List<String> names =  new ArrayList<String>();
+			for (Player player : point.getLine()) {
+				names.add(player.getName());
+			}
+			String namesAsString = TextUtils.join(", ", names);
+			if (game.isPointOline(point)) {
+				return "Pull, " +  ourTeam() + " on Offense.  Line: " + namesAsString;
+			} else {
+				return "Pull, " +  ourTeam() + " on Defense.  Line: " + namesAsString;
+			}
+		}
 	}
 	
 	private boolean isTweetingEvents() {
