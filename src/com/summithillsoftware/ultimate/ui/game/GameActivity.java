@@ -34,6 +34,7 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
+import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game;
 import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
@@ -91,6 +92,9 @@ public class GameActivity extends UltimateActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			return navigateUp();
+		case R.id.action_twitter:
+			goToTwitterActivity();
+			return true;				
 		case R.id.action_delete:
 			deleteClicked();
 			return true;
@@ -310,6 +314,10 @@ public class GameActivity extends UltimateActivity {
 		GameUploadWorkflow workflow = new GameUploadWorkflow();
 		uploadDialog.setWorkflow(workflow);
 		uploadDialog.show(fragmentManager, "dialog");
+	}
+	
+	private void goToTwitterActivity() {
+		startActivity(new Intent(this, TwitterActivity_Game.class));
 	}
 
 }

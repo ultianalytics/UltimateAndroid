@@ -121,6 +121,32 @@
             android:name="com.summithillsoftware.ultimate.ui.twitter.TwitterActivity"
             android:label="@string/title_activity_twitter" >
         </activity>
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_GameAction"
+            android:label="@string/title_activity_twitter"             
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.game.action.GameActionActivity" />
+        </activity>        
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game"
+            android:label="@string/title_activity_twitter"             
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
+        </activity>    
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Team"
+            android:label="@string/title_activity_twitter"             
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.team.TeamActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.team.TeamActivity" />
+        </activity>    
+        
+        
     </application>
 
 </manifest>

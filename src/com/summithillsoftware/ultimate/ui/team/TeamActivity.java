@@ -19,6 +19,7 @@ import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
+import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Team;
 import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
 public class TeamActivity extends UltimateActivity {
@@ -66,6 +67,9 @@ public class TeamActivity extends UltimateActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			return navigateUp();
+		case R.id.action_twitter:
+			goToTwitterActivity();
+			return true;				
 		case R.id.action_delete:
 			deleteClicked();
 			return true;
@@ -211,6 +215,10 @@ public class TeamActivity extends UltimateActivity {
 
 	private String getWebsite() {
 		return Team.current().hasCloudId() ? CloudClient.current().websiteUrlForCloudId(Team.current().getCloudId()) : "";
+	}
+	
+	private void goToTwitterActivity() {
+		startActivity(new Intent(this, TwitterActivity_Team.class));
 	}
 
 }

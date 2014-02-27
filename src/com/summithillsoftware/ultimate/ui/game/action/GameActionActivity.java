@@ -31,6 +31,7 @@ import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
+import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_GameAction;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener, Refreshable {
 	private GameActionFieldFragment fieldFragment;
@@ -69,6 +70,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			return navigateUp();
+		case R.id.action_twitter:
+			goToTwitterActivity();
+			return true;					
 		case R.id.action_line:
 			showLineDialog();
 			return true;
@@ -343,6 +347,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 
 	private Game game() {
 		return Game.current();
+	}
+	
+	private void goToTwitterActivity() {
+		startActivity(new Intent(this, TwitterActivity_GameAction.class));
 	}
 
 	
