@@ -18,6 +18,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Action;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.PointEvent;
+import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.ui.DefaultAnimationListener;
 import com.summithillsoftware.ultimate.ui.UltimateFragment;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
@@ -31,6 +32,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	private Button undoLastEventButton;
 	private Button timeoutButton;
 	private Button cessationButton;
+	private TextView autoTweetMessage;
 	private TextView ephemeralMessage;
 	private RecentEventButton event1Button;
 	private View event2ButtonSeparator;
@@ -69,7 +71,8 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 		undoLastEventButton = (Button)view.findViewById(R.id.undoLastEventButton);
 		timeoutButton = (Button)view.findViewById(R.id.timeoutButton);
 		cessationButton = (Button)view.findViewById(R.id.cessationButton);
-		ephemeralMessage = (TextView)view.findViewById(R.id.ephemeralMessage);		
+		ephemeralMessage = (TextView)view.findViewById(R.id.ephemeralMessage);	
+		autoTweetMessage = (TextView)view.findViewById(R.id.autoTweetMessage);	
 		event1Button = (RecentEventButton)view.findViewById(R.id.event1Button);
 		event2ButtonSeparator = view.findViewById(R.id.event2ButtonSeparator);
 		event2Button = (RecentEventButton)view.findViewById(R.id.event2Button);
@@ -161,8 +164,13 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	
 	private void populateView() {
 		populateRecentEvents();
+		populateAutoTweetingView();
 	    timeoutButton.setText(getString(R.string.button_action_timeouts, Game.current().availableTimeouts()));
 	    updateCessationButtonText();
+	}
+	
+	private void populateAutoTweetingView() {
+		autoTweetMessage.setVisibility(GameTweeter.current().isAutoTweeting() ? View.VISIBLE : View.INVISIBLE);
 	}
 	
 	private void updateCessationButtonText() {
@@ -239,6 +247,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 	}
 	
 	public void displayEphemeralMessage(String message, final int seconds) {
+		autoTweetMessage.setVisibility(View.INVISIBLE);
 		ephemeralMessage.setText(message);
 		
     	Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -261,6 +270,7 @@ public class GameActionRecentEventsFragment extends UltimateFragment {
 								    	animation.setDuration(500);
 								    	animation.setFillAfter(true); 
 								    	ephemeralMessage.startAnimation(animation);
+								    	populateAutoTweetingView();
 									}
 								}
 							});

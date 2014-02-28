@@ -16,6 +16,21 @@
             android:layout_height="wrap_content"
             android:text="@string/button_action_undo"
             android:textSize="@dimen/game_action_button_undo_button_size" />
+        
+        <TextView
+            android:id="@+id/autoTweetMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/undoLastEventButton"
+            android:layout_below="@id/undoLastEventButton"
+            android:layout_alignRight="@id/undoLastEventButton"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/label_game_action_auto_tweeting"
+            android:textSize="@dimen/font_size30"
+            android:textStyle="italic"
+            android:textColor="@color/ultimate_theme_color"
+            android:visibility="invisible" />     
 
         <TextView
             android:id="@+id/ephemeralMessage"

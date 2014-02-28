@@ -107,7 +107,24 @@
                 android:layout_height="wrap_content" />  
                           
         </LinearLayout>
+        
 
+
+         <TextView
+            android:id="@+id/autoTweetMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/recentsList"
+            android:layout_alignRight="@id/recentsList"
+            android:layout_below="@id/recentsList"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/label_game_action_auto_tweeting"
+            android:textSize="@dimen/font_size40"
+            android:textStyle="italic"
+            android:textColor="@color/ultimate_theme_color"
+            android:visibility="invisible" />
+                
         <TextView
             android:id="@+id/ephemeralMessage"
             android:layout_width="wrap_content"

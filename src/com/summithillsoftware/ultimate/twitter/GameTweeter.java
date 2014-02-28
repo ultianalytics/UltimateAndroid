@@ -40,6 +40,10 @@ public class GameTweeter {
 		AutoTweetLevel level = Preferences.current().getTweetLevel();
 		return level == null ? AutoTweetLevel.NONE : level;
 	}
+	
+	public boolean isAutoTweeting() {
+		return getTweetLevel() != AutoTweetLevel.NONE;
+	}
 
 	public void setTweetLevel(AutoTweetLevel tweetLevel) {
 		Preferences.current().setTweetLevel(tweetLevel);
