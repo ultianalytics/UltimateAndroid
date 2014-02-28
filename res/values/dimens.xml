@@ -23,8 +23,9 @@
 	<dimen name="event_player_check_icon_dimension">20dp</dimen>
 	<dimen name="cloud_dialog_content_view_length">410dp</dimen>	
 	<dimen name="instructions_text_size">10sp</dimen>
-	<dimen name="tweet_entry_height">100dp</dimen>
+	<dimen name="tweet_entry_height">80dp</dimen>
 	<dimen name="tweet_text_size">14sp</dimen>
+	<dimen name="tweet_clear_button_dimension">18dp</dimen>
 	<dimen name="twitter_signon_webview_height">600dp</dimen>
 	
 	<dimen name="font_size10">8sp</dimen>

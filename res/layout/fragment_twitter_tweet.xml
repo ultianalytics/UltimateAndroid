@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:animateLayoutChanges="true"
-	android:padding="10dp"
+	android:padding="4dp"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -12,11 +13,12 @@
 
         <ImageButton
             android:id="@+id/clearButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/tweet_clear_button_dimension"
+            android:layout_height="@dimen/tweet_clear_button_dimension"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
             android:enabled="false"
+            android:scaleType="fitCenter"
             android:src="@drawable/cancel_button"
             android:contentDescription="@string/image_description" />
 
@@ -29,21 +31,29 @@
             android:textSize="@dimen/tweet_text_size" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/tweetText"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tweet_entry_height"
-        android:inputType="textMultiLine"
-        android:maxLength="140"
-        android:textSize="@dimen/tweet_text_size" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tweet_entry_height"
+            android:padding="10dp"
+            android:background="@drawable/tweet_entry_background" >
 
-        <requestFocus />
-    </EditText>
+            <EditText
+                android:id="@+id/tweetText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent_black_hex_1"
+                android:inputType="textMultiLine"
+                android:maxLength="140"
+                android:textSize="@dimen/tweet_text_size" >
+                <requestFocus />
+            </EditText>
+        </FrameLayout>
 
     <Button
         android:id="@+id/tweetButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:enabled="true"
         android:text="@string/button_tweet_send" />
 

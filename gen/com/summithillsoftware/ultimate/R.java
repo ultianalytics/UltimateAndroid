@@ -1191,14 +1191,14 @@ containing a value of this type.
         public static final int event_player_list_font_size=0x7f090020;
         public static final int event_player_list_show_all_font_size=0x7f090021;
         public static final int event_player_list_width=0x7f09001f;
-        public static final int font_size10=0x7f090028;
-        public static final int font_size20=0x7f090029;
-        public static final int font_size30=0x7f09002a;
-        public static final int font_size40=0x7f09002b;
-        public static final int font_size50=0x7f09002c;
-        public static final int font_size60=0x7f09002d;
-        public static final int font_size70=0x7f09002e;
-        public static final int font_size80=0x7f09002f;
+        public static final int font_size10=0x7f090029;
+        public static final int font_size20=0x7f09002a;
+        public static final int font_size30=0x7f09002b;
+        public static final int font_size40=0x7f09002c;
+        public static final int font_size50=0x7f09002d;
+        public static final int font_size60=0x7f09002e;
+        public static final int font_size70=0x7f09002f;
+        public static final int font_size80=0x7f090030;
         public static final int form_text_size=0x7f090014;
         /**  LANDSCAPE
          Customize dimensions originally defined in res/values/dimens.xml (such as
@@ -1222,9 +1222,10 @@ containing a value of this type.
         public static final int instructions_text_size=0x7f090024;
         public static final int line_toolbar_button_margin=0x7f090013;
         public static final int standard_button_text_size=0x7f090015;
+        public static final int tweet_clear_button_dimension=0x7f090027;
         public static final int tweet_entry_height=0x7f090025;
         public static final int tweet_text_size=0x7f090026;
-        public static final int twitter_signon_webview_height=0x7f090027;
+        public static final int twitter_signon_webview_height=0x7f090028;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1425,12 +1426,13 @@ containing a value of this type.
         public static final int throwaway=0x7f0200c3;
         public static final int too_many_females_on_field=0x7f0200c4;
         public static final int too_many_males_on_field=0x7f0200c5;
-        public static final int ultimate_action_bar_background=0x7f0200c6;
-        public static final int ultimate_logo=0x7f0200c7;
-        public static final int undo=0x7f0200c8;
-        public static final int undo_button_background=0x7f0200c9;
-        public static final int unknown_event=0x7f0200ca;
-        public static final int upload_cloud_white=0x7f0200cb;
+        public static final int tweet_entry_background=0x7f0200c6;
+        public static final int ultimate_action_bar_background=0x7f0200c7;
+        public static final int ultimate_logo=0x7f0200c8;
+        public static final int undo=0x7f0200c9;
+        public static final int undo_button_background=0x7f0200ca;
+        public static final int unknown_event=0x7f0200cb;
+        public static final int upload_cloud_white=0x7f0200cc;
     }
     public static final class id {
         public static final int actionView=0x7f0600f9;
