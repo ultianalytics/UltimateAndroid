@@ -3,6 +3,7 @@ package com.summithillsoftware.ultimate;
 import java.io.File;
 
 import android.app.Application;
+import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
 import android.os.Environment;
 import android.os.Handler;
@@ -102,5 +103,19 @@ public class UltimateApplication extends Application {
 			dir.mkdirs();
 		}
 		return dir;
+	}
+	
+	@Override
+    public void onTrimMemory(final int level) {
+		super.onTrimMemory(level);
+		
+		// if we are called because we got moved to the background...
+        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+        	handleMovedToBackground();
+        }
+    }
+	
+	private void handleMovedToBackground() {
+		UltimateLogger.logInfo("Ultimate App moved to background");
 	}
 }
