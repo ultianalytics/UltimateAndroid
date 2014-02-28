@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.ui.twitter;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Preferences;
@@ -166,10 +168,12 @@ public class TwitterActivity extends UltimateActivity implements TabListener, Vi
         for (int i=0; i < tabs.size(); i++) {
             if (tabs.get(i).getTag().equals(tab.getTag())) {
                 viewPager.setCurrentItem(i);
+                // dismiss the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(viewPager.getApplicationWindowToken(), 0);
             }
         }
     }
-
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
