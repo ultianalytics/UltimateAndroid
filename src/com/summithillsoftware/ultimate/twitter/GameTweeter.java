@@ -54,6 +54,18 @@ public class GameTweeter {
 		}
 	}
 	
+	public void tweetHalftime() {
+		if (isTweetingEvents()) {
+			tweet(createTweet(halftimeTweetMessage(false)));
+		}
+	}
+	
+	public void tweetGameOver() {
+		if (isTweetingEvents()) {
+			tweet(createTweet(gameOverTweetMessage()));
+		}
+	}
+	
 	private void tweetEvent(Event event, Point point, boolean isUndo) {
 		Game game = game();
         tweetFirstEventOfGameIfNecessary(event, point, isUndo);
@@ -99,6 +111,7 @@ public class GameTweeter {
 			updateGameTweeted(event, isUndo);
 		}
 	}
+	
 	
 	private boolean hasGameBeenTweeted() {
 		return game().getFirstEventTweeted() != null;
@@ -221,6 +234,14 @@ public class GameTweeter {
 				return "Pull, " +  ourTeam() + " on Defense.  Line: " + namesAsString;
 			}
 		}
+	}
+	
+	private String halftimeTweetMessage(boolean isUndo) {
+	    return isUndo ? "\"Halftime\" was a boo-boo...never mind." : "Halftime.";
+	}
+
+	private String gameOverTweetMessage() {
+	    return "Game over, " + getGameScoreDescription(); 
 	}
 	
 	private boolean isTweetingEvents() {

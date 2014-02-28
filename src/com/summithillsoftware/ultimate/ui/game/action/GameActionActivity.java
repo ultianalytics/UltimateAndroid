@@ -21,6 +21,7 @@ import com.summithillsoftware.ultimate.model.EventHolder;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.PointEvent;
+import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
@@ -241,10 +242,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void showHalftimeWarning() {
-		// TODO tweet halftime
-		//	    if ([[Tweeter getCurrent] isTweetingEvents]) {
-		//	        [[Tweeter getCurrent] tweetHalftimeWithoutEvent];
-		//	    }
+		GameTweeter.current().tweetHalftime();
 		
 		String message = game().isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
 		if (game().getWind().isSpecified()) {
@@ -320,8 +318,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 							game.addEvent(createNextPeriodEndEvent());
 							game.save();
 						}
-						// TODO...add tweet
-						//	[[Tweeter getCurrent] tweetGameOver: [Game getCurrentGame]];
+						GameTweeter.current().tweetGameOver();
 						finish();
 					}
 		 		},
