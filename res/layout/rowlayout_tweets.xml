@@ -18,6 +18,7 @@
         android:id="@+id/tweetSince"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentRight="true"
         android:textSize="@dimen/font_size30" />
 

@@ -6,6 +6,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +25,7 @@ public class TweetFragment extends UltimateFragment {
 	private EditText tweetText;
 	private Button tweetButton;
 	private ImageButton clearButton;
+	private TextView tweetedMessage;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class TweetFragment extends UltimateFragment {
 		tweetText = (EditText)view.findViewById(R.id.tweetText);
 		tweetButton = (Button)view.findViewById(R.id.tweetButton);
 		clearButton = (ImageButton)view.findViewById(R.id.clearButton);
+		tweetedMessage =  (TextView)view.findViewById(R.id.tweetedMessage);
 	}
 	
 	private void registerWidgetListeners() {
@@ -72,6 +76,7 @@ public class TweetFragment extends UltimateFragment {
 		if (text != null && !text.isEmpty()) {
 			TweetQueue.current().submitTweet(text);
 			tweetText.setText("");
+			showSentToast();
 		}
 	}
 	
@@ -86,5 +91,14 @@ public class TweetFragment extends UltimateFragment {
 		tweetCharacterCount.setText(Integer.toString(availableChars));
 		tweetButton.setEnabled(!text.isEmpty());
 		clearButton.setEnabled(!text.isEmpty());
+	}
+	
+	private void showSentToast() {
+		tweetedMessage.setAlpha(1.0f);
+		tweetedMessage.setVisibility(View.VISIBLE);
+    	Animation animation = new AlphaAnimation(1.0f, 0.0f);
+    	animation.setDuration(1000);
+    	animation.setFillAfter(true); // persist animation
+    	tweetedMessage.startAnimation(animation);
 	}
 }

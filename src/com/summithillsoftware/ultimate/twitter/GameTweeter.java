@@ -134,7 +134,7 @@ public class GameTweeter {
 	private String getGameScoreDescription() {
 	    Score score = game().getScore();
 	    return score.getOurs() + "-" + score.getTheirs() + (score.getOurs() == score.getTheirs() ? "" : score.getOurs() > score.getTheirs() ?
-	            Team.current().getName() : game().getOpponentName());
+	            " " + Team.current().getName() : " " + game().getOpponentName());
 	}
 	
 	private String gameBeginTweetMessage(Event event, boolean isUndo) {

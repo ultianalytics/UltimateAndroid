@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_name">UltiAnalytics</string>
+    <string name="app_name">Ulti Analytics</string>
     <string name="undefined">UNDEFINED</string>
     <string name="zero">0</string>
     <string name="blank"></string>
@@ -324,6 +324,7 @@
     <string name="toast_swipe_up_to_see_more">Swipe up to see more</string>
     <string name="toast_upload_complete">Upload Complete</string>
     <string name="toast_signon_complete">Signon Complete</string>
+    <string name="toast_tweet_sent">Tweet Sent</string>
     <string name="checkbox_support_log_files">Log files</string>
     <string name="checkbox_support_team_files">Team/Game files</string>
     <string name="tab_twitter_tweet">AdHoc Tweet</string>
