@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,6 +47,12 @@ public class ViewHelper {
 				addDescendentViews(((ViewGroup)view).getChildAt(i), viewType, viewList);
 			}
 		} 
+	}
+	
+	public static int dpAsPixels(int dpValue, Context context) {
+		Resources r = context.getResources();
+		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, r.getDisplayMetrics());
+		return (int)Math.round(px);
 	}
 
 }
