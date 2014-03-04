@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.ui.CalloutView.AnimateCalloutShowAsyncTask;
 import com.summithillsoftware.ultimate.ui.settings.SettingsActivity;
 import com.summithillsoftware.ultimate.ui.support.SupportActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity;
@@ -152,7 +154,6 @@ public class UltimateActivity extends ActionBarActivity {
 		Display display = getWindowManager().getDefaultDisplay();
 		@SuppressWarnings("deprecation")
 		Size size = new Size(display.getWidth(), display.getHeight());
-//		display.getSize(point);
 		return size;
 	}
 	
@@ -162,6 +163,10 @@ public class UltimateActivity extends ActionBarActivity {
 	
 	public ViewGroup getRootContentView() {
 		return (ViewGroup)getRootView().getChildAt(0);
+	}
+	
+	public Point locationInRootView(View view) {
+		return ViewHelper.locationInRootView(view, getRootView());
 	}
 	
 	public void lockOrientation() {
@@ -245,5 +250,14 @@ public class UltimateActivity extends ActionBarActivity {
 	    } catch (Exception ex) {
 	        UltimateLogger.logError("Unable to apply custom style to alert dialog", ex);
 	    }
+	}
+	
+	protected void showCallouts(List<CalloutView> callouts) {
+		for (CalloutView calloutView : callouts) {
+			getRootView().addView(calloutView);
+		}
+
+		// animate them in
+		new AnimateCalloutShowAsyncTask(callouts).execute(); 
 	}
 }

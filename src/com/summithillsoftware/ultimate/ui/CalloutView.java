@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 
 public class CalloutView extends FrameLayout {
+	private static final int HORIZ_PADDING = 16;
+	private static final int VERTICAL_PADDING = 10;
 	private CalloutAnimationStyle animateStyle = CalloutAnimationStyle.FromLeft;
-	private int textWidth = 200;  // pixels
+	private int calloutWidth = 200;  // pixels
+	private int connectorLineBaseWidth = 80; // pixels
 	private String text = "Hello\nDude";
 	private int degrees;
 	private Point anchor;
@@ -30,7 +33,7 @@ public class CalloutView extends FrameLayout {
 	
 	private TextView textView;
 	private Point textViewMidPoint;
-	private int connectorLineBaseWidth = 60;
+
 
 	public CalloutView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -74,8 +77,13 @@ public class CalloutView extends FrameLayout {
 	}
 
 	// set the width (in DP) of the text bubble
-	public void setTextWidth(int newWidth) {
-		this.textWidth = ViewHelper.dpAsPixels(newWidth, getContext());
+	public void setCalloutWidth(int newWidth) {
+		this.calloutWidth = ViewHelper.dpAsPixels(newWidth, getContext());
+	}
+	
+	// for the triangle drawn from the middle of the text view to the anchor point...what should it's base size be (in DP)
+	public void setConnectorLineBaseWidth(int newConnectorLineBaseWidth) {
+		this.connectorLineBaseWidth = ViewHelper.dpAsPixels(newConnectorLineBaseWidth, getContext());;
 	}
 	
 	public void setText(String text) {
@@ -145,12 +153,12 @@ public class CalloutView extends FrameLayout {
 		backgroundDrawable.setCornerRadius(5.f);
 		textView.setBackgroundDrawable(backgroundDrawable);  // re: deprecation - method name is not current as of API 16
 		textView.setMaxLines(100);
-		textView.setPadding(6, 6, 6, 6);
+		textView.setPadding(HORIZ_PADDING, VERTICAL_PADDING, HORIZ_PADDING, VERTICAL_PADDING);
 		textView.setTextColor(getResources().getColor(android.R.color.black));
 		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, (int) getResources().getDimension(R.dimen.font_size20));
 		textView.setText(this.text);
 		addView(textView);
-		LayoutParams params= new LayoutParams(textWidth, LayoutParams.WRAP_CONTENT);
+		LayoutParams params= new LayoutParams(calloutWidth, LayoutParams.WRAP_CONTENT);
 		textView.setLayoutParams(params);
 	}
 
@@ -242,6 +250,8 @@ public class CalloutView extends FrameLayout {
 	private void calcConnectorLineBaseWidth() {
 	    connectorLineBaseWidth = Math.min(connectorLineBaseWidth, Math.min(textView.getWidth(), textView.getHeight()));
 	}
+
+
 
 	
 }

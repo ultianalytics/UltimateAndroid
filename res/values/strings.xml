@@ -71,6 +71,7 @@
     <string name="title_activity_events_in_action">Events</string>
     <string name="title_activity_twitter">Tweets</string>
     <string name="title_activity_support">Support</string>
+	<string name="title_activity_wind">WindActivity</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
@@ -350,6 +351,6 @@
     <string name="twitter_description_hours">h</string>
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
-    <string name="title_activity_wind">WindActivity</string>
+    <string name="callout_only_your_teams">Reminder:\n\nOnly add teams for whom you are keeping stats.\n\nThere is no need to add an opponent as a team.</string>
 
 </resources>
