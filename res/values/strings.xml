@@ -69,7 +69,7 @@
     <string name="title_activity_stats">Player Statistics</string>
     <string name="title_activity_settings">Website Settings</string>
     <string name="title_activity_events_in_action">Events</string>
-	<string name="title_activity_twitter">Tweets</string>
+    <string name="title_activity_twitter">Tweets</string>
     <string name="title_activity_support">Support</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
@@ -141,7 +141,7 @@
     <string name="alert_file_corrupt_delete">Delete</string>
     <string name="alert_file_corrupt_try_again">Try again</string>
     <string name="alert_twitter_signon_error_title">Twitter Signon Error</string>
-    <string name="alert_twitter_signon_error_message">We are unable to communicate to Twitter to sign you on.  Try again later.  If the problem persists please send a note to support.</string>    
+    <string name="alert_twitter_signon_error_message">We are unable to communicate to Twitter to sign you on.  Try again later.  If the problem persists please send a note to support.</string>
     <string name="label_team_type">Type:</string>
     <string name="label_game_vs">vs.</string>
     <string name="label_game_at_tournament">at</string>
@@ -223,8 +223,12 @@
     <string name="label_support_need_help_question">Need Help?</string>
     <string name="label_support_include">Include:</string>
     <string name="label_twitter_waiting_for_signon">Waiting for sign in&#8230;</string>
-	<string name="label_twitter_recents">Recent Tweets</string>
-	<string name="label_twitter_auto_tweet">Auto-Tweet Settings</string>
+    <string name="label_twitter_recents">Recent Tweets</string>
+    <string name="label_twitter_auto_tweet">Auto-Tweet Settings</string>
+	<string name="label_wind_instructions">From a sideline of the field:</string>
+	<string name="label_wind_direction_first_pull">1.) Direction first pull thrown?</string>
+	<string name="label_wind_speed">2.) Speed (mph)?</string>
+	<string name="label_wind_direction_of_wind">3.) Direction wind blowing (swipe)?</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -332,7 +336,7 @@
     <string name="tab_twitter_tweet_log">Tweet Log</string>
     <string name="twitter_description_error">ERROR SENDING TO TWITTER</string>
     <string name="twitter_description_skipped">SKIPPED&#8230;TOO MANY RECENT TWEETS</string>
-    <string name="twitter_description_rejected">TWITTER REJECTED</string>    
+    <string name="twitter_description_rejected">TWITTER REJECTED</string>
     <string name="twitter_description_rejected_rate_limit">TWITTER REJECTED&#8230;TOO MANY RECENT TWEETS</string>
     <string name="twitter_description_rejected_duplicate">TWITTER REJECTED&#8230;DUPLICATE</string>
     <string name="twitter_description_rejected_bad_credentials">TWITTER REJECTED&#8230;BAD CREDENTIALS</string>
@@ -346,5 +350,6 @@
     <string name="twitter_description_hours">h</string>
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
+    <string name="title_activity_wind">WindActivity</string>
 
 </resources>
