@@ -16,11 +16,9 @@ import com.summithillsoftware.ultimate.util.DirectoryZipper;
 import com.summithillsoftware.ultimate.util.SoundPlayer;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.Workflow;
-import com.testflightapp.lib.TestFlight;
 
 public class UltimateApplication extends Application {
 	private static UltimateApplication Current;
-	private static final String TEST_FLIGHT_APP_ID = "b9c54b7f-ef84-4875-a67f-afdaa6887045";
 	private static final String ULTIMATE_EXT_DRIVE_FOLDER = "ultimate";
 	private static final String ULTIMATE_SUPPORT_ZIP_PREFIX = "ultimate-";
 	private boolean isAppStartInProgress;
@@ -41,7 +39,6 @@ public class UltimateApplication extends Application {
 	public final void onCreate() {
         super.onCreate(); 
         Current = this;
-        TestFlight.takeOff(this, TEST_FLIGHT_APP_ID);
         CookieSyncManager.createInstance(this);
         TweetQueue.current();  // gets twitter looper initialized
         ensureOneTeam();
