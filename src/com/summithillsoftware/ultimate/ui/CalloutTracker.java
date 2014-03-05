@@ -13,6 +13,12 @@ import com.summithillsoftware.ultimate.util.AtomicFile;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class CalloutTracker implements Externalizable {
+	
+	public static final int CALLOUT_OUR_TEAMS_ONLY = 1;
+	
+	
+	/*******************************/
+	
 	private static final byte serialVersionUID = 1;
 	private static final String FILE_NAME = "callout_tracker.ser";
 	private static CalloutTracker Current;

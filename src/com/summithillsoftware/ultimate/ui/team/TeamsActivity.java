@@ -108,7 +108,7 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	}
 	
 	private boolean showOnlyYourTeamsCallout() {
-		if (CalloutTracker.current().hasCalloutBeenShown(R.string.callout_only_your_teams)) {
+		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
 			return false;
 		} else {
 			final List<CalloutView> callouts = new ArrayList<CalloutView>();
@@ -123,7 +123,7 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 				callout.setCalloutWidth(200);
 				callout.setConnectorLineBaseWidth(100);
 				callouts.add(callout);
-				CalloutTracker.current().setCalloutShown(R.string.callout_only_your_teams);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY);
 				
 				showCallouts(callouts);
 			}
