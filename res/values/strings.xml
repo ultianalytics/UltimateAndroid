@@ -297,6 +297,7 @@
     <string name="button_overtime_receive">Receive</string>
     <string name="button_overtime_defend">Pull</string>
     <string name="button_signoff">Sign out</string>
+    <string name="button_wind_lookup_speed">Lookup</string>
     <string name="button_support_send_email">Send E-mail to Support</string>
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>

@@ -49,10 +49,29 @@
             android:text="@string/label_wind_speed"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <SeekBar
-            android:id="@+id/windSpeedSeekBar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" >
+
+            <SeekBar
+                android:id="@+id/windSpeedSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lookupSpeedButton"
+                android:layout_alignParentLeft="true"/>
+
+            <Button
+                android:id="@+id/lookupSpeedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+				style="?android:attr/buttonStyleSmall"
+                android:text="@string/button_wind_lookup_speed" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/labelDirection"
@@ -60,6 +79,13 @@
             android:layout_height="wrap_content"
             android:text="@string/label_wind_direction_of_wind"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <View
+            android:id="@+id/directionView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wind_direction_view_height"
+            android:background="@color/ultimate_action_bar" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -3,6 +3,8 @@ package com.summithillsoftware.ultimate.ui.wind;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
@@ -14,6 +16,8 @@ public class WindActivity extends UltimateActivity {
 	private ImageButton buttonDirectionRight;
 	private ImageButton buttonDirectionLeft;
 	private SeekBar windSpeedSeekBar;
+	private View directionView;
+	private Button lookupSpeedButton;
 
 
 	@Override
@@ -39,6 +43,8 @@ public class WindActivity extends UltimateActivity {
 		buttonDirectionRight = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionRight);
 		buttonDirectionLeft = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionLeft);
 		windSpeedSeekBar = (SeekBar)findViewById(R.id.windFragment).findViewById(R.id.windSpeedSeekBar);
+		directionView = (View)findViewById(R.id.windFragment).findViewById(R.id.directionView);
+		lookupSpeedButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.lookupSpeedButton);
 	}
 	
 	private void populateView() {
