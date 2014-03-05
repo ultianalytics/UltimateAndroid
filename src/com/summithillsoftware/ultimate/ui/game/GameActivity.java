@@ -35,6 +35,7 @@ import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game;
+import com.summithillsoftware.ultimate.ui.wind.WindActivity;
 import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
@@ -141,6 +142,10 @@ public class GameActivity extends UltimateActivity {
 	
 	public void statisticsClicked(View v) {
 		goToStatsActivity();
+	}
+	
+	public void windClicked(View v) {
+		goToWindActivity();
 	}
 	
 	private void connectWidgets() {
@@ -318,6 +323,10 @@ public class GameActivity extends UltimateActivity {
 	
 	private void goToTwitterActivity() {
 		startActivity(new Intent(this, TwitterActivity_Game.class));
+	}
+	
+	private void goToWindActivity() {
+		startActivity(new Intent(this, WindActivity.class));
 	}
 
 }

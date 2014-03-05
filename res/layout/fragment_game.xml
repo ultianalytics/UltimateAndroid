@@ -188,6 +188,20 @@
                     android:onClick="statisticsClicked"
                     android:text="@string/button_game_statistics" />
             </TableRow>
+            
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" >
+
+                <Button
+                    android:id="@+id/button_wind"
+                    style="@style/FormCellButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="windClicked"
+                    android:text="@string/button_game_wind" />
+            </TableRow>            
         </TableLayout>
 
         <LinearLayout

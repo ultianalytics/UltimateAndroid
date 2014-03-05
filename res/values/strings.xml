@@ -245,6 +245,7 @@
     <string name="button_game_events">Events</string>
     <string name="button_game_timeouts">Timeouts</string>
     <string name="button_game_statistics">Statistics</string>
+    <string name="button_game_wind">Wind</string>    
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>
