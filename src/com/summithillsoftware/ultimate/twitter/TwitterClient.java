@@ -119,27 +119,35 @@ public class TwitterClient {
 	
 	// IMPORTANT: Do not call on UI thread
 	public void tweet(Tweet tweet) {
-		try {
-			Status status = getAuthenticatedTwitter().updateStatus(tweet.getText());
-			tweet.setCompletionStatus(TweetSendStatus.OK);
-			tweet.setLimitStatus(status.getRateLimitStatus());
-		} catch (TwitterException e) {
-			if (e.getStatusCode() == 403) {
-				if (e.getErrorCode() == 187) {
-					tweet.setCompletionStatus(TweetSendStatus.RejectedRetweet);
-				} else if (e.getErrorCode() == 88 || e.getErrorCode() == 185) {
-					tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);
-				} else {
-					tweet.setCompletionStatus(TweetSendStatus.RejectedForUnkownReason);
+		Twitter twitter = getAuthenticatedTwitter();
+		if (twitter == null) {
+			tweet.setCompletionStatus(TweetSendStatus.RejectedBadCredentials);
+		} else {
+			try {
+				Status status = getAuthenticatedTwitter().updateStatus(tweet.getText());
+				tweet.setCompletionStatus(TweetSendStatus.OK);
+				tweet.setLimitStatus(status.getRateLimitStatus());
+			} catch (TwitterException e) {
+				if (e.getStatusCode() == 403) {
+					if (e.getErrorCode() == 187) {
+						tweet.setCompletionStatus(TweetSendStatus.RejectedRetweet);
+					} else if (e.getErrorCode() == 88 || e.getErrorCode() == 185) {
+						tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);
+					} else {
+						tweet.setCompletionStatus(TweetSendStatus.RejectedForUnkownReason);
+					}
+				} else if (e.getStatusCode() == 429) {
+					tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);				
+				} else if (e.getStatusCode() == 401) {
+					tweet.setCompletionStatus(TweetSendStatus.RejectedBadCredentials);
+				} else if (e.getStatusCode() == 401) {
+					tweet.setCompletionStatus(TweetSendStatus.UnknownError);
 				}
-			} else if (e.getStatusCode() == 429) {
-				tweet.setCompletionStatus(TweetSendStatus.RejectedRateLimitExceeded);				
-			} else if (e.getStatusCode() == 401) {
-				tweet.setCompletionStatus(TweetSendStatus.RejectedBadCredentials);
-			} else if (e.getStatusCode() == 401) {
+				UltimateLogger.logError("Tweet failed" + tweet , e);
+			} catch (Exception e) {
+				UltimateLogger.logError("Error trying to tweet", e);
 				tweet.setCompletionStatus(TweetSendStatus.UnknownError);
 			}
-			UltimateLogger.logError("Tweet failed" + tweet , e);
 		}
 	}
     
@@ -185,10 +193,16 @@ public class TwitterClient {
 	}
 	
 	private Twitter getAuthenticatedTwitter() {
-	    Twitter authenticatedTwitter = getTwitter();
-	    AccessToken accessToken = new AccessToken(getTwitterOAuthUserAccessToken(), getTwitterOAuthUserAccessTokenSecret());
-	    authenticatedTwitter.setOAuthAccessToken(accessToken);
-		return authenticatedTwitter;
+	    Twitter authenticatedTwitter;
+		try {
+			authenticatedTwitter = getTwitter();
+			AccessToken accessToken = new AccessToken(getTwitterOAuthUserAccessToken(), getTwitterOAuthUserAccessTokenSecret());
+			authenticatedTwitter.setOAuthAccessToken(accessToken);
+			return authenticatedTwitter;
+		} catch (Exception e) {
+			UltimateLogger.logError("Unable to get authentication data to tweet", e);
+			return null;
+		}
 	}
 	
 	private Configuration getTwitterConfiguration() {
