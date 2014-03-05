@@ -71,7 +71,7 @@
     <string name="title_activity_events_in_action">Events</string>
     <string name="title_activity_twitter">Tweets</string>
     <string name="title_activity_support">Support</string>
-	<string name="title_activity_wind">WindActivity</string>
+	<string name="title_activity_wind">Wind</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
