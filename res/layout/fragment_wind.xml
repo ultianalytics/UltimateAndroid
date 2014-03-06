@@ -80,7 +80,7 @@
             android:text="@string/label_wind_direction_of_wind"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
+        <com.summithillsoftware.ultimate.ui.wind.WindDirectionView
             android:id="@+id/directionView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/wind_direction_view_height"

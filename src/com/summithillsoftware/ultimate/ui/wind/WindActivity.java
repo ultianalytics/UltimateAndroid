@@ -20,11 +20,8 @@ public class WindActivity extends UltimateActivity {
 	private ImageButton buttonDirectionRight;
 	private ImageButton buttonDirectionLeft;
 	private SeekBar windSpeedSeekBar;
-	private View directionView;
+	private WindDirectionView directionView;
 	private Button lookupSpeedButton;
-	
-	private Wind wind;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +43,11 @@ public class WindActivity extends UltimateActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putSerializable(WIND_EXTRA, getWind());
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		wind = (Wind)savedInstanceState.getSerializable(WIND_EXTRA);
-	}
-	
-	
 	private void connectWidgets() {
 		buttonDirectionRight = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionRight);
 		buttonDirectionLeft = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionLeft);
 		windSpeedSeekBar = (SeekBar)findViewById(R.id.windFragment).findViewById(R.id.windSpeedSeekBar);
-		directionView = (View)findViewById(R.id.windFragment).findViewById(R.id.directionView);
+		directionView = (WindDirectionView)findViewById(R.id.windFragment).findViewById(R.id.directionView);
 		lookupSpeedButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.lookupSpeedButton);
 	}
 	
@@ -91,6 +74,7 @@ public class WindActivity extends UltimateActivity {
 	
 	private void populateView() {
 		updateFirstPullDirectionArrow();
+		directionView.setDegreesFromNorth(getWind().getDirectionDegrees());
 	}
 
 	private void updateFirstPullDirectionArrow() {
