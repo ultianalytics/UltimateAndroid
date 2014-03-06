@@ -1447,8 +1447,9 @@ containing a value of this type.
         public static final int undo_button_background=0x7f0200d7;
         public static final int unknown_event=0x7f0200d8;
         public static final int upload_cloud_white=0x7f0200d9;
-        public static final int wind_direction_left_button=0x7f0200da;
-        public static final int wind_direction_right_button=0x7f0200db;
+        public static final int wind_arrow=0x7f0200da;
+        public static final int wind_direction_left_button=0x7f0200db;
+        public static final int wind_direction_right_button=0x7f0200dc;
     }
     public static final class id {
         public static final int actionView=0x7f0600fb;

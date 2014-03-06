@@ -28,7 +28,6 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
-import com.summithillsoftware.ultimate.model.Wind;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
@@ -41,8 +40,7 @@ import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
 public class GameActivity extends UltimateActivity {
-	private static final int WIND_ACTIVITY_REQUEST = 1;
-	
+
 	private List<Integer> gameToScores;
 	private List<String> gameToNames;
 	
@@ -329,22 +327,7 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void goToWindActivity() {
-		Intent intent = new Intent(this, WindActivity.class);
-		if (!isNewGame() && Game.current().getWind() != null) {
-			intent.putExtra(WindActivity.WIND_EXTRA,  Game.current().getWind());
-		}
-		startActivityForResult(intent, WIND_ACTIVITY_REQUEST);
+		startActivity(new Intent(this, WindActivity.class));
 	}
-
-	@Override
-	protected void onActivityResult(int request, int result, Intent resultIntent) {
-		super.onActivityResult(request, result, resultIntent);
-		if (request == WIND_ACTIVITY_REQUEST && result == RESULT_OK) {
-			Wind wind = (Wind)resultIntent.getSerializableExtra(WindActivity.WIND_EXTRA);
-			Game.current().setWind(wind);
-		}
-	}
-
-
 
 }

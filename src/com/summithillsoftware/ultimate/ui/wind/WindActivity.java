@@ -1,6 +1,5 @@
 package com.summithillsoftware.ultimate.ui.wind;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Wind;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 
@@ -86,7 +86,6 @@ public class WindActivity extends UltimateActivity {
 	
 	private void handleFirstPullDirectionButtonTap(boolean isFirstPullLeftToRight) {
 		getWind().setFirstPullLeftToRight(isFirstPullLeftToRight);
-		updateResult();
 		populateView();
 	}
 	
@@ -101,20 +100,7 @@ public class WindActivity extends UltimateActivity {
 	}
 	
 	private Wind getWind() {
-		if (wind == null) {
-			wind = (Wind)getIntent().getExtras().getSerializable(WIND_EXTRA);
-			if (wind == null) {
-				wind = new Wind();
-			}
-		}
-		return wind;
-	}
-	
-	private void updateResult() {
-		Intent resultIntent = new Intent();
-		resultIntent.putExtra(WIND_EXTRA, getWind());
-		setResult(RESULT_OK, resultIntent);
-		finish();
+		return Game.current().getWind();
 	}
 
 }
