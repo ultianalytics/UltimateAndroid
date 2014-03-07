@@ -1,91 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_wind_instructions"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_wind_direction_first_pull"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:orientation="vertical" >
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp" >
 
-        <TextView
+        <ImageButton
+            android:id="@+id/buttonDirectionRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_wind_instructions"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:contentDescription="@string/image_description"
+            android:src="@drawable/wind_direction_right_button" />
 
-        <TextView
+        <ImageButton
+            android:id="@+id/buttonDirectionLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_wind_direction_first_pull"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp" >
-
-            <ImageButton
-                android:id="@+id/buttonDirectionRight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wind_direction_right_button" 
-				android:contentDescription="@string/image_description"/>
-
-            <ImageButton
-                android:id="@+id/buttonDirectionLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wind_direction_left_button"
-                android:contentDescription="@string/image_description" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_wind_speed"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical" >
-
-            <SeekBar
-                android:id="@+id/windSpeedSeekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/lookupSpeedButton"
-                android:layout_alignParentLeft="true"/>
-
-            <Button
-                android:id="@+id/lookupSpeedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-				style="?android:attr/buttonStyleSmall"
-                android:text="@string/button_wind_lookup_speed" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/labelDirection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_wind_direction_of_wind"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <com.summithillsoftware.ultimate.ui.wind.WindDirectionView
-            android:id="@+id/directionView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/wind_direction_view_height"
-            android:background="@color/ultimate_action_bar" />
-
+            android:contentDescription="@string/image_description"
+            android:src="@drawable/wind_direction_left_button" />
     </LinearLayout>
 
-</ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_wind_speed"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" >
+
+        <SeekBar
+            android:id="@+id/windSpeedSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/lookupSpeedButton" />
+
+        <Button
+            android:id="@+id/lookupSpeedButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/button_wind_lookup_speed" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/labelDirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_wind_direction_of_wind"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.summithillsoftware.ultimate.ui.wind.WindDirectionView
+        android:id="@+id/directionView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/wind_direction_view_height"
+        android:background="@color/ultimate_action_bar" />
+
+</LinearLayout>

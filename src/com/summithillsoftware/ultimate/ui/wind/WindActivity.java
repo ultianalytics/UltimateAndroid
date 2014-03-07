@@ -13,10 +13,9 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Wind;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.wind.WindDirectionView.OnWindDirectionChangedListener;
 
 public class WindActivity extends UltimateActivity {
-	public final static String WIND_EXTRA = "wind";
-	
 	private ImageButton buttonDirectionRight;
 	private ImageButton buttonDirectionLeft;
 	private SeekBar windSpeedSeekBar;
@@ -64,7 +63,13 @@ public class WindActivity extends UltimateActivity {
 			public void onClick(View v) {
 				handleFirstPullDirectionButtonTap(false);
 			}
-		});		
+		});
+		directionView.setChangeListener(new OnWindDirectionChangedListener() {
+			@Override
+			public void onWindDirectionChanged(int degreesFromNorth) {
+				getWind().setDirectionDegrees(degreesFromNorth);
+			}
+		});
 	}
 	
 	private void handleFirstPullDirectionButtonTap(boolean isFirstPullLeftToRight) {
@@ -86,5 +91,7 @@ public class WindActivity extends UltimateActivity {
 	private Wind getWind() {
 		return Game.current().getWind();
 	}
+	
+
 
 }
