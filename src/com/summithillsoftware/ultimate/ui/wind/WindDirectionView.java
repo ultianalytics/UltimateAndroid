@@ -53,6 +53,7 @@ public class WindDirectionView extends View {
 		// text properties
 		paint.setTextSize(Math.max(textSize, 14));
 		paint.setColor(Color.WHITE);
+		paint.setAntiAlias(true);
 		textRect = new Rect();  // used during draw...instantiated here for performance reasons
 	}
 	
