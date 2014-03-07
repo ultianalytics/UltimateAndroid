@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +23,9 @@ public class WindDirectionView extends View {
 	private Paint paint;
 	private Point mouseDownPoint;
 	private OnWindDirectionChangedListener changeListener;
+	private String directionInstructions;
+	private float textSize;
+	private Rect textRect;
 
 	public WindDirectionView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -39,15 +44,23 @@ public class WindDirectionView extends View {
 	
 	private void init() {
 		arrowImage = BitmapFactory.decodeResource(getResources(), R.drawable.wind_arrow);
+		directionInstructions = getResources().getString(R.string.label_wind_direction_of_wind_instructions);
+		initPaint();
+	}
+	
+	private void initPaint() {
 		paint = new Paint();
+		// text properties
+		paint.setTextSize(Math.max(textSize, 14));
+		paint.setColor(Color.WHITE);
+		textRect = new Rect();  // used during draw...instantiated here for performance reasons
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+	    canvas.save();
 		if (degreesFromNorth >= 0) {
-		    canvas.save();
-
 			float originX = (getWidth() - arrowImage.getWidth()) / 2; 
 			float originY = (getHeight() - arrowImage.getHeight()) / 2; 
 			float midX = getWidth() / 2; 
@@ -57,9 +70,14 @@ public class WindDirectionView extends View {
 	        canvas.rotate(rotateDegrees, midX, midY);
 	        
 			canvas.drawBitmap(arrowImage, originX, originY, paint);
-			
-		    canvas.restore();
+		} else {
+			paint.getTextBounds(directionInstructions, 0, directionInstructions.length(), textRect);
+			float x = (canvas.getWidth() - textRect.width()) / 2.0f;
+			float y = (canvas.getHeight() - textRect.height()) / 2.0f;
+			y += (textRect.height() / 2);  // text origin is the bottom of the text
+			canvas.drawText(directionInstructions, x, y, paint); 
 		}
+	    canvas.restore();
 	}
 	
 	@Override
@@ -100,13 +118,18 @@ public class WindDirectionView extends View {
     	return (int)angle + 180;
     }
 
-
 	public int getDegreesFromNorth() {
 		return degreesFromNorth;
 	}
 
 	public void setDegreesFromNorth(int degreesFromNorth) {
 		this.degreesFromNorth = degreesFromNorth;
+		invalidate();
+	}
+	
+	public void setTextSize(float textSize) {
+		this.textSize = textSize;
+		initPaint();
 		invalidate();
 	}
 	
@@ -119,6 +142,8 @@ public class WindDirectionView extends View {
 	public interface OnWindDirectionChangedListener {
 		public void onWindDirectionChanged(int degreesFromNorth);
 	}
+
+
 	
 
 }

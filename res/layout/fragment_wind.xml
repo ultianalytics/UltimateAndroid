@@ -90,7 +90,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/labelDirection"
+        android:id="@+id/directionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_wind_direction_of_wind"

@@ -229,7 +229,8 @@
 	<string name="label_wind_instructions">From a sideline of the field:</string>
 	<string name="label_wind_direction_first_pull">1.) Direction first pull thrown?</string>
 	<string name="label_wind_speed">2.) Speed (mph)?</string>
-	<string name="label_wind_direction_of_wind">3.) Direction wind blowing (swipe)?</string>
+	<string name="label_wind_direction_of_wind">3.) Direction wind blowing?</string>
+	<string name="label_wind_direction_of_wind_instructions">Swipe to indicate direction</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>

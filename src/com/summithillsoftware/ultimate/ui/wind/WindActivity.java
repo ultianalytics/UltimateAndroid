@@ -24,6 +24,7 @@ public class WindActivity extends UltimateActivity {
 	private ImageButton buttonDirectionLeft;
 	private TextView windSpeed;
 	private SeekBar windSpeedSeekBar;
+	private TextView directionLabel;
 	private WindDirectionView directionView;
 	private Button lookupSpeedButton;
 
@@ -51,9 +52,11 @@ public class WindActivity extends UltimateActivity {
 		buttonDirectionRight = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionRight);
 		buttonDirectionLeft = (ImageButton)findViewById(R.id.windFragment).findViewById(R.id.buttonDirectionLeft);
 		windSpeedSeekBar = (SeekBar)findViewById(R.id.windFragment).findViewById(R.id.windSpeedSeekBar);
-		directionView = (WindDirectionView)findViewById(R.id.windFragment).findViewById(R.id.directionView);
 		lookupSpeedButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.lookupSpeedButton);
 		windSpeed = (TextView)findViewById(R.id.windFragment).findViewById(R.id.windSpeed);
+		directionView = (WindDirectionView)findViewById(R.id.windFragment).findViewById(R.id.directionView);
+		directionLabel = (TextView)findViewById(R.id.windFragment).findViewById(R.id.directionLabel);
+		directionView.setTextSize(directionLabel.getTextSize()); 
 	}
 	
 	
