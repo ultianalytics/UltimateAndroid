@@ -9,6 +9,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +21,6 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class GameDescription implements Externalizable {
@@ -34,12 +34,10 @@ public class GameDescription implements Externalizable {
 	public static final String JSON_START_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
 	
 	private String gameId;
-	private String startDateUtc;
+	private Date startDate;
 	private String opponentName = "";
 	private String tournamentName = "";	
 	private Score score;
-	
-	private transient Date startDate;
 	
 	public GameDescription() {
 		super();
@@ -56,22 +54,11 @@ public class GameDescription implements Externalizable {
 	public void setGameId(String gameId) {
 		this.gameId = gameId;
 	}
-	public String getStartDateUtc() {
-		return startDateUtc;
-	}
-	public void setStartDateUtc(String startDateUtc) {
-		this.startDateUtc = startDateUtc;
-	}
 	public Date getStartDate() {
-		if (startDate == null) {
-			if (startDateUtc != null) {
-				startDate = DateUtil.fromUtcString(startDateUtc);
-			}
-			if (startDate == null) {
-				startDate = new Date();
-			}
-		}
 		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	public String getOpponentName() {
 		return opponentName;
@@ -96,7 +83,7 @@ public class GameDescription implements Externalizable {
 	public void writeExternal(ObjectOutput output) throws IOException {
 		output.writeByte(serialVersionUID);
 		output.writeObject(gameId);
-		output.writeObject(startDateUtc);
+		output.writeObject(startDate);
 		output.writeObject(opponentName);
 		output.writeObject(tournamentName);		
 		output.writeObject(score);
@@ -107,7 +94,7 @@ public class GameDescription implements Externalizable {
 		@SuppressWarnings("unused")
 		byte version = input.readByte();  // if vars change use this to decide how far to read
 		gameId = (String)input.readObject();
-		startDateUtc = (String)input.readObject();
+		startDate = (Date)input.readObject();
 		opponentName = (String)input.readObject();
 		tournamentName = (String)input.readObject();
 		score = (Score)input.readObject();
@@ -130,16 +117,14 @@ public class GameDescription implements Externalizable {
 				game.setTournamentName(jsonObject
 						.getString(JSON_TOURNAMENT_NAME));
 			}
-			if (jsonObject.has(Game.JSON_START_DATE_TIME_UTC)) {
-				game.startDateUtc = jsonObject.getString(Game.JSON_START_DATE_TIME_UTC);
-			} else if (jsonObject.has(JSON_START_DATE_TIME)) {
+			if (jsonObject.has(JSON_START_DATE_TIME)) {
 				SimpleDateFormat parser = new SimpleDateFormat(
 						JSON_START_DATE_TIME_FORMAT, Locale.US);
 				try {
-					Date gameDate = parser.parse(jsonObject.getString(JSON_START_DATE_TIME));
-					game.setStartDateUtc(DateUtil.toUtcString(gameDate));
-				} catch (Exception e) {
-					UltimateLogger.logError("Unable to parse json date " + jsonObject.getString(JSON_START_DATE_TIME), e);
+					game.setStartDate(parser.parse(jsonObject
+							.getString(JSON_START_DATE_TIME)));
+				} catch (ParseException e) {
+					throw new JSONException(e.toString());
 				}
 			}
 			return game;
@@ -175,7 +160,7 @@ public class GameDescription implements Externalizable {
 		gameDesc.setOpponentName(game.getOpponentName());
 		gameDesc.setTournamentName(game.getTournamentName());
 		gameDesc.setScore(game.getScore());
-		gameDesc.setStartDateUtc(DateUtil.toUtcString(game.getStartDateTime()));
+		gameDesc.setStartDate(game.getStartDateTime());
 		gameDesc.saveForTeam(teamId);
 		return gameDesc;
 	}
@@ -245,15 +230,7 @@ public class GameDescription implements Externalizable {
 	
 	public static Comparator<GameDescription> GameDescriptionListComparator = new Comparator<GameDescription>() {
 		public int compare(GameDescription game1, GameDescription game2) {
-			Date game1Date = game1.getStartDate();
-			Date game2Date = game2.getStartDate();
-			if (game1Date == null) {
-				game1Date = new Date();
-			}
-			if (game2Date == null) {
-				game2Date = new Date();
-			}
-			return game2Date.compareTo(game1Date);
+			return game2.getStartDate().compareTo(game1.getStartDate());
 		}
 	};
 
