@@ -31,6 +31,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.util.AtomicFile;
+import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Game implements Externalizable {
@@ -42,6 +43,7 @@ public class Game implements Externalizable {
 	private static final String JSON_GAME_POINT = "gamePoint";
 	private static final String JSON_IS_FIRST_POINT_OLINE = "firstPointOline";
 	private static final String JSON_START_DATE_TIME = "timestamp";
+	public static final String JSON_START_DATE_TIME_UTC = "timestampUTC";
 	private static final String JSON_TIMEMOUT_DETAILS_JSON = "timeoutDetailsJson";
 	private static final String JSON_POINTS_JSON = "pointsJson";
 	private static final String JSON_WIND = "wind";
@@ -54,6 +56,7 @@ public class Game implements Externalizable {
 
 	private String gameId;
 	private Date startDateTime;
+	private String startDateTimeUtc;
 	private String opponentName;
 	private String tournamentName;
 	private int gamePoint;
@@ -87,6 +90,7 @@ public class Game implements Externalizable {
 		game.gamePoint = Preferences.current().getGamePoint();
 		game.currentLine = Team.current().getDefaultLine();
 		game.startDateTime = new Date();
+		game.startDateTimeUtc = DateUtil.toUtcString(game.startDateTime);
 		return game;
 	}
 
@@ -733,6 +737,9 @@ public class Game implements Externalizable {
 	}
 
 	public Date getStartDateTime() {
+		if (startDateTimeUtc != null) {
+			return DateUtil.fromUtcString(startDateTimeUtc);
+		}
 		if (startDateTime == null) {
 			startDateTime = new Date();
 		}
@@ -992,6 +999,7 @@ public class Game implements Externalizable {
 		
 		gameId = (String) input.readObject();
 		startDateTime = (Date) input.readObject();
+		startDateTimeUtc = (String) input.readObject();
 		opponentName = (String) input.readObject();
 		tournamentName = (String) input.readObject();
 		gamePoint = input.readInt();
@@ -1013,6 +1021,7 @@ public class Game implements Externalizable {
 		output.writeByte(serialVersionUID);
 		output.writeObject(gameId);
 		output.writeObject(startDateTime);
+		output.writeObject(startDateTimeUtc);
 		output.writeObject(opponentName);
 		output.writeObject(tournamentName);
 		output.writeInt(gamePoint);
@@ -1041,6 +1050,9 @@ public class Game implements Externalizable {
 					JSON_START_DATE_TIME_FORMAT, Locale.US);
 			jsonObject.put(JSON_START_DATE_TIME,
 					formatter.format(startDateTime));
+		}
+		if (startDateTimeUtc != null) {
+			jsonObject.put(JSON_START_DATE_TIME_UTC,startDateTimeUtc);
 		}
 		// the timeouts object is embedded json
 		if (timeoutDetails != null) {
@@ -1094,6 +1106,9 @@ public class Game implements Externalizable {
 					throw new JSONException(e.toString());
 				}
 			}
+			if (jsonObject.has(JSON_START_DATE_TIME_UTC)) {
+				game.setStartDateTimeUtc(jsonObject.getString(JSON_START_DATE_TIME_UTC));
+			}
 			// the timeouts object is embedded json
 			if (jsonObject.has(JSON_TIMEMOUT_DETAILS_JSON)) {
 				JSONObject timeoutsAsJson = new JSONObject(
@@ -1118,6 +1133,14 @@ public class Game implements Externalizable {
 
 			return game;
 		}
+	}
+
+	public String getStartDateTimeUtc() {
+		return startDateTimeUtc;
+	}
+
+	public void setStartDateTimeUtc(String startDateTimeUtc) {
+		this.startDateTimeUtc = startDateTimeUtc;
 	}
 
 
