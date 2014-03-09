@@ -6,20 +6,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="6dp" >
+        android:orientation="vertical" >
 
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/date_time_picker_height"
-            android:calendarViewShown="false" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/date_time_picker_height" />
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/date_time_picker_height"
+                android:layout_weight="50"
+                android:calendarViewShown="false" />
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/date_time_picker_height"
+                android:layout_weight="50" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
