@@ -132,7 +132,9 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 			playerFragment.setInitialPlayerBeenSelected(selectedPlayer != null);
 		}
 		if (selectedPlayer != null) {
-			throwawayButton.setVisibility(View.VISIBLE);
+			if (Game.current().arePlayingOffense()) {
+				throwawayButton.setVisibility(View.VISIBLE);
+			}
 			pickInitialPlayerInstructionsTextView.setVisibility(View.GONE);
 		}
 		if (selectedPlayer == null || (!selectedPlayerFound && !selectedPlayer.isAnonymous())) {
