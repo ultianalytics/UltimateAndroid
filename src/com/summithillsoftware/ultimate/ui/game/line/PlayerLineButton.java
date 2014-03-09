@@ -11,7 +11,6 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Player;
 import com.summithillsoftware.ultimate.model.Team;
-import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class PlayerLineButton extends Button {
 	private Player player;
