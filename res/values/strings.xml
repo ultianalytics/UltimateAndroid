@@ -71,7 +71,8 @@
     <string name="title_activity_events_in_action">Events</string>
     <string name="title_activity_twitter">Tweets</string>
     <string name="title_activity_support">Support</string>
-	<string name="title_activity_wind">Wind</string>
+    <string name="title_activity_wind">Wind</string>
+    <string name="title_activity_timestamp">Game Start Time</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
@@ -228,11 +229,11 @@
     <string name="label_twitter_waiting_for_signon">Waiting for sign in&#8230;</string>
     <string name="label_twitter_recents">Recent Tweets</string>
     <string name="label_twitter_auto_tweet">Auto-Tweet Settings</string>
-	<string name="label_wind_instructions">From a sideline of the field:</string>
-	<string name="label_wind_direction_first_pull">1.) Direction first pull thrown?</string>
-	<string name="label_wind_speed">2.) Speed (mph)?</string>
-	<string name="label_wind_direction_of_wind">3.) Direction wind blowing?</string>
-	<string name="label_wind_direction_of_wind_instructions">Swipe to indicate direction</string>
+    <string name="label_wind_instructions">From a sideline of the field:</string>
+    <string name="label_wind_direction_first_pull">1.) Direction first pull thrown?</string>
+    <string name="label_wind_speed">2.) Speed (mph)?</string>
+    <string name="label_wind_direction_of_wind">3.) Direction wind blowing?</string>
+    <string name="label_wind_direction_of_wind_instructions">Swipe to indicate direction</string>
     <string name="placeholder_team_name">Team Name</string>
     <string name="placeholder_player_name">Player Name</string>
     <string name="placeholder_player_number">Player Number</string>
@@ -248,7 +249,7 @@
     <string name="button_game_events">Events</string>
     <string name="button_game_timeouts">Timeouts</string>
     <string name="button_game_statistics">Statistics</string>
-    <string name="button_game_wind">Wind</string>    
+    <string name="button_game_wind">Wind</string>
     <string name="button_line_last_oline">Last O-Line</string>
     <string name="button_line_last_dline">Last D-Line</string>
     <string name="button_line_clear">Clear</string>

@@ -35,6 +35,7 @@ import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
+import com.summithillsoftware.ultimate.ui.timestamp.TimestampActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game;
 import com.summithillsoftware.ultimate.ui.wind.WindActivity;
 import com.summithillsoftware.ultimate.util.DateUtil;
@@ -136,7 +137,7 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	public void dateClicked(View v) {
-		
+		goToDateActivity();
 	}
 	
 	public void scoreClicked(View v) {
@@ -341,6 +342,11 @@ public class GameActivity extends UltimateActivity {
 	private void goToWindActivity() {
 		populateGame();  // save state so we don't lose it going to the wind view
 		startActivity(new Intent(this, WindActivity.class));
+	}
+	
+	private void goToDateActivity() {
+		populateGame();  // save state so we don't lose it going to the date view
+		startActivity(new Intent(this, TimestampActivity.class));
 	}
 
 }
