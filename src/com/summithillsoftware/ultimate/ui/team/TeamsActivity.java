@@ -108,7 +108,9 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	}
 	
 	private boolean showOnlyYourTeamsCallout() {
-		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
+		if (true) {
+// TODO...after doing better math on callouts...remove line before and uncomment line after			
+//		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
 			return false;
 		} else {
 			final List<CalloutView> callouts = new ArrayList<CalloutView>();
