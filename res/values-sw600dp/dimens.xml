@@ -19,7 +19,7 @@
 	<dimen name="tweet_text_size">18sp</dimen>
 	<dimen name="tweet_clear_button_dimension">30dp</dimen>
 	<dimen name="twitter_signon_webview_height">800dp</dimen>	
-	
+	<dimen name="date_time_picker_height">300dp</dimen>
 	
 	<dimen name="font_size10">10sp</dimen>
 	<dimen name="font_size20">12sp</dimen>
