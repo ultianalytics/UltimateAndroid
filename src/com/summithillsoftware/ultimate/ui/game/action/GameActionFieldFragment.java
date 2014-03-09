@@ -120,27 +120,17 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 		updateSelectedPasser(selectedPlayer);
 	}
 	
-	private void updateSelectedPasser(Player selectedPlayer) {
-		boolean selectedPlayerFound = false;
-		for (int i = 0; i <= 7; i++) {
-			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
-			boolean isFragmentForPlayer = playerFragment.isFragmentForPlayer(selectedPlayer);
-			playerFragment.setSelected(isFragmentForPlayer);
-			if (isFragmentForPlayer) {
-				selectedPlayerFound = true;
-			}
-			playerFragment.setInitialPlayerBeenSelected(selectedPlayer != null);
-		}
-		if (selectedPlayer != null) {
-			if (Game.current().arePlayingOffense()) {
-				throwawayButton.setVisibility(View.VISIBLE);
-			}
-			pickInitialPlayerInstructionsTextView.setVisibility(View.GONE);
-		}
-		if (selectedPlayer == null || (!selectedPlayerFound && !selectedPlayer.isAnonymous())) {
-			updateSelectedPasser(Player.anonymous());
-		}
-	}
+ 	private void updateSelectedPasser(Player selectedPlayer) {
+ 		for (int i = 0; i <= 7; i++) {
+ 			GameActionPlayerFragment playerFragment = getPlayerFragment(i);
+			playerFragment.setSelected(playerFragment.isFragmentForPlayer(selectedPlayer));
+ 			playerFragment.setInitialPlayerBeenSelected(selectedPlayer != null);
+ 		}
+ 		if (selectedPlayer != null) {
+ 			throwawayButton.setVisibility(View.VISIBLE);
+ 			pickInitialPlayerInstructionsTextView.setVisibility(View.GONE);
+ 		}
+ 	}
         
 	private GameActionPlayerFragment getAnonymousPlayerFragment() {
 		return getPlayerFragment(7);
