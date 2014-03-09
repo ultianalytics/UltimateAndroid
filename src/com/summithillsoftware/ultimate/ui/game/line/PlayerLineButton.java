@@ -46,7 +46,6 @@ public class PlayerLineButton extends Button {
 				UltimateApplication.current().getString(R.string.button_line_field_slot_open) : 
 					(Team.current().isDisplayingPlayerNumber() ? player.getPlayerNumberDescription() : player.getName());
 		this.setText(description);
-		UltimateLogger.logInfo("Player " + player.getName() + " has factor " + this.playingTimeFactor);
 	}
 
 	public boolean isButtonOnFieldView() {

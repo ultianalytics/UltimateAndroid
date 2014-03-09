@@ -379,7 +379,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private void registerLastLineButtonClickListener() {
 		lastLineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	List<Player> lastLine = LineDialogFragment.this.isPointOline() ? Game.current().getLastOLine() : Game.current().getLastOLine();
+            	List<Player> lastLine = LineDialogFragment.this.isPointOline() ? Game.current().getLastOLine() : Game.current().getLastDLine();
             	if (lastLine == null) {
             		lastLine = new ArrayList<Player>();
             	} 
