@@ -2,9 +2,11 @@ package com.summithillsoftware.ultimate.ui.timestamp;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -49,5 +51,21 @@ public class TimestampActivity extends UltimateActivity {
 		datePicker.init(year, month, day, null);
 		timePicker.setCurrentHour(hour);
 		timePicker.setCurrentMinute(minute);
+	}
+	
+	public void saveClicked(View v) {
+		int year = datePicker.getYear();
+		int month = datePicker.getMonth();
+		int day = datePicker.getDayOfMonth();
+		int hour = timePicker.getCurrentHour();
+		int minute = timePicker.getCurrentMinute();
+		Calendar calendar = new GregorianCalendar (year, month, day, hour, minute);
+		Game.current().setStartDateTime(calendar.getTime());
+		Game.current().save();
+		finish();
+	}
+	
+	public void cancelClicked(View v) {
+		finish();
 	}
 }
