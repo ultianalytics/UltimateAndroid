@@ -160,6 +160,8 @@
     <string name="label_game_opponent">Opponent:</string>
     <string name="label_game_first_point_oline">We start on:</string>
     <string name="label_game_game_to">Game point:</string>
+    <string name="label_game_wind_not_set">NOT SPECIFIED YET</string>
+    <string name="label_game_wind_description">%1$d mph</string>
     <string name="label_line_field">Field</string>
     <string name="label_line_bench">Bench</string>
     <string name="label_line_substitution_out">OUT</string>

@@ -28,6 +28,7 @@ import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
+import com.summithillsoftware.ultimate.model.Wind;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
@@ -54,6 +55,7 @@ public class GameActivity extends UltimateActivity {
 	private TextView label_game_score;
 	private RadioGroup radiogroup_game_first_point_oline;
 	private Spinner spinner_game_to;
+	private Button windButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +161,7 @@ public class GameActivity extends UltimateActivity {
 		label_game_score = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.label_game_score);
 		radiogroup_game_first_point_oline = (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
 		spinner_game_to = (Spinner)findViewById(R.id.gameFragment).findViewById(R.id.spinner_game_to);
+		windButton = (Button)findViewById(R.id.gameFragment).findViewById(R.id.windButton);
 	}
 	
 	private void populateView() {
@@ -188,6 +191,7 @@ public class GameActivity extends UltimateActivity {
 			populateGamePointView(Game.current().getGamePoint());
 			text_game_opponent_name.requestFocus();
 		}
+		populateWindDescription();
 	
 		label_game_date.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
@@ -204,6 +208,13 @@ public class GameActivity extends UltimateActivity {
         spinner.setAdapter(dataAdapter);
         int gameToIndex = getGameToScores().indexOf(gamePoint);
         spinner.setSelection(gameToIndex);
+	}
+	
+	private void populateWindDescription() {
+		Wind wind = Game.current().getWind();
+		String buttonText = getString(R.string.button_game_wind);
+		String description = (wind != null && wind.getMph() > 0) ? getString(R.string.label_game_wind_description, wind.getMph()) : getString(R.string.label_game_wind_not_set);
+		windButton.setText(buttonText + " (" + description + ")");;
 	}
 	
 	private void populateAndSaveGame() {

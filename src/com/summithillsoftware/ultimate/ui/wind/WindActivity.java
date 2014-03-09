@@ -77,6 +77,7 @@ public class WindActivity extends UltimateActivity {
 			@Override
 			public void onWindDirectionChanged(int degreesFromNorth) {
 				getWind().setDirectionDegrees(degreesFromNorth);
+				saveChanges();
 			}
 		});
 		windSpeedSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -90,7 +91,7 @@ public class WindActivity extends UltimateActivity {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				// no-op
+				saveChanges();
 			}
 		});
 		lookupSpeedButton.setOnClickListener(new OnClickListener() {
@@ -104,6 +105,7 @@ public class WindActivity extends UltimateActivity {
 	private void handleFirstPullDirectionButtonTap(boolean isFirstPullLeftToRight) {
 		getWind().setFirstPullLeftToRight(isFirstPullLeftToRight);
 		populateView();
+		saveChanges();
 	}
 	
 	private void populateView() {
@@ -137,6 +139,12 @@ public class WindActivity extends UltimateActivity {
 	
 	private Wind getWind() {
 		return Game.current().getWind();
+	}
+	
+	private void saveChanges() {
+		if (Game.current().hasBeenSaved()) {
+			Game.current().save();
+		}
 	}
 	
 
