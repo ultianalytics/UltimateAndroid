@@ -107,6 +107,7 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	    downloadDialog.show(fragmentManager, "dialog");
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean showOnlyYourTeamsCallout() {
 		if (true) {
 // TODO...after doing better math on callouts...remove line before and uncomment line after			
