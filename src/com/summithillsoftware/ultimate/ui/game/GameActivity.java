@@ -165,16 +165,11 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void populateView() {
+		Game game = Game.current();
 		if (isNewGame()) {
 			setTitle(getString(R.string.title_activity_game_new));
 			button_save.setText(R.string.button_start);
-			text_game_tourament_name.setText(Preferences.current().getTournamentName());
-			populateGamePointView(Preferences.current().getGamePoint());
-			radiogroup_game_first_point_oline.check(R.id.radio_game_start_offense);
 		} else {
-			Game game = Game.current();
-			text_game_tourament_name.setText(game.getTournamentName());
-			text_game_opponent_name.setText(game.getOpponentName());		
 			if (game.getStartDateTime() != null) {
 				String startDateTime = DateFormat.getTimeInstance().format(game.getStartDateTime());
 				if (DateUtil.isToday(game.getStartDateTime())) {
@@ -187,12 +182,13 @@ public class GameActivity extends UltimateActivity {
 			String scoreFormatted = formatScore(game, this);
 			label_game_score.setText(scoreFormatted);
 			label_game_score.setTextColor(getScoreColor(game));
-			radiogroup_game_first_point_oline.check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
-			populateGamePointView(Game.current().getGamePoint());
 			text_game_opponent_name.requestFocus();
 		}
+		text_game_opponent_name.setText(game.getOpponentName());	
+		text_game_tourament_name.setText(game.getTournamentName());
+		radiogroup_game_first_point_oline.check(Game.current().isFirstPointOline() ? R.id.radio_game_start_offense : R.id.radio_game_start_defense);
+		populateGamePointView(game.getGamePoint());
 		populateWindDescription();
-	
 		label_game_date.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_events.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
@@ -218,6 +214,16 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void populateAndSaveGame() {
+		populateGame();
+		Game game = Game.current();
+		game.save();
+		Game.setCurrentGame(game);
+		Preferences.current().setGamePoint(game.getGamePoint());
+		Preferences.current().setTournamentName(game.getTournamentName());
+		Preferences.current().save();
+	}
+	
+	private void populateGame() {
 		Game game = Game.current();
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
@@ -225,11 +231,6 @@ public class GameActivity extends UltimateActivity {
 		int gameToIndex = spinner_game_to.getSelectedItemPosition();
 		int gameToPoint = getGameToScores().get(gameToIndex);
 		game.setGamePoint(gameToPoint);
-		game.save();
-		Game.setCurrentGame(game);
-		Preferences.current().setGamePoint(game.getGamePoint());
-		Preferences.current().setTournamentName(game.getTournamentName());
-		Preferences.current().save();
 	}
 	
 	private void confirmAndDeleteGame() {
@@ -338,6 +339,7 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void goToWindActivity() {
+		populateGame();  // save state so we don't lose it going to the wind view
 		startActivity(new Intent(this, WindActivity.class));
 	}
 

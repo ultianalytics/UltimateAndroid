@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.GameDescription;
+import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
@@ -128,7 +129,10 @@ public class GamesActivity extends UltimateActivity implements Refreshable {
 	private void goToGameActivity(boolean isNew) {
 		Intent intent = new Intent(GamesActivity.this, GameActivity.class);
 		if (isNew) {
-			Game.setCurrentGame(Game.createGame());
+			Game newGame = Game.createGame();
+			Game.setCurrentGame(newGame);
+			newGame.setTournamentName(Preferences.current().getTournamentName());
+			newGame.setGamePoint(Preferences.current().getGamePoint());
 		}
 		startActivity(intent);
 	}
