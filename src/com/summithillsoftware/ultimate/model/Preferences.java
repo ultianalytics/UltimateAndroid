@@ -11,7 +11,8 @@ import com.summithillsoftware.ultimate.twitter.AutoTweetLevel;
 import com.summithillsoftware.ultimate.util.AtomicFile;
 
 public class Preferences implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	
 	public static final int MINIMUM_GAME_POINT = 9;
 	public static final int MAXIMUM_GAME_POINT = 17;
@@ -127,7 +128,7 @@ public class Preferences implements Externalizable {
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(currentTeamFileName);
 		output.writeObject(currentGameFileName);
 		output.writeObject(tournamentName);

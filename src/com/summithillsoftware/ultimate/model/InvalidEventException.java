@@ -1,7 +1,7 @@
 package com.summithillsoftware.ultimate.model;
 
 public class InvalidEventException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1l;
 
 	public InvalidEventException() {
 		super();

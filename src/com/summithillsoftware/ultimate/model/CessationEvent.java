@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.R;
 
 public class CessationEvent extends Event {
-	private static final long serialVersionUID = 8990822261864009064L;
+	private static final long serialVersionUID = 1l;
 	private static final String NEXT_PERIOD_START_ONLINE_DETAIL = "nextPeriodStartO";
 	public static final EnumSet<Action> CESSATION_ACTIONS = EnumSet.of(
 			EndOfFirstQuarter,

@@ -15,7 +15,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 
 public class Player implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	
 	private static final String JSON_NAME = "name";
 	private static final String JSON_POSITION = "position";
@@ -201,7 +202,7 @@ public class Player implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(name);
 		output.writeObject(number);
 		output.writeBoolean(isMale);

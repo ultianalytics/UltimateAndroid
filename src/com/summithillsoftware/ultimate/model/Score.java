@@ -10,7 +10,8 @@ import android.content.Context;
 import com.summithillsoftware.ultimate.R;
 
 public class Score implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	private int ours;
 	private int theirs;
 	
@@ -97,7 +98,7 @@ public class Score implements Externalizable {
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeInt(ours);
 		output.writeInt(theirs);
 	}

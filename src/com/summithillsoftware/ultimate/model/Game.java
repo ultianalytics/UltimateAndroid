@@ -34,7 +34,8 @@ import com.summithillsoftware.ultimate.util.AtomicFile;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Game implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	
 	private static final String JSON_GAME_ID = "gameId";
 	private static final String JSON_OPPONENT_NAME = "opponentName";
@@ -1010,7 +1011,7 @@ public class Game implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(gameId);
 		output.writeObject(startDateTime);
 		output.writeObject(opponentName);

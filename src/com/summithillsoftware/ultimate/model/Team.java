@@ -20,7 +20,8 @@ import com.summithillsoftware.ultimate.util.AtomicFile;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Team implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	
 	private static final String JSON_TEAM_ID = "teamId";
 	private static final String JSON_CLOUD_ID = "cloudId";
@@ -394,7 +395,7 @@ public class Team implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(teamId);
 		output.writeObject(name);
 		output.writeObject(cloudId);

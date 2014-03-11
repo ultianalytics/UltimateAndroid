@@ -22,7 +22,7 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.util.StringUtil;
 
 public class OffenseEvent extends Event {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1l;
 	private static final String JSON_PASSER = "passer";
 	private static final String JSON_RECEIVER = "receiver";
 

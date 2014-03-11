@@ -17,7 +17,8 @@ import org.json.JSONObject;
 import com.summithillsoftware.ultimate.util.UniqueTimestampGenerator;
 
 public class Point implements Externalizable {
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	
 	private static final String JSON_SUMMARY = "summary";
 	private static final String JSON_EVENTS = "events";
@@ -233,7 +234,7 @@ public class Point implements Externalizable {
 	}
 
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(events);
 		output.writeObject(line);
 		output.writeObject(substitutions);
