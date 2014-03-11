@@ -242,8 +242,6 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void showHalftimeWarning() {
-		GameTweeter.current().tweetHalftime();
-		
 		String message = game().isCurrentlyOline() ? getString(R.string.alert_action_halftime_message_receive) : getString(R.string.alert_action_halftime_message_defend);
 		if (game().getWind().isSpecified()) {
 			message = message + "\n\n" + getString(R.string.alert_action_wind_speed_reminder);

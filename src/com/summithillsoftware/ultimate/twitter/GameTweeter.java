@@ -51,16 +51,14 @@ public class GameTweeter {
 	}
 	
 	public void tweetGameEvent(Event event, Point point, boolean isUndo) {
-		if (point.getEvents().size() == 1) {
-			tweetFirstEventOfPoint(event, point, isUndo);
-		} else {
-			tweetEvent(event, point, isUndo);
-		}
-	}
-	
-	public void tweetHalftime() {
 		if (isTweetingEvents()) {
-			tweet(createTweet(halftimeTweetMessage(false)));
+			if (event.isHalftime()) { // only occurs for time-based games
+				tweetHalftime(event, isUndo);
+			} else if (point.getEvents().size() == 1) {
+				tweetFirstEventOfPoint(event, point, isUndo);
+			} else {
+				tweetEvent(event, point, isUndo);
+			}
 		}
 	}
 	
@@ -73,38 +71,34 @@ public class GameTweeter {
 	private void tweetEvent(Event event, Point point, boolean isUndo) {
 		Game game = game();
         tweetFirstEventOfGameIfNecessary(event, point, isUndo);
-		if (isTweetingEvents()) {
-			if (event.isGoal()) {
-				String message = goalTweetMessage(event, isUndo);
-				Tweet tweet = createTweet(message, event, isUndo);
-				tweet(tweet);
-				if (game.isNextEventImmediatelyAfterHalftime()) {
-					String halftimeMessage = halftimeTweetMessageIsUndo(isUndo);
-					Tweet halftimeTweet = createTweet(halftimeMessage, event, isUndo);
-					tweet(halftimeTweet);
-				}
-			} else if (event.isTurnover() && getTweetLevel() == AutoTweetLevel.TURNOVERS) {
-				String message = turnoverTweetMessage(event, isUndo);
-				Tweet tweet = createTweet(message, event, isUndo);
-				tweet.setOptional(true);
-				tweet(tweet);
-				updateGameTweeted(event, isUndo);
+		if (event.isGoal()) {
+			String message = goalTweetMessage(event, isUndo);
+			Tweet tweet = createTweet(message, event, isUndo);
+			tweet(tweet);
+			if (!game.isTimeBasedGame() && game.isNextEventImmediatelyAfterHalftime()) {
+				String halftimeMessage = halftimeTweetMessageIsUndo(isUndo);
+				Tweet halftimeTweet = createTweet(halftimeMessage, event, isUndo);
+				tweet(halftimeTweet);
 			}
+		} else if (event.isTurnover() && getTweetLevel() == AutoTweetLevel.TURNOVERS) {
+			String message = turnoverTweetMessage(event, isUndo);
+			Tweet tweet = createTweet(message, event, isUndo);
+			tweet.setOptional(true);
+			tweet(tweet);
+			updateGameTweeted(event, isUndo);
 		}
 	}
 	
 	private void tweetFirstEventOfPoint(Event event, Point point, boolean isUndo) {
-		if (isTweetingEvents()) {
-			tweetFirstEventOfGameIfNecessary(event, point, isUndo);
-			String message = pointBeginTweetMessage(event, point, isUndo);
-			Tweet tweet = createTweet(message, event, isUndo);
-			tweet.setOptional(true);
-			tweet(tweet);
-			if (event.isGoal() || event.isTurnover()) {
-				tweetEvent(event, point, isUndo);
-			}
-			updateGameTweeted(event, isUndo);
+		tweetFirstEventOfGameIfNecessary(event, point, isUndo);
+		String message = pointBeginTweetMessage(event, point, isUndo);
+		Tweet tweet = createTweet(message, event, isUndo);
+		tweet.setOptional(true);
+		tweet(tweet);
+		if (event.isGoal() || event.isTurnover()) {
+			tweetEvent(event, point, isUndo);
 		}
+		updateGameTweeted(event, isUndo);
 	}
 	
 	private void tweetFirstEventOfGameIfNecessary(Event event, Point point, boolean isUndo) {
@@ -239,10 +233,6 @@ public class GameTweeter {
 			}
 		}
 	}
-	
-	private String halftimeTweetMessage(boolean isUndo) {
-	    return isUndo ? "\"Halftime\" was a boo-boo...never mind." : "Halftime.";
-	}
 
 	private String gameOverTweetMessage() {
 	    return "Game over, " + getGameScoreDescription(); 
@@ -262,6 +252,12 @@ public class GameTweeter {
 	
 	private String prependTime(String message) {
 		return timeFormatter.format(new Date()) + " " + message;
+	}
+	
+	private void tweetHalftime(Event event, boolean isUndo) {
+		String halftimeMessage = halftimeTweetMessageIsUndo(isUndo);
+		Tweet halftimeTweet = createTweet(halftimeMessage, event, isUndo);
+		tweet(halftimeTweet);
 	}
 	
 	private Tweet createTweet(String message) {

@@ -109,6 +109,10 @@ public abstract class Event implements Externalizable {
 		}
 		return details;
 	}
+	
+	public boolean isHalftime() {
+		return false;
+	}
 
 	public boolean isHalftimeCause() {
 		return isHalftimeCause;
