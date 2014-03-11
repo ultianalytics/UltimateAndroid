@@ -62,6 +62,10 @@ public class Tweet {
 		return progressStatus == TweetProgressStatus.Sent && sendStatus == TweetSendStatus.OK;
 	}
 	
+	public synchronized boolean hadSendError() {
+		return !(sendStatus == TweetSendStatus.OK || sendStatus == TweetSendStatus.NotStarted);
+	}
+	
 	public synchronized String getText() {
 		return text;
 	}

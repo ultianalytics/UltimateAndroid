@@ -78,8 +78,8 @@ public class TweetsListAdapter extends BaseAdapter implements TweetQueue.TweetLi
 		TextView tweetTextView = (TextView)rowView.findViewById(R.id.tweetText);
 		tweetTextView.setText(getTweetText(tweet));
 		
-		boolean isTweetOk = tweet.isWaiting() || tweet.isSentAndAccepted();
-		tweetTextView.setTextColor(context.getResources().getColor(isTweetOk ? R.color.White : R.color.Red));
+		boolean tweetHadError = tweet.hadSendError();
+		tweetTextView.setTextColor(context.getResources().getColor(tweetHadError ? R.color.Red : R.color.White));
 		
 		// "since" time
 		TextView tweetSinceView = (TextView)rowView.findViewById(R.id.tweetSince);
