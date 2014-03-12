@@ -1006,7 +1006,7 @@ public class Game implements Externalizable {
 		lastOLine = (List<Player>) input.readObject();
 		periodsComplete = input.readInt();
 		firstEventTweeted = (Event) input.readObject();
-		lastPeriodEnd = (CessationEvent) lastPeriodEnd;
+		lastPeriodEnd = (CessationEvent) input.readObject();
 	}
 
 	@Override
