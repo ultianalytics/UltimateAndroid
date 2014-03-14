@@ -107,8 +107,11 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	    downloadDialog.show(fragmentManager, "dialog");
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean showOnlyYourTeamsCallout() {
-		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
+		if (true) {
+// TODO...after fixing issues with different pixel densities...uncomment this			
+//		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
 			return false;
 		} else {
 			final List<CalloutView> callouts = new ArrayList<CalloutView>();
