@@ -107,11 +107,8 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	    downloadDialog.show(fragmentManager, "dialog");
 	}
 	
-	@SuppressWarnings("unused")
 	private boolean showOnlyYourTeamsCallout() {
-		if (true) {
-// TODO...after doing better math on callouts...remove line before and uncomment line after			
-//		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
+		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
 			return false;
 		} else {
 			final List<CalloutView> callouts = new ArrayList<CalloutView>();
@@ -121,10 +118,9 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 				Point anchor = locationInRootView(menuView);
 				anchor = ViewHelper.locationInRect(anchor, menuView.getWidth(), menuView.getHeight(), AnchorPosition.BottomLeft);
 		
-				CalloutView callout = new CalloutView(this, anchor, 125, 210, R.string.callout_only_your_teams);
+				CalloutView callout = new CalloutView(this, anchor, 30, 210, R.string.callout_only_your_teams);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
-				callout.setConnectorLineBaseWidth(100);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY);
 				

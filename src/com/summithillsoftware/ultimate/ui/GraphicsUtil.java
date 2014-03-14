@@ -2,24 +2,52 @@ package com.summithillsoftware.ultimate.ui;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.view.View;
 
-public class ShapeMath {
+public class GraphicsUtil {
 	
-	/* Given a rectangle, compute the point at which a line (angle specified by degrees)
-	 * drawn from the center of the rectangle intersects the rectangle.  0 degrees is north
+	/* 
+	 * Given a rectangle, compute the point at which a line (angle specified by degrees)
+	 * drawn from the center of the rectangle intersects the rectangle.  0 degrees is north.
+	 * Inset the point by the radialInset value.  "radialInset" means the point is moved 
+	 * this amount closer to the center point of the rectangle.
 	 */
-	public final static Point pointOnRectAtAngle(int rectWidth, int rectHeight, int degrees) {
-		Rect rect = new Rect(0, 0, rectWidth, rectHeight);
+	public final static Point pointOnRectAtAngleWithInset(Rect rect, int degrees, int radialInset) {
+		int distanceToIntersect = distanceFromCenterToIntersect(rect, degrees);
+		Point rectMid = new Point((int)rect.exactCenterX(), (int)rect.exactCenterY());
+		Point point = calcPointOnCirle(rectMid, distanceToIntersect - radialInset, degrees - 90);
+		return point;
+	}
+	
+	/* 
+	 * Given a rectangle, compute the distance from the center of the rectangle to the side that
+	 * a line, starting at the center point and continuing at angle degrees, will intersect it.
+	 */
+	public final static int distanceFromCenterToIntersect(Rect rect, int degrees) {
+		Point intersectOnRect = pointOnRectAtAngle(rect, degrees);
+		Point rectMid = new Point((int)rect.exactCenterX(), (int)rect.exactCenterY());
+		return (int)lengthOfLine(intersectOnRect, rectMid);
+	}
+	
+	/* 
+	 * Given a rectangle, compute the point at which a line (angle specified by degrees)
+	 * drawn from the center of the rectangle intersects the rectangle.  0 degrees is north.
+	 */
+	public final static Point pointOnRectAtAngle(Rect rect, int degrees) {
 		// 1.) find a distant point that will intersect the rect
 		int distantPointLineLength = Math.max(rect.height(), rect.width());  // length is not important as long as it is beyond border of rect
 		Point rectMid = new Point((int)rect.exactCenterX(), (int)rect.exactCenterY());
 		Point distantPoint = calcPointOnCirle(rectMid, distantPointLineLength, degrees - 90);
 		
 		// 2.) check each side of the rect until we find the intersection
+		
+		// our line at angle degrees
 		int x1 = rectMid.x;
 		int y1 = rectMid.y;
 		int x2 = distantPoint.x;
 		int y2 = distantPoint.y;
+		
+		// now compare to each side
 		int x3, x4, y3, y4;
 		Point intersection = null;
 		
@@ -47,7 +75,7 @@ public class ShapeMath {
 		}
 		
 		// right and left
-		if (distantPoint.y > rectMid.y) {
+		if (distantPoint.x > rectMid.x) {
 			// right
 			x3 = rect.right;
 			y3 = rect.top;
@@ -70,6 +98,17 @@ public class ShapeMath {
 		}
 		
 		return null;
+	}
+	
+	public static final double lengthOfLine(Point p1, Point p2) {
+		// Pythagorean Theorem
+		double side1length = Math.abs(p2.x - p1.x);
+		double side2length = Math.abs(p2.y - p1.y);
+		return Math.sqrt(Math.pow(side1length, 2) + Math.pow(side2length, 2));
+	}
+	
+	public static final Rect rectForView(View view) {
+		return new Rect((int)view.getX(), (int)view.getY(), (int)view.getX() + view.getWidth(), (int)view.getY() + view.getHeight());
 	}
 	
 	private static final Point calcPointOnCirle(Point centerPoint, int radius, int degrees) {
