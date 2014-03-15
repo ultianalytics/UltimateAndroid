@@ -30,6 +30,8 @@
 	<dimen name="wind_direction_view_height">160dp</dimen>
 	<dimen name="date_time_picker_height">160dp</dimen>
 	
+	<dimen name="font_size_callouts">18dp</dimen>
+	
 	<dimen name="font_size10">8sp</dimen>
 	<dimen name="font_size20">10sp</dimen>
 	<dimen name="font_size30">12sp</dimen>

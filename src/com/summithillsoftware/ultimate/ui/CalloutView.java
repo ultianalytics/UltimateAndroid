@@ -17,8 +17,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.ui.GraphicsUtil;
-import com.summithillsoftware.ultimate.ui.ViewHelper;
+import com.summithillsoftware.ultimate.R;
 
 public class CalloutView extends FrameLayout {
 	private static final int HORIZ_PADDING = 16;
@@ -154,7 +153,8 @@ public class CalloutView extends FrameLayout {
 		textView.setMaxLines(100);
 		textView.setPadding(HORIZ_PADDING, VERTICAL_PADDING, HORIZ_PADDING, VERTICAL_PADDING);
 		textView.setTextColor(getResources().getColor(android.R.color.black));
-		textView.setTextSize(14);
+		int fontSize = (int) (getResources().getDimension(R.dimen.font_size_callouts) / getResources().getDisplayMetrics().density);
+		textView.setTextSize(fontSize);
 		textView.setText(this.text);
 		addView(textView);
 		LayoutParams params= new LayoutParams(calloutWidth, LayoutParams.WRAP_CONTENT);

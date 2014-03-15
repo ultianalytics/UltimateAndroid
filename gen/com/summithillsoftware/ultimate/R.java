@@ -1192,14 +1192,15 @@ containing a value of this type.
         public static final int event_player_list_font_size=0x7f090020;
         public static final int event_player_list_show_all_font_size=0x7f090021;
         public static final int event_player_list_width=0x7f09001f;
-        public static final int font_size10=0x7f09002b;
-        public static final int font_size20=0x7f09002c;
-        public static final int font_size30=0x7f09002d;
-        public static final int font_size40=0x7f09002e;
-        public static final int font_size50=0x7f09002f;
-        public static final int font_size60=0x7f090030;
-        public static final int font_size70=0x7f090031;
-        public static final int font_size80=0x7f090032;
+        public static final int font_size10=0x7f09002c;
+        public static final int font_size20=0x7f09002d;
+        public static final int font_size30=0x7f09002e;
+        public static final int font_size40=0x7f09002f;
+        public static final int font_size50=0x7f090030;
+        public static final int font_size60=0x7f090031;
+        public static final int font_size70=0x7f090032;
+        public static final int font_size80=0x7f090033;
+        public static final int font_size_callouts=0x7f09002b;
         public static final int form_text_size=0x7f090014;
         /**  LANDSCAPE
          Customize dimensions originally defined in res/values/dimens.xml (such as
