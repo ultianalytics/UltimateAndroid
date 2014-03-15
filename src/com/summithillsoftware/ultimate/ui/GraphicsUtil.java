@@ -15,7 +15,7 @@ public class GraphicsUtil {
 	public final static Point pointOnRectAtAngleWithInset(Rect rect, int degrees, int radialInset) {
 		int distanceToIntersect = distanceFromCenterToIntersect(rect, degrees);
 		Point rectMid = new Point((int)rect.exactCenterX(), (int)rect.exactCenterY());
-		Point point = calcPointOnCirle(rectMid, distanceToIntersect - radialInset, degrees - 90);
+		Point point = calcPointOnCirle(rectMid, distanceToIntersect - radialInset, degrees);
 		return point;
 	}
 	
@@ -37,7 +37,7 @@ public class GraphicsUtil {
 		// 1.) find a distant point that will intersect the rect
 		int distantPointLineLength = Math.max(rect.height(), rect.width());  // length is not important as long as it is beyond border of rect
 		Point rectMid = new Point((int)rect.exactCenterX(), (int)rect.exactCenterY());
-		Point distantPoint = calcPointOnCirle(rectMid, distantPointLineLength, degrees - 90);
+		Point distantPoint = calcPointOnCirle(rectMid, distantPointLineLength, degrees);
 		
 		// 2.) check each side of the rect until we find the intersection
 		
@@ -49,70 +49,71 @@ public class GraphicsUtil {
 		
 		// now compare to each side
 		int x3, x4, y3, y4;
-		Point intersection = null;
+		Point horizontalIntersection = null;
+		Point verticalIntersection = null;
 		
-		// top and bottom
+		// horizontal (top and bottom)
 		if (distantPoint.y < rectMid.y) {
 			// top
 			x3 = rect.left;
 			y3 = rect.top;
 			x4 = rect.right;
 			y4 = rect.top;
-			intersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
-			if (intersection != null) {
-				return intersection;
-			}
+			horizontalIntersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
 		} else {
 			// bottom
 			x3 = rect.left;
 			y3 = rect.bottom;
 			x4 = rect.right;
 			y4 = rect.bottom;
-			intersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
-			if (intersection != null) {
-				return intersection;
-			}
+			horizontalIntersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
 		}
 		
-		// right and left
+		// vertical (right and left)
 		if (distantPoint.x > rectMid.x) {
 			// right
 			x3 = rect.right;
 			y3 = rect.top;
 			x4 = rect.right;
 			y4 = rect.bottom;
-			intersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
-			if (intersection != null && intersection.x > rectMid.x) {
-				return intersection;
-			}
+			verticalIntersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
 		} else {
 			// left
 			x3 = rect.left;
 			y3 = rect.top;
 			x4 = rect.left;
 			y4 = rect.bottom;
-			intersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
-			if (intersection != null && intersection.x < rectMid.x) {
-				return intersection;
-			}
+			verticalIntersection = intersection(x1,y1,x2,y2, x3, y3, x4,y4);
 		}
 		
-		return null;
+		if (horizontalIntersection == null && verticalIntersection != null) {
+			return verticalIntersection;
+		} else if (verticalIntersection == null && horizontalIntersection != null) {
+			return horizontalIntersection;
+		} else if (verticalIntersection != null && horizontalIntersection != null) {
+			double distanceToHorizontal = lengthOfLine(horizontalIntersection, rectMid);
+			double distanceToVertical = lengthOfLine(verticalIntersection, rectMid);
+			return distanceToHorizontal < distanceToVertical ? horizontalIntersection : verticalIntersection;
+		} else {
+			return null;  // should never happen
+		}
 	}
 	
 	public static final double lengthOfLine(Point p1, Point p2) {
 		// Pythagorean Theorem
 		double side1length = Math.abs(p2.x - p1.x);
 		double side2length = Math.abs(p2.y - p1.y);
-		return Math.sqrt(Math.pow(side1length, 2) + Math.pow(side2length, 2));
+		double length = Math.sqrt(Math.pow(side1length, 2) + Math.pow(side2length, 2));
+		return length;
 	}
 	
 	public static final Rect rectForView(View view) {
 		return new Rect((int)view.getX(), (int)view.getY(), (int)view.getX() + view.getWidth(), (int)view.getY() + view.getHeight());
 	}
 	
-	private static final Point calcPointOnCirle(Point centerPoint, int radius, int degrees) {
-	    double radians = Math.toRadians(degrees);
+	// north = 0 degrees
+	public static final Point calcPointOnCirle(Point centerPoint, int radius, int degrees) {
+	    double radians = Math.toRadians(degrees - 90);
 	    return new Point(centerPoint.x + (int)Math.round(radius * Math.cos(radians)), centerPoint.y + (int)Math.round(radius * Math.sin(radians)));
 	}
 	

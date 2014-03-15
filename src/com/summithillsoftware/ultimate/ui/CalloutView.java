@@ -12,13 +12,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.GraphicsUtil;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
 
 public class CalloutView extends FrameLayout {
 	private static final int HORIZ_PADDING = 16;
@@ -77,7 +77,7 @@ public class CalloutView extends FrameLayout {
 
 	// set the degrees from the anchor that the center of the callout should appear
 	public void setDegreesFromNorth(int degreesFromNorth) {
-		this.degrees = (degreesFromNorth - 90) % 360;
+		this.degrees = degreesFromNorth;
 	}
 
 	// set the width (in DP) of the text bubble
@@ -154,7 +154,7 @@ public class CalloutView extends FrameLayout {
 		textView.setMaxLines(100);
 		textView.setPadding(HORIZ_PADDING, VERTICAL_PADDING, HORIZ_PADDING, VERTICAL_PADDING);
 		textView.setTextColor(getResources().getColor(android.R.color.black));
-		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, (int) getResources().getDimension(R.dimen.font_size20));
+		textView.setTextSize(14);
 		textView.setText(this.text);
 		addView(textView);
 		LayoutParams params= new LayoutParams(calloutWidth, LayoutParams.WRAP_CONTENT);
@@ -187,7 +187,7 @@ public class CalloutView extends FrameLayout {
         path.lineTo(point3.x, point3.y);
         path.close();
         
-        int rotateDegrees = (degrees + 90) % 360;
+        int rotateDegrees = degrees;
         canvas.rotate(rotateDegrees, connectorOriginPoint.x, connectorOriginPoint.y);
         canvas.drawPath(path, paint);
 	}
@@ -238,18 +238,12 @@ public class CalloutView extends FrameLayout {
 
 	private void positionTextView() {
 		int distanceFromCenterOfTextViewToAnchor = calcDistanceFromCenterOfTextViewToAnchor();
-		textViewMidPoint = calcPointOnCirle(anchor, distanceFromCenterOfTextViewToAnchor, degrees);
+		textViewMidPoint = GraphicsUtil.calcPointOnCirle(anchor, distanceFromCenterOfTextViewToAnchor, degrees);
 		textView.setX(textViewMidPoint.x - (textView.getWidth() / 2));   
 		textView.setY(textViewMidPoint.y - (textView.getHeight() / 2));
 		Rect textViewRect = GraphicsUtil.rectForView(textView);
-		System.out.println("textViewRect = " + textViewRect);
-		connectorOriginPoint = GraphicsUtil.pointOnRectAtAngleWithInset(textViewRect, degrees - 90, connectorOriginInset());
-		System.out.println("connectorOriginPoint = " + connectorOriginPoint);		
-	}
-	
-	private Point calcPointOnCirle(Point centerPoint, int radius, int degrees) {
-	    double radians = Math.toRadians(degrees);
-	    return new Point(centerPoint.x + (int)Math.round(radius * Math.cos(radians)), centerPoint.y + (int)Math.round(radius * Math.sin(radians)));
+		int connectorDegrees = (degrees + 180) % 360;  // invert the degrees since we are now calculating the connector's origin to the anchor
+		connectorOriginPoint = GraphicsUtil.pointOnRectAtAngleWithInset(textViewRect, connectorDegrees, connectorOriginInset());
 	}
 
 	private void calcConnectorLineBaseWidth() {
@@ -258,7 +252,7 @@ public class CalloutView extends FrameLayout {
 	
 	private int calcDistanceFromCenterOfTextViewToAnchor() {
 		Rect rect = new Rect(0,0,textView.getWidth(), textView.getHeight());
-		return GraphicsUtil.distanceFromCenterToIntersect(rect, degrees + 90) + connectorLength; 
+		return GraphicsUtil.distanceFromCenterToIntersect(rect, degrees) + connectorLength; 
 	}
 
 	private int connectorOriginInset() {
