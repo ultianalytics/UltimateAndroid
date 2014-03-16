@@ -16,7 +16,7 @@
             android:textSize="@dimen/font_size50" />
 
         <Button
-            android:id="@+id/signoffButton"
+            android:id="@+id/sendEMailButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

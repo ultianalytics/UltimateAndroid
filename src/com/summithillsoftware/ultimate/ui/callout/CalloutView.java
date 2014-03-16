@@ -1,9 +1,10 @@
-package com.summithillsoftware.ultimate.ui;
+package com.summithillsoftware.ultimate.ui.callout;
 
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -18,6 +19,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.GraphicsUtil;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
 
 public class CalloutView extends FrameLayout {
 	private static final int HORIZ_PADDING = 16;
@@ -55,6 +58,7 @@ public class CalloutView extends FrameLayout {
 	public CalloutView(Context context, Point anchor, int connectorLength, int degreesFromNorth, int resId) {
 		super(context);
 		init();
+		setBackgroundColor(Color.TRANSPARENT);
 		connectorLineBaseWidth = ViewHelper.dpAsPixels(CONNECTOR_LINE_BASE_WIDTH_DP, context);
 		setAnchor(anchor);
 		setConnectorLength(connectorLength);

@@ -73,6 +73,7 @@
     <string name="title_activity_support">Support</string>
     <string name="title_activity_wind">Wind</string>
     <string name="title_activity_timestamp">Game Start Time</string>
+	<string name="title_activity_developer">Troubleshooting</string>
     <string name="menuitem_team_add">Add Team</string>
     <string name="menuitem_player_add">Add Player</string>
     <string name="menuitem_game_add">New Game</string>
@@ -153,7 +154,7 @@
     <string name="label_team_name">Name:</string>
     <string name="label_team_mixed">Mixed:</string>
     <string name="label_team_code">(check if co-ed)</string>
-    <string name="label_team_cloud_id">Team ID:</string>    
+    <string name="label_team_cloud_id">Team ID:</string>
     <string name="label_player_name">Name:</string>
     <string name="label_player_number">Number:</string>
     <string name="label_player_position">Position:</string>
@@ -304,6 +305,7 @@
     <string name="button_signoff">Sign out</string>
     <string name="button_wind_lookup_speed">Lookup</string>
     <string name="button_support_send_email">Send E-mail to Support</string>
+    <string name="button_developer_clear_callout_tracking">Clear Help Tracking</string>
     <string name="spinner_game_to_9">9 points</string>
     <string name="spinner_game_to_11">11 points</string>
     <string name="spinner_game_to_13">13 points</string>
@@ -358,6 +360,6 @@
     <string name="twitter_description_hours">h</string>
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
-    <string name="callout_only_your_teams">Reminder:\n\nOnly add teams for whom you are keeping stats.\n\nThere is no need to add an opponent as a team.</string>
+    <string name="callout_only_your_teams">Reminder:\nOnly add teams for whom you are keeping stats (don\'t add an opponent as a team).\n\nTap + again if you really want to add a team</string>
 
 </resources>

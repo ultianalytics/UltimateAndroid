@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui;
+package com.summithillsoftware.ultimate.ui.callout;
 
 import java.io.Externalizable;
 import java.io.File;
@@ -15,6 +15,7 @@ import com.summithillsoftware.ultimate.util.UltimateLogger;
 public class CalloutTracker implements Externalizable {
 	
 	public static final int CALLOUT_OUR_TEAMS_ONLY = 1;
+	public static final int CALLOUT_BUTTON_COLOR = 2;
 	
 	
 	/*******************************/
@@ -37,6 +38,11 @@ public class CalloutTracker implements Externalizable {
 	
 	public static CalloutTracker current() {
 		return Current;
+	}
+	
+	public void clear() {
+		displayedCallouts.clear();
+		save();
 	}
 	
 	public boolean hasCalloutBeenShown(int calloutId) {

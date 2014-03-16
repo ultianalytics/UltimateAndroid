@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.summithillsoftware.ultimate.R;
@@ -17,17 +19,30 @@ public class SupportActivity extends UltimateActivity {
 	// widgets
 	private CheckBox includeLogFilesCheckbox;
 	private CheckBox includeTeamsCheckbox;
+	private Button sendEMailButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_support);
 		connectWidgets();
+		registerListeners();
 	}
 
 	private void connectWidgets() {
 		includeLogFilesCheckbox = (CheckBox)findViewById(R.id.settingsFragment).findViewById(R.id.includeLogFilesCheckbox);
-		includeTeamsCheckbox = (CheckBox)findViewById(R.id.settingsFragment).findViewById(R.id.includeTeamsCheckbox);		
+		includeTeamsCheckbox = (CheckBox)findViewById(R.id.settingsFragment).findViewById(R.id.includeTeamsCheckbox);	
+		sendEMailButton = (Button)findViewById(R.id.settingsFragment).findViewById(R.id.sendEMailButton);
+	}
+	
+	private void registerListeners() {
+		sendEMailButton.setOnLongClickListener(new OnLongClickListener() { 
+	        @Override
+	        public boolean onLongClick(View v) {
+	        	goToDeveloperActivity();
+	            return true;
+	        }
+	    });
 	}
 	
 	public void sendEmailClicked(View v) {
@@ -53,6 +68,10 @@ public class SupportActivity extends UltimateActivity {
 		
 		startActivity(emailIntent);  
 		finish();
+	}
+	
+	private void goToDeveloperActivity() {
+		startActivity(new Intent(this, DeveloperActivity.class));
 	}
 
 }

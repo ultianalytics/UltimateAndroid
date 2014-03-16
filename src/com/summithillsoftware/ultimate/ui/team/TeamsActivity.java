@@ -18,13 +18,13 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.TeamDescription;
-import com.summithillsoftware.ultimate.ui.CalloutView;
-import com.summithillsoftware.ultimate.ui.CalloutView.CalloutAnimationStyle;
-import com.summithillsoftware.ultimate.ui.CalloutTracker;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationStyle;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamDownloadDialog;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 
