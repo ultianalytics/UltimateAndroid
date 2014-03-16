@@ -16,7 +16,11 @@ public class CalloutTracker implements Externalizable {
 	
 	public static final int CALLOUT_OUR_TEAMS_ONLY = 1;
 	public static final int CALLOUT_BUTTON_COLOR = 2;
-	
+	public static final int CALLOUT_ACTION_LONG_PRESS_THROWAWAY = 3;
+	public static final int CALLOUT_ACTION_LONG_PRESS_D = 4;
+	public static final int CALLOUT_ACTION_TAP_TO_CORRECT = 5;
+	public static final int CALLOUT_SWIPE_UP_TO_SEE_MORE = 6;
+	public static final int CALLOUT_UNDO_BUTTON = 7;
 	
 	/*******************************/
 	

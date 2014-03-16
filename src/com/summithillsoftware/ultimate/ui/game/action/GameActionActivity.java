@@ -1,15 +1,21 @@
 package com.summithillsoftware.ultimate.ui.game.action;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
@@ -25,6 +31,12 @@ import com.summithillsoftware.ultimate.twitter.GameTweeter;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateGestureHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationStyle;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutViewTextSize;
 import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.ui.game.event.EventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.events.EventsInActionActivity;
@@ -181,6 +193,8 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    	} else if (event.causesLineChange()) {
 		    		showLineDialog();
 		    	}
+		    } else {
+		    	showHelpCallouts();
 		    }
 		    displayInstructionsToSeeMoreEventsIfNecessary();
 		}
@@ -346,6 +360,32 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	private void goToTwitterActivity() {
 		startActivity(new Intent(this, TwitterActivity_GameAction.class));
+	}
+	
+	private boolean showHelpCallouts() {
+		List<CalloutView> callouts = new ArrayList<CalloutView>();
+		boolean hasGameStarted = Game.current().hasEvents();
+		if (hasGameStarted && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_UNDO_BUTTON)) {
+			View anchorView = findFirstViewWithId(getRootContentView(), R.id.undoLastEventButton);
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopRight);
+		
+				CalloutView callout = new CalloutView(this, anchor, 60, 30, R.string.callout_action_undo_button);
+				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+				callout.setCalloutWidth(200);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callouts.add(callout);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_UNDO_BUTTON);
+				
+			}
+		}
+		if (callouts.isEmpty()) {
+			return false;
+		} else {
+			showCallouts(callouts);
+			return true;
+		}
 	}
 
 	

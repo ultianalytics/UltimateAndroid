@@ -34,6 +34,7 @@ public class CalloutView extends FrameLayout {
 	private Point anchor;
 	private int connectorLength;  // pixels
 	private int calloutColor;
+	private CalloutViewTextSize textSize = CalloutViewTextSize.Medium;
 	
 	private TextView textView;
 	private Point textViewMidPoint;
@@ -86,6 +87,11 @@ public class CalloutView extends FrameLayout {
 	// set the width (in DP) of the text bubble
 	public void setCalloutWidth(int newWidth) {
 		this.calloutWidth = ViewHelper.dpAsPixels(newWidth, getContext());
+	}
+	
+	// set font size
+	public void setFontSize(CalloutViewTextSize textSize) {
+		this.textSize = textSize;
 	}
 	
 	public void setText(String text) {
@@ -157,8 +163,7 @@ public class CalloutView extends FrameLayout {
 		textView.setMaxLines(100);
 		textView.setPadding(HORIZ_PADDING, VERTICAL_PADDING, HORIZ_PADDING, VERTICAL_PADDING);
 		textView.setTextColor(getResources().getColor(android.R.color.black));
-		int fontSize = (int) (getResources().getDimension(R.dimen.font_size_callouts) / getResources().getDisplayMetrics().density);
-		textView.setTextSize(fontSize);
+		textView.setTextSize(getFontSize());
 		textView.setText(this.text);
 		addView(textView);
 		LayoutParams params= new LayoutParams(calloutWidth, LayoutParams.WRAP_CONTENT);
@@ -262,6 +267,34 @@ public class CalloutView extends FrameLayout {
 	private int connectorOriginInset() {
 		return connectorLineBaseWidth / 2;
 	}
-
 	
+	private int getFontSize() {
+		int dimenId = R.dimen.font_size_callouts;
+		switch (textSize) {
+		case Large:
+			dimenId = R.dimen.font_size_callouts_large;
+			break;
+		case Small:
+			dimenId = R.dimen.font_size_callouts_small;
+			break;	
+		case ExtraSmall:
+			dimenId = R.dimen.font_size_callouts_extra_small;
+			break;				
+		default:
+			dimenId = R.dimen.font_size_callouts;
+			break;
+		}
+		int fontSize = (int) (getResources().getDimension(dimenId) / getResources().getDisplayMetrics().density);
+		return fontSize;
+	}
+	
+	int fontSize = (int) (getResources().getDimension(R.dimen.font_size_callouts) / getResources().getDisplayMetrics().density);
+
+
+	public static enum CalloutViewTextSize {
+		ExtraSmall,
+		Small,
+		Medium,
+		Large
+	}
 }

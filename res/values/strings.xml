@@ -361,5 +361,10 @@
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
     <string name="callout_only_your_teams">Reminder:\nOnly add teams for whom you are keeping stats (don\'t add an opponent as a team).\n\nTap + again if you really want to add a team</string>
+    <string name="callout_action_long_press_throwaway">Did you know?\nYou can press-and-hold some event buttons or more options (like throwaway)</string>
+    <string name="callout_action_long_press_d">Did you know?\nYou can press-and-hold some event buttons to see more options (like D)</string>
+    <string name="callout_action_tap_to_correct">Did you known?\nYou can tap event buttons to make corrections</string>
+    <string name="callout_action_swipe_up_to_see_more">Did you know?\nYou can swipe up to see more events</string>
+    <string name="callout_action_undo_button">Did you know?\nTap the undo button to undo the last action</string>
 
 </resources>

@@ -92,6 +92,25 @@ public class UltimateActivity extends ActionBarActivity {
 	    return null;
 	}
 	
+	public static View findFirstViewWithId(ViewGroup viewGroup, int id) {
+	    final int numberOfChildren = viewGroup.getChildCount();
+	    
+	    for (int i = 0; i < numberOfChildren; i++) {
+	    	final View childView = viewGroup.getChildAt(i);
+	        if (id == childView.getId()) {
+	        	return childView;
+	        }
+	        if (childView instanceof ViewGroup) {
+	        	View hit = findFirstViewWithId((ViewGroup)childView, id);
+	        	if (hit != null) {
+	        		return hit;
+	        	}
+	        }
+	    }
+
+	    return null;
+	}
+	
 	protected boolean navigateUp() {
 			// This ID represents the Home or Up button. In the case of this activity, the Up button is shown. Use NavUtils to allow users
 			// to navigate up one level in the application structure. For more details, see the Navigation pattern on Android Design:

@@ -1192,15 +1192,18 @@ containing a value of this type.
         public static final int event_player_list_font_size=0x7f090020;
         public static final int event_player_list_show_all_font_size=0x7f090021;
         public static final int event_player_list_width=0x7f09001f;
-        public static final int font_size10=0x7f09002c;
-        public static final int font_size20=0x7f09002d;
-        public static final int font_size30=0x7f09002e;
-        public static final int font_size40=0x7f09002f;
-        public static final int font_size50=0x7f090030;
-        public static final int font_size60=0x7f090031;
-        public static final int font_size70=0x7f090032;
-        public static final int font_size80=0x7f090033;
+        public static final int font_size10=0x7f09002f;
+        public static final int font_size20=0x7f090030;
+        public static final int font_size30=0x7f090031;
+        public static final int font_size40=0x7f090032;
+        public static final int font_size50=0x7f090033;
+        public static final int font_size60=0x7f090034;
+        public static final int font_size70=0x7f090035;
+        public static final int font_size80=0x7f090036;
         public static final int font_size_callouts=0x7f09002b;
+        public static final int font_size_callouts_extra_small=0x7f09002c;
+        public static final int font_size_callouts_large=0x7f09002e;
+        public static final int font_size_callouts_small=0x7f09002d;
         public static final int form_text_size=0x7f090014;
         /**  LANDSCAPE
          Customize dimensions originally defined in res/values/dimens.xml (such as
@@ -2069,6 +2072,11 @@ containing a value of this type.
         public static final int button_timeouts_which_half_second=0x7f0b0126;
         public static final int button_tweet_send=0x7f0b0137;
         public static final int button_wind_lookup_speed=0x7f0b013b;
+        public static final int callout_action_long_press_d=0x7f0b0176;
+        public static final int callout_action_long_press_throwaway=0x7f0b0175;
+        public static final int callout_action_swipe_up_to_see_more=0x7f0b0178;
+        public static final int callout_action_tap_to_correct=0x7f0b0177;
+        public static final int callout_action_undo_button=0x7f0b0179;
         public static final int callout_only_your_teams=0x7f0b0174;
         public static final int checkbox_support_log_files=0x7f0b015f;
         public static final int checkbox_support_team_files=0x7f0b0160;
