@@ -153,6 +153,7 @@
     <string name="label_team_name">Name:</string>
     <string name="label_team_mixed">Mixed:</string>
     <string name="label_team_code">(check if co-ed)</string>
+    <string name="label_team_cloud_id">Team ID:</string>    
     <string name="label_player_name">Name:</string>
     <string name="label_player_number">Number:</string>
     <string name="label_player_position">Position:</string>

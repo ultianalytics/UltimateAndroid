@@ -52,15 +52,18 @@ public class TeamsListAdaptor extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			rowView = inflater.inflate(R.layout.rowlayout_teams, null);
 		}
+		
+		TeamDescription team = teams.get(index);
 	
 		TextView teamNameTextView = (TextView)rowView.findViewById(R.id.text_team_name);
 		TextView cloudIdTextView = (TextView)rowView.findViewById(R.id.text_team_cloud_id);
+		TextView cloudIdTextViewLabel = (TextView)rowView.findViewById(R.id.text_team_cloud_id_label);
+		boolean showCloudId = team.getCloudId() != null && !team.getCloudId().trim().isEmpty();
+		cloudIdTextView.setVisibility(showCloudId ? View.VISIBLE : View.GONE);
+		cloudIdTextViewLabel.setVisibility(showCloudId ? View.VISIBLE : View.GONE);
 		
-		TeamDescription team = teams.get(index);
 		teamNameTextView.setText(team.getName());
 		cloudIdTextView.setText(team.getCloudId());	
-//		teamNameTextView.setTypeface(null, team.isCurrentTeam() ? Typeface.BOLD : Typeface.NORMAL);
-//		teamNameTextView.setTextColor(context.getResources().getColor(team.isCurrentTeam() ? R.color.list_name_current:R.color.list_name));
 		
 		return rowView;
 	}
