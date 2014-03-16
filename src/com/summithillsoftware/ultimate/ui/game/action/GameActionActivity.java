@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
@@ -194,7 +193,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		    		showLineDialog();
 		    	}
 		    } else {
-		    	showHelpCallouts();
+		    	showHelpCallouts(game().arePlayingOffense());
 		    }
 		    displayInstructionsToSeeMoreEventsIfNecessary();
 		}
@@ -362,10 +361,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		startActivity(new Intent(this, TwitterActivity_GameAction.class));
 	}
 	
-	private boolean showHelpCallouts() {
+	private boolean showHelpCallouts(boolean isOffense) {
 		List<CalloutView> callouts = new ArrayList<CalloutView>();
 		boolean hasGameStarted = Game.current().hasEvents();
-		if (hasGameStarted && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_UNDO_BUTTON)) {
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_UNDO_BUTTON) && hasGameStarted) {
 			View anchorView = findFirstViewWithId(getRootContentView(), R.id.undoLastEventButton);
 			if (anchorView != null) {
 				Point anchor = locationInRootView(anchorView);
@@ -377,7 +376,46 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				callout.setFontSize(CalloutViewTextSize.Small);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_UNDO_BUTTON);
-				
+			}
+		} else if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_ACTION_TAP_TO_CORRECT) && hasGameStarted) {
+			View anchorView = findFirstViewWithId(getRootContentView(), R.id.event1Button);
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+		
+				CalloutView callout = new CalloutView(this, anchor, 20, 0, R.string.callout_action_tap_to_correct);
+				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
+				callout.setCalloutWidth(200);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callouts.add(callout);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_ACTION_TAP_TO_CORRECT);
+			}
+		} else if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_SWIPE_UP_TO_SEE_MORE) && Game.current().getNumberOfPoints() > 2) {
+			View anchorView = findFirstViewWithId(getRootContentView(), R.id.event1Button);
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+		
+				CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_action_swipe_up_to_see_more);
+				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
+				callout.setCalloutWidth(200);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callouts.add(callout);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_SWIPE_UP_TO_SEE_MORE);
+			}
+		}
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_ACTION_LONG_PRESS_THROWAWAY) && Game.current().getNumberOfPoints() > 2 && isOffense) {
+			View anchorView = findFirstViewWithId(getRootContentView(), R.id.throwawayButton);
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+		
+				CalloutView callout = new CalloutView(this, anchor, 40, 300, R.string.callout_action_long_press_throwaway);
+				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+				callout.setCalloutWidth(200);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callouts.add(callout);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_ACTION_LONG_PRESS_THROWAWAY);
 			}
 		}
 		if (callouts.isEmpty()) {

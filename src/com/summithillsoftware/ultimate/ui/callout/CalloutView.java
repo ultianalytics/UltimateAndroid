@@ -180,9 +180,10 @@ public class CalloutView extends FrameLayout {
 	}
 	
 	private void drawConnector(Canvas canvas) {
+		int pointerLength = connectorLength + connectorOriginInset();
 		
 		Point point1 = new Point(connectorOriginPoint.x - (connectorLineBaseWidth / 2), connectorOriginPoint.y);
-		Point point2 = new Point(connectorOriginPoint.x, connectorOriginPoint.y + connectorLength);
+		Point point2 = new Point(connectorOriginPoint.x, connectorOriginPoint.y + pointerLength);
 		Point point3 = new Point(connectorOriginPoint.x + (connectorLineBaseWidth / 2), connectorOriginPoint.y);
 		
 		Paint paint = new Paint();
@@ -265,7 +266,7 @@ public class CalloutView extends FrameLayout {
 	}
 
 	private int connectorOriginInset() {
-		return connectorLineBaseWidth / 2;
+		return connectorLineBaseWidth;
 	}
 	
 	private int getFontSize() {
