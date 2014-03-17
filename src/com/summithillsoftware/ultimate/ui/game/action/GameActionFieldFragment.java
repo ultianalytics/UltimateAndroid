@@ -264,7 +264,9 @@ public class GameActionFieldFragment extends UltimateFragment implements GameAct
 
 	@Override
 	public void initialOffensePlayerSelected(Player selectedPlayer) {
-		updateSelectedPasser(selectedPlayer);
+		if (Game.current().arePlayingOffense()) {
+			updateSelectedPasser(selectedPlayer);
+		}
 	}
 
 	@Override
