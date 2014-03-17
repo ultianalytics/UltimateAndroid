@@ -15,7 +15,7 @@ public class CloudTeamUploadDialog extends CloudDialog {
 				showLoadingView();
 				teamUploadWorkflow.resume();
 			} else {
-				showIntroView();
+				showIntroView(true);
 			}
 			break;
 		case UserApprovedServerInteraction:

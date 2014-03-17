@@ -20,7 +20,7 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 				showLoadingView();
 				teamDownloadWorkflow.resume();
 			} else {
-				showIntroView();
+				showIntroView(false);
 			}
 			break;
 		case UserApprovedServerInteraction:
