@@ -179,6 +179,7 @@
     <string name="label_game_specialevent_turnover">Throwaway is actually&#8230;</string>
     <string name="label_game_specialevent_d">D is actually&#8230;</string>
     <string name="label_game_action_auto_tweeting">auto\ntweeting</string>
+    <string name="label_game_action_auto_tweeting_no_break">auto tweeting</string>
     <string name="label_event_hangtime">Hangtime:</string>
     <string name="label_event_category_catch">Catch</string>
     <string name="label_event_category_our_goal">Our Goal</string>

@@ -119,7 +119,7 @@
             android:layout_below="@id/recentsList"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/label_game_action_auto_tweeting"
+            android:text="@string/label_game_action_auto_tweeting_no_break"
             android:textSize="@dimen/font_size40"
             android:textStyle="italic"
             android:textColor="@color/ultimate_theme_color"
