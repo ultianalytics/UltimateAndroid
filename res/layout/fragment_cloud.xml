@@ -16,22 +16,38 @@
             android:id="@+id/introView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:orientation="vertical" >
-
+           
+           <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/label_cloud_introduction_title"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/font_signon_callout_title" />
+                        
             <TextView
                 android:id="@+id/introTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:text="@string/label_cloud_introduction_upload"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_signon_callout_message" />
 
             <Button
                 android:id="@+id/continueButton"
                 style="@style/buttonGameAction"
-                android:layout_width="fill_parent"
+                android:textSize="@dimen/standard_button_text_size"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:text="@string/button_continue" />
         </LinearLayout>
 

@@ -35,6 +35,9 @@
 	<dimen name="font_size_callouts_small">16dp</dimen>
 	<dimen name="font_size_callouts_large">20dp</dimen>
 	
+	<dimen name="font_signon_callout_title">@dimen/font_size60</dimen>
+	<dimen name="font_signon_callout_message">@dimen/font_size50</dimen>
+	
 	<dimen name="font_size10">8sp</dimen>
 	<dimen name="font_size20">10sp</dimen>
 	<dimen name="font_size30">12sp</dimen>
