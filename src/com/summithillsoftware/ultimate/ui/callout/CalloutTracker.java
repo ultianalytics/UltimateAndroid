@@ -20,6 +20,7 @@ public class CalloutTracker implements Externalizable {
 	public static final int CALLOUT_ACTION_TAP_TO_CORRECT = 4;
 	public static final int CALLOUT_SWIPE_UP_TO_SEE_MORE = 6;
 	public static final int CALLOUT_UNDO_BUTTON = 7;
+	public static final int CALLOUT_SIGNON_TO_SERVER = 8;
 	
 	/*******************************/
 	

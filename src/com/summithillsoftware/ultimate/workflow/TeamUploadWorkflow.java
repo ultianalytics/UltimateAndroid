@@ -15,6 +15,9 @@ public class TeamUploadWorkflow extends CloudWorkflow {
 				// CloudClient.current().clearExistingAuthentication();
 				uploadCurrentTeam();
 				break;
+			case UserApprovedServerInteraction:
+				uploadCurrentTeam();
+				break;				
 			case AuthenticationEnded:
 				uploadCurrentTeam();
 				break;		

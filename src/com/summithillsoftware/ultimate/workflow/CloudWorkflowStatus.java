@@ -2,6 +2,7 @@ package com.summithillsoftware.ultimate.workflow;
 
 public enum CloudWorkflowStatus {
 	NotStarted,
+	UserApprovedServerInteraction,
 	CredentialsRejected,
 	AuthenticationEnded,
 	TeamListRetrievalStarted,

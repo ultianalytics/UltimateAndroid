@@ -212,6 +212,9 @@
     <string name="label_timeouts_second_half">2nd Half:</string>
     <string name="label_timeouts_available">Available now:</string>
     <string name="label_stats_include">Include:</string>
+    <string name="label_cloud_introduction_upload">You tapped the option to upload a Team.  This will upload your team to the UltiAnalytics website where you can do analysis of your team.  The upload requires a google sign-on.\nNOTE: If you will be sharing the duties of stats taking with other people you might want to create a shared google id.</string>
+    <string name="label_cloud_introduction_upload">You tapped the option to download a Team.  If you have not previously uploaded a team you will have nothing to download yet.\nNOTE: Upload/Download requires a google sign-on.</string>  
+    <string name="label_cloud_introduction_download">Talking to server&#8230;</string>
     <string name="label_cloud_talking_to_server">Talking to server&#8230;</string>
     <string name="label_cloud_waiting_for_signon">Waiting for sign in&#8230;</string>
     <string name="label_cloud_downloading_teams">Downloading teams&#8230;</string>
@@ -304,6 +307,7 @@
     <string name="button_overtime_receive">Receive</string>
     <string name="button_overtime_defend">Pull</string>
     <string name="button_signoff">Sign out</string>
+    <string name="button_continue">Continue</string>
     <string name="button_wind_lookup_speed">Lookup</string>
     <string name="button_support_send_email">Send E-mail to Support</string>
     <string name="button_developer_clear_callout_tracking">Clear Help Tracking</string>
@@ -362,8 +366,8 @@
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
     <string name="callout_only_your_teams">Reminder:\nOnly add teams for whom you are keeping stats (don\'t add an opponent as a team).\n\nTap + again if you really want to add a team</string>
-    <string name="callout_action_long_press_throwaway">Did you know?\nYou can press-and-hold some event buttons (like Throwaway or D) for more options</string>
-    <string name="callout_action_tap_to_correct">Did you known?\nYou can tap event buttons to make corrections</string>
+    <string name="callout_action_long_press_throwaway">Did you know?\nYou can press-and-hold some action buttons (like Throwaway or D) for more options</string>
+    <string name="callout_action_tap_to_correct">Did you know?\nYou can tap event buttons to make corrections</string>
     <string name="callout_action_swipe_up_to_see_more">Did you know?\nYou can swipe up to see more events</string>
     <string name="callout_action_undo_button">Did you know?\nTap the undo button to undo the last action</string>
 

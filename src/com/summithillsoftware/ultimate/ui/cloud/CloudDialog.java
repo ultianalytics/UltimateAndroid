@@ -33,6 +33,7 @@ import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.UltimateDialogFragment;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflow;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
@@ -47,13 +48,16 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	
 	// widgets
 	private ViewFlipper viewFlipper;
+	protected View introView;
 	protected View loadingView;
 	protected View signonView;
 	protected View selectionView;
 	protected WebView webView;
+	protected TextView introTextView;
 	protected TextView selectionInstructionsLabel;
 	protected ListView selectionListView;
 	private Button cancelButton;
+	private Button continueButton;
 	private TextView statusTextView;
 	private ProgressBar progressBar;
 	
@@ -98,13 +102,16 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	
 	private void connectWidgets(View view) {
 		cancelButton = (Button) view.findViewById(R.id.cancelButton);
+		continueButton  = (Button) view.findViewById(R.id.continueButton);
 		viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
+		introView = (View) view.findViewById(R.id.introView);
 		loadingView = (View) view.findViewById(R.id.loadingView);
 		selectionView = (View) view.findViewById(R.id.selectionView);
 		signonView = (View) view.findViewById(R.id.signonView);
 		webView = (WebView) view.findViewById(R.id.webView); 
 		statusTextView = (TextView) view.findViewById(R.id.statusTextView);
 		selectionInstructionsLabel = (TextView) view.findViewById(R.id.selectionInstructionsLabel);
+		introTextView = (TextView) view.findViewById(R.id.introTextView);
 		selectionListView = (ListView) view.findViewById(R.id.selectionListView);
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 	}
@@ -117,6 +124,11 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				dismissDialog();
+			}
+		});
+		continueButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				handleUserWantsToSignon();
 			}
 		});
 	}
@@ -142,17 +154,21 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		return getArguments().getString(WORKFLOW_ID_ARG);
 	}
 	
-	protected void showLoadingView() {
+	protected void showIntroView() {
 		viewFlipper.setDisplayedChild(0);
+	}
+	
+	protected void showLoadingView() {
+		viewFlipper.setDisplayedChild(1);
 	}
 	
 	protected void showSignonView() {
 		webView.setVisibility(View.VISIBLE);
-		viewFlipper.setDisplayedChild(1);
+		viewFlipper.setDisplayedChild(2);
 	}
 	
 	protected void showSelectionView() {
-		viewFlipper.setDisplayedChild(2);
+		viewFlipper.setDisplayedChild(3);
 	}
 
 	protected void dismissDialog() {
@@ -235,6 +251,11 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		getWorkflow().resume();
 	}
 	
+	private void handleUserWantsToSignon() {
+		setUserHasBeenIntroducedToSignon();
+		getWorkflow().setStatus(CloudWorkflowStatus.UserApprovedServerInteraction);
+	}
+	
 	private void captureAuthenticationCookie() {
 		CookieSyncManager.getInstance().sync();
 		CookieManager cookieManager = CookieManager.getInstance();
@@ -313,6 +334,14 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 			}
 		};
 		timer.schedule(task, 1000);
+	}
+	
+	protected boolean hasUserBeenIntroducedToSignon() {
+		return CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_SIGNON_TO_SERVER);
+	}
+	
+	protected void setUserHasBeenIntroducedToSignon() {
+		CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_SIGNON_TO_SERVER);
 	}
 	
 	protected abstract void workflowChanged(final Workflow workflow);

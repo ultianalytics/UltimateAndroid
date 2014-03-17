@@ -11,6 +11,14 @@ public class CloudTeamUploadDialog extends CloudDialog {
 		TeamUploadWorkflow teamUploadWorkflow = (TeamUploadWorkflow)workflow;
 		switch (teamUploadWorkflow.getStatus()) {
 		case NotStarted:
+			if (hasUserBeenIntroducedToSignon()) {
+				showLoadingView();
+				teamUploadWorkflow.resume();
+			} else {
+				showIntroView();
+			}
+			break;
+		case UserApprovedServerInteraction:
 			showLoadingView();
 			teamUploadWorkflow.resume();
 			break;

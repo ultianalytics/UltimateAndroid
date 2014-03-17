@@ -13,6 +13,29 @@
         android:outAnimation="@android:anim/slide_out_right" >
 
         <LinearLayout
+            android:id="@+id/introView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/introTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/label_cloud_introduction_upload"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/continueButton"
+                style="@style/buttonGameAction"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_continue" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,8 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
-                android:textSize="18sp"
-                android:text="@string/label_cloud_talking_to_server" />
+                android:text="@string/label_cloud_talking_to_server"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,9 +88,9 @@
 
             <ListView
                 android:id="@+id/selectionListView"
-                android:scrollbars="none"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:scrollbars="none" >
             </ListView>
         </LinearLayout>
     </ViewFlipper>
@@ -77,8 +100,8 @@
         style="@style/redButton"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:gravity="center_horizontal"
         android:layout_margin="10dp"
+        android:gravity="center_horizontal"
         android:text="@string/button_cancel" />
 
 </LinearLayout>

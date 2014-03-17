@@ -20,6 +20,9 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 				// CloudClient.current().clearExistingAuthentication();
 				retrieveTeamsList();
 				break;
+			case UserApprovedServerInteraction:
+				retrieveTeamsList();
+				break;				
 			case AuthenticationEnded:
 				if (teamsAvailable == null) {
 					retrieveTeamsList();
