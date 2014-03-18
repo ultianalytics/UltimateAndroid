@@ -370,10 +370,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				Point anchor = locationInRootView(anchorView);
 				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopRight);
 		
-				CalloutView callout = new CalloutView(this, anchor, 60, 30, R.string.callout_action_undo_button);
+				CalloutView callout = createCallout(anchor, 60, 30, R.string.callout_action_undo_button);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
-				callout.setFontSize(CalloutViewTextSize.Small);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_UNDO_BUTTON);
 			}
@@ -383,10 +382,9 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				Point anchor = locationInRootView(anchorView);
 				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
 		
-				CalloutView callout = new CalloutView(this, anchor, 20, 0, R.string.callout_action_tap_to_correct);
+				CalloutView callout = createCallout(anchor, 20, 0, R.string.callout_action_tap_to_correct);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
 				callout.setCalloutWidth(200);
-				callout.setFontSize(CalloutViewTextSize.Small);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_ACTION_TAP_TO_CORRECT);
 			}
@@ -396,24 +394,21 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 				Point anchor = locationInRootView(anchorView);
 				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
 		
-				CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_action_swipe_up_to_see_more);
+				CalloutView callout = createCallout(anchor, 30, 0, R.string.callout_action_swipe_up_to_see_more);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
 				callout.setCalloutWidth(200);
-				callout.setFontSize(CalloutViewTextSize.Small);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_SWIPE_UP_TO_SEE_MORE);
 			}
-		}
-		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_ACTION_LONG_PRESS_THROWAWAY) && Game.current().getNumberOfPoints() > 2 && isOffense) {
+		} else if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_ACTION_LONG_PRESS_THROWAWAY) && Game.current().getNumberOfPoints() > 2 && isOffense) {
 			View anchorView = findFirstViewWithId(getRootContentView(), R.id.throwawayButton);
 			if (anchorView != null) {
 				Point anchor = locationInRootView(anchorView);
 				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
 		
-				CalloutView callout = new CalloutView(this, anchor, 40, 300, R.string.callout_action_long_press_throwaway);
+				CalloutView callout = createCallout(anchor, 40, 300, R.string.callout_action_long_press_throwaway);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
-				callout.setFontSize(CalloutViewTextSize.Small);
 				callouts.add(callout);
 				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_ACTION_LONG_PRESS_THROWAWAY);
 			}
@@ -426,5 +421,12 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		}
 	}
 
+	private CalloutView createCallout(Point anchor, int degrees, int width, int textResId) {
+		CalloutView callout = new CalloutView(this, anchor, degrees, width, textResId);
+		callout.setFontSize(CalloutViewTextSize.Small);
+		callout.setCalloutBackgroundColor(getResources().getColor(R.color.ultimate_theme_color));
+		callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
+		return callout;
+	}
 	
 }

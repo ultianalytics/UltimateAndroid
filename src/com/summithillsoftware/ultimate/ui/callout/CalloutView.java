@@ -33,7 +33,8 @@ public class CalloutView extends FrameLayout {
 	private int degrees;
 	private Point anchor;
 	private int connectorLength;  // pixels
-	private int calloutColor;
+	private int calloutBackgroundColor;
+	private int calloutTextColor;
 	private CalloutViewTextSize textSize = CalloutViewTextSize.Medium;
 	
 	private TextView textView;
@@ -149,20 +150,21 @@ public class CalloutView extends FrameLayout {
 	
 	private void init() {
 		setWillNotDraw(false);
-		calloutColor = getResources().getColor(android.R.color.white);
+		calloutBackgroundColor = getResources().getColor(android.R.color.white);
+		calloutTextColor = getResources().getColor(android.R.color.black);
 	}
 	
 	@SuppressWarnings("deprecation")
 	private void addTextView() {
 		textView = new TextView(getContext());
 		// Using a GradientDrawable because the ColorDrawable doesn't support setting a radius
-		GradientDrawable backgroundDrawable = new GradientDrawable(Orientation.BOTTOM_TOP, new int[] {calloutColor, calloutColor});
+		GradientDrawable backgroundDrawable = new GradientDrawable(Orientation.BOTTOM_TOP, new int[] {calloutBackgroundColor, calloutBackgroundColor});
 		backgroundDrawable.setShape(GradientDrawable.RECTANGLE);
 		backgroundDrawable.setCornerRadius(5.f);
 		textView.setBackgroundDrawable(backgroundDrawable);  // re: deprecation - method name is not current as of API 16
 		textView.setMaxLines(100);
 		textView.setPadding(HORIZ_PADDING, VERTICAL_PADDING, HORIZ_PADDING, VERTICAL_PADDING);
-		textView.setTextColor(getResources().getColor(android.R.color.black));
+		textView.setTextColor(calloutTextColor);
 		textView.setTextSize(getFontSize());
 		textView.setText(this.text);
 		addView(textView);
@@ -189,7 +191,7 @@ public class CalloutView extends FrameLayout {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(2);
-        paint.setColor(calloutColor);
+        paint.setColor(calloutBackgroundColor);
         
         Path path = new Path();
         path.moveTo(point1.x, point1.y);
@@ -242,8 +244,11 @@ public class CalloutView extends FrameLayout {
 		this.animateStyle = animateStyle;
 	}
 
-	public void setCalloutColor(int calloutColor) {
-		this.calloutColor = calloutColor;
+	public void setCalloutBackgroundColor(int calloutColor) {
+		this.calloutBackgroundColor = calloutColor;
+	}
+	public void setCalloutTextColor(int calloutColor) {
+		this.calloutTextColor = calloutColor;
 	}
 
 	private void positionTextView() {
