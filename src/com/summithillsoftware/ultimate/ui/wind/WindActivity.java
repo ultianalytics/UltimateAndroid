@@ -27,6 +27,8 @@ public class WindActivity extends UltimateActivity {
 	private TextView directionLabel;
 	private WindDirectionView directionView;
 	private Button lookupSpeedButton;
+	private Button saveButton;
+	private Button cancelButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class WindActivity extends UltimateActivity {
 		directionView = (WindDirectionView)findViewById(R.id.windFragment).findViewById(R.id.directionView);
 		directionLabel = (TextView)findViewById(R.id.windFragment).findViewById(R.id.directionLabel);
 		directionView.setTextSize(directionLabel.getTextSize()); 
+		saveButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.saveButton);
+		cancelButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.cancelButton);
 	}
 	
 	
@@ -112,6 +116,13 @@ public class WindActivity extends UltimateActivity {
 		updateFirstPullDirectionArrow();
 		updateWindSpeed(true);
 		updateWindDirection();
+		
+		// TODO...use save/cancel buttons on this view
+		// TODO...make these visible
+		saveButton.setVisibility(View.GONE);
+		cancelButton.setVisibility(View.GONE);
+		// disable save button until all values are set the FIRST time, i.e., after a user has saved first time let them save 0.
+		// other stuff
 	}
 
 	private void updateFirstPullDirectionArrow() {
@@ -147,6 +158,13 @@ public class WindActivity extends UltimateActivity {
 		}
 	}
 	
+	public void saveClicked(View v) {
+
+	}
+
+	public void cancelClicked(View v) {
+		
+	}
 
 
 }
