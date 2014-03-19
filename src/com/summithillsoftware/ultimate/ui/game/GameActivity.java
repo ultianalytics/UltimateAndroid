@@ -341,7 +341,15 @@ public class GameActivity extends UltimateActivity {
 	
 	private void goToWindActivity() {
 		populateGame();  // save state so we don't lose it going to the wind view
-		startActivity(new Intent(this, WindActivity.class));
+		Intent intent = new Intent(this, WindActivity.class);
+		Wind wind = Game.current().getWind();
+		if (wind != null) {
+			intent.putExtra(WindActivity.WIND_STATE, new Wind(wind));  // add a copy of the wind if the game has one
+		}
+		if (wind == null || !wind.hasBeenEdited()) {
+			intent.putExtra(WindActivity.NEW_STATE, true); 
+		}
+		startActivity(intent);
 	}
 	
 	private void goToDateActivity() {

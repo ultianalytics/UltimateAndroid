@@ -20,6 +20,17 @@ public class Wind implements Externalizable {
 	private int directionDegrees = -1;
 	private boolean isFirstPullLeftToRight;
 	
+	public Wind() {
+		super();
+	}
+	
+	public Wind(Wind wind) {
+		super();
+		this.mph = wind.mph;
+		this.directionDegrees = wind.directionDegrees;
+		this.isFirstPullLeftToRight = wind.isFirstPullLeftToRight;
+	}
+	
 	public int getMph() {
 		return mph;
 	}
@@ -41,6 +52,10 @@ public class Wind implements Externalizable {
 	
 	public boolean isSpecified() {
 		return mph != 0 && directionDegrees > -1;
+	}
+	
+	public boolean hasBeenEdited() {
+		return directionDegrees > -1;
 	}
 	
 	@Override

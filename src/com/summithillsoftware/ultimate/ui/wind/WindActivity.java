@@ -20,6 +20,8 @@ import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.wind.WindDirectionView.OnWindDirectionChangedListener;
 
 public class WindActivity extends UltimateActivity {
+	public static final String WIND_STATE = "Wind";
+	public static final String NEW_STATE = "IsNew";
 	private ImageButton buttonDirectionRight;
 	private ImageButton buttonDirectionLeft;
 	private TextView windSpeed;
@@ -28,15 +30,28 @@ public class WindActivity extends UltimateActivity {
 	private WindDirectionView directionView;
 	private Button lookupSpeedButton;
 	private Button saveButton;
-	private Button cancelButton;
+	
+	private Wind wind;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wind);
+		if (savedInstanceState != null) {
+			wind = (Wind) savedInstanceState.getSerializable(WIND_STATE);
+		}
+		if (wind == null) {
+			wind = (Wind) getIntent().getSerializableExtra(WIND_STATE);
+		}
 		connectWidgets();
 		registerWidgetListeners();
 		populateView();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(WIND_STATE, getWind());
 	}
 
 	@Override
@@ -60,9 +75,7 @@ public class WindActivity extends UltimateActivity {
 		directionLabel = (TextView)findViewById(R.id.windFragment).findViewById(R.id.directionLabel);
 		directionView.setTextSize(directionLabel.getTextSize()); 
 		saveButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.saveButton);
-		cancelButton = (Button)findViewById(R.id.windFragment).findViewById(R.id.cancelButton);
 	}
-	
 	
 	private void registerWidgetListeners() {
 		buttonDirectionRight.setOnClickListener(new OnClickListener() {
@@ -82,6 +95,7 @@ public class WindActivity extends UltimateActivity {
 			public void onWindDirectionChanged(int degreesFromNorth) {
 				getWind().setDirectionDegrees(degreesFromNorth);
 				saveChanges();
+				updateSaveEnablement();
 			}
 		});
 		windSpeedSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -116,13 +130,7 @@ public class WindActivity extends UltimateActivity {
 		updateFirstPullDirectionArrow();
 		updateWindSpeed(true);
 		updateWindDirection();
-		
-		// TODO...use save/cancel buttons on this view
-		// TODO...make these visible
-		saveButton.setVisibility(View.GONE);
-		cancelButton.setVisibility(View.GONE);
-		// disable save button until all values are set the FIRST time, i.e., after a user has saved first time let them save 0.
-		// other stuff
+		updateSaveEnablement();
 	}
 
 	private void updateFirstPullDirectionArrow() {
@@ -149,7 +157,10 @@ public class WindActivity extends UltimateActivity {
 	}
 	
 	private Wind getWind() {
-		return Game.current().getWind();
+		if (wind == null) {
+			wind = new Wind();
+		}
+		return wind;
 	}
 	
 	private void saveChanges() {
@@ -158,13 +169,25 @@ public class WindActivity extends UltimateActivity {
 		}
 	}
 	
+	private void updateSaveEnablement() {
+		boolean isSaveable = isNewWind() ? getWind().getDirectionDegrees() > -1 && getWind().getMph() > 0 : true;
+		saveButton.setEnabled(isSaveable);
+	}
+	
 	public void saveClicked(View v) {
-
+		Game.current().setWind(getWind());
+		if (Game.current().hasBeenSaved()) {
+			Game.current().save();
+		}
+		finish();
 	}
 
 	public void cancelClicked(View v) {
-		
+		finish();
 	}
-
+	
+	private boolean isNewWind() {
+		return getIntent().getBooleanExtra(NEW_STATE, false);
+	}
 
 }
