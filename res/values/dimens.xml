@@ -29,6 +29,8 @@
 	<dimen name="twitter_signon_webview_height">600dp</dimen>
 	<dimen name="wind_direction_view_height">120dp</dimen>
 	<dimen name="date_time_picker_height">160dp</dimen>
+	<dimen name="wind_landscape_section_margin">10dp</dimen>
+
 	
 	<dimen name="font_size_callouts">18dp</dimen>
 	<dimen name="font_size_callouts_extra_small">14dp</dimen>

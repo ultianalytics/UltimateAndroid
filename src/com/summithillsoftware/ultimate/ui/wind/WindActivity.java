@@ -144,6 +144,7 @@ public class WindActivity extends UltimateActivity {
 		if (initial) {
 			windSpeedSeekBar.setProgress(getWind().getMph());
 		}
+		updateSaveEnablement();
 	}
 	
 	private void updateWindDirection() {
