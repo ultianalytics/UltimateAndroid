@@ -2084,6 +2084,7 @@ containing a value of this type.
         public static final int callout_action_tap_to_correct=0x7f0b017b;
         public static final int callout_action_undo_button=0x7f0b017d;
         public static final int callout_only_your_teams=0x7f0b0179;
+        public static final int callout_stats_avail_on_server=0x7f0b017e;
         public static final int checkbox_support_log_files=0x7f0b0164;
         public static final int checkbox_support_team_files=0x7f0b0165;
         public static final int common_d_line=0x7f0b001e;

@@ -1,7 +1,9 @@
 package com.summithillsoftware.ultimate.ui.stats;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,11 @@ import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.stats.PlayerStat;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationStyle;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutViewTextSize;
 
 public class StatsActivity extends UltimateActivity {
 	private int selectedStatId;
@@ -63,6 +70,7 @@ public class StatsActivity extends UltimateActivity {
 			@Override
 			public void onClick(View v) {
 				setStatButtonSelected(v.getId());
+				showHelpCallouts();
 			}
 		};
 		getButton(R.id.button_stattype_plus_minus).setOnClickListener(statTypeButtonListener);
@@ -136,7 +144,31 @@ public class StatsActivity extends UltimateActivity {
 		progressBar.setVisibility(show ? View.VISIBLE: View.GONE);
 	}
 
-
+	private boolean showHelpCallouts() {
+		List<CalloutView> callouts = new ArrayList<CalloutView>();
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_STATS_AVAIL_ON_SERVER)) {
+			View anchorView = getButton(R.id.button_stattype_dpoints_played);
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+		
+				CalloutView callout = new CalloutView(this, anchor, 0, 90, R.string.callout_stats_avail_on_server);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callout.setCalloutBackgroundColor(getResources().getColor(R.color.ultimate_theme_color));
+				callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
+				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+				callout.setCalloutWidth(200);
+				callouts.add(callout);
+				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_STATS_AVAIL_ON_SERVER);
+			}
+		} 
+		if (callouts.isEmpty()) {
+			return false;
+		} else {
+			showCallouts(callouts);
+			return true;
+		}
+	}
 
 
 }

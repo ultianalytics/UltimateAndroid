@@ -370,5 +370,6 @@
     <string name="callout_action_tap_to_correct">Did you know?\nYou can tap event buttons to make corrections</string>
     <string name="callout_action_swipe_up_to_see_more">Did you know?\nYou can swipe up to see more events</string>
     <string name="callout_action_undo_button">Did you know?\nTap the undo button to undo the last action</string>
+    <string name="callout_stats_avail_on_server">This view shows just some of the statistics for the team/game.  Upload your game to the website to see more.</string>
 
 </resources>
