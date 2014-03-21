@@ -368,9 +368,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 			View anchorView = findFirstViewWithId(getRootContentView(), R.id.undoLastEventButton);
 			if (anchorView != null) {
 				Point anchor = locationInRootView(anchorView);
-				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopRight);
-		
-				CalloutView callout = createCallout(anchor, 60, 30, R.string.callout_action_undo_button);
+				CalloutView callout = null;
+				if (UltimateApplication.current().isLandscape()) {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.LeftMid);
+					callout = createCallout(anchor, 40, 270, R.string.callout_action_undo_button);
+				}  else {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopRight);
+					callout = createCallout(anchor, 40, 30, R.string.callout_action_undo_button);
+				}
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
 				callouts.add(callout);
@@ -380,9 +385,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 			View anchorView = findFirstViewWithId(getRootContentView(), R.id.event1Button);
 			if (anchorView != null) {
 				Point anchor = locationInRootView(anchorView);
-				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
-		
-				CalloutView callout = createCallout(anchor, 20, 0, R.string.callout_action_tap_to_correct);
+				CalloutView callout = null;
+				if (UltimateApplication.current().isLandscape()) {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.BottomMid);
+					callout = createCallout(anchor, 20, 180, R.string.callout_action_tap_to_correct);
+				}  else {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+					callout = createCallout(anchor, 20, 0, R.string.callout_action_tap_to_correct);
+				}
 				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
 				callout.setCalloutWidth(200);
 				callouts.add(callout);
@@ -393,8 +403,14 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 			if (anchorView != null) {
 				Point anchor = locationInRootView(anchorView);
 				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
-		
-				CalloutView callout = createCallout(anchor, 30, 0, R.string.callout_action_swipe_up_to_see_more);
+				CalloutView callout = null;
+				if (UltimateApplication.current().isLandscape()) {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.BottomMid);
+					callout = createCallout(anchor, 20, 180, R.string.callout_action_swipe_up_to_see_more);
+				}  else {
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.Middle);
+					callout = createCallout(anchor, 30, 0, R.string.callout_action_swipe_up_to_see_more);
+				}		
 				callout.setAnimateStyle(CalloutAnimationStyle.FromLeft);  
 				callout.setCalloutWidth(200);
 				callouts.add(callout);
@@ -421,8 +437,8 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		}
 	}
 
-	private CalloutView createCallout(Point anchor, int degrees, int width, int textResId) {
-		CalloutView callout = new CalloutView(this, anchor, degrees, width, textResId);
+	private CalloutView createCallout(Point anchor, int connectorLength, int degreesFromNorth, int textResId) {
+		CalloutView callout = new CalloutView(this, anchor, connectorLength, degreesFromNorth, textResId);
 		callout.setFontSize(CalloutViewTextSize.Small);
 		callout.setCalloutBackgroundColor(getResources().getColor(R.color.ultimate_theme_color));
 		callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
