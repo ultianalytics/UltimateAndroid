@@ -20,7 +20,7 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 				showLoadingView();
 				teamDownloadWorkflow.resume();
 			} else {
-				showIntroView(false);
+				showIntroView();
 			}
 			break;
 		case UserApprovedServerInteraction:
@@ -81,6 +81,12 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 			}
 
 		});
+	}
+	
+	@Override
+	protected void showIntroView() {
+		introTextView.setText(getString(R.string.label_cloud_introduction_team_download));
+		super.showIntroView();
 	}
 
 }

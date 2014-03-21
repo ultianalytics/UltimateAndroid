@@ -213,8 +213,9 @@
     <string name="label_timeouts_available">Available now:</string>
     <string name="label_stats_include">Include:</string>
 	<string name="label_cloud_introduction_title">Website Upload/Download</string>    
-    <string name="label_cloud_introduction_upload">You tapped the option to upload a Team.  This will upload your data to the UltiAnalytics website where you can do analysis of the team.\nThe upload requires a google sign-on. If you will be sharing the duties of stats taking with other people you might want to create a shared google userid.</string>
-	<string name="label_cloud_introduction_download">Are you sure you want to try downloading team data?  If you haven\'t uploaded team data previously there will be nothing to download.</string>  
+    <string name="label_cloud_introduction_team_upload">You tapped the option to upload a Team.  This will upload your data to the UltiAnalytics website where you can do analysis of the team.\nThe upload requires a google sign-on. If you will be sharing the duties of stats taking with other people you might want to create a shared google userid.</string> 
+	<string name="label_cloud_introduction_team_download">Are you sure you want to try downloading team data?  If you haven\'t uploaded team data previously there will be nothing to download.</string>
+    <string name="label_cloud_introduction_game_upload">You tapped the option to upload a Game.  This will upload your data to the UltiAnalytics website where you can do analysis of the team/game.\nThe upload requires a google sign-on. If you will be sharing the duties of stats taking with other people you might want to create a shared google userid.</string>
     <string name="label_cloud_talking_to_server">Talking to server&#8230;</string>
     <string name="label_cloud_waiting_for_signon">Waiting for sign in&#8230;</string>
     <string name="label_cloud_downloading_teams">Downloading teams&#8230;</string>

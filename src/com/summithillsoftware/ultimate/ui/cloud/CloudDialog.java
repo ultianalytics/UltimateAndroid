@@ -154,8 +154,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		return getArguments().getString(WORKFLOW_ID_ARG);
 	}
 	
-	protected void showIntroView(boolean isUpload) {
-		introTextView.setText(getString(isUpload ? R.string.label_cloud_introduction_upload : R.string.label_cloud_introduction_download));
+	protected void showIntroView() {
 		viewFlipper.setDisplayedChild(0);
 	}
 	

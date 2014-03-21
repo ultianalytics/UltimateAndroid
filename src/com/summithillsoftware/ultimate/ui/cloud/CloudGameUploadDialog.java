@@ -11,6 +11,14 @@ public class CloudGameUploadDialog extends CloudDialog {
 		GameUploadWorkflow gameUploadWorkflow = (GameUploadWorkflow)workflow;
 		switch (gameUploadWorkflow.getStatus()) {
 		case NotStarted:
+			if (hasUserBeenIntroducedToSignon()) {
+				showLoadingView();
+				gameUploadWorkflow.resume();
+			} else {
+				showIntroView();
+			}
+			break;
+		case UserApprovedServerInteraction:
 			showLoadingView();
 			gameUploadWorkflow.resume();
 			break;
@@ -39,6 +47,11 @@ public class CloudGameUploadDialog extends CloudDialog {
 			break;
 		}
 	}
-
+	
+	@Override
+	protected void showIntroView() {
+		introTextView.setText(getString(R.string.label_cloud_introduction_game_upload));
+		super.showIntroView();
+	}
 
 }

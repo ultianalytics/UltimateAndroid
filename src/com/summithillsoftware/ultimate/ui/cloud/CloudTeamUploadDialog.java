@@ -6,16 +6,16 @@ import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public class CloudTeamUploadDialog extends CloudDialog {
-	
+
 	protected void workflowChanged(final Workflow workflow) {
-		TeamUploadWorkflow teamUploadWorkflow = (TeamUploadWorkflow)workflow;
+		TeamUploadWorkflow teamUploadWorkflow = (TeamUploadWorkflow) workflow;
 		switch (teamUploadWorkflow.getStatus()) {
 		case NotStarted:
 			if (hasUserBeenIntroducedToSignon()) {
 				showLoadingView();
 				teamUploadWorkflow.resume();
 			} else {
-				showIntroView(true);
+				showIntroView();
 			}
 			break;
 		case UserApprovedServerInteraction:
@@ -24,25 +24,30 @@ public class CloudTeamUploadDialog extends CloudDialog {
 			break;
 		case CredentialsRejected:
 			requestSignon();
-			break;	
+			break;
 		case TeamUploadStarted:
 			setProgressText(R.string.label_cloud_uploading_team);
 			showLoadingView();
-			break;	
+			break;
 		case TeamUploadComplete:
 			displayCompleteAndThenDismiss(true);
-			break;				
+			break;
 		case Error:
 			teamUploadWorkflow.setStatus(CloudWorkflowStatus.Cancel);
 			displayCloudError(teamUploadWorkflow.getLastErrorStatus());
-			break;	
+			break;
 		case Cancel:
 			dismissDialog();
-			break;					
+			break;
 		default:
 			break;
 		}
 	}
 
+	@Override
+	protected void showIntroView() {
+		introTextView.setText(getString(R.string.label_cloud_introduction_team_upload));
+		super.showIntroView();
+	}
 
 }

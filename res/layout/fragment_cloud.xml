@@ -38,7 +38,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:text="@string/label_cloud_introduction_upload"
+                android:text="@string/label_cloud_introduction_team_upload"
                 android:textSize="@dimen/font_signon_callout_message" />
 
             <Button

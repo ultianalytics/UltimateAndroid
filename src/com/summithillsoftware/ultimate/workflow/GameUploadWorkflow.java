@@ -17,6 +17,9 @@ public class GameUploadWorkflow extends CloudWorkflow {
 				// CloudClient.current().clearExistingAuthentication();
 				uploadCurrentTeam();
 				break;
+			case UserApprovedServerInteraction:
+				uploadCurrentTeam();
+				break;				
 			case AuthenticationEnded:
 				if (cloudId == null) {
 					uploadCurrentTeam();
