@@ -121,8 +121,8 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 				CalloutView callout = new CalloutView(this, anchor, 30, 210, R.string.callout_only_your_teams);
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
+				callout.setCalloutTrackerID(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY);
 				callouts.add(callout);
-				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY);
 				
 				showCallouts(callouts);
 			}

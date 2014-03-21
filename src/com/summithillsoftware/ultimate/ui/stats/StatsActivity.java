@@ -158,8 +158,8 @@ public class StatsActivity extends UltimateActivity {
 				callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
 				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
 				callout.setCalloutWidth(200);
+				callout.setCalloutTrackerID(CalloutTracker.CALLOUT_STATS_AVAIL_ON_SERVER);
 				callouts.add(callout);
-				CalloutTracker.current().setCalloutShown(CalloutTracker.CALLOUT_STATS_AVAIL_ON_SERVER);
 			}
 		} 
 		if (callouts.isEmpty()) {
