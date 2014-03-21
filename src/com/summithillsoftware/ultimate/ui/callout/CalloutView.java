@@ -14,11 +14,13 @@ import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.DefaultAnimationListener;
 import com.summithillsoftware.ultimate.ui.GraphicsUtil;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 
@@ -36,10 +38,12 @@ public class CalloutView extends FrameLayout {
 	private int calloutBackgroundColor;
 	private int calloutTextColor;
 	private CalloutViewTextSize textSize = CalloutViewTextSize.Medium;
+	private int calloutTrackerID = -1;
 	
 	private TextView textView;
 	private Point textViewMidPoint;
 	private Point connectorOriginPoint;
+	private long timeDisplayed;
 
 
 	public CalloutView(Context context, AttributeSet attrs, int defStyle) {
@@ -98,6 +102,14 @@ public class CalloutView extends FrameLayout {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public void setCalloutTrackerID(int calloutTrackerId) {
+		this.calloutTrackerID = calloutTrackerId;
+	}
+
+	public long getTimeDisplayed() {
+		return timeDisplayed;
+	}
 	
 	public void showAnimated() {
 		setVisibility(View.VISIBLE);
@@ -118,22 +130,18 @@ public class CalloutView extends FrameLayout {
 			break;
 		}
 	
-		if (animation == null) {
-			show();
-		} else {
+		if (animation != null) {
 			animation.setDuration(1000);
 			animation.setFillAfter(true);
+			animation.setAnimationListener(new DefaultAnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					timeDisplayed = System.currentTimeMillis();
+				}
+			});
 			startAnimation(animation);			
 		}
 		
-	}
-	
-	public void show() {
-		setVisibility(View.VISIBLE);
-	}
-	
-	public void hide() {
-		setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -209,37 +217,6 @@ public class CalloutView extends FrameLayout {
 		FromRight
 	}
 	
-	public static class AnimateCalloutShowAsyncTask extends AsyncTask<Void, Void, String> {
-		private List<CalloutView> callouts;
-		
-		public AnimateCalloutShowAsyncTask(final List<CalloutView> callouts) {
-			this.callouts = callouts;
-			OnClickListener tapListener = new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					for (CalloutView calloutView : callouts) {
-						ViewHelper.removeViewFromParent(calloutView);
-					}
-				}
-			};
-			for (CalloutView calloutView : callouts) {
-				calloutView.setOnClickListener(tapListener);
-			}
-		}
-		
-		@Override
-		protected String doInBackground(Void... paramArrayOfParams) {
-			return null;
-		}
-		@Override
-		protected void onPostExecute(String x) {
-			for (CalloutView callout : callouts) {
-				callout.showAnimated();
-			}
-		}
-	}
-
-
 	public void setAnimateStyle(CalloutAnimationStyle animateStyle) {
 		this.animateStyle = animateStyle;
 	}
@@ -302,5 +279,55 @@ public class CalloutView extends FrameLayout {
 		Small,
 		Medium,
 		Large
+	}
+
+	public static class AnimateCalloutShowAsyncTask extends AsyncTask<Void, Void, String> {
+		private List<CalloutView> callouts;
+		private long minimumDisplayTimeMilliseconds = 2000;
+		
+		public AnimateCalloutShowAsyncTask(final List<CalloutView> callouts) {
+			this.callouts = callouts;
+			OnClickListener tapListener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (haveCalloutsBeenDisplayedLongEnough()) {
+						for (CalloutView calloutView : callouts) {
+							ViewHelper.removeViewFromParent(calloutView);
+						}
+						for (CalloutView calloutView : callouts) {
+							if (calloutView.calloutTrackerID != -1) {
+								CalloutTracker.current().setCalloutShown(calloutView.calloutTrackerID);
+							}
+						}
+					}
+				}
+			};
+			for (CalloutView calloutView : callouts) {
+				calloutView.setOnClickListener(tapListener);
+			}
+		}
+		
+		@Override
+		protected String doInBackground(Void... paramArrayOfParams) {
+			return null;
+		}
+		@Override
+		protected void onPostExecute(String x) {
+			for (CalloutView callout : callouts) {
+				callout.showAnimated();
+			}
+		}
+		public void setMinimumDisplayTime(long milliseconds) {
+			minimumDisplayTimeMilliseconds = milliseconds;
+		}
+		private boolean haveCalloutsBeenDisplayedLongEnough() {
+			if (callouts.size() > 0) {
+				long timeWhenFirstCalloutDisplayed = callouts.get(0).timeDisplayed;
+				return timeWhenFirstCalloutDisplayed == 0 ? false : 
+					(System.currentTimeMillis() - minimumDisplayTimeMilliseconds) > timeWhenFirstCalloutDisplayed;
+			} else {
+				return true;
+			}
+		}
 	}
 }
