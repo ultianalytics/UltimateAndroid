@@ -29,6 +29,7 @@
 
                 <EditText
                     android:id="@+id/text_player_name"
+                    android:maxLength="8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_player_name"

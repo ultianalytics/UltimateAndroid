@@ -57,6 +57,7 @@
 
                 <EditText
                     android:id="@+id/text_game_opponent_name"
+                    android:maxLength="50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_opponent_name"
@@ -79,6 +80,7 @@
 
                 <EditText
                     android:id="@+id/text_game_tourament_name"
+                    android:maxLength="50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_tournament_name"
