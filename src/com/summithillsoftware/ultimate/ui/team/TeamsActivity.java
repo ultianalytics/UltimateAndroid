@@ -29,6 +29,7 @@ import com.summithillsoftware.ultimate.ui.cloud.CloudTeamDownloadDialog;
 import com.summithillsoftware.ultimate.workflow.TeamDownloadWorkflow;
 
 public class TeamsActivity extends UltimateActivity implements Refreshable {
+	boolean showingTeamOnlyCallout = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +109,10 @@ public class TeamsActivity extends UltimateActivity implements Refreshable {
 	}
 	
 	private boolean showOnlyYourTeamsCallout() {
-		if (CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
+		if (showingTeamOnlyCallout || CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_OUR_TEAMS_ONLY)) {
 			return false;
 		} else {
+			showingTeamOnlyCallout = true;
 			final List<CalloutView> callouts = new ArrayList<CalloutView>();
 			
 			View menuView = findViewById(R.id.action_add);
