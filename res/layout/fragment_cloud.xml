@@ -113,11 +113,14 @@
 
     <Button
         android:id="@+id/cancelButton"
-        style="@style/redButton"
         android:layout_width="wrap_content"
+        android:background="@drawable/undo_button_background"
+        android:textSize="@dimen/standard_button_text_size"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:gravity="center"
         android:layout_height="40dp"
         android:layout_margin="10dp"
-        android:gravity="center_horizontal"
         android:text="@string/button_cancel" />
 
 </LinearLayout>
