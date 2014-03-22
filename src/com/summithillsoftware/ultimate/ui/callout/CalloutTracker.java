@@ -23,6 +23,7 @@ public class CalloutTracker implements Externalizable {
 	public static final int CALLOUT_UNDO_BUTTON = 7;
 	public static final int CALLOUT_SIGNON_TO_SERVER = 8;
 	public static final int CALLOUT_STATS_AVAIL_ON_SERVER = 9;
+	public static final int CALLOUT_WEBSITE_LINK_TEAM = 10;
 	
 	/*******************************/
 	

@@ -1,11 +1,15 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import android.app.Activity;
+
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.team.TeamActivity;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public class CloudTeamUploadDialog extends CloudDialog {
+	boolean uploadFinished = false;
 
 	protected void workflowChanged(final Workflow workflow) {
 		TeamUploadWorkflow teamUploadWorkflow = (TeamUploadWorkflow) workflow;
@@ -30,6 +34,7 @@ public class CloudTeamUploadDialog extends CloudDialog {
 			showLoadingView();
 			break;
 		case TeamUploadComplete:
+			uploadFinished = true;
 			displayCompleteAndThenDismiss(true);
 			break;
 		case Error:
@@ -48,6 +53,17 @@ public class CloudTeamUploadDialog extends CloudDialog {
 	protected void showIntroView() {
 		introTextView.setText(getString(R.string.label_cloud_introduction_team_upload));
 		super.showIntroView();
+	}
+	
+	@Override
+	protected void dismissDialog() {
+		Activity activity = getActivity();
+		super.dismissDialog();
+		if (uploadFinished) {
+			if (activity instanceof TeamActivity) {
+				((TeamActivity)activity).teamWasUploaded();
+			}
+		}
 	}
 
 }

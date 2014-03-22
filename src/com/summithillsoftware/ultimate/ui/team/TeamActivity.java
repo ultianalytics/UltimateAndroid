@@ -1,9 +1,14 @@
 package com.summithillsoftware.ultimate.ui.team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,13 +21,20 @@ import android.widget.TextView;
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.model.Team;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationStyle;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutViewTextSize;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Team;
 import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
-public class TeamActivity extends UltimateActivity {
+public class TeamActivity extends UltimateActivity  implements Refreshable {
 	public static final String NEW_TEAM = "NewTeam";
 	
 	// widgets
@@ -219,6 +231,49 @@ public class TeamActivity extends UltimateActivity {
 	
 	private void goToTwitterActivity() {
 		startActivity(new Intent(this, TwitterActivity_Team.class));
+	}
+	
+	public void refresh() {
+		populateView();
+	}
+	
+	public void teamWasUploaded() {
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM)) {
+			// run via a handler to make sure the website view is visible before the callout pops out 
+			final Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+			  @Override
+			  public void run() {
+				  showUploadCompleteCallout();
+			  }
+			}, 1); 
+		}
+	}
+	
+	private boolean showUploadCompleteCallout() {
+		List<CalloutView> callouts = new ArrayList<CalloutView>();
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM)) {
+			View anchorView = view_website;
+			if (anchorView != null) {
+				Point anchor = locationInRootView(anchorView);
+				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopMid);
+		
+				CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_team_website_link_team);
+				callout.setFontSize(CalloutViewTextSize.Small);
+				callout.setCalloutBackgroundColor(getResources().getColor(R.color.ultimate_theme_color));
+				callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
+				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+				callout.setCalloutWidth(200);
+				callout.setCalloutTrackerID(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM);
+				callouts.add(callout);
+			}
+		} 
+		if (callouts.isEmpty()) {
+			return false;
+		} else {
+			showCallouts(callouts);
+			return true;
+		}
 	}
 
 }
