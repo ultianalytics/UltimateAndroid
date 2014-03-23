@@ -9,7 +9,7 @@
     tools:context=".PlayerActivity" >
 
   <fragment 
-    android:name="com.summithillsoftware.ultimate.ui.team.PlayerFragment"
+    android:name="com.summithillsoftware.ultimate.ui.player.PlayerFragment"
     android:id="@+id/playerFragment"
     android:layout_height="match_parent" 
     android:layout_width="match_parent"

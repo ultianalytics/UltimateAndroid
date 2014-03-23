@@ -43,9 +43,11 @@ import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
+import com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_GameAction;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener, Refreshable {
+	private static final int PLAYERS_ACTIVITY_REQUEST_CODE = 1;
 	private GameActionFieldFragment fieldFragment;
 	private GameActionRecentEventsFragment recentsFragment;
 	private GestureOverlayView swipeGestureOverlay;
@@ -88,8 +90,18 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 		case R.id.action_line:
 			showLineDialog();
 			return true;
-		}		
+		case R.id.action_players:
+			goToPlayersActivity();
+			return true;	
+		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		if (requestCode == PLAYERS_ACTIVITY_REQUEST_CODE) {
+			refresh();
+		}
 	}
 	
 	private void connectWidgets() {
@@ -359,6 +371,10 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	
 	private void goToTwitterActivity() {
 		startActivity(new Intent(this, TwitterActivity_GameAction.class));
+	}
+	
+	private void goToPlayersActivity() {
+		startActivityForResult(new Intent(this, PlayersActivity_Game.class), PLAYERS_ACTIVITY_REQUEST_CODE);
 	}
 	
 	private boolean showHelpCallouts(boolean isOffense) {

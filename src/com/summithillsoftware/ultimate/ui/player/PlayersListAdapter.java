@@ -1,4 +1,4 @@
-package com.summithillsoftware.ultimate.ui.team;
+package com.summithillsoftware.ultimate.ui.player;
 
 import java.util.List;
 

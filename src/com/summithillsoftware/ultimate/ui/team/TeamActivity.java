@@ -31,6 +31,7 @@ import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationSt
 import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutViewTextSize;
 import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
+import com.summithillsoftware.ultimate.ui.player.PlayersActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Team;
 import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
