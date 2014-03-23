@@ -1472,14 +1472,14 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_delete=0x7f060138;
+        public static final int action_delete=0x7f060137;
         public static final int action_download=0x7f06013b;
         public static final int action_games=0x7f06013c;
-        public static final int action_line=0x7f060139;
+        public static final int action_line=0x7f060138;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_players=0x7f060137;
+        public static final int action_players=0x7f060139;
         public static final int action_settings=0x7f060132;
         public static final int action_support=0x7f060133;
         public static final int action_twitter=0x7f060136;

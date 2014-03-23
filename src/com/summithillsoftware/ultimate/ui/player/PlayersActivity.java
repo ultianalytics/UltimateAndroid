@@ -84,8 +84,13 @@ public class PlayersActivity extends UltimateActivity {
 	}
 	
 	private void goToPlayerActivity(Player player) {
-		Intent intent = new Intent(PlayersActivity.this, PlayerActivity.class);
+		Intent intent = createPlayerIntent();
 		intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
 		startActivity(intent);
 	}
+	
+	protected Intent createPlayerIntent() {
+		return new Intent(this, PlayerActivity.class);
+	}
+	
 }

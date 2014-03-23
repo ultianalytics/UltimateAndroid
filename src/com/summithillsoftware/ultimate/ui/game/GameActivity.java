@@ -34,7 +34,6 @@ import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
-import com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game;
 import com.summithillsoftware.ultimate.ui.stats.StatsActivity;
 import com.summithillsoftware.ultimate.ui.timestamp.TimestampActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game;
@@ -107,9 +106,6 @@ public class GameActivity extends UltimateActivity {
 		case R.id.action_action:
 			goToActionActivity();
 			return true;
-		case R.id.action_players:
-			goToPlayersActivity();
-			return true;			
 		case R.id.action_upload:
 			showGameUploadDialog();
 			return true;
@@ -359,10 +355,6 @@ public class GameActivity extends UltimateActivity {
 	private void goToDateActivity() {
 		populateGame();  // save state so we don't lose it going to the date view
 		startActivity(new Intent(this, TimestampActivity.class));
-	}
-	
-	private void goToPlayersActivity() {
-		startActivity(new Intent(this, PlayersActivity_Game.class));
 	}
 
 }

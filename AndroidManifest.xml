@@ -45,14 +45,6 @@
                 android:value="com.summithillsoftware.ultimate.ui.team.TeamsActivity" />
         </activity>
         <activity
-            android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game"
-            android:label="@string/title_activity_players"
-            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.summithillsoftware.ultimate.ui.game.GameActivity" />
-        </activity>     
-        <activity
             android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity_GameAction"
             android:label="@string/title_activity_players"
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
@@ -69,15 +61,25 @@
                 android:value="com.summithillsoftware.ultimate.ui.team.TeamActivity" />
         </activity>         
         <activity
-            android:name="com.summithillsoftware.ultimate.ui.player.PlayerActivity"
+            android:name="com.summithillsoftware.ultimate.ui.player.PlayerActivity_Team"
             android:label="@string/title_activity_player"
             android:noHistory="true"
-            android:parentActivityName="com.summithillsoftware.ultimate.ui.player.PlayersActivity"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.player.PlayersActivity_Team"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.summithillsoftware.ultimate.ui.team.PlayersActivity" />
-        </activity>            
+                android:value="com.summithillsoftware.ultimate.ui.player.PlayersActivity_Team" />
+        </activity> 
+                           <activity
+            android:name="com.summithillsoftware.ultimate.ui.player.PlayerActivity_GameAction"
+            android:label="@string/title_activity_player"
+            android:noHistory="true"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.player.PlayersActivity_GameAction"
+            android:windowSoftInputMode="stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.team.PlayersActivity_GameAction" />
+        </activity>  
         <activity
             android:name="com.summithillsoftware.ultimate.ui.game.GamesActivity"
             android:label="@string/title_activity_games"
