@@ -325,12 +325,16 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				getActivity().runOnUiThread(new Runnable(){
-					@Override
-					public void run() {
-						CloudDialog.this.dismissDialog();
-					}
-				});
+				try {
+					getActivity().runOnUiThread(new Runnable(){
+						@Override
+						public void run() {
+							CloudDialog.this.dismissDialog();
+						}
+					});
+				} catch (Exception e) {
+					UltimateLogger.logError("error while trying to dismiss cloud dialog", e);
+				}
 			}
 		};
 		timer.schedule(task, 1000);

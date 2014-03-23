@@ -43,7 +43,6 @@ import com.summithillsoftware.ultimate.ui.game.line.LineDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
-import com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game;
 import com.summithillsoftware.ultimate.ui.player.PlayersActivity_GameAction;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_GameAction;
 
