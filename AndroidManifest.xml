@@ -45,14 +45,6 @@
                 android:value="com.summithillsoftware.ultimate.ui.team.TeamsActivity" />
         </activity>
         <activity
-            android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity"
-            android:label="@string/title_activity_players"
-            android:parentActivityName="com.summithillsoftware.ultimate.ui.team.TeamActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.summithillsoftware.ultimate.ui.team.TeamActivity" />
-        </activity>
-        <activity
             android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game"
             android:label="@string/title_activity_players"
             android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActivity" >
@@ -63,11 +55,19 @@
         <activity
             android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity_GameAction"
             android:label="@string/title_activity_players"
-            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.GameActionActivity" >
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.summithillsoftware.ultimate.ui.game.GameActionActivity" />
+                android:value="com.summithillsoftware.ultimate.ui.game.action.GameActionActivity" />
         </activity>  
+        <activity
+            android:name="com.summithillsoftware.ultimate.ui.player.PlayersActivity_Team"
+            android:label="@string/title_activity_players"
+            android:parentActivityName="com.summithillsoftware.ultimate.ui.team.TeamActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.summithillsoftware.ultimate.ui.team.TeamActivity" />
+        </activity>         
         <activity
             android:name="com.summithillsoftware.ultimate.ui.player.PlayerActivity"
             android:label="@string/title_activity_player"

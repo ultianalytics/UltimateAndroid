@@ -44,6 +44,7 @@ import com.summithillsoftware.ultimate.ui.game.pull.PullDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.specialevent.SpecialEventDialogFragment;
 import com.summithillsoftware.ultimate.ui.game.timeouts.TimeoutsDialogFragment;
 import com.summithillsoftware.ultimate.ui.player.PlayersActivity_Game;
+import com.summithillsoftware.ultimate.ui.player.PlayersActivity_GameAction;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_GameAction;
 
 public class GameActionActivity extends UltimateActivity implements GameActionEventListener, Refreshable {
@@ -374,7 +375,7 @@ public class GameActionActivity extends UltimateActivity implements GameActionEv
 	}
 	
 	private void goToPlayersActivity() {
-		startActivityForResult(new Intent(this, PlayersActivity_Game.class), PLAYERS_ACTIVITY_REQUEST_CODE);
+		startActivityForResult(new Intent(this, PlayersActivity_GameAction.class), PLAYERS_ACTIVITY_REQUEST_CODE);
 	}
 	
 	private boolean showHelpCallouts(boolean isOffense) {
