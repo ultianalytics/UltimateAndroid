@@ -27,7 +27,8 @@ public class CalloutTracker implements Externalizable {
 	
 	/*******************************/
 	
-	private static final byte serialVersionUID = 1;
+	private static final long serialVersionUID = 1l;
+	private static final byte OBJECT_STATE_VERSION = 1;
 	private static final String FILE_NAME = "callout_tracker.ser";
 	private static CalloutTracker Current;
 	
@@ -40,7 +41,7 @@ public class CalloutTracker implements Externalizable {
 		}
 	}
 	
-	private CalloutTracker() {
+	public CalloutTracker() {
 	}
 	
 	public static CalloutTracker current() {
@@ -72,7 +73,7 @@ public class CalloutTracker implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput output) throws IOException {
-		output.writeByte(serialVersionUID);
+		output.writeByte(OBJECT_STATE_VERSION);
 		output.writeObject(displayedCallouts);
 	}
 	
@@ -89,6 +90,7 @@ public class CalloutTracker implements Externalizable {
 				}
 			} catch (Exception e) {
 				UltimateLogger.logError("Unable to restore callout tracker",e);
+				AtomicFile.delete(getFile());
 			}
 			return calloutTracker;
 		}

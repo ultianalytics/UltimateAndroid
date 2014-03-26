@@ -55,9 +55,7 @@ public class PlayersActivity extends UltimateActivity {
 		case android.R.id.home:
 			return navigateUp();
 		case R.id.action_add:
-			Intent intent = new Intent(this, PlayerActivity.class);
-			intent.putExtra(PlayerActivity.NEW_PLAYER, true);
-			startActivity(intent);
+			goToPlayerActivity(null);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -85,7 +83,11 @@ public class PlayersActivity extends UltimateActivity {
 	
 	private void goToPlayerActivity(Player player) {
 		Intent intent = createPlayerIntent();
-		intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
+		if (player == null) {
+			intent.putExtra(PlayerActivity.NEW_PLAYER, true);
+		} else {
+			intent.putExtra(PlayerActivity.PLAYER_NAME, player.getName());
+		}
 		startActivity(intent);
 	}
 	
