@@ -367,6 +367,7 @@
     <string name="twitter_description_hours">h</string>
     <string name="twitter_description_days">d</string>
     <string name="twitter_description_old">old</string>
+	<string name="callout_welcome">Welcome to UltiAnalytics!\n\nTo begin, enter a name for your team and then add players.\n\nYou can upload your team at anytime to the website.\n\nIf you already have a team uploaded then return to the Teams view to download your team.</string>    
     <string name="callout_only_your_teams">Reminder:\nOnly add teams for whom you are keeping stats (don\'t add an opponent as a team).\n\nTap + again if you really want to add a team</string>
     <string name="callout_action_long_press_throwaway">Did you know?\nYou can press-and-hold some action buttons (like Throwaway or D) for more options</string>
     <string name="callout_action_tap_to_correct">Did you know?\nYou can tap event buttons to make corrections</string>

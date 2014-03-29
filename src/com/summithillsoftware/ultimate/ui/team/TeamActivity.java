@@ -33,6 +33,7 @@ import com.summithillsoftware.ultimate.ui.cloud.CloudTeamUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.GamesActivity;
 import com.summithillsoftware.ultimate.ui.player.PlayersActivity_Team;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Team;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
 public class TeamActivity extends UltimateActivity  implements Refreshable {
@@ -53,6 +54,12 @@ public class TeamActivity extends UltimateActivity  implements Refreshable {
 		setContentView(R.layout.activity_team);
 		connectWidgets();
 		setupActionBar();  // Show the Up button in the action bar.
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		showWelcomeCallout();
 	}
 	
 	@Override
@@ -251,29 +258,54 @@ public class TeamActivity extends UltimateActivity  implements Refreshable {
 		}
 	}
 	
-	private boolean showUploadCompleteCallout() {
-		List<CalloutView> callouts = new ArrayList<CalloutView>();
+	private void showUploadCompleteCallout() {
 		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM)) {
 			View anchorView = view_website;
 			if (anchorView != null) {
-				Point anchor = locationInRootView(anchorView);
-				anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopMid);
-		
-				CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_team_website_link_team);
-				callout.setFontSize(CalloutViewTextSize.Small);
-				callout.setCalloutBackgroundColor(getResources().getColor(R.color.ultimate_theme_color));
-				callout.setCalloutTextColor(getResources().getColor(android.R.color.white));
-				callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
-				callout.setCalloutWidth(200);
-				callout.setCalloutTrackerID(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM);
-				callouts.add(callout);
+				try {
+					List<CalloutView> callouts = new ArrayList<CalloutView>();
+					Point anchor = locationInRootView(anchorView);
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopMid);
+
+					CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_team_website_link_team);
+					callout.setFontSize(CalloutViewTextSize.Small);
+					callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+					callout.setCalloutWidth(200);
+					callout.setCalloutTrackerID(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM);
+					callouts.add(callout);
+					showCallouts(callouts);
+				} catch (Exception e) {
+					UltimateLogger.logError("unable to display callout_team_website_link_team callout", e);
+				}
 			}
 		} 
-		if (callouts.isEmpty()) {
-			return false;
-		} else {
-			showCallouts(callouts);
-			return true;
+	}
+	
+	private void showWelcomeCallout() {
+		if (Team.current().isDefaultTeamName() && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WELCOME)) {
+			final Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+			  @Override
+			  public void run() {
+					try {
+						List<CalloutView> callouts = new ArrayList<CalloutView>();
+						View anchorView = text_team_name;
+						Point anchor = locationInRootView(anchorView);
+						anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.BottomMid);
+						anchor.x = getRootView().getWidth() / 2; // center horizontally in the screen
+						
+						CalloutView callout = new CalloutView(TeamActivity.this, anchor, 30, 180, R.string.callout_welcome);
+						callout.setFontSize(CalloutViewTextSize.Small);
+						callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+						callout.setCalloutWidth(300);
+						callout.setCalloutTrackerID(CalloutTracker.CALLOUT_WELCOME);
+						callouts.add(callout);
+						showCallouts(callouts);
+					} catch (Exception e) {
+						UltimateLogger.logError("unable to display welcome callout", e);
+					}
+			  }
+			}, 1); 
 		}
 	}
 
