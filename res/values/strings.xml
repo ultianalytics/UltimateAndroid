@@ -53,7 +53,7 @@
     <string name="event_description_callahan_by">Callahan by %1$s</string>
     <string name="event_description_end_of_first_quarter">End of 1st Qtr</string>
     <string name="event_description_end_of_third_quarter">End of 3rd Qtr</string>
-    <string name="event_description_halftime">Halftime</string>
+    <string name="event_description_halftime">Half\nTime</string>
     <string name="event_description_game_over">Game Over</string>
     <string name="event_description_end_of_fourth_quarter">End of 4th Qtr</string>
     <string name="event_description_end_of_overtime">End of an overtime</string>
