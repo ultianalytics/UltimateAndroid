@@ -217,6 +217,7 @@ public class LineDialogFragment extends UltimateDialogFragment {
     			numberOfButtonsInRow = 0;
     		}
     		PlayerLineButtonView button = createLineButton(player);
+    		logView(button, "row button[" + numberOfButtonsInRow +"]");
     		button.setButtonOnFieldView(isField, line, originalLine);
     		addButtonOrLabelToRow(buttonRowView, button);
 	        numberOfButtonsInRow++;
@@ -294,18 +295,12 @@ public class LineDialogFragment extends UltimateDialogFragment {
     
     private void playerButtonClicked(PlayerLineButtonView clickedButton) {
     	if (clickedButton.isButtonOnFieldView()) {  // player on field
-    		line.remove(clickedButton.getPlayer());
-    		PlayerLineButtonView benchButton = getButtonForPlayerName(clickedButton.getPlayer(), false);
-    		clickedButton.setPlayer(Player.anonymous(), 0, 0);
-    		benchButton.updateView(line, originalLine);
+    		removePlayerFromField(clickedButton);
     	} else {  // player on bench
     		if (line.size() < 7) {
     			if (validateMoveToField(clickedButton.getPlayer())) {
 		    		line.add(clickedButton.getPlayer());
-		    		PlayerLineButtonView fieldButton = getButtonForPlayerName(Player.anonymous(), true);
-		    		Player player = clickedButton.getPlayer();
-		    		fieldButton.setPlayer(player, pointsPlayerForPlayer(player), playingTimeFactorForPlayer(player));
-		    		fieldButton.updateView(line, originalLine);
+		    		putPlayerOnField(clickedButton);
     			} else {
     				errorSoundAndVibrate();
     			}
@@ -313,8 +308,44 @@ public class LineDialogFragment extends UltimateDialogFragment {
     			errorSoundAndVibrate();
     		}
     	}
-    	clickedButton.updateView(line, originalLine);
     }
+    
+    private void putLineOnField() {
+    	for (Player player : line) {
+    		if (!player.isAnonymous()) { // shouldn't be anon players in line but just in case
+    			putPlayerOnField(getButtonForPlayerName(player, false));
+    		}
+		}
+    }
+    
+	private void putPlayerOnField(PlayerLineButtonView benchButton) {
+		PlayerLineButtonView fieldButton = getButtonForPlayerName(Player.anonymous(), true);  // get an open slot
+		if (fieldButton != null) {
+			Player player = benchButton.getPlayer();
+			if (!player.isAnonymous()) {
+				fieldButton.setPlayer(player, pointsPlayerForPlayer(player), playingTimeFactorForPlayer(player));
+				fieldButton.updateView(line, originalLine);
+				benchButton.updateView(line, originalLine);
+			}
+		}
+	}
+    
+    private void clearField() {
+    	List<View> lineButtons = ViewHelper.allDescendentViews(lineFieldPlayers, PlayerLineButtonView.class);
+    	for (View view : lineButtons) {
+    		removePlayerFromField((PlayerLineButtonView)view);
+		}
+    }
+
+	private void removePlayerFromField(PlayerLineButtonView fieldButton) {
+		if (!fieldButton.getPlayer().isAnonymous()) {
+			line.remove(fieldButton.getPlayer());
+			PlayerLineButtonView benchButton = getButtonForPlayerName(fieldButton.getPlayer(), false);
+			fieldButton.setPlayer(Player.anonymous(), 0, 0);
+			benchButton.updateView(line, originalLine);
+			fieldButton.updateView(line, originalLine);
+		}
+	}
 
     private boolean validateMoveToField(Player player) {
     	if (Team.current().isMixed()) {
@@ -379,12 +410,13 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private void registerLastLineButtonClickListener() {
 		lastLineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+            	clearField();
             	List<Player> lastLine = LineDialogFragment.this.isPointOline() ? Game.current().getLastOLine() : Game.current().getLastDLine();
             	if (lastLine == null) {
             		lastLine = new ArrayList<Player>();
             	} 
             	line = new ArrayList<Player>(lastLine);
-            	populateFieldAndBench();
+            	putLineOnField();
             }
         });
 	}
@@ -392,10 +424,22 @@ public class LineDialogFragment extends UltimateDialogFragment {
 	private void registerClearButtonClickListener() {
 		clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	line = new ArrayList<Player>();
-            	populateFieldAndBench();
+            	clearField();
             }
         });
+	}
+	
+	private void logView(View v, String name) {
+		System.out.println(name + " height= " + v.getHeight() + " width=" + v.getWidth()  
+				+ " x=" + v.getX()  + " y=" + v.getY() 
+				+ " visibility=" + v.getVisibility() + "(View.VISIBLE=" + View.VISIBLE +")");
+		if (v instanceof ViewGroup) {
+			System.out.println("children:");
+			ViewGroup vg = (ViewGroup)v;
+			for (int i = 0; i < vg.getChildCount(); i++) {
+				logView(vg.getChildAt(i), name + "-child");
+			}
+		}
 	}
 	
 	private void registerChangeModeRadioListener() {
