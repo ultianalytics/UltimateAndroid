@@ -35,7 +35,7 @@ import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 public class Game implements Externalizable {
 	private static final long serialVersionUID = 1l;
-	private static final byte OBJECT_STATE_VERSION = 1;
+	private static final byte OBJECT_STATE_VERSION = 2;
 	
 	private static final String JSON_GAME_ID = "gameId";
 	private static final String JSON_OPPONENT_NAME = "opponentName";
@@ -997,7 +997,6 @@ public class Game implements Externalizable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput input) throws IOException,	ClassNotFoundException {
-		@SuppressWarnings("unused")
 		byte version = input.readByte();  // if vars change use this to decide how far to read
 		
 		gameId = (String) input.readObject();
@@ -1016,7 +1015,9 @@ public class Game implements Externalizable {
 		periodsComplete = input.readInt();
 		firstEventTweeted = (Event) input.readObject();
 		lastPeriodEnd = (CessationEvent) input.readObject();
-		isUploaded = input.readBoolean();
+		if (version >= 2) {
+			isUploaded = input.readBoolean();	
+		}
 	}
 
 	@Override
