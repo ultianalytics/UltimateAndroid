@@ -55,7 +55,7 @@
     <string name="event_description_callahan_by">Callahan by %1$s</string>
     <string name="event_description_end_of_first_quarter">End of 1st Qtr</string>
     <string name="event_description_end_of_third_quarter">End of 3rd Qtr</string>
-    <string name="event_description_halftime">Half\nTime</string>
+    <string name="event_description_halftime">HalfTime</string>
     <string name="event_description_game_over">Game Over</string>
     <string name="event_description_end_of_fourth_quarter">End of 4th Qtr</string>
     <string name="event_description_end_of_overtime">End of an overtime</string>
@@ -281,7 +281,7 @@
     <string name="button_action_timeouts">Timeouts\n(%1$d free)</string>
     <string name="button_action_cessation_game_over">Game\nOver</string>
     <string name="button_action_cessation_first_quarter">End 1st\nQuarter</string>
-    <string name="button_action_cessation_halftime">Halftime</string>
+    <string name="button_action_cessation_halftime">Half\nTime</string>
     <string name="button_action_cessation_third_quarter">End 3rd\nQuarter</string>
     <string name="button_action_cessation_fourth_quarter">End 4th\nQuarter</string>
     <string name="button_action_cessation_overtime">End\nOvertime</string>
