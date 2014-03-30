@@ -32,7 +32,7 @@ public class Team implements Externalizable {
 	private static final String JSON_IS_LEAGUEVINE_PLAYERS = "playersAreLeaguevine";
 	private static final String JSON_LEAGUEVINE_JSON = "leaguevineJson";
 	
-	private static final String DEFAULT_TEAM_NAME = "My Team";
+	static final String DEFAULT_TEAM_NAME = "My Team";
 	private static final String FILE_NAME_PREFIX = "team-";
 	private static Team Current;
 	
@@ -140,7 +140,25 @@ public class Team implements Externalizable {
 		return getAllTeamFileNames().size();
 	}
 	
-	public static boolean  isDuplicateTeamName(String newTeamName, Team teamToIgnore) {
+	public static TeamDescription getDefaultTeamDescription() {
+		for (TeamDescription teamDescription : retrieveTeamDescriptions()) {
+			if (teamDescription.isDefaultTeamName()) {
+				return teamDescription;
+			}
+		}
+		return null;
+	}
+	
+	public static void removeDefaultTeamIfNoLongerRequired() {
+		if (numberOfTeams() > 1) {
+			TeamDescription defaultTeam = getDefaultTeamDescription();
+			if (defaultTeam != null && defaultTeam.canBeSafelyRemove()) {
+				Team.delete(defaultTeam.getTeamId());
+			}
+		}
+	}
+	
+	public static boolean isDuplicateTeamName(String newTeamName, Team teamToIgnore) {
 		for (TeamDescription existingTeam : retrieveTeamDescriptions()) {
 			if (teamToIgnore == null) {
 				if (existingTeam.getName().equalsIgnoreCase(newTeamName)) {
@@ -201,31 +219,35 @@ public class Team implements Externalizable {
 		return UltimateApplication.current().getFilesDir();
 	}
 	
-	public void save() {
-		File file = getFile(teamId);
-		AtomicFile.writeObject(this, file);
-	}
-	
-	public void delete() {
+	public static void delete(String teamId) {
 		// delete the associated games
-		Game.deleteAllGamesForTeam(this.getTeamId());
+		Game.deleteAllGamesForTeam(teamId);
 		
 		// move "current" to another team		
-		if (isCurrentTeam(this.getTeamId())) {
+		if (isCurrentTeam(teamId)) {
 			for (TeamDescription team : retrieveTeamDescriptions()) {
-				if (!team.getTeamId().equals(this.getTeamId())) {
-					setCurrentTeamId(team.getTeamId());
+				if (!team.getTeamId().equals(teamId)) {
+					setCurrentTeamId(teamId);
 					break;
 				}
 			}
 		}
 		
 		// delete the team
-		File file = getFile(this.getTeamId());
+		File file = getFile(teamId);
 		boolean didDelete = AtomicFile.delete(file);
 		if (!didDelete) {
 			UltimateLogger.logError( "Attempted to delete team file but it did not delete");
 		}
+	}
+	
+	public void save() {
+		File file = getFile(teamId);
+		AtomicFile.writeObject(this, file);
+	}
+
+	public void delete() {
+		Team.delete(this.getTeamId());
 	}
 
 	public boolean hasBeenSaved() {

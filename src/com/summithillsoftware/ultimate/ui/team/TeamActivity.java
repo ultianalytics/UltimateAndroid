@@ -124,6 +124,7 @@ public class TeamActivity extends UltimateActivity  implements Refreshable {
 			populateAndSaveTeam();
 			getIntent().removeExtra(NEW_TEAM);
 			if (wasNewTeam || (wasDefaultTeamName && !Team.current().isDefaultTeamName())) {
+				Team.removeDefaultTeamIfNoLongerRequired();
 				goToPlayersActivity();
 			} else {
 				finish();

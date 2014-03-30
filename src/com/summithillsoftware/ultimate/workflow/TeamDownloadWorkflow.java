@@ -113,6 +113,7 @@ public class TeamDownloadWorkflow extends CloudWorkflow {
 		if (isCurrentTeam) {
 			Team.setCurrentTeam(downloadedTeam);
 		}
+		Team.removeDefaultTeamIfNoLongerRequired();
 	}
 
 
