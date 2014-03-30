@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -25,10 +26,13 @@ import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.UltimateApplication;
+import com.summithillsoftware.ultimate.cloud.CloudClient;
 import com.summithillsoftware.ultimate.model.Game;
 import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
+import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.Wind;
+import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
@@ -41,7 +45,7 @@ import com.summithillsoftware.ultimate.ui.wind.WindActivity;
 import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
-public class GameActivity extends UltimateActivity {
+public class GameActivity extends UltimateActivity implements Refreshable {
 
 	private List<Integer> gameToScores;
 	private List<String> gameToNames;
@@ -52,6 +56,8 @@ public class GameActivity extends UltimateActivity {
 	private Button  button_save;
 	private Button  button_events;
 	private Button  button_statistics;
+	private View view_website;
+	private Button button_website;
 	private TextView label_game_date;
 	private TextView label_game_score;
 	private RadioGroup radiogroup_game_first_point_oline;
@@ -152,6 +158,10 @@ public class GameActivity extends UltimateActivity {
 		goToWindActivity();
 	}
 	
+	public void websiteClicked(View v) {
+		openWebsiteInBrower();
+	}
+	
 	private void connectWidgets() {
 		text_game_opponent_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_opponent_name);
 		text_game_tourament_name = (TextView)findViewById(R.id.gameFragment).findViewById(R.id.text_game_tourament_name);
@@ -163,6 +173,8 @@ public class GameActivity extends UltimateActivity {
 		radiogroup_game_first_point_oline = (RadioGroup)findViewById(R.id.gameFragment).findViewById(R.id.radiogroup_game_first_point_oline);
 		spinner_game_to = (Spinner)findViewById(R.id.gameFragment).findViewById(R.id.spinner_game_to);
 		windButton = (Button)findViewById(R.id.gameFragment).findViewById(R.id.windButton);
+		view_website = (View)findViewById(R.id.gameFragment).findViewById(R.id.view_website);
+		button_website = (Button)findViewById(R.id.gameFragment).findViewById(R.id.button_website);
 	}
 	
 	private void populateView() {
@@ -194,6 +206,8 @@ public class GameActivity extends UltimateActivity {
 		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_events.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_statistics.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
+		view_website.setVisibility(game.isUploaded() ? View.VISIBLE : View.GONE);
+		button_website.setText(getWebsite());
 	}
 	
 	private void populateGamePointView(int gamePoint) {
@@ -355,6 +369,21 @@ public class GameActivity extends UltimateActivity {
 	private void goToDateActivity() {
 		populateGame();  // save state so we don't lose it going to the date view
 		startActivity(new Intent(this, TimestampActivity.class));
+	}
+
+	private String getWebsite() {
+		return Team.current().hasCloudId() ? CloudClient.current().websiteUrlForCloudId(Team.current().getCloudId()) : "";
+	}
+	
+	private void openWebsiteInBrower() {
+		String website = getWebsite();
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+		startActivity(browserIntent);
+	}
+
+	@Override
+	public void refresh() {
+		populateView();
 	}
 
 }

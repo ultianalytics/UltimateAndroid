@@ -375,5 +375,6 @@
     <string name="callout_action_undo_button">Did you know?\nTap the undo button to undo the last action</string>
     <string name="callout_stats_avail_on_server">This view shows just some of the statistics for the team/game.  Upload your game to the website to see more.</string>
     <string name="callout_team_website_link_team">Tap on this link if would like to visit your team on the website</string>
+	<string name="callout_game_website_link_game">Tap on this link if would like to visit your game on the website</string>    
 
 </resources>

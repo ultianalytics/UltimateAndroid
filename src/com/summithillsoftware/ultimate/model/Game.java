@@ -69,6 +69,7 @@ public class Game implements Externalizable {
 	private int periodsComplete; // server transient
 	private Event firstEventTweeted; // server transient
 	private CessationEvent lastPeriodEnd; // server transient
+	private boolean isUploaded; // server transient
 
 	private transient boolean arePointSummariesValid; // local and server
 														// transient
@@ -759,6 +760,14 @@ public class Game implements Externalizable {
 	public void setTournamentName(String tournamentName) {
 		this.tournamentName = tournamentName;
 	}
+	
+	public boolean isUploaded() {
+		return isUploaded;
+	}
+
+	public void setUploaded(boolean isUploaded) {
+		this.isUploaded = isUploaded;
+	}
 
 	public List<Player> getCurrentLine() {
 		return currentLine;
@@ -1007,6 +1016,7 @@ public class Game implements Externalizable {
 		periodsComplete = input.readInt();
 		firstEventTweeted = (Event) input.readObject();
 		lastPeriodEnd = (CessationEvent) input.readObject();
+		isUploaded = input.readBoolean();
 	}
 
 	@Override
@@ -1028,6 +1038,7 @@ public class Game implements Externalizable {
 		output.writeInt(periodsComplete);
 		output.writeObject(firstEventTweeted);
 		output.writeObject(lastPeriodEnd);
+		output.writeBoolean(isUploaded);
 	}
 
 	public JSONObject toJsonObject() throws JSONException {
@@ -1120,6 +1131,8 @@ public class Game implements Externalizable {
 			return game;
 		}
 	}
+
+
 
 
 }

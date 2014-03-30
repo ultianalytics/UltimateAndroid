@@ -57,11 +57,11 @@
 
                 <EditText
                     android:id="@+id/text_game_opponent_name"
-                    android:maxLength="50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_opponent_name"
                     android:inputType="textCapWords|textNoSuggestions"
+                    android:maxLength="50"
                     android:textCursorDrawable="@null"
                     android:textSize="@dimen/form_text_size" />
             </TableRow>
@@ -80,11 +80,11 @@
 
                 <EditText
                     android:id="@+id/text_game_tourament_name"
-                    android:maxLength="50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/placeholder_tournament_name"
                     android:inputType="textCapWords|textNoSuggestions"
+                    android:maxLength="50"
                     android:textCursorDrawable="@null"
                     android:textSize="@dimen/form_text_size" />
             </TableRow>
@@ -148,6 +148,28 @@
                         android:textSize="@dimen/form_text_size" />
                 </RadioGroup>
             </TableRow>
+
+            <TableRow
+                android:id="@+id/view_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_team_website"
+                    android:textAppearance="@style/FormLabel" />
+
+                <Button
+                    android:id="@+id/button_website"
+                    style="@style/FormCellButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="websiteClicked"
+                    android:text="@string/undefined"
+                    android:textColor="@color/ultimate_form_data" />
+            </TableRow>
         </TableLayout>
 
         <TableLayout
@@ -208,7 +230,6 @@
                     android:layout_height="wrap_content"
                     android:onClick="windClicked"
                     android:text="@string/button_game_wind" />
-
             </TableRow>
         </TableLayout>
 

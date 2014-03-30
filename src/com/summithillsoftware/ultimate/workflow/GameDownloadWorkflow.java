@@ -87,6 +87,7 @@ public class GameDownloadWorkflow extends CloudWorkflow {
 		if (isCurrentGame) {
 			Game.setCurrentGame(null);
 		}
+		downloadedGame.setUploaded(true);
 		downloadedGame.save();
 		if (isCurrentGame) {
 			Game.setCurrentGame(downloadedGame);

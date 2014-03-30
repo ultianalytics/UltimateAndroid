@@ -63,6 +63,8 @@ public class GameUploadWorkflow extends CloudWorkflow {
 			public void onResponse(CloudResponseStatus status, Object responseObect) {
 				if (status == CloudResponseStatus.Ok) {
 					setStatus(CloudWorkflowStatus.GameUploadComplete);
+					Game.current().setUploaded(true);
+					Game.current().save();
 				} else if (status == CloudResponseStatus.Unauthorized) {
 					setStatus(CloudWorkflowStatus.CredentialsRejected);
 				} else {
