@@ -251,7 +251,7 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		Game game = Game.current();
 		game.setOpponentName(getOpponentName());
 		game.setTournamentName(getTournamentName());
-		game.setFirstPointOline((radiogroup_game_first_point_oline.getCheckedRadioButtonId() == R.id.radio_game_start_offense));
+		game.setFirstPointOline(isFirstPointOline());
 		int gameToIndex = spinner_game_to.getSelectedItemPosition();
 		int gameToPoint = getGameToScores().get(gameToIndex);
 		game.setGamePoint(gameToPoint);
@@ -288,6 +288,16 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		return text_game_tourament_name.getText().toString().trim();
 	}
 	
+	private boolean isFirstPointOline() {
+		return (radiogroup_game_first_point_oline.getCheckedRadioButtonId() == R.id.radio_game_start_offense);
+	}
+	
+	private int getGamePoint() {
+		int gameToIndex = spinner_game_to.getSelectedItemPosition();
+		int gameToPoint = getGameToScores().get(gameToIndex);
+		return gameToPoint;
+	}
+	
 	private void goToActionActivity() {
 		startActivity(new Intent(GameActivity.this, GameActionActivity.class));
 	}
@@ -320,7 +330,7 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		} else if (game.getScore().isTheirLead()) {
 			return Color.RED;
 		} else {
-			return Color.RED;
+			return Color.WHITE;
 		} 
 	}
 	
@@ -408,6 +418,50 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		}
 	}
 
+	private boolean hasChanged() {
+		Game game = Game.current();
+		if (!areEqual(game.getOpponentName(), getOpponentName())) {
+			return true;
+		}
+		if (!areEqual(game.getTournamentName(), getTournamentName())) {
+			return true;
+		}
+		if (game.isFirstPointOline() != isFirstPointOline()) {
+			return true;
+		}
+		if (game.getGamePoint() != getGamePoint()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean areEqual(String s1, String s2) {
+		if (s1 == null) {
+			return s1 == null;
+		} else {
+			return s1.equals(s2);
+		}
+	}
+	
+	private void promptForSave(final Intent intent) {
+		displayConfirmDialog(getString(R.string.alert_game_confirm_save_title),
+				getString(R.string.alert_game_confirm_save_message),
+				getString(R.string.yes),
+				getString(R.string.no),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int buttonPressed) {
+						populateAndSaveGame();
+						GameActivity.super.startActivity(intent);
+					}
+				},
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int buttonPressed) {
+						GameActivity.super.startActivity(intent);
+					}
+				});
+	}
 	
 	private void showUploadCompleteCallout() {
 		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
@@ -430,5 +484,14 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 				}
 			}
 		} 
+	}
+
+	@Override
+	public void startActivity(Intent intent) {
+		if (hasChanged()) {
+			promptForSave(intent);
+		} else {
+			super.startActivity(intent);
+		}
 	}
 }

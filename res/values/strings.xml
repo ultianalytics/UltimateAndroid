@@ -9,6 +9,8 @@
     <string name="image_description">ImageDescription</string>
     <string name="fake_date">April 99, 1999</string>
     <string name="fake_score">6&#8211;8 (them)</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="common_retry">Retry</string>
     <string name="common_today">Today</string>
     <string name="common_versus_short">v.</string>
@@ -110,6 +112,8 @@
     <string name="alert_game_opponent_required_message">Please enter a name for the opponent</string>
     <string name="alert_game_confirm_delete_title">Confirm Game Delete</string>
     <string name="alert_game_confirm_delete_message">Do you really want to delete game vs. \"%1$s\"?</string>
+    <string name="alert_game_confirm_save_title">Save Changes?</string>
+    <string name="alert_game_confirm_save_message">You made changes to the game. Should they be saved before continuing?</string>    
     <string name="alert_line_mismatched_substitutions_title">Mismatched Substitutions</string>
     <string name="alert_line_mismatched_substitutions_message">You have chosen to do a substitution but the line now has more or less players than when you started</string>
     <string name="alert_line_substitutions_no_change_title">No Changes Made</string>
