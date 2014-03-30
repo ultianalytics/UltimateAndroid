@@ -11,8 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +36,12 @@ import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.Wind;
 import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
+import com.summithillsoftware.ultimate.ui.ViewHelper;
+import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
+import com.summithillsoftware.ultimate.ui.callout.CalloutTracker;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutAnimationStyle;
+import com.summithillsoftware.ultimate.ui.callout.CalloutView.CalloutViewTextSize;
 import com.summithillsoftware.ultimate.ui.cloud.CloudGameUploadDialog;
 import com.summithillsoftware.ultimate.ui.game.action.GameActionActivity;
 import com.summithillsoftware.ultimate.ui.game.events.EventsActivity;
@@ -43,6 +51,7 @@ import com.summithillsoftware.ultimate.ui.timestamp.TimestampActivity;
 import com.summithillsoftware.ultimate.ui.twitter.TwitterActivity_Game;
 import com.summithillsoftware.ultimate.ui.wind.WindActivity;
 import com.summithillsoftware.ultimate.util.DateUtil;
+import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
 public class GameActivity extends UltimateActivity implements Refreshable {
@@ -385,5 +394,41 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 	public void refresh() {
 		populateView();
 	}
+	
+	public void gameWasUploaded() {
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
+			// run via a handler to make sure the website view is visible before the callout pops out 
+			final Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+			  @Override
+			  public void run() {
+				  showUploadCompleteCallout();
+			  }
+			}, 1); 
+		}
+	}
 
+	
+	private void showUploadCompleteCallout() {
+		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
+			View anchorView = view_website;
+			if (anchorView != null) {
+				try {
+					List<CalloutView> callouts = new ArrayList<CalloutView>();
+					Point anchor = locationInRootView(anchorView);
+					anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.TopMid);
+
+					CalloutView callout = new CalloutView(this, anchor, 30, 0, R.string.callout_game_website_link_game);
+					callout.setFontSize(CalloutViewTextSize.Small);
+					callout.setAnimateStyle(CalloutAnimationStyle.FromRight);  
+					callout.setCalloutWidth(200);
+					callout.setCalloutTrackerID(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME);
+					callouts.add(callout);
+					showCallouts(callouts);
+				} catch (Exception e) {
+					UltimateLogger.logError("unable to display callout_game_website_link_game callout", e);
+				}
+			}
+		} 
+	}
 }

@@ -1,11 +1,15 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import android.app.Activity;
+
 import com.summithillsoftware.ultimate.R;
+import com.summithillsoftware.ultimate.ui.game.GameActivity;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
 
 public class CloudGameUploadDialog extends CloudDialog {
+	boolean uploadFinished = false;
 	
 	protected void workflowChanged(final Workflow workflow) {
 		GameUploadWorkflow gameUploadWorkflow = (GameUploadWorkflow)workflow;
@@ -34,6 +38,7 @@ public class CloudGameUploadDialog extends CloudDialog {
 			showLoadingView();
 			break;	
 		case GameUploadComplete:
+			uploadFinished = true;
 			displayCompleteAndThenDismiss(true);
 			break;				
 		case Error:
@@ -54,4 +59,14 @@ public class CloudGameUploadDialog extends CloudDialog {
 		super.showIntroView();
 	}
 
+	@Override
+	protected void dismissDialog() {
+		Activity activity = getActivity();
+		super.dismissDialog();
+		if (uploadFinished) {
+			if (activity instanceof GameActivity) {
+				((GameActivity)activity).gameWasUploaded();
+			}
+		}
+	}
 }
