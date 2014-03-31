@@ -34,7 +34,6 @@ import com.summithillsoftware.ultimate.model.Preferences;
 import com.summithillsoftware.ultimate.model.Score;
 import com.summithillsoftware.ultimate.model.Team;
 import com.summithillsoftware.ultimate.model.Wind;
-import com.summithillsoftware.ultimate.ui.Refreshable;
 import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.ui.ViewHelper;
 import com.summithillsoftware.ultimate.ui.ViewHelper.AnchorPosition;
@@ -54,7 +53,7 @@ import com.summithillsoftware.ultimate.util.DateUtil;
 import com.summithillsoftware.ultimate.util.UltimateLogger;
 import com.summithillsoftware.ultimate.workflow.GameUploadWorkflow;
 
-public class GameActivity extends UltimateActivity implements Refreshable {
+public class GameActivity extends UltimateActivity {
 
 	private List<Integer> gameToScores;
 	private List<String> gameToNames;
@@ -215,7 +214,11 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		label_game_score.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_events.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
 		button_statistics.setVisibility(isNewGame() ? View.GONE : View.VISIBLE);
-		view_website.setVisibility(game.isUploaded() ? View.VISIBLE : View.GONE);
+		populateWebView();
+	}
+	
+	private void populateWebView() {
+		view_website.setVisibility(Game.current().isUploaded() ? View.VISIBLE : View.GONE);
 		button_website.setText(getWebsite());
 	}
 	
@@ -400,12 +403,8 @@ public class GameActivity extends UltimateActivity implements Refreshable {
 		startActivity(browserIntent);
 	}
 
-	@Override
-	public void refresh() {
-		populateView();
-	}
-	
 	public void gameWasUploaded() {
+		populateWebView();
 		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
 			// run via a handler to make sure the website view is visible before the callout pops out 
 			final Handler handler = new Handler();

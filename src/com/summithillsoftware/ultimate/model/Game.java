@@ -497,6 +497,9 @@ public class Game implements Externalizable {
 		updatePointSummaries();
 		if (isTimeBasedGame()) {
 			Event lastEvent = getLastEvent();
+			if (lastEvent == null) {
+				return false;
+			}
 			return lastEvent.isCessationEvent()
 					&& ((CessationEvent) lastEvent).isHalftime();
 		} else {

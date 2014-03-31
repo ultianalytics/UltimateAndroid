@@ -103,12 +103,14 @@ public class TimeoutsDialogFragment extends UltimateDialogFragment {
 	    
 	    // hide stuff that is not applicable
 	    actionView.setVisibility(isActionMode() ? View.VISIBLE : View.GONE);
-	    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 ? View.VISIBLE : View.GONE);
-	    undoTimeoutButton.setVisibility(shouldShowUndoButton() ? View.VISIBLE : View.GONE);
-	    timeoutsTakenLabel.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
-	    timeoutsTakenView.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
-	    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
-	    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
+	    if (isActionMode()) {
+		    takeTimeoutButton.setVisibility(game().availableTimeouts() > 0 ? View.VISIBLE : View.GONE);
+		    undoTimeoutButton.setVisibility(shouldShowUndoButton() ? View.VISIBLE : View.GONE);
+		    timeoutsTakenLabel.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
+		    timeoutsTakenView.setVisibility(game().hasBeenSaved() ? View.VISIBLE : View.GONE);
+		    timeoutsTakenSecondHalfLabel.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
+		    timeoutsTakenSecondHalfTextView.setVisibility(is2ndHalf ? View.VISIBLE : View.INVISIBLE);
+	    }
 	}
 	
 	private boolean shouldShowUndoButton() {
