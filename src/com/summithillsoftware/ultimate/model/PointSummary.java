@@ -8,8 +8,8 @@ public class PointSummary {
 	private static final String JSON_IS_FINISHED = "finished";
 	private static final String JSON_ELAPSED_TIME = "elapsedTime";
 	private static final String JSON_SCORE = "score";
-	private static final String JSON_SCORE_OURS = "ours";
-	private static final String JSON_SCORE_THEIRS = "theirs";
+	public static final String JSON_SCORE_OURS = "ours";
+	public static final String JSON_SCORE_THEIRS = "theirs";
 	
 	private Score score;
 	private boolean isOline;

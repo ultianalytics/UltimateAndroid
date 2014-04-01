@@ -1067,13 +1067,20 @@ public class Game implements Externalizable {
 		if (wind != null) {
 			jsonObject.put(JSON_WIND, wind.toJsonObject());
 		}
-		if (points != null) {
+		Score score = null;
+		if (points != null && !points.isEmpty()) {
 			JSONArray jsonArray = new JSONArray();
 			for (Point point : points) {
 				jsonArray.put(point.toJsonObject());
+				score = point.getSummary().getScore();
 			}
 			jsonObject.put(JSON_POINTS_JSON, jsonArray.toString());
+		} else {
+			score = new Score(0,0);
 		}
+		jsonObject.put(PointSummary.JSON_SCORE_OURS, score.getOurs());
+		jsonObject.put(PointSummary.JSON_SCORE_THEIRS, score.getTheirs());
+		
 		return jsonObject;
 	}
 
