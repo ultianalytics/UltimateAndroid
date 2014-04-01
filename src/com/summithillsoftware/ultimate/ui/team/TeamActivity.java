@@ -38,6 +38,7 @@ import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 
 public class TeamActivity extends UltimateActivity  implements Refreshable {
 	public static final String NEW_TEAM = "NewTeam";
+	boolean isShowingWelcome;
 	
 	// widgets
 	private TextView text_team_name;
@@ -283,17 +284,15 @@ public class TeamActivity extends UltimateActivity  implements Refreshable {
 	}
 	
 	private void showWelcomeCallout() {
-		if (Team.current().isDefaultTeamName() && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WELCOME)) {
+		if (Team.current().isDefaultTeamName() && !isShowingWelcome && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WELCOME)) {
+			isShowingWelcome = true;
 			final Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
 			  @Override
 			  public void run() {
 					try {
 						List<CalloutView> callouts = new ArrayList<CalloutView>();
-						View anchorView = text_team_name;
-						Point anchor = locationInRootView(anchorView);
-						anchor = ViewHelper.locationInRect(anchor, anchorView.getWidth(), anchorView.getHeight(), AnchorPosition.BottomMid);
-						anchor.x = getRootView().getWidth() / 2; // center horizontally in the screen
+						Point anchor = new Point(getScreenSize().width / 2, ViewHelper.dpAsPixels(90, TeamActivity.this)); // center horizontally in the screen...roughly at the team name
 						
 						CalloutView callout = new CalloutView(TeamActivity.this, anchor, 30, 180, R.string.callout_welcome);
 						callout.setFontSize(CalloutViewTextSize.Small);

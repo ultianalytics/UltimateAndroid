@@ -172,9 +172,9 @@ public class UltimateActivity extends ActionBarActivity {
 
 	public Size getScreenSize() {
 		Display display = getWindowManager().getDefaultDisplay();
-		@SuppressWarnings("deprecation")
-		Size size = new Size(display.getWidth(), display.getHeight());
-		return size;
+		Point size = new Point();
+		display.getSize(size);
+		return new Size(size.x, size.y);
 	}
 	
 	public ViewGroup getRootView() {
