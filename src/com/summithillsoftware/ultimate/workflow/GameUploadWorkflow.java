@@ -26,8 +26,10 @@ public class GameUploadWorkflow extends CloudWorkflow {
 				} else {
 					uploadCurrentGame();
 				};	
+				break;
 			case TeamUploadComplete:
-				uploadCurrentGame();					
+				uploadCurrentGame();
+				break;
 			default:
 				break;
 			}
