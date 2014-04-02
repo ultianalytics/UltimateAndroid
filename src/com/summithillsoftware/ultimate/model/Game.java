@@ -302,6 +302,7 @@ public class Game implements Externalizable {
 	}
 
 	public void addEvent(Event event) {
+		event.ensureValid();
 		if (getCurrentPoint() == null || getCurrentPoint().isFinished()) {
 			Point newPoint = new Point();
 			addPoint(newPoint);

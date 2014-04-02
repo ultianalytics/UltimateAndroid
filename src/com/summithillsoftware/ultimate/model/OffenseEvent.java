@@ -323,6 +323,7 @@ public class OffenseEvent extends Event {
 	}
 	
 	public JSONObject toJsonObject() throws JSONException {
+		ensureValid();
 		JSONObject jsonObject = super.toJsonObject();
 		String actionAsString = null;
 		switch (getAction()) {

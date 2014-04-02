@@ -131,7 +131,7 @@ public class CloudClient {
 				try {
 					Team team = Team.fromJsonObject(responseObject);
 					responseHandler.onResponse(CloudResponseStatus.Ok, team);
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					UltimateLogger.logError( "Unable to convert JSON team to Team object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
@@ -153,7 +153,7 @@ public class CloudClient {
 				try {
 					Game game = Game.fromJsonObject(responseObject);
 					responseHandler.onResponse(CloudResponseStatus.Ok, game);
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					UltimateLogger.logError( "Unable to convert JSON game to Game object", e);
 					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 				}
@@ -174,7 +174,7 @@ public class CloudClient {
 		JSONObject teamAsJson = null;
 		try {
 			teamAsJson = team.toJsonObject();
-		} catch (JSONException e1) {
+		} catch (Exception e1) {
 			UltimateLogger.logError( "Unable to convert Team to JSON Object", e1);
 			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 		}
@@ -205,7 +205,7 @@ public class CloudClient {
 		try {
 			gameAsJson = game.toJsonObject();
 			gameAsJson.put(JSON_TEAM_ID, team.getCloudId());
-		} catch (JSONException e1) {
+		} catch (Exception e1) {
 			UltimateLogger.logError( "Unable to convert Game to JSON Object", e1);
 			responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
 		}
