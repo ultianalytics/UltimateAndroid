@@ -185,7 +185,8 @@ public class GameTweeter {
 	}
 	
 	private String turnoverTweetMessage(Event event, boolean isUndo) {
-		String message = ourTeam() + (event.getAction() == Action.De ? " steal" : " lose") + " the disc";
+		String team = event.isDefense() && event.isThrowaway() ? game().getOpponentName() : ourTeam(); 
+		String message = team + (event.getAction() == Action.De ? " steal" : " lose") + " the disc";
 		if (isUndo) {
 			message = "\"" + message + "\" was a boo-boo...never mind.";
 		} else {
