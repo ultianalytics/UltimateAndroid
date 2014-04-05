@@ -91,6 +91,11 @@ public class OffenseEvent extends Event {
 	}
 	
 	@Override
+	public boolean isDrop() {
+		return getAction() == Drop;
+	}
+	
+	@Override
 	public boolean isTurnover() {
 	    return getAction() == Drop || getAction() == Throwaway || getAction() == Stall || getAction() == MiscPenalty || getAction() == Callahan;
 	}

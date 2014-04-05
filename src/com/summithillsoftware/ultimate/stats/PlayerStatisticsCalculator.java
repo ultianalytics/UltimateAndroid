@@ -95,7 +95,7 @@ public class PlayerStatisticsCalculator {
 			public void updateStats(StatsEventDetails eventDetails) {
 				if (eventDetails.isOffense()) {
 					OffenseEvent event = eventDetails.getOffenseEvent();
-					if (event.isCatch() || event.isDrop() || event.isThrowaway() || event.isCallahan()) {
+					if (event.isCatch() || event.isDrop() || event.isThrowaway() || event.isCallahan() || event.isGoal()) {
 						PlayerStat playerStat = getStatForPlayer(event.getPasser(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
 						playerStat.incrIntValue();
 					}
@@ -142,8 +142,8 @@ public class PlayerStatisticsCalculator {
 			@Override
 			public void updateStats(StatsEventDetails eventDetails) {
 				if (eventDetails.getEvent().isDrop()) {
-					DefenseEvent event = eventDetails.getDefenseEvent();
-					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					OffenseEvent event = eventDetails.getOffenseEvent();
+					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
 					playerStat.incrIntValue();
 				} 
 			}
@@ -157,7 +157,7 @@ public class PlayerStatisticsCalculator {
 			public void updateStats(StatsEventDetails eventDetails) {
 				if (eventDetails.isOffense() && (eventDetails.getEvent().isThrowaway() || eventDetails.getEvent().isCallahan())) {
 					OffenseEvent event = eventDetails.getOffenseEvent();
-					PlayerStat playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
+					PlayerStat playerStat = getStatForPlayer(event.getPasser(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
 					playerStat.incrIntValue();
 				} 
 			}
@@ -283,10 +283,7 @@ public class PlayerStatisticsCalculator {
 						playerStat.incrIntValue();
 						playerStat = getStatForPlayer(event.getReceiver(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
 						playerStat.incrIntValue();						
-					} else if (event.isCallahan()) {
-						PlayerStat playerStat = getStatForPlayer(event.getPasser(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
-						playerStat.decrIntValue();
-					}
+					} 
 				} else if (eventDetails.getEvent().isD() || eventDetails.getEvent().isCallahan()) {
 					DefenseEvent event = eventDetails.getDefenseEvent();
 					PlayerStat playerStat = getStatForPlayer(event.getDefender(), eventDetails.getAccumulatedStats(), StatNumericType.INTEGER);
