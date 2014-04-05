@@ -33,7 +33,7 @@ import com.summithillsoftware.ultimate.util.UltimateLogger;
 
 
 public class CloudClient {
-	public static final String HOST = "www.ultimate-numbers.com";
+	public static final String HOST = "www.ultianalytics.com";
 //	private static final String HOST = "local.appspot.com:8888";
 //	private static final String HOST = "local.appspot.com:8890"; // tcp monitor
 	public static final String SCHEME_HOST = "http://" + HOST;
