@@ -39,6 +39,7 @@ import com.summithillsoftware.ultimate.workflow.TeamUploadWorkflow;
 public class TeamActivity extends UltimateActivity  implements Refreshable {
 	public static final String NEW_TEAM = "NewTeam";
 	boolean isShowingWelcome;
+	boolean isShowingWebsiteCallout;
 	
 	// widgets
 	private TextView text_team_name;
@@ -261,7 +262,8 @@ public class TeamActivity extends UltimateActivity  implements Refreshable {
 	}
 	
 	private void showUploadCompleteCallout() {
-		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM)) {
+		if (!isShowingWebsiteCallout && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_TEAM)) {
+			isShowingWebsiteCallout = true;
 			View anchorView = view_website;
 			if (anchorView != null) {
 				try {

@@ -71,6 +71,8 @@ public class GameActivity extends UltimateActivity {
 	private RadioGroup radiogroup_game_first_point_oline;
 	private Spinner spinner_game_to;
 	private Button windButton;
+	
+	private boolean isShowingWebsiteCallout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -463,7 +465,8 @@ public class GameActivity extends UltimateActivity {
 	}
 	
 	private void showUploadCompleteCallout() {
-		if (!CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
+		if (!isShowingWebsiteCallout && !CalloutTracker.current().hasCalloutBeenShown(CalloutTracker.CALLOUT_WEBSITE_LINK_GAME)) {
+			isShowingWebsiteCallout = true; 
 			View anchorView = view_website;
 			if (anchorView != null) {
 				try {
