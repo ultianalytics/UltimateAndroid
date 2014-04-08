@@ -231,6 +231,8 @@
     <string name="label_cloud_uploading_game">Uploading game&#8230;</string>
     <string name="label_cloud_download_team_selection_instructions">Tap the team you would like to download</string>
     <string name="label_cloud_download_game_selection_instructions">Tap the game you would like to download</string>
+    <string name="label_cloud_version_not_acceptable_title">App Version Problem</string>  
+	<string name="label_cloud_version_not_acceptable_default_message">The version of the app you are running on your android device is no longer compatible with the server.  Please upgrade the app to the latest version.  \nDo not worry&#8230;you will not lose your data as a result of the upgrade!</string>    
     <string name="label_settings_current_signon">Current sign in:</string>
     <string name="label_settings_current_signed_off">Signed Off</string>
     <string name="label_settings_signed_off_explanation">(you will be asked to sign in the next time you upload or download a team/game)</string>

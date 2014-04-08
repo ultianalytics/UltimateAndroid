@@ -225,6 +225,29 @@ public class CloudClient {
 		}
 	}
 	
+	public void submitVersionCheck(final String appVersion, final CloudResponseHandler responseHandler) {
+		String urlSafeAppVersion = appVersion.replace(".", "_");
+		UltimateJsonObjectRequest request = new UltimateJsonObjectRequest(Method.GET, getUrl("/rest/mobile/meta/" + urlSafeAppVersion + "?mobile-type=android"), null, new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(final JSONObject responseObject) {
+				try {
+					CloudMetaInfo metaInfo = CloudMetaInfo.fromJsonObject(responseObject);
+					responseHandler.onResponse(CloudResponseStatus.Ok, metaInfo);
+				} catch (Exception e) {
+					UltimateLogger.logError( "Unable to convert JSON team to CloudMetaInfo object", e);
+					responseHandler.onResponse(CloudResponseStatus.MarshallingError, null);
+				}
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				handleError(responseHandler, error);
+			}
+		});
+		
+		addRequestToQueue(request, responseHandler);
+	}
+	
 	private String getUrl(String relativePath) {
 		return SCHEME_HOST + relativePath;
 	}

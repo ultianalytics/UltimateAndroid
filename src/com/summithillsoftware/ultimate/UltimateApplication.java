@@ -94,6 +94,17 @@ public class UltimateApplication extends Application {
 		handler.post(runnable);
 	}
 	
+	// returns the versionName from the manifest
+	public String getAppVersion() {
+		String version = "99.99.99";
+		try {
+			version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (Exception e) {
+		    UltimateLogger.logError("Unable to retrieve app version", e);
+		}
+		return version;
+	}
+	
 	private File getAppExternalStorageFolder() {
 		File dir = new File(Environment.getExternalStorageDirectory(), ULTIMATE_EXT_DRIVE_FOLDER);
 		if (!dir.exists()) {

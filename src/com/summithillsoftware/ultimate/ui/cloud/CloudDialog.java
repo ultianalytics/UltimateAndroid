@@ -56,6 +56,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	protected TextView introTextView;
 	protected TextView selectionInstructionsLabel;
 	protected ListView selectionListView;
+	private TextView versionMessageTextView;
 	private Button cancelButton;
 	private Button continueButton;
 	private TextView statusTextView;
@@ -114,6 +115,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 		introTextView = (TextView) view.findViewById(R.id.introTextView);
 		selectionListView = (ListView) view.findViewById(R.id.selectionListView);
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+		versionMessageTextView = (TextView) view.findViewById(R.id.versionMessageTextView);
 	}
 
 	private void populateView() {
@@ -169,6 +171,15 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 	
 	protected void showSelectionView() {
 		viewFlipper.setDisplayedChild(3);
+	}
+	
+	protected void showVersionCheckView() {
+		try {
+			versionMessageTextView.setText(getWorkflow().getCloudMetaInfo().getMessageToUser());
+		} catch (Exception e) {
+			UltimateLogger.logError("Unable to retrieve app version check message", e);
+		}
+		viewFlipper.setDisplayedChild(4);
 	}
 
 	protected void dismissDialog() {

@@ -15,6 +15,13 @@ public class CloudTeamUploadDialog extends CloudDialog {
 		TeamUploadWorkflow teamUploadWorkflow = (TeamUploadWorkflow) workflow;
 		switch (teamUploadWorkflow.getStatus()) {
 		case NotStarted:
+			showLoadingView();
+			teamUploadWorkflow.resume();
+			break;
+		case VersionCheckCompleteVersionUnacceptable:
+			showVersionCheckView();
+			break;
+		case VersionCheckCompleteVersionOk:
 			if (hasUserBeenIntroducedToSignon()) {
 				showLoadingView();
 				teamUploadWorkflow.resume();
@@ -51,17 +58,18 @@ public class CloudTeamUploadDialog extends CloudDialog {
 
 	@Override
 	protected void showIntroView() {
-		introTextView.setText(getString(R.string.label_cloud_introduction_team_upload));
+		introTextView
+				.setText(getString(R.string.label_cloud_introduction_team_upload));
 		super.showIntroView();
 	}
-	
+
 	@Override
 	protected void dismissDialog() {
 		Activity activity = getActivity();
 		super.dismissDialog();
 		if (uploadFinished) {
 			if (activity instanceof TeamActivity) {
-				((TeamActivity)activity).teamWasUploaded();
+				((TeamActivity) activity).teamWasUploaded();
 			}
 		}
 	}
