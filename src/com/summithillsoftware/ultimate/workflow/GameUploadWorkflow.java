@@ -13,10 +13,13 @@ public class GameUploadWorkflow extends CloudWorkflow {
 		synchronized (this) {
 			switch (getStatus()) {
 			case NotStarted:
+				checkAppVersion();
+				break;
+			case VersionCheckCompleteVersionOk:
 				// uncomment to force signon
 				// CloudClient.current().clearExistingAuthentication();
 				uploadCurrentTeam();
-				break;
+				break;	
 			case UserApprovedServerInteraction:
 				uploadCurrentTeam();
 				break;				

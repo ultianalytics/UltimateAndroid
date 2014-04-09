@@ -16,6 +16,13 @@ public class CloudTeamDownloadDialog extends CloudDialog {
 		TeamDownloadWorkflow teamDownloadWorkflow = (TeamDownloadWorkflow)workflow;
 		switch (teamDownloadWorkflow.getStatus()) {
 		case NotStarted:
+			showLoadingView();
+			teamDownloadWorkflow.resume();
+			break;
+		case VersionCheckCompleteVersionUnacceptable:
+			showVersionCheckView();
+			break;
+		case VersionCheckCompleteVersionOk:
 			if (hasUserBeenIntroducedToSignon()) {
 				showLoadingView();
 				teamDownloadWorkflow.resume();

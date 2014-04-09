@@ -15,6 +15,13 @@ public class CloudGameUploadDialog extends CloudDialog {
 		GameUploadWorkflow gameUploadWorkflow = (GameUploadWorkflow)workflow;
 		switch (gameUploadWorkflow.getStatus()) {
 		case NotStarted:
+			showLoadingView();
+			gameUploadWorkflow.resume();
+			break;
+		case VersionCheckCompleteVersionUnacceptable:
+			showVersionCheckView();
+			break;
+		case VersionCheckCompleteVersionOk:
 			if (hasUserBeenIntroducedToSignon()) {
 				showLoadingView();
 				gameUploadWorkflow.resume();

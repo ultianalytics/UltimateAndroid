@@ -19,6 +19,13 @@ public class CloudGameDownloadDialog extends CloudDialog {
 			showLoadingView();
 			gameDownloadWorkflow.resume();
 			break;
+		case VersionCheckCompleteVersionUnacceptable:
+			showVersionCheckView();
+			break;
+		case VersionCheckCompleteVersionOk:
+			showLoadingView();
+			gameDownloadWorkflow.resume();
+			break;
 		case CredentialsRejected:
 			requestSignon();
 			break;	
