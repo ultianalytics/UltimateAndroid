@@ -37,6 +37,7 @@ public class UltimateJsonObjectRequest extends JsonObjectRequest {
 		if (authCookie != null) {
 			headers.put("Cookie", Preferences.current().getCloudAuthenticationCookie());
 		}
+		headers.put("Accept", "application/json");
 		return headers;
 	}
 	
