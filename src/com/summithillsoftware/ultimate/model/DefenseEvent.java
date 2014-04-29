@@ -25,7 +25,7 @@ public class DefenseEvent extends Event {
 	private static final long serialVersionUID = 1l;
 	private static final String JSON_DEFENDER = "defender";
 	private static final String JSON_HANGTIME = "hangtime";
-	private static final String HANGTIME_DETAIL_PROPERTY_NAME = "hangtime";
+	private static final String HANGTIME_DETAIL_PROPERTY_NAME = JSON_HANGTIME;
 	
 	public static final EnumSet<Action> DEFENSE_ACTIONS = EnumSet.of(
 			Pull,
@@ -278,8 +278,11 @@ public class DefenseEvent extends Event {
 			defender = Team.getPlayerNamed(jsonObject.getString(JSON_DEFENDER));
 		}
 		DefenseEvent event = new DefenseEvent(action, defender);
-		if (event.isPull() && jsonObject.has(JSON_HANGTIME)) {
-			event.setDetailIntValue(HANGTIME_DETAIL_PROPERTY_NAME, jsonObject.getInt(JSON_HANGTIME));
+		if (event.isPull()) {
+			Integer hangTimeMs = retrieveIntEventDetailFromJsonObject(jsonObject, JSON_HANGTIME);
+			if (hangTimeMs != null) {
+				event.setPullHangtimeMilliseconds(hangTimeMs.intValue());
+			}
 		}
 		populateGeneralPropertiesFromJsonObject(event, jsonObject);
 		return event;
@@ -315,7 +318,7 @@ public class DefenseEvent extends Event {
 		jsonObject.put(JSON_ACTION, actionAsString);
 		jsonObject.put(JSON_DEFENDER, defender.getName());
 		if (isPull() && getPullHangtimeMilliseconds() != 0) {
-			jsonObject.put(JSON_HANGTIME, getPullHangtimeMilliseconds());
+			addEventDetailToJsonObject(jsonObject, JSON_HANGTIME, Integer.valueOf(getPullHangtimeMilliseconds()));
 		}
 		return jsonObject;
 	}

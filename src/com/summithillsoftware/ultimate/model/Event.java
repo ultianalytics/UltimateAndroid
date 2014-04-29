@@ -331,6 +331,14 @@ public abstract class Event implements Externalizable {
 		return jsonObject;
 	}
 	
+	protected void addEventDetailToJsonObject(JSONObject eventJsonObject, String detailName, Object detailValue) throws JSONException {
+		if (!eventJsonObject.has(JSON_DETAILS)) {
+			eventJsonObject.put(JSON_DETAILS, new JSONObject());
+		} 
+		JSONObject detailsObject = eventJsonObject.getJSONObject(JSON_DETAILS);
+		detailsObject.put(detailName, detailValue);
+	}
+	
 	public static Event fromJsonObject(JSONObject jsonObject) throws JSONException {
 		if (jsonObject == null) {
 			return null;
@@ -346,6 +354,18 @@ public abstract class Event implements Externalizable {
 				UltimateLogger.logError( "No valid event type in json");
 				return null;
 			}
+		}
+	}
+	
+	protected static Integer retrieveIntEventDetailFromJsonObject(JSONObject eventJsonObject, String detailName) throws JSONException {
+		if (!eventJsonObject.has(JSON_DETAILS)) {
+			return null;
+		} 
+		JSONObject detailsObject = eventJsonObject.getJSONObject(JSON_DETAILS);
+		if (detailsObject.has(detailName)) {
+			return Integer.valueOf(detailsObject.getInt(detailName));
+		} else {
+			return null;
 		}
 	}
 	
