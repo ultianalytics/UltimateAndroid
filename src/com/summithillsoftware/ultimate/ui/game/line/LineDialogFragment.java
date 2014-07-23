@@ -197,7 +197,12 @@ public class LineDialogFragment extends UltimateDialogFragment {
 		}
     	populateButtonContainer(lineFieldPlayers, players, true);
     	
-    	players = Team.current().getPlayersSorted();
+    	players = new ArrayList<Player>();
+    	for (Player player : Team.current().getPlayersSorted()) {
+			if (!player.isAbsent()) {
+				players.add(player);
+			}
+		}
     	populateButtonContainer(lineBenchPlayers, players, false);
     }
     
@@ -338,11 +343,14 @@ public class LineDialogFragment extends UltimateDialogFragment {
     }
 
 	private void removePlayerFromField(PlayerLineButtonView fieldButton) {
-		if (!fieldButton.getPlayer().isAnonymous()) {
+		Player player = fieldButton.getPlayer();
+		if (player != null && !fieldButton.getPlayer().isAnonymous()) {
 			line.remove(fieldButton.getPlayer());
 			PlayerLineButtonView benchButton = getButtonForPlayerName(fieldButton.getPlayer(), false);
 			fieldButton.setPlayer(Player.anonymous(), 0, 0);
-			benchButton.updateView(line, originalLine);
+			if (benchButton != null) {
+				benchButton.updateView(line, originalLine);
+			}
 			fieldButton.updateView(line, originalLine);
 		}
 	}

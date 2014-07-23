@@ -164,6 +164,7 @@
     <string name="label_player_number">Number:</string>
     <string name="label_player_position">Position:</string>
     <string name="label_player_gender">Gender:</string>
+    <string name="label_player_absent">Absent:</string>    
     <string name="label_game_tournament">Tournament:</string>
     <string name="label_game_opponent">Opponent:</string>
     <string name="label_game_first_point_oline">We start on:</string>

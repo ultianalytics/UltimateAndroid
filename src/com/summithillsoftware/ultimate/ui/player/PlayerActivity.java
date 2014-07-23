@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -99,6 +100,7 @@ public class PlayerActivity extends UltimateActivity {
 			break;
 		}
 		getGenderRadioGroup().check(player.isMale() ? R.id.radio_player_gender_male : R.id.radio_player_gender_female);
+		getAbsentCheckBox().setChecked(player.isAbsent());
 		getNameTextView().requestFocus();
 	}
 	
@@ -118,6 +120,7 @@ public class PlayerActivity extends UltimateActivity {
 			break;
 		}
 		player.setMale(getGenderRadioGroup().getCheckedRadioButtonId() == R.id.radio_player_gender_male);
+		player.setAbsent(getAbsentCheckBox().isChecked());
 		if (isNewPlayer()) {
 			Team.current().getPlayers().add(player);
 		}
@@ -146,6 +149,10 @@ public class PlayerActivity extends UltimateActivity {
 	
 	private RadioGroup getGenderRadioGroup() {
 		return (RadioGroup)findViewById(R.id.playerFragment).findViewById(R.id.radiogroup_player_gender);
+	}
+	
+	private CheckBox getAbsentCheckBox() {
+		return (CheckBox)findViewById(R.id.playerFragment).findViewById(R.id.checkbox_player_absent);
 	}
 
 	private Button getAddAnotherButton() {

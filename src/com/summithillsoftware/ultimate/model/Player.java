@@ -16,12 +16,13 @@ import android.annotation.SuppressLint;
 
 public class Player implements Externalizable {
 	private static final long serialVersionUID = 1l;
-	private static final byte OBJECT_STATE_VERSION = 1;
+	private static final byte OBJECT_STATE_VERSION = 2;
 	
 	private static final String JSON_NAME = "name";
 	private static final String JSON_POSITION = "position";
 	private static final String JSON_NUMBER = "number";
 	private static final String JSON_IS_MALE = "male";
+	private static final String JSON_IS_ABSENT = "absent";	
 	private static final String JSON_LEAGUEVINE_PLAYER = "leaguevinePlayer";
 	private static Player ANONYMOUS_PLAYER = null;
 	private static final String ANON_NAME = "Anonymous";
@@ -31,6 +32,7 @@ public class Player implements Externalizable {
 	private boolean isMale;
 	private String leaguevineJson;
 	private PlayerPosition position;
+	private boolean isAbsent;
 	
 	static {
 		Player.ANONYMOUS_PLAYER = new Player();
@@ -113,6 +115,12 @@ public class Player implements Externalizable {
 	public boolean isFemale() {
 		return !isAnonymous() && !isMale;
 	}
+	public boolean isAbsent() {
+		return isAbsent;
+	}
+	public void setAbsent(boolean isAbsent) {
+		this.isAbsent = isAbsent;
+	}	
 	public String getLeaguevineJson() {
 		return leaguevineJson;
 	}
@@ -191,13 +199,15 @@ public class Player implements Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
-		@SuppressWarnings("unused")
 		byte version = input.readByte();  // if vars change use this to decide how far to read
 		name = (String)input.readObject();
 		number = (String)input.readObject();
 		isMale = input.readBoolean();
 		leaguevineJson = (String)input.readObject();
 		position = (PlayerPosition)input.readObject();
+		if (version == 2) {
+			isAbsent = input.readBoolean();
+		}
 	}
 
 	@Override
@@ -208,6 +218,7 @@ public class Player implements Externalizable {
 		output.writeBoolean(isMale);
 		output.writeObject(leaguevineJson);		
 		output.writeObject(position);
+		output.writeBoolean(isAbsent);
 	}
 	
 	public JSONObject toJsonObject() throws JSONException {
@@ -216,6 +227,7 @@ public class Player implements Externalizable {
 		jsonObject.put(JSON_NUMBER, number);
 		jsonObject.put(JSON_POSITION, position);
 		jsonObject.put(JSON_IS_MALE, isMale);
+		jsonObject.put(JSON_IS_ABSENT, isAbsent);
 		jsonObject.put(JSON_LEAGUEVINE_PLAYER, leaguevineJson);
 		return jsonObject;
 	}
@@ -235,6 +247,9 @@ public class Player implements Externalizable {
 			if (jsonObject.has(JSON_IS_MALE)) {
 				player.setMale(jsonObject.getBoolean(JSON_IS_MALE));
 			}
+			if (jsonObject.has(JSON_IS_ABSENT)) {
+				player.setAbsent(jsonObject.getBoolean(JSON_IS_ABSENT));
+			}			
 			if (jsonObject.has(JSON_LEAGUEVINE_PLAYER)) {
 				player.setLeaguevineJson(jsonObject.getString(JSON_LEAGUEVINE_PLAYER));
 			}			
@@ -242,4 +257,6 @@ public class Player implements Externalizable {
 			return player;
 		}
 	}
+
+
 }

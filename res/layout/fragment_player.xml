@@ -146,6 +146,26 @@
                         android:textSize="@dimen/form_text_size" />
                 </RadioGroup>
             </TableRow>
+            
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/label_player_absent"
+                    android:textAppearance="@style/FormLabel" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_player_absent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>            
         </TableLayout>
 
         <LinearLayout
