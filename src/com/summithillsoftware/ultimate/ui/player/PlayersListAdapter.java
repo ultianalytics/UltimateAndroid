@@ -64,9 +64,11 @@ public class PlayersListAdapter extends BaseAdapter {
 		
 		Player player = getSortedPlayers().get(index);
 		playerNameTextView.setText(player.getName());
+		playerNameTextView.setTextColor(parent.getResources().getColor(player.isAbsent() ? R.color.Gray : R.color.White));
 		if (player.getNumber() != null && player.getNumber().trim().length() > 0) {
 			TextView playerNumberTextView = (TextView)rowView.findViewById(R.id.text_players_number);
 			playerNumberTextView.setText(" (" + player.getNumber() + ")");
+			playerNumberTextView.setTextColor(parent.getResources().getColor(player.isAbsent() ? R.color.Gray : R.color.White));
 		}
 		playerImageView.setImageResource(player.isAbsent() ? R.drawable.ic_action_user_absent : R.drawable.social_person);
 		
