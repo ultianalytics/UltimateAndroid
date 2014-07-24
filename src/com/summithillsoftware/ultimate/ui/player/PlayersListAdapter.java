@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.summithillsoftware.ultimate.R;
@@ -59,6 +60,7 @@ public class PlayersListAdapter extends BaseAdapter {
 		}
 	
 		TextView playerNameTextView = (TextView)rowView.findViewById(R.id.text_players_description);
+		ImageView playerImageView = (ImageView)rowView.findViewById(R.id.icon_player);
 		
 		Player player = getSortedPlayers().get(index);
 		playerNameTextView.setText(player.getName());
@@ -66,6 +68,7 @@ public class PlayersListAdapter extends BaseAdapter {
 			TextView playerNumberTextView = (TextView)rowView.findViewById(R.id.text_players_number);
 			playerNumberTextView.setText(" (" + player.getNumber() + ")");
 		}
+		playerImageView.setImageResource(player.isAbsent() ? R.drawable.ic_action_user_absent : R.drawable.social_person);
 		
 		return rowView;
 	}
