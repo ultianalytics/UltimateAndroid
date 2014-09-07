@@ -249,7 +249,15 @@ public class CloudClient {
 	}
 	
 	private String getUrl(String relativePath) {
-		return SCHEME_HOST + relativePath;
+		String fullUrl = SCHEME_HOST + relativePath;
+		// add the app version to every request (?ulti_version=android_3_0_0)
+		String appVersion = UltimateApplication.current().getAppVersion();
+		String urlSafeAppVersion = appVersion.replace(".", "_");
+		String appVersionQueryStringParam = "ulti_version=android_" + urlSafeAppVersion;
+		String fullUrlWithVersion = fullUrl + (relativePath.contains("?") ? 
+					("&" + appVersionQueryStringParam) : 
+					("?" + appVersionQueryStringParam));
+		return fullUrlWithVersion;
 	}
 	
 	private void handleError(final CloudResponseHandler responseHandler, final VolleyError error) {

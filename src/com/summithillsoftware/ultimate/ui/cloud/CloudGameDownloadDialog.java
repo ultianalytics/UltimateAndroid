@@ -1,11 +1,13 @@
 package com.summithillsoftware.ultimate.ui.cloud;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.summithillsoftware.ultimate.R;
 import com.summithillsoftware.ultimate.model.GameDescription;
+import com.summithillsoftware.ultimate.ui.UltimateActivity;
 import com.summithillsoftware.ultimate.workflow.CloudWorkflowStatus;
 import com.summithillsoftware.ultimate.workflow.GameDownloadWorkflow;
 import com.summithillsoftware.ultimate.workflow.Workflow;
@@ -67,10 +69,14 @@ public class CloudGameDownloadDialog extends CloudDialog {
 	}
 	
 	private void handleGameSelection(GameDescription game) {
-		GameDownloadWorkflow workflow = (GameDownloadWorkflow)getWorkflow();
-		workflow.setGameCloudId(game.getGameId());
-		workflow.setStatus(CloudWorkflowStatus.GameChosen);
-		workflow.resume();
+		if (game.isPositional()) {
+			this.displayPositionalGameNotAllowedDialog();
+		} else {
+			GameDownloadWorkflow workflow = (GameDownloadWorkflow)getWorkflow();
+			workflow.setGameCloudId(game.getGameId());
+			workflow.setStatus(CloudWorkflowStatus.GameChosen);
+			workflow.resume();
+		}
 	}
 	
 	private void registerGameSelectedListener() {
@@ -82,6 +88,16 @@ public class CloudGameDownloadDialog extends CloudDialog {
 			}
 
 		});
+	}
+	
+	private void displayPositionalGameNotAllowedDialog() {
+		((UltimateActivity)getActivity()).displayErrorMessage(getString(R.string.alert_cloud_positional_game_error_title), getString(R.string.alert_cloud_positional_game_error_message), 
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+						dismissDialog();
+					}
+				});
 	}
 
 }

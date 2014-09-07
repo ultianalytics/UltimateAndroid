@@ -32,6 +32,7 @@ public class GameDescription implements Externalizable {
 	private static final String JSON_OPPONENT_NAME = "opponentName";
 	private static final String JSON_TOURNAMENT_NAME = "tournamentName";
 	private static final String JSON_START_DATE_TIME = "timestamp";
+	private static final String JSON_IS_POSITIONAL = "positional";
 	public static final String JSON_START_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
 	
 	private String gameId;
@@ -39,6 +40,7 @@ public class GameDescription implements Externalizable {
 	private String opponentName = "";
 	private String tournamentName = "";	
 	private Score score;
+	private boolean isPositional;
 	
 	public GameDescription() {
 		super();
@@ -127,6 +129,10 @@ public class GameDescription implements Externalizable {
 				} catch (ParseException e) {
 					throw new JSONException(e.toString());
 				}
+			}
+			if (jsonObject.has(JSON_IS_POSITIONAL)) {
+				game.setPositional(jsonObject
+						.getBoolean(JSON_IS_POSITIONAL));
 			}
 			return game;
 		}
@@ -234,5 +240,13 @@ public class GameDescription implements Externalizable {
 			return game2.getStartDate().compareTo(game1.getStartDate());
 		}
 	};
+
+	public boolean isPositional() {
+		return isPositional;
+	}
+
+	public void setPositional(boolean isPositional) {
+		this.isPositional = isPositional;
+	}
 
 }

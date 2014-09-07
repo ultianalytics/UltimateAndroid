@@ -142,6 +142,8 @@
     <string name="alert_cloud_not_connected_error_message">Sorry&#8230;we can\'t connect to the internet.  Please try again when you have connectivity.</string>
     <string name="alert_cloud_timeout_error_title">Timeout</string>
     <string name="alert_cloud_timeout_error_message">Sorry&#8230;our attempt to talk to the server timed out. Please try again when you have better connectivity.</string>
+	<string name="alert_cloud_positional_game_error_title">Game not supported on this device</string>
+    <string name="alert_cloud_positional_game_error_message">The game you selected has positional data.  It is currently only supported on an iPad.</string>    
     <string name="alert_file_team_corrupt_title">Error Restoring Team</string>
     <string name="alert_file_team_corrupt_message">Ouch!  We experienced an error attempting to read the team data.\n\nWould you like to delete the game now or try again?</string>
     <string name="alert_file_game_corrupt_title">Error Restoring Game</string>

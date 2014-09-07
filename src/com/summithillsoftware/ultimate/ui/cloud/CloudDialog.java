@@ -227,6 +227,7 @@ public abstract class CloudDialog extends UltimateDialogFragment implements OnWo
 				});
 	}
 	
+	
 	protected void setProgressText(int resid) {
 		statusTextView.setText(getString(resid));
 	}
